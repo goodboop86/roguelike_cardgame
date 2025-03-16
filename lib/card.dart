@@ -22,7 +22,7 @@ class CardComponent extends RectangleComponent with TapCallbacks, RiverpodCompon
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    canvas.drawRect(size.toRect(), Paint()..color = Colors.blue);
+    canvas.drawRect(size.toRect(), Paint()..color = Colors.green);
     TextPainter(
       text: TextSpan(text: "$name\nDamage: $damage\nHeal: $heal", style: const TextStyle(color: Colors.white)),
       textDirection: TextDirection.ltr,
