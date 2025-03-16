@@ -13,7 +13,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'PushPuzzle',
+      title: 'RoguelikeCardGame',
       home: MainGamePage(),
     );
   }

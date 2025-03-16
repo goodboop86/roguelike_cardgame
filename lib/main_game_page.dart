@@ -1,7 +1,12 @@
+import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'main_game.dart';
+
+final GlobalKey<RiverpodAwareGameWidgetState> gameWidgetKey =
+GlobalKey<RiverpodAwareGameWidgetState>();
 
 class MainGamePage extends StatefulWidget {
   const MainGamePage({super.key});
@@ -19,7 +24,7 @@ class MainGamePageState extends State<MainGamePage> {
     return Scaffold(
         body: Stack(
           children: [
-            GameWidget(game: game),
+            ProviderScope(child: RiverpodAwareGameWidget(key:gameWidgetKey,game: game)),
           ],
         )
     );
