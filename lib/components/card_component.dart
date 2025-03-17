@@ -1,62 +1,11 @@
-import 'dart:convert';
-import 'dart:ui';
-
 import 'package:flame/events.dart';
 import 'package:flame/components.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
 
-import 'character_state.dart';
-
-abstract interface class Jsonable {
-  Map<String, dynamic> toJson();
-
-  String toJsonString() {
-    return jsonEncode(toJson());
-  }
-}
-
-// カードの効果を定義するクラス
-class CardEffect implements Jsonable {
-  final int damage;
-  final int heal;
-
-  CardEffect({required this.damage, required this.heal});
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      'damage': damage,
-      'heal': heal,
-    };
-  }
-
-  @override
-  String toJsonString() {
-    return jsonEncode(toJson());
-  }
-}
-
-// カードの情報を保持するクラス
-class Card_ implements Jsonable {
-  final String name;
-  final CardEffect effect;
-
-  Card_({required this.name, required this.effect});
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'effect': effect.toJson(), // CardEffect の toJson() を呼び出す
-    };
-  }
-
-  @override
-  String toJsonString() {
-    return jsonEncode(toJson());
-  }
-}
+import '../models/card.dart';
+import '../models/player_state.dart';
+import '../providers/player_provider.dart';
 
 class CardComponent extends RectangleComponent
     with TapCallbacks, RiverpodComponentMixin {

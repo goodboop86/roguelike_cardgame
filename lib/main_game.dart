@@ -10,10 +10,12 @@ import 'package:flutter/services.dart';
 
 import 'dart:async';
 
-import 'package:roguelike_cardgame/character_state.dart';
 
-import 'card.dart';
-import 'charactor.dart';
+import 'components/card_component.dart';
+import 'components/enemy_component.dart';
+import 'components/player_component.dart';
+import 'models/card.dart';
+import 'models/card_effect.dart';
 
 class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
   late Function stateCallbackHandler;
