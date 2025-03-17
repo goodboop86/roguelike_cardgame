@@ -17,9 +17,6 @@ class CardComponent extends RectangleComponent
 
   @override
   void onTapDown(TapDownEvent event) {
-    // ref.read(playerProvider.notifier).applyCardEffect(card.effect);
-    // final player = ref.read(playerProvider.notifier);
-    // final enemy = ref.read(enemyProvider.notifier);
 
     card.effect.effectFunction(ref);
 
@@ -31,13 +28,11 @@ class CardComponent extends RectangleComponent
 
   @override
   void render(Canvas canvas) {
-
     super.render(canvas);
     canvas.drawRect(size.toRect(), Paint()..color = Colors.green);
     TextPainter(
       text: TextSpan(
-          text: card.name,
-          style: const TextStyle(color: Colors.white)),
+          text: card.name, style: const TextStyle(color: Colors.white)),
       textDirection: TextDirection.ltr,
     )
       ..layout(maxWidth: size.x)

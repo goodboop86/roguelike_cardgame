@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'dart:async';
 
 
+import 'components/card_area_component.dart';
 import 'components/card_component.dart';
 import 'components/enemy_component.dart';
 import 'components/player_component.dart';
@@ -18,6 +19,10 @@ import 'models/card.dart';
 import 'models/card_effect.dart';
 
 class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
+
+  @override
+  var debugMode = true;
+
   late Function stateCallbackHandler;
   final List<CardComponent> _cards = []; // カードリストをキャッシュ
 
@@ -64,11 +69,11 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
 
   void refreshCards() {
     // 現在のカードを削除
-    // 現在のカードを削除
-    children.whereType<CardComponent>().forEach((card) {
-      remove(card);
+    children.whereType<CardAreaComponent>().forEach((area) {
+      remove(area);
     });
     _cards.clear();
+    print(_cards);
 
     // 新しいカードを生成して配置
     _addCards(4); // カード枚数を指定
@@ -76,19 +81,28 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
 
   void _addCards(int cardCount) {
 
+    print("add cards");
+
     final screenSize = size;
     final screenWidth = screenSize.x;
     final screenHeight = screenSize.y;
-    final cardSize = Vector2(screenWidth * 0.2 - 20, screenHeight * 0.15 - 20);
-    final cardY = screenHeight - cardSize.y - 10;
-    final cardWidth = cardSize.x;
-    final cardMargin = 10.0;
 
-    final totalCardWidth = cardCount * cardWidth;
-    final totalMarginWidth = (cardCount - 1) * cardMargin;
-    final totalWidth = totalCardWidth + totalMarginWidth;
+    // カードエリアのサイズ
+    final cardAreaSize = Vector2(450, 200);
 
-    final startX = (screenWidth - totalWidth) / 2;
+    // カードエリアの位置を計算 (画面中央)
+    final cardAreaPosition = Vector2(
+      (screenWidth - cardAreaSize.x) / 2,
+      (screenHeight - cardAreaSize.y) / 2,
+    );
+
+    // カードエリアを作成
+    final cardArea = CardAreaComponent(
+      position: cardAreaPosition,
+      size: cardAreaSize, // カードエリアのサイズ
+
+    );
+    add(cardArea);
 
     // カードのリストを作成
     final cards = <Card_>[];
@@ -101,12 +115,16 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
       cards.add(card);
     });
 
+
+    final cardSize = Vector2(100, 150);
+    final cardWidth = cardSize.x;
+    const cardMargin = 10;
     // カードコンポーネントを追加
     cards.asMap().forEach((index, card) { // asMap() と forEach() を使用
       final cardComponent = CardComponent(card: card)
         ..size = cardSize
-        ..position = Vector2(startX + index * (cardWidth + cardMargin), cardY);
-      add(cardComponent);
+        ..position = Vector2(index * (cardWidth + cardMargin), 0);
+      cardArea.add(cardComponent);;
     });
   }
 
@@ -130,54 +148,13 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
     }
   }
 
-  void removeCard(CardComponent cardComponent) {
-    cardComponent.removeFromParent();
-    _cards.remove(cardComponent); // カードリストを更新
-    rearrangeCards();
-  }
+  // void removeCard(CardComponent cardComponent) {
+  //   cardComponent.removeFromParent();
+  //   _cards.remove(cardComponent); // カードリストを更新
+  //   rearrangeCards();
+  // }
 
   void setCallback(Function fn) => stateCallbackHandler = fn;
 
 
-  Future<void> draw() async {
-    // add(PlayerComponent()
-    //   ..position = Vector2(50, 50)
-    //   ..size = Vector2.all(100));
-    // add(CardComponent(
-    //   card: Card_(name: 'Fireball', effect: CardEffect(damage: 20, heal: 0)),
-    // )
-    //   ..position = Vector2(100, 100)
-    //   ..size = Vector2(100, 50));
-    // add(CardComponent(
-    //   card: Card_(name: 'Mana Potion', effect: CardEffect(damage: 0, heal: 10)),
-    // )
-    //   ..position = Vector2(100, 200)
-    //   ..size = Vector2(100, 50));
-
-    // // 画面中央に100x100の赤いボックスを表示
-    // final playerBox = RectangleComponent(
-    //     position: Vector2(size.x / 3 - 50, size.y / 3 - 50),
-    //     size: Vector2.all(200),
-    //     paint: Paint()..color = Colors.blue,
-    //     children: [
-    //       TextComponent(
-    //         text: jsonEncode(player),
-    //         position: Vector2.all(16.0),
-    //       )
-    //     ]);
-    //
-    // final enemyBox = RectangleComponent(
-    //     position: Vector2(size.x / 1.5 - 50, size.y / 3 - 50),
-    //     size: Vector2.all(200),
-    //     paint: Paint()..color = Colors.red,
-    //     children: [
-    //       TextComponent(
-    //         text: jsonEncode(enemy),
-    //         position: Vector2.all(16.0),
-    //       )
-    //     ]);
-
-    // add(playerBox);
-    // add(enemyBox);
-  }
 }

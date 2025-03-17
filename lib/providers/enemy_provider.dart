@@ -22,5 +22,4 @@ class EnemyStateNotifier extends CharacterStateNotifier<EnemyState> {
     state = EnemyState(
         name: state.name, health: state.health + amount, mana: state.mana);
   }
-
 }
