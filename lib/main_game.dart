@@ -90,15 +90,24 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
 
     final startX = (screenWidth - totalWidth) / 2;
 
-    for (int i = 0; i < cardCount; i++) {
-      final cardComponent = CardComponent(
-        card: Card_(name: 'Card ${i + 1}', effect: CardEffect(damage: 10, heal: 0)),
-      )
+    // カードのリストを作成
+    final cards = <Card_>[];
+    final effectFunctions = [damageEffect, healEffect, buffEffect, debuffEffect];
+    effectFunctions.asMap().forEach((index, effectFunction) { // asMap() と forEach() を使用
+      final card = Card_(
+        name: 'Card ${index + 1}',
+        effect: CardEffect(effectFunction: effectFunction),
+      );
+      cards.add(card);
+    });
+
+    // カードコンポーネントを追加
+    cards.asMap().forEach((index, card) { // asMap() と forEach() を使用
+      final cardComponent = CardComponent(card: card)
         ..size = cardSize
-        ..position = Vector2(startX + i * (cardWidth + cardMargin), cardY);
+        ..position = Vector2(startX + index * (cardWidth + cardMargin), cardY);
       add(cardComponent);
-      _cards.add(cardComponent); // カードリストを更新
-    }
+    });
   }
 
   void rearrangeCards() {

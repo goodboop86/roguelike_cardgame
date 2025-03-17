@@ -2,6 +2,7 @@ import 'package:flame/events.dart';
 import 'package:flame/components.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:roguelike_cardgame/providers/enemy_provider.dart';
 
 import '../main_game.dart';
 import '../models/card.dart';
@@ -16,7 +17,12 @@ class CardComponent extends RectangleComponent
 
   @override
   void onTapDown(TapDownEvent event) {
-    ref.read(playerProvider.notifier).applyCardEffect(card.effect);
+    // ref.read(playerProvider.notifier).applyCardEffect(card.effect);
+    // final player = ref.read(playerProvider.notifier);
+    // final enemy = ref.read(enemyProvider.notifier);
+
+    card.effect.effectFunction(ref);
+
     // カードを削除
     removeFromParent();
     // 残りのカードを再配置
@@ -30,7 +36,7 @@ class CardComponent extends RectangleComponent
     canvas.drawRect(size.toRect(), Paint()..color = Colors.green);
     TextPainter(
       text: TextSpan(
-          text: card.toJsonString(),
+          text: card.name,
           style: const TextStyle(color: Colors.white)),
       textDirection: TextDirection.ltr,
     )

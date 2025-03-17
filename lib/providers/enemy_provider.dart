@@ -23,13 +23,4 @@ class EnemyStateNotifier extends CharacterStateNotifier<EnemyState> {
         name: state.name, health: state.health + amount, mana: state.mana);
   }
 
-  // カードの効果を適用するメソッド
-  void applyCardEffect(CardEffect effect) {
-    if (effect.damage != 0) {
-      takeDamage(effect.damage);
-    }
-    if (effect.heal != 0) {
-      heal(effect.heal);
-    }
-  }
 }
