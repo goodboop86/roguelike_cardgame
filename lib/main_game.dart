@@ -24,29 +24,55 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    await draw();
+    final screenSize = size; // ディスプレイサイズを取得
+    final screenWidth = screenSize.x;
+    final screenHeight = screenSize.y;
+
+    const double margin = 20.0; // 余白のサイズ
+
+    // Player の配置 (左上)
+    final playerSize = Vector2(screenWidth * 0.4 - margin * 2, screenHeight * 0.4 - margin * 2);
+    add(PlayerComponent()
+      ..size = playerSize
+      ..position = Vector2(margin, margin));
+
+    // Enemy の配置 (右上)
+    final enemySize = Vector2(screenWidth * 0.4 - margin * 2, screenHeight * 0.4 - margin * 2);
+    add(EnemyComponent()
+      ..size = enemySize
+      ..position = Vector2(screenWidth - enemySize.x - margin, margin));
+
+    // Card の配置 (下部)
+    final cardSize = Vector2(screenWidth * 0.22 - margin * 2, screenHeight * 0.25 - margin * 2);
+    final cardY = screenHeight - cardSize.y - margin;
+    for (int i = 0; i < 4; i++) {
+      add(CardComponent(
+        card: Card_(name: 'Card ${i + 1}', effect: CardEffect(damage: 10, heal: 5)),
+      )
+        ..size = cardSize
+        ..position = Vector2(screenWidth * 0.05 + i * screenWidth * 0.23 + margin, cardY));
+    }
+
+    // await draw();
   }
 
   void setCallback(Function fn) => stateCallbackHandler = fn;
 
+
   Future<void> draw() async {
-    add(PlayerComponent()
-      ..position = Vector2(50, 50)
-      ..size = Vector2.all(100));
-    add(CardComponent(
-      'Fireball',
-      20,
-      10,
-    )
-      ..position = Vector2(50, 200)
-      ..size = Vector2.all(100));
-    add(CardComponent(
-      'Heal',
-      -15,
-      5,
-    )
-      ..position = Vector2(200, 200)
-      ..size = Vector2.all(100));
+    // add(PlayerComponent()
+    //   ..position = Vector2(50, 50)
+    //   ..size = Vector2.all(100));
+    // add(CardComponent(
+    //   card: Card_(name: 'Fireball', effect: CardEffect(damage: 20, heal: 0)),
+    // )
+    //   ..position = Vector2(100, 100)
+    //   ..size = Vector2(100, 50));
+    // add(CardComponent(
+    //   card: Card_(name: 'Mana Potion', effect: CardEffect(damage: 0, heal: 10)),
+    // )
+    //   ..position = Vector2(100, 200)
+    //   ..size = Vector2(100, 50));
 
     // // 画面中央に100x100の赤いボックスを表示
     // final playerBox = RectangleComponent(
