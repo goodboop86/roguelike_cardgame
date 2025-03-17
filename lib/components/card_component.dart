@@ -3,12 +3,13 @@ import 'package:flame/components.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
 
+import '../main_game.dart';
 import '../models/card.dart';
 import '../models/player_state.dart';
 import '../providers/player_provider.dart';
 
 class CardComponent extends RectangleComponent
-    with TapCallbacks, RiverpodComponentMixin {
+    with TapCallbacks, RiverpodComponentMixin, HasGameRef {
   final Card_ card;
 
   CardComponent({required this.card});
@@ -16,10 +17,15 @@ class CardComponent extends RectangleComponent
   @override
   void onTapDown(TapDownEvent event) {
     ref.read(playerProvider.notifier).applyCardEffect(card.effect);
+    // カードを削除
+    removeFromParent();
+    // 残りのカードを再配置
+    (gameRef as MainGame).rearrangeCards();
   }
 
   @override
   void render(Canvas canvas) {
+
     super.render(canvas);
     canvas.drawRect(size.toRect(), Paint()..color = Colors.green);
     TextPainter(

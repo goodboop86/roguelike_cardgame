@@ -19,6 +19,7 @@ import 'models/card_effect.dart';
 
 class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
   late Function stateCallbackHandler;
+  final List<CardComponent> _cards = []; // カードリストをキャッシュ
 
   @override
   Color backgroundColor() => const Color.fromRGBO(89, 106, 108, 1.0);
@@ -44,18 +45,86 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
       ..size = enemySize
       ..position = Vector2(screenWidth - enemySize.x - margin, margin));
 
-    // Card の配置 (下部)
-    final cardSize = Vector2(screenWidth * 0.22 - margin * 2, screenHeight * 0.25 - margin * 2);
-    final cardY = screenHeight - cardSize.y - margin;
-    for (int i = 0; i < 4; i++) {
-      add(CardComponent(
-        card: Card_(name: 'Card ${i + 1}', effect: CardEffect(damage: 10, heal: 5)),
+    _addCards(4);
+
+    // ButtonComponent を追加
+    add(
+      ButtonComponent(
+        button: PositionComponent() // ボタンの見た目を定義
+          ..size = Vector2(100, 100)
+          ..add(RectangleComponent(size: Vector2(50, 50), paint: Paint()..color = Colors.red)),
+        onPressed: () {
+          // カードをリフレッシュして再配置
+          refreshCards();
+        },
+      )..position = Vector2(10, 10), // ボタンの位置
+    );
+
+  }
+
+  void refreshCards() {
+    // 現在のカードを削除
+    // 現在のカードを削除
+    children.whereType<CardComponent>().forEach((card) {
+      remove(card);
+    });
+    _cards.clear();
+
+    // 新しいカードを生成して配置
+    _addCards(4); // カード枚数を指定
+  }
+
+  void _addCards(int cardCount) {
+
+    final screenSize = size;
+    final screenWidth = screenSize.x;
+    final screenHeight = screenSize.y;
+    final cardSize = Vector2(screenWidth * 0.2 - 20, screenHeight * 0.15 - 20);
+    final cardY = screenHeight - cardSize.y - 10;
+    final cardWidth = cardSize.x;
+    final cardMargin = 10.0;
+
+    final totalCardWidth = cardCount * cardWidth;
+    final totalMarginWidth = (cardCount - 1) * cardMargin;
+    final totalWidth = totalCardWidth + totalMarginWidth;
+
+    final startX = (screenWidth - totalWidth) / 2;
+
+    for (int i = 0; i < cardCount; i++) {
+      final cardComponent = CardComponent(
+        card: Card_(name: 'Card ${i + 1}', effect: CardEffect(damage: 10, heal: 0)),
       )
         ..size = cardSize
-        ..position = Vector2(screenWidth * 0.05 + i * screenWidth * 0.23 + margin, cardY));
+        ..position = Vector2(startX + i * (cardWidth + cardMargin), cardY);
+      add(cardComponent);
+      _cards.add(cardComponent); // カードリストを更新
     }
+  }
 
-    // await draw();
+  void rearrangeCards() {
+    final screenSize = size;
+    final screenWidth = screenSize.x;
+    final screenHeight = screenSize.y;
+    final cardSize = Vector2(screenWidth * 0.2 - 20, screenHeight * 0.15 - 20);
+    final cardY = screenHeight - cardSize.y - 10;
+    final cardWidth = cardSize.x;
+    final cardMargin = 10.0;
+
+    final totalCardWidth = _cards.length * cardWidth;
+    final totalMarginWidth = (_cards.length - 1) * cardMargin;
+    final totalWidth = totalCardWidth + totalMarginWidth;
+
+    final startX = (screenWidth - totalWidth) / 2;
+
+    for (int i = 0; i < _cards.length; i++) {
+      _cards[i].position = Vector2(startX + i * (cardWidth + cardMargin), cardY);
+    }
+  }
+
+  void removeCard(CardComponent cardComponent) {
+    cardComponent.removeFromParent();
+    _cards.remove(cardComponent); // カードリストを更新
+    rearrangeCards();
   }
 
   void setCallback(Function fn) => stateCallbackHandler = fn;
