@@ -93,7 +93,7 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
     // カードエリアの位置を計算 (画面中央)
     final cardAreaPosition = Vector2(
       (screenWidth - cardAreaSize.x) / 2,
-      (screenHeight - cardAreaSize.y) / 2,
+      (screenHeight - cardAreaSize.y) / 1.5,
     );
 
     // カードエリアを作成
@@ -116,17 +116,26 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
     });
 
 
-    final cardSize = Vector2(100, 150);
+    // カードコンポーネントを作成し、カードエリアの中心に集める
+    final cardSize = Vector2(120, 120);
     final cardWidth = cardSize.x;
-    const cardMargin = 10;
-    // カードコンポーネントを追加
-    cards.asMap().forEach((index, card) { // asMap() と forEach() を使用
+    final cardHeight = cardSize.y;
+    final cardMargin = 10;
+    final cardAreaCenterX = cardAreaSize.x / 2;
+    final cardAreaCenterY = cardAreaSize.y / 2;
+    cards.asMap().forEach((index, card) {
+      final row = index ~/ 2;
+      final col = index % 2;
       final cardComponent = CardComponent(card: card)
         ..size = cardSize
-        ..position = Vector2(index * (cardWidth + cardMargin), 0);
-      cardArea.add(cardComponent);;
+        ..position = Vector2(
+          cardAreaCenterX - cardWidth / 2 + col * (cardWidth + cardMargin) - (cardWidth + cardMargin) / 2, // X 座標を調整
+          cardAreaCenterY - cardHeight / 2 + row * (cardHeight + cardMargin) - (cardHeight + cardMargin) / 2, // Y 座標を調整
+        ); // カードエリアの中心を基準に位置を計算
+      cardArea.add(cardComponent);
     });
   }
+
 
   void rearrangeCards() {
     final screenSize = size;
