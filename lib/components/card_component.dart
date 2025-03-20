@@ -16,7 +16,7 @@ class CardComponent extends RectangleComponent
   CardComponent({required this.card});
 
   @override
-  void onTapDown(TapDownEvent event) {
+  void onTapUp(TapUpEvent event) {
 
     card.effect.effectFunction(ref);
 
