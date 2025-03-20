@@ -5,6 +5,7 @@ import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:roguelike_cardgame/main_game.dart';
 import 'package:roguelike_cardgame/providers/sizes.dart';
+import 'package:flame/parallax.dart';
 
 import 'dart:async';
 
@@ -25,6 +26,7 @@ class BattlePage extends Component
   Future<void> onLoad() async {
     super.onLoad();
     Sizes().setScreenSize(game.size);
+
 
     await _addCharacters();
     _addCards(4);

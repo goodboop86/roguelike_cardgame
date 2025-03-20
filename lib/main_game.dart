@@ -2,12 +2,14 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
+import 'package:flame/parallax.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:roguelike_cardgame/pages/battle.dart';
 import 'package:roguelike_cardgame/pages/home.dart';
 import 'dart:async';
 
-class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin, HasWorldReference {
+class MainGame extends FlameGame
+    with HasGameRef, RiverpodGameMixin, HasWorldReference {
   @override
   var debugMode = true;
 
@@ -18,6 +20,22 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin, HasWorldRef
 
   @override
   Future<void> onLoad() async {
+    final parallaxComponent = await loadParallaxComponent(
+      [
+        ParallaxImageData('parallax/1.png'),
+        ParallaxImageData('parallax/2.png'),
+        ParallaxImageData('parallax/3.png'),
+        ParallaxImageData('parallax/5.png'),
+        ParallaxImageData('parallax/6.png'),
+        ParallaxImageData('parallax/7.png'),
+        ParallaxImageData('parallax/8.png'),
+        ParallaxImageData('parallax/10.png'),
+      ],
+      baseVelocity: Vector2(0.2, 0),
+      position: Vector2(0, -450),
+      velocityMultiplierDelta: Vector2(1.8, 1.0),
+    );
+    add(parallaxComponent);
 
     add(
       router = RouterComponent(
@@ -28,7 +46,5 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin, HasWorldRef
         initialRoute: 'home',
       ),
     );
-
-
   }
 }
