@@ -1,7 +1,8 @@
 import 'package:flame/components.dart' hide Timer;
+import 'package:flame/flame.dart';
 import 'package:flame/input.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Image;
 import 'package:roguelike_cardgame/main_game.dart';
 import 'package:roguelike_cardgame/providers/sizes.dart';
 
@@ -25,12 +26,12 @@ class BattlePage extends Component
     super.onLoad();
     Sizes().setScreenSize(game.size);
 
-    _addCharacters();
+    await _addCharacters();
     _addCards(4);
     _addButtons();
   }
 
-  void _addCharacters() {
+  Future<void> _addCharacters() async {
     // カードエリアを作成
     final characterArea = CharacterAreaComponent(
       position: Sizes().characterAreaPosition,
@@ -43,10 +44,26 @@ class BattlePage extends Component
       ..size = Sizes().characterSize
       ..position = Sizes().playerPosition);
 
+
     // Enemy の配置 (右上)
     characterArea.add(EnemyComponent()
       ..size = Sizes().characterSize
       ..position = Sizes().enemyPosition);
+
+    var player = await SpriteAnimationComponent.fromFrameData(
+      await Flame.images.load('noBKG_KnightIdle_strip.png'),
+      SpriteAnimationData.sequenced(
+        textureSize: Vector2.all(64),
+        amount: 15,
+        stepTime: 0.08,
+      ),
+      position: Vector2(0, 0),
+      anchor: Anchor.topLeft,
+    );
+    await characterArea.add(player
+    ..size = Vector2.all(160)
+    );
+
   }
 
   void _addButtons() {
