@@ -1,7 +1,13 @@
+import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:roguelike_cardgame/providers/card_provider.dart';
 
 import 'main_game.dart';
+
+final GlobalKey<RiverpodAwareGameWidgetState<MainGame>> gameWidgetKey =
+    GlobalKey<RiverpodAwareGameWidgetState<MainGame>>();
 
 class MainGamePage extends StatefulWidget {
   const MainGamePage({super.key});
@@ -15,15 +21,50 @@ class MainGamePageState extends State<MainGamePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         body: Stack(
-          children: [
-            GameWidget(game: game),
-          ],
-        )
-    );
+      children: [
+        ProviderScope(
+          child: RiverpodAwareGameWidget<MainGame>(
+              key: gameWidgetKey,
+              game: game,
+              overlayBuilderMap: {
+                'myOverlay': (BuildContext context, MainGame game) {
+                  return MyOverlayWidget(game: game);
+                },
+              }),
+        ),
+      ],
+    ));
   }
-
 }
 
+
+class MyOverlayWidget extends ConsumerWidget {
+  final MainGame game;
+  const MyOverlayWidget({super.key, required this.game});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final cardState = ref.read(cardProvider);
+    return GestureDetector(
+      onTap: () {
+        game.overlays.remove('myOverlay');
+        game.resumeEngine();
+      },
+      child: Container(
+        color: Colors.black.withOpacity(0.5),
+        child: Center(
+          child: Container(
+            width: 200,
+            height: 100,
+            color: Colors.white,
+            child: Center(
+              child: Text(cardState.toJsonString()),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
