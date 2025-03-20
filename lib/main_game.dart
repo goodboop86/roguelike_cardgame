@@ -1,12 +1,8 @@
-import 'dart:convert';
-
 import 'package:flame/components.dart' hide Timer;
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:roguelike_cardgame/providers/sizes.dart';
 
 import 'dart:async';
@@ -39,7 +35,6 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
   }
 
   void _addCharacters() {
-
     // カードエリアを作成
     final characterArea = CharacterAreaComponent(
       position: Sizes().characterAreaPosition,
@@ -70,24 +65,58 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
       _addCards(4); // カード枚数を指定
     }
 
-    // ButtonComponent を追加
-    add(
-      ButtonComponent(
-        button: PositionComponent() // ボタンの見た目を定義
-          ..size = Vector2(50, 50)
-          ..add(RectangleComponent(
-              size: Vector2(50, 50), paint: Paint()..color = Colors.red)),
-        onPressed: () {
-          // カードをリフレッシュして再配置
-          refreshCards();
-        },
-      )..position = Vector2(10, 10), // ボタンの位置
+    // カードエリアを作成
+    final buttonArea = ButtonAreaComponent(
+      position: Sizes().buttonAreaPosition,
+      size: Sizes().buttonAreaSize, // カードエリアのサイズ
     );
+    add(buttonArea);
+
+    List buttonOnPressedFunctions = [
+      () {debugPrint('Button 1 pressed');},
+      () {debugPrint('Button 2 pressed');},
+      () {debugPrint('Button 3 pressed');},
+      () {
+        refreshCards();
+      }
+    ];
+    int buttonNum = buttonOnPressedFunctions.length;
+    buttonOnPressedFunctions.asMap().forEach((index, function) {
+      final buttonWidth = buttonArea.size.x * 0.2;
+      final buttonMargin = (buttonArea.size.x - buttonWidth * buttonNum) / (buttonNum+1);
+      final buttonPosition = Vector2(
+        buttonMargin + index * (buttonWidth + buttonMargin),
+        buttonArea.size.y * 0.25,
+      );
+      final button = ButtonComponent(
+        button: RectangleComponent(
+          size: Sizes().buttonSize,
+          paint: Paint()..color = Colors.red,
+        ),
+        onPressed: function,
+      );
+      button.position= buttonPosition;
+      buttonArea.add(button);
+    });
+
+    ButtonComponent turnEndButton = ButtonComponent(
+      button: PositionComponent() // ボタンの見た目を定義
+        ..size = Vector2(50, 50)
+        ..add(RectangleComponent(
+            size: Vector2(50, 50), paint: Paint()..color = Colors.red)),
+      onPressed: () {
+        // カードをリフレッシュして再配置
+        refreshCards();
+      },
+    )..position = Vector2(10, 10);
+
+    // ButtonComponent を追加
+    add(turnEndButton // ボタンの位置
+        );
   }
 
-
   void _addCards(int cardCount) {
-    print("add cards");
+    debugPrint("add cards");
 
     // カードエリアを作成
     final cardArea = CardAreaComponent(
