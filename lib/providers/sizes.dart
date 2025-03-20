@@ -13,18 +13,33 @@ class Sizes {
   void setScreenSize(Vector2 size) {
     screenSize = size;
   }
+  // Screen
   double get screenWidth => screenSize.x;
   double get screenHeight => screenSize.y;
   double get margin => 20.0;
 
-  Vector2 get cardAreaSize => Vector2(450, 200);
+  // Character
+  double get characterWidth => screenWidth  * 0.5 - margin * 2;
+  double get characterHeight => screenHeight * 0.3 - margin * 2;
+  double get playerX => margin;
+  double get playerY => margin;
+  double get enemyX => screenWidth - characterWidth - Sizes().margin;
+  double get enemyY => margin;
 
-  double get cardAreaWidth => screenSize.x * 0.7;
-  double get cardAreaHeight => screenSize.x * 0.5;
 
-  double get cardWidth => cardAreaWidth * 0.4;
-  double get cardHeight => cardAreaHeight * 0.4;
-  double get cardMargin => 10.0;
+
+
+  // CardArea
+  double get cardAreaWidth => screenSize.x * 0.95;
+  double get cardAreaHeight => screenSize.y * 0.4;
+  double get cardAreaX => (screenWidth - cardAreaWidth)/2;
+  double get cardAreaY => (screenHeight - cardAreaHeight)/1/1;
+
+
+  // Card
+  double get cardWidth => cardAreaWidth * 0.45;
+  double get cardHeight => cardAreaHeight * 0.45;
+  double get cardMargin => 20.0;
 
   double get buttonAreaHeight => 100.0;
 }

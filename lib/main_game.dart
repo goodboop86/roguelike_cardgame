@@ -11,7 +11,6 @@ import 'package:roguelike_cardgame/providers/sizes.dart';
 
 import 'dart:async';
 
-
 import 'components/card_area_component.dart';
 import 'components/card_component.dart';
 import 'components/enemy_component.dart';
@@ -20,7 +19,6 @@ import 'models/card.dart';
 import 'models/card_effect.dart';
 
 class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
-
   @override
   var debugMode = true;
 
@@ -40,44 +38,37 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
 
     const double margin = 20.0; // 余白のサイズ
 
-
     _addCharacters();
     _addCards(4);
     _addButtons();
-
-
-
   }
 
-  void _addCharacters(){
+  void _addCharacters() {
     // Player の配置 (左上)
-    final playerSize = Vector2(Sizes().screenWidth * 0.4 - Sizes().margin * 2, Sizes().screenHeight * 0.4 - Sizes().margin * 2);
     add(PlayerComponent()
-      ..size = playerSize
-      ..position = Vector2(Sizes().margin, Sizes().margin));
+      ..size = Vector2(Sizes().characterWidth, Sizes().characterHeight)
+      ..position = Vector2(Sizes().playerX, Sizes().playerY));
 
     // Enemy の配置 (右上)
-    final enemySize = Vector2(Sizes().screenWidth * 0.4 - Sizes().margin * 2, Sizes().screenHeight * 0.4 - Sizes().margin * 2);
     add(EnemyComponent()
-      ..size = enemySize
-      ..position = Vector2(Sizes().screenWidth - enemySize.x - Sizes().margin, Sizes().margin));
-
+      ..size = Vector2(Sizes().characterWidth, Sizes().characterHeight)
+      ..position = Vector2(Sizes().enemyX, Sizes().enemyY));
   }
 
-  void _addButtons(){
+  void _addButtons() {
     // ButtonComponent を追加
     add(
       ButtonComponent(
         button: PositionComponent() // ボタンの見た目を定義
           ..size = Vector2(100, 100)
-          ..add(RectangleComponent(size: Vector2(50, 50), paint: Paint()..color = Colors.red)),
+          ..add(RectangleComponent(
+              size: Vector2(50, 50), paint: Paint()..color = Colors.red)),
         onPressed: () {
           // カードをリフレッシュして再配置
           refreshCards();
         },
       )..position = Vector2(10, 10), // ボタンの位置
     );
-
   }
 
   void refreshCards() {
@@ -92,35 +83,35 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
   }
 
   void _addCards(int cardCount) {
-
     print("add cards");
-
-
-    // カードエリアの位置を計算 (画面中央)
-    final cardAreaPosition = Vector2(
-      (Sizes().screenWidth - Sizes().cardAreaWidth) / 2,
-      (Sizes().screenHeight - Sizes().cardAreaHeight) / 1.5,
-    );
 
     // カードエリアを作成
     final cardArea = CardAreaComponent(
-      position: cardAreaPosition,
-      size: Vector2(Sizes().cardAreaWidth, Sizes().cardAreaHeight), // カードエリアのサイズ
-
+      position: Vector2(
+        Sizes().cardAreaX,
+        Sizes().cardAreaY,
+      ),
+      size:
+          Vector2(Sizes().cardAreaWidth, Sizes().cardAreaHeight), // カードエリアのサイズ
     );
     add(cardArea);
 
     // カードのリストを作成
     final cards = <Card_>[];
-    final effectFunctions = [damageEffect, healEffect, buffEffect, debuffEffect];
-    effectFunctions.asMap().forEach((index, effectFunction) { // asMap() と forEach() を使用
+    final effectFunctions = [
+      damageEffect,
+      healEffect,
+      buffEffect,
+      debuffEffect
+    ];
+    effectFunctions.asMap().forEach((index, effectFunction) {
+      // asMap() と forEach() を使用
       final card = Card_(
         name: 'Card ${index + 1}',
         effect: CardEffect(effectFunction: effectFunction),
       );
       cards.add(card);
     });
-
 
     // カードコンポーネントを作成し、カードエリアの中心に集める
     final cardAreaCenterX = Sizes().cardAreaWidth / 2;
@@ -129,18 +120,22 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
       final row = index ~/ 2;
       final col = index % 2;
       final cardComponent = CardComponent(card: card)
-        ..size =  Vector2(Sizes().cardWidth, Sizes().cardHeight)
+        ..size = Vector2(Sizes().cardWidth, Sizes().cardHeight)
         ..position = Vector2(
-          cardAreaCenterX - Sizes().cardWidth / 2 + col * (Sizes().cardWidth + Sizes().cardMargin) - (Sizes().cardWidth + Sizes().cardMargin) / 2, // X 座標を調整
-          cardAreaCenterY - Sizes().cardHeight / 2 + row * (Sizes().cardHeight + Sizes().cardMargin) - (Sizes().cardHeight + Sizes().cardMargin) / 2, // Y 座標を調整
+          cardAreaCenterX -
+              Sizes().cardWidth / 2 +
+              col * (Sizes().cardWidth + Sizes().cardMargin) -
+              (Sizes().cardWidth + Sizes().cardMargin) / 2, // X 座標を調整
+          cardAreaCenterY -
+              Sizes().cardHeight / 2 +
+              row * (Sizes().cardHeight + Sizes().cardMargin) -
+              (Sizes().cardHeight + Sizes().cardMargin) / 2, // Y 座標を調整
         ); // カードエリアの中心を基準に位置を計算
       cardArea.add(cardComponent);
     });
   }
 
-
   void rearrangeCards() {
-
     final totalCardWidth = _cards.length * Sizes().cardWidth;
     final totalMarginWidth = (_cards.length - 1) * Sizes().cardMargin;
     final totalWidth = totalCardWidth + totalMarginWidth;
@@ -148,12 +143,11 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
     final startX = (Sizes().screenWidth - totalWidth) / 2;
 
     for (int i = 0; i < _cards.length; i++) {
-      _cards[i].position = Vector2(startX + i * (Sizes().cardWidth + Sizes().cardMargin), Sizes().cardHeight);
+      _cards[i].position = Vector2(
+          startX + i * (Sizes().cardWidth + Sizes().cardMargin),
+          Sizes().cardHeight);
     }
   }
 
-
   void setCallback(Function fn) => stateCallbackHandler = fn;
-
-
 }
