@@ -86,7 +86,7 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
       final buttonMargin = (buttonArea.size.x - buttonWidth * buttonNum) / (buttonNum+1);
       final buttonPosition = Vector2(
         buttonMargin + index * (buttonWidth + buttonMargin),
-        buttonArea.size.y * 0.25,
+        (Sizes().buttonAreaHeight - Sizes().buttonHeight) / 2,
       );
       final button = ButtonComponent(
         button: RectangleComponent(
