@@ -2,6 +2,7 @@ import 'package:flame/events.dart';
 import 'package:flame/components.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:roguelike_cardgame/world/battle.dart';
 
 import '../main_game.dart';
 import '../models/card.dart';
@@ -28,7 +29,8 @@ class CardComponent extends RectangleComponent
     // カードを削除
     removeFromParent();
     // 残りのカードを再配置
-    (gameRef as MainGame).rearrangeCards();
+    BattlePage battlePage = findParent<BattlePage>() as BattlePage;
+    battlePage.rearrangeCards();
   }
 
   @override
