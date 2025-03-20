@@ -7,11 +7,11 @@ import '../models/enemy_state.dart';
 import '../providers/enemy_provider.dart';
 
 
-class EnemyComponent extends PositionComponent with RiverpodComponentMixin {
+class EnemyComponent extends SpriteAnimationComponent with RiverpodComponentMixin {
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    canvas.drawRect(size.toRect(), Paint()..color = Colors.blue);
+    // canvas.drawRect(size.toRect(), Paint()..color = Colors.blue);
     final enemyState = ref.watch(enemyProvider);
     TextPainter(
       text: TextSpan(text: enemyState.toJsonString(), style: const TextStyle(color: Colors.white)),

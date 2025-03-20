@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 
 import '../providers/player_provider.dart';
 
-class PlayerComponent extends PositionComponent with RiverpodComponentMixin, TapCallbacks, HasGameRef {
+class PlayerComponent extends SpriteAnimationComponent with RiverpodComponentMixin, TapCallbacks, HasGameRef {
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    canvas.drawRect(size.toRect(), Paint()..color = Colors.blue);
+    // canvas.drawRect(size.toRect(), Paint()..color = Colors.blue);
     final playerState = ref.watch(playerProvider);
     TextPainter(
       text: TextSpan(

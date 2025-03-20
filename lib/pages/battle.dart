@@ -44,26 +44,34 @@ class BattlePage extends Component
       ..size = Sizes().characterSize
       ..position = Sizes().playerPosition);
 
+    var player_ = PlayerComponent()
+      ..animation = SpriteAnimation.fromFrameData(
+          await Flame.images.load('noBKG_KnightIdle_strip.png'),
+          SpriteAnimationData.sequenced(
+            textureSize: Vector2.all(64),
+            amount: 15,
+            stepTime: 0.08,
+          ))
+      ..size = Sizes().characterSize
+      ..position = Sizes().playerPosition;
+
+    var enemy_ = EnemyComponent()
+      ..animation = SpriteAnimation.fromFrameData(
+          await Flame.images.load('noBKG_KnightIdle_strip.png'),
+          SpriteAnimationData.sequenced(
+            textureSize: Vector2.all(64),
+            amount: 15,
+            stepTime: 0.08,
+          ))
+      ..size = Sizes().characterSize
+      ..position = Sizes().enemyPosition
+      ..flipHorizontally();
 
     // Enemy の配置 (右上)
-    characterArea.add(EnemyComponent()
-      ..size = Sizes().characterSize
-      ..position = Sizes().enemyPosition);
+    characterArea.add(enemy_);
 
-    var player = await SpriteAnimationComponent.fromFrameData(
-      await Flame.images.load('noBKG_KnightIdle_strip.png'),
-      SpriteAnimationData.sequenced(
-        textureSize: Vector2.all(64),
-        amount: 15,
-        stepTime: 0.08,
-      ),
-      position: Vector2(0, 0),
-      anchor: Anchor.topLeft,
-    );
-    await characterArea.add(player
-    ..size = Vector2.all(160)
-    );
 
+    characterArea.add(player_);
   }
 
   void _addButtons() {
@@ -86,16 +94,16 @@ class BattlePage extends Component
     add(buttonArea);
 
     List buttonOnPressedFunctions = [
-      () {
+          () {
         game.router.pushNamed('home');
       },
-      () {
+          () {
         debugPrint('Button 2 pressed');
       },
-      () {
+          () {
         debugPrint('Button 3 pressed');
       },
-      () {
+          () {
         refreshCards();
       }
     ];
@@ -111,7 +119,8 @@ class BattlePage extends Component
       final button = ButtonComponent(
         button: RectangleComponent(
           size: Sizes().buttonSize,
-          paint: Paint()..color = Colors.red,
+          paint: Paint()
+            ..color = Colors.red,
         ),
         onPressed: function,
       );

@@ -31,21 +31,23 @@ class Sizes {
 
 
   // Character
-  double get characterWidth => characterAreaWidth * 0.45;
-  double get characterHeight => characterAreaHeight * 0.9;
+  // double get characterWidth => characterAreaWidth * 0.45;
+  // double get characterHeight => characterAreaHeight * 0.9;
+  double get characterWidth => 160;
+  double get characterHeight => 160;
   Vector2 get characterSize => Vector2(characterWidth, characterHeight);
 
-  double get playerX => margin;
-  double get playerY => margin;
+  double get playerX => 0;
+  double get playerY => characterAreaHeight - characterHeight;
   Vector2 get playerPosition => Vector2(playerX, playerY);
 
-  double get enemyX => characterAreaWidth - characterWidth - Sizes().margin;
-  double get enemyY => margin;
+  double get enemyX => characterAreaWidth;
+  double get enemyY => characterAreaHeight - characterHeight;
   Vector2 get enemyPosition => Vector2(enemyX, enemyY);
 
 
   // CardArea
-  double get cardAreaWidth => screenSize.x * 0.95;
+  double get cardAreaWidth => screenSize.x * 0.9;
   double get cardAreaHeight => screenSize.y * 0.4;
   Vector2 get cardAreaSize => Vector2(cardAreaWidth, cardAreaHeight);
 
@@ -55,11 +57,13 @@ class Sizes {
 
 
   // Card
-  double get cardWidth => cardAreaWidth * 0.45;
-  double get cardHeight => cardAreaHeight * 0.45;
+  // double get cardWidth => cardAreaWidth * 0.45;
+  double get cardWidth => 128;
+  // double get cardHeight => cardAreaHeight * 0.45;
+  double get cardHeight => 160;
   Vector2 get cardSize => Vector2(cardWidth, cardHeight);
 
-  double get cardMargin => 20.0;
+  double get cardMargin => 40.0;
 
   // ButtonArea
   double get buttonAreaWidth => screenSize.x * 0.95;
