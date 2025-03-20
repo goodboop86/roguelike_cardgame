@@ -39,18 +39,37 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
   }
 
   void _addCharacters() {
+
+    // カードエリアを作成
+    final characterArea = CharacterAreaComponent(
+      position: Sizes().characterAreaPosition,
+      size: Sizes().characterAreaSize, // カードエリアのサイズ
+    );
+    add(characterArea);
+
     // Player の配置 (左上)
-    add(PlayerComponent()
+    characterArea.add(PlayerComponent()
       ..size = Sizes().characterSize
       ..position = Sizes().playerPosition);
 
     // Enemy の配置 (右上)
-    add(EnemyComponent()
+    characterArea.add(EnemyComponent()
       ..size = Sizes().characterSize
       ..position = Sizes().enemyPosition);
   }
 
   void _addButtons() {
+    void refreshCards() {
+      // 現在のカードを削除
+      children.whereType<CardAreaComponent>().forEach((area) {
+        remove(area);
+      });
+      _cards.clear();
+
+      // 新しいカードを生成して配置
+      _addCards(4); // カード枚数を指定
+    }
+
     // ButtonComponent を追加
     add(
       ButtonComponent(
@@ -66,16 +85,6 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
     );
   }
 
-  void refreshCards() {
-    // 現在のカードを削除
-    children.whereType<CardAreaComponent>().forEach((area) {
-      remove(area);
-    });
-    _cards.clear();
-
-    // 新しいカードを生成して配置
-    _addCards(4); // カード枚数を指定
-  }
 
   void _addCards(int cardCount) {
     print("add cards");
