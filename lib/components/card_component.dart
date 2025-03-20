@@ -7,7 +7,7 @@ import '../pages/battle.dart';
 import '../providers/card_provider.dart';
 
 class CardComponent extends RectangleComponent
-    with TapCallbacks, RiverpodComponentMixin, HasGameRef, DragCallbacks {
+    with TapCallbacks, RiverpodComponentMixin, HasGameRef {
   final Card_ card;
   bool isDragging = false;
 
@@ -16,7 +16,7 @@ class CardComponent extends RectangleComponent
   @override
   void onTapUp(TapUpEvent event) {
     ref.read(cardProvider.notifier).setCard(card);
-    game.overlays.add('myOverlay');
+    game.overlays.add('CardOverlay');
     game.pauseEngine();
   }
 

@@ -1,10 +1,11 @@
+import 'package:flame/events.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
 import '../providers/player_provider.dart';
 
-class PlayerComponent extends PositionComponent with RiverpodComponentMixin {
+class PlayerComponent extends PositionComponent with RiverpodComponentMixin, TapCallbacks, HasGameRef {
   @override
   void render(Canvas canvas) {
     super.render(canvas);
@@ -18,5 +19,11 @@ class PlayerComponent extends PositionComponent with RiverpodComponentMixin {
     )
       ..layout(maxWidth: size.x)
       ..paint(canvas, Vector2(0, 0).toOffset());
+  }
+
+  @override
+  void onTapUp(TapUpEvent event) {
+    game.overlays.add('CharacterOverlay');
+    game.pauseEngine();
   }
 }
