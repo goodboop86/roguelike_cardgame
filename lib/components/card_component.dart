@@ -17,7 +17,13 @@ class CardComponent extends RectangleComponent
 
   @override
   void onTapUp(TapUpEvent event) {
+    game.overlays.add('myOverlay');
+    game.pauseEngine();
 
+  }
+
+  @override
+  void onLongTapDown(TapDownEvent event) {
     card.effect.effectFunction(ref);
 
     // カードを削除
@@ -40,28 +46,3 @@ class CardComponent extends RectangleComponent
   }
 }
 
-// class CardInfoOverlay extends PositionComponent with TapCallbacks {
-//   final Map<String, dynamic> cardData;
-//
-//   CardInfoOverlay({required this.cardData})
-//       : super(
-//     position: Vector2.all(50),
-//     size: Vector2(300, 200),
-//   );
-//
-//   @override
-//   void render(Canvas canvas) {
-//     super.render(canvas);
-//     canvas.drawRect(size.toRect(), Paint()..color = Colors.black.withOpacity(0.8));
-//     TextPainter(
-//       text: TextSpan(text: JsonEncoder.withIndent('  ').convert(cardData), style: TextStyle(color: Colors.white)),
-//       textDirection: TextDirection.ltr,
-//     )..layout(maxWidth: size.x)
-//       ..paint(canvas, Vector2.all(10).toOffset());
-//   }
-//
-//   @override
-//   void onTapDown(TapDownEvent event) {
-//     game.overlays.remove('cardInfo'); // オーバーレイを削除
-//   }
-// }

@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'main_game.dart';
 
-final GlobalKey<RiverpodAwareGameWidgetState> gameWidgetKey =
-GlobalKey<RiverpodAwareGameWidgetState>();
+final GlobalKey<RiverpodAwareGameWidgetState<MainGame>> gameWidgetKey =
+    GlobalKey<RiverpodAwareGameWidgetState<MainGame>>();
 
 class MainGamePage extends StatefulWidget {
   const MainGamePage({super.key});
@@ -20,15 +20,38 @@ class MainGamePageState extends State<MainGamePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         body: Stack(
-          children: [
-            ProviderScope(child: RiverpodAwareGameWidget(key:gameWidgetKey,game: game)),
-          ],
-        )
-    );
+      children: [
+        ProviderScope(
+          child: RiverpodAwareGameWidget<MainGame>(
+              key: gameWidgetKey,
+              game: game,
+              overlayBuilderMap: {
+                'myOverlay': (BuildContext context, MainGame game) {
+                  return GestureDetector(
+                    onTap: () {
+                      game.overlays.remove('myOverlay');
+                      game.resumeEngine();
+                    },
+                    child: Container(
+                      color: Colors.black.withOpacity(0.5),
+                      child: Center(
+                        child: Container(
+                          width: 200,
+                          height: 100,
+                          color: Colors.white,
+                          child: Center(
+                            child: Text('Overlay Content'),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              }),
+        ),
+      ],
+    ));
   }
-
 }
-

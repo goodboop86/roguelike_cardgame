@@ -1,6 +1,7 @@
 import 'package:flame/components.dart' hide Timer;
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
+import 'package:flame/src/game/overlay_manager.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:roguelike_cardgame/providers/sizes.dart';
@@ -32,6 +33,7 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
     _addCharacters();
     _addCards(4);
     _addButtons();
+
   }
 
   void _addCharacters() {
@@ -73,9 +75,15 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
     add(buttonArea);
 
     List buttonOnPressedFunctions = [
-      () {debugPrint('Button 1 pressed');},
-      () {debugPrint('Button 2 pressed');},
-      () {debugPrint('Button 3 pressed');},
+      () {
+        debugPrint('Button 1 pressed');
+      },
+      () {
+        debugPrint('Button 2 pressed');
+      },
+      () {
+        debugPrint('Button 3 pressed');
+      },
       () {
         refreshCards();
       }
@@ -83,7 +91,8 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
     int buttonNum = buttonOnPressedFunctions.length;
     buttonOnPressedFunctions.asMap().forEach((index, function) {
       final buttonWidth = buttonArea.size.x * 0.2;
-      final buttonMargin = (buttonArea.size.x - buttonWidth * buttonNum) / (buttonNum+1);
+      final buttonMargin =
+          (buttonArea.size.x - buttonWidth * buttonNum) / (buttonNum + 1);
       final buttonPosition = Vector2(
         buttonMargin + index * (buttonWidth + buttonMargin),
         (Sizes().buttonAreaHeight - Sizes().buttonHeight) / 2,
@@ -95,7 +104,7 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
         ),
         onPressed: function,
       );
-      button.position= buttonPosition;
+      button.position = buttonPosition;
       buttonArea.add(button);
     });
   }
