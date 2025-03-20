@@ -2,10 +2,8 @@ import 'package:flame/events.dart';
 import 'package:flame/components.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:roguelike_cardgame/world/battle.dart';
-
-import '../main_game.dart';
 import '../models/card.dart';
+import '../pages/battle.dart';
 import '../providers/card_provider.dart';
 
 class CardComponent extends RectangleComponent

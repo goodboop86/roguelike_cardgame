@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
-import 'package:roguelike_cardgame/world/battle.dart';
-import 'package:roguelike_cardgame/world/home.dart';
+import 'package:roguelike_cardgame/pages/battle.dart';
+import 'package:roguelike_cardgame/pages/home.dart';
 import 'dart:async';
 
 class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin, HasWorldReference {
