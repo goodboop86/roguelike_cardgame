@@ -29,29 +29,41 @@ class MainGamePageState extends State<MainGamePage> {
               game: game,
               overlayBuilderMap: {
                 'myOverlay': (BuildContext context, MainGame game) {
-                  return GestureDetector(
-                    onTap: () {
-                      game.overlays.remove('myOverlay');
-                      game.resumeEngine();
-                    },
-                    child: Container(
-                      color: Colors.black.withOpacity(0.5),
-                      child: Center(
-                        child: Container(
-                          width: 200,
-                          height: 100,
-                          color: Colors.white,
-                          child: Center(
-                            child: Text('Overlay Content'),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
+                  return MyOverlayWidget(game: game);
                 },
               }),
         ),
       ],
     ));
+  }
+}
+
+
+class MyOverlayWidget extends StatelessWidget {
+  final MainGame game;
+
+  MyOverlayWidget({required this.game});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        game.overlays.remove('myOverlay');
+        game.resumeEngine();
+      },
+      child: Container(
+        color: Colors.black.withOpacity(0.5),
+        child: Center(
+          child: Container(
+            width: 200,
+            height: 100,
+            color: Colors.white,
+            child: Center(
+              child: Text('Overlay Content'),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
