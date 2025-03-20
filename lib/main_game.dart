@@ -32,11 +32,6 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
   Future<void> onLoad() async {
     super.onLoad();
     Sizes().setScreenSize(size);
-    final screenSize = size; // ディスプレイサイズを取得
-    final screenWidth = screenSize.x;
-    final screenHeight = screenSize.y;
-
-    const double margin = 20.0; // 余白のサイズ
 
     _addCharacters();
     _addCards(4);
@@ -46,13 +41,13 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
   void _addCharacters() {
     // Player の配置 (左上)
     add(PlayerComponent()
-      ..size = Vector2(Sizes().characterWidth, Sizes().characterHeight)
-      ..position = Vector2(Sizes().playerX, Sizes().playerY));
+      ..size = Sizes().characterSize
+      ..position = Sizes().playerPosition);
 
     // Enemy の配置 (右上)
     add(EnemyComponent()
-      ..size = Vector2(Sizes().characterWidth, Sizes().characterHeight)
-      ..position = Vector2(Sizes().enemyX, Sizes().enemyY));
+      ..size = Sizes().characterSize
+      ..position = Sizes().enemyPosition);
   }
 
   void _addButtons() {
@@ -87,12 +82,8 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
 
     // カードエリアを作成
     final cardArea = CardAreaComponent(
-      position: Vector2(
-        Sizes().cardAreaX,
-        Sizes().cardAreaY,
-      ),
-      size:
-          Vector2(Sizes().cardAreaWidth, Sizes().cardAreaHeight), // カードエリアのサイズ
+      position: Sizes().cardAreaPosition,
+      size: Sizes().cardAreaSize, // カードエリアのサイズ
     );
     add(cardArea);
 
@@ -120,7 +111,7 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
       final row = index ~/ 2;
       final col = index % 2;
       final cardComponent = CardComponent(card: card)
-        ..size = Vector2(Sizes().cardWidth, Sizes().cardHeight)
+        ..size = Sizes().cardSize
         ..position = Vector2(
           cardAreaCenterX -
               Sizes().cardWidth / 2 +
