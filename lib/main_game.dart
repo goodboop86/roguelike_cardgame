@@ -98,21 +98,6 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
       button.position= buttonPosition;
       buttonArea.add(button);
     });
-
-    ButtonComponent turnEndButton = ButtonComponent(
-      button: PositionComponent() // ボタンの見た目を定義
-        ..size = Vector2(50, 50)
-        ..add(RectangleComponent(
-            size: Vector2(50, 50), paint: Paint()..color = Colors.red)),
-      onPressed: () {
-        // カードをリフレッシュして再配置
-        refreshCards();
-      },
-    )..position = Vector2(10, 10);
-
-    // ButtonComponent を追加
-    add(turnEndButton // ボタンの位置
-        );
   }
 
   void _addCards(int cardCount) {
