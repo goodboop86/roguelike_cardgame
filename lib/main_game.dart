@@ -74,7 +74,7 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
     add(
       ButtonComponent(
         button: PositionComponent() // ボタンの見た目を定義
-          ..size = Vector2(100, 100)
+          ..size = Vector2(50, 50)
           ..add(RectangleComponent(
               size: Vector2(50, 50), paint: Paint()..color = Colors.red)),
         onPressed: () {

@@ -14,3 +14,11 @@ class CharacterAreaComponent extends PositionComponent {
 
 // カードエリアの描画やその他の処理
 }
+
+
+class ButtonAreaComponent extends PositionComponent {
+  ButtonAreaComponent({required Vector2 position, required Vector2 size})
+      : super(position: position, size: size);
+
+// カードエリアの描画やその他の処理
+}
