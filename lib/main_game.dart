@@ -1,4 +1,5 @@
 import 'package:flame/components.dart' hide Timer;
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/src/game/overlay_manager.dart';
@@ -53,6 +54,7 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
     characterArea.add(EnemyComponent()
       ..size = Sizes().characterSize
       ..position = Sizes().enemyPosition);
+
   }
 
   void _addButtons() {
@@ -122,7 +124,7 @@ class MainGame extends FlameGame with HasGameRef, RiverpodGameMixin {
     // カードのリストを作成
     final cards = <Card_>[];
     final effectFunctions = [
-      damageEffect,
+      emptyEffect,
       healEffect,
       buffEffect,
       debuffEffect

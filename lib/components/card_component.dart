@@ -2,24 +2,23 @@ import 'package:flame/events.dart';
 import 'package:flame/components.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:roguelike_cardgame/providers/enemy_provider.dart';
 
 import '../main_game.dart';
 import '../models/card.dart';
-import '../models/player_state.dart';
-import '../providers/player_provider.dart';
+import '../providers/card_provider.dart';
 
 class CardComponent extends RectangleComponent
-    with TapCallbacks, RiverpodComponentMixin, HasGameRef {
+    with TapCallbacks, RiverpodComponentMixin, HasGameRef, DragCallbacks {
   final Card_ card;
+  bool isDragging = false;
 
   CardComponent({required this.card});
 
   @override
   void onTapUp(TapUpEvent event) {
+    ref.read(cardProvider.notifier).setCard(card);
     game.overlays.add('myOverlay');
     game.pauseEngine();
-
   }
 
   @override
@@ -45,4 +44,3 @@ class CardComponent extends RectangleComponent
       ..paint(canvas, Vector2(0, 0).toOffset());
   }
 }
-

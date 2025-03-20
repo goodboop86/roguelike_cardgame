@@ -2,6 +2,7 @@ import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:roguelike_cardgame/providers/card_provider.dart';
 
 import 'main_game.dart';
 
@@ -39,13 +40,13 @@ class MainGamePageState extends State<MainGamePage> {
 }
 
 
-class MyOverlayWidget extends StatelessWidget {
+class MyOverlayWidget extends ConsumerWidget {
   final MainGame game;
-
-  MyOverlayWidget({required this.game});
+  const MyOverlayWidget({super.key, required this.game});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final cardState = ref.read(cardProvider);
     return GestureDetector(
       onTap: () {
         game.overlays.remove('myOverlay');
@@ -59,7 +60,7 @@ class MyOverlayWidget extends StatelessWidget {
             height: 100,
             color: Colors.white,
             child: Center(
-              child: Text('Overlay Content'),
+              child: Text(cardState.toJsonString()),
             ),
           ),
         ),

@@ -35,3 +35,7 @@ void debuffEffect(ComponentRef ref) {
   // デバフ効果の実装 (例: 防御力ダウン)
   print('Debuff applied!');
 }
+
+void emptyEffect(ComponentRef ref) {
+  // do nothing.
+}
