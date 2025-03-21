@@ -161,13 +161,12 @@ class BattlePage extends Component
       final col = index % 2;
       final cardComponent = CardComponent(card: card)
         ..size = Sizes().cardSize
+        ..anchor = Anchor.center
         ..position = Vector2(
-          cardAreaCenterX -
-              Sizes().cardWidth / 2 +
+          cardAreaCenterX  +
               col * (Sizes().cardWidth + Sizes().cardMargin) -
               (Sizes().cardWidth + Sizes().cardMargin) / 2, // X 座標を調整
-          cardAreaCenterY -
-              Sizes().cardHeight / 2 +
+          cardAreaCenterY  +
               row * (Sizes().cardHeight + Sizes().cardMargin) -
               (Sizes().cardHeight + Sizes().cardMargin) / 2, // Y 座標を調整
         ); // カードエリアの中心を基準に位置を計算

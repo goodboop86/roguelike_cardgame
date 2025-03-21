@@ -1,3 +1,4 @@
+import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
 import 'package:flame/components.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
@@ -15,6 +16,21 @@ class CardComponent extends RectangleComponent
 
   @override
   void onTapUp(TapUpEvent event) {
+    add(SequenceEffect([
+      ScaleEffect.to(
+        Vector2.all(1.1), // 1.2倍に拡大
+        EffectController(duration: 0.05), // 0.05秒かけて拡大
+      ),
+      ScaleEffect.to(
+        Vector2.all(1.0), // 元の大きさに戻す
+        EffectController(duration: 0.05), // 0.05秒かけて縮小
+      ),
+    ], onComplete: () {
+      overLay();
+    }));
+  }
+
+  void overLay() {
     // overlayでカード情報を表示するために、タップされたカードをアクティブにする。
     ref.read(cardProvider.notifier).setCard(card);
     game.overlays.add('CardOverlay');
