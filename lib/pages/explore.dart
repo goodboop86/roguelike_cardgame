@@ -40,12 +40,12 @@ class ExplorePage extends Component
     // Player の配置 (左上)
     characterArea.add(PlayerComponent()
       ..size = Sizes().characterSize
-      ..position = Sizes().playerPosition);
+      ..position = Sizes().playerAreaPosition);
 
     // Enemy の配置 (右上)
     characterArea.add(EnemyComponent()
       ..size = Sizes().characterSize
-      ..position = Sizes().enemyPosition);
+      ..position = Sizes().enemyAreaPosition);
   }
 
   void _addButtons() {

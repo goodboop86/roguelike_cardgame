@@ -29,21 +29,24 @@ class Sizes {
   double get characterAreaY => (screenHeight - characterAreaHeight)/10;
   Vector2 get characterAreaPosition => Vector2(characterAreaX, characterAreaY);
 
-
   // Character
   // double get characterWidth => characterAreaWidth * 0.45;
   // double get characterHeight => characterAreaHeight * 0.9;
-  double get characterWidth => 160;
-  double get characterHeight => 160;
-  Vector2 get characterSize => Vector2(characterWidth, characterHeight);
+  double get enemyAreaWidth => characterAreaWidth * 0.4;
+  double get enemyAreaHeight => characterAreaHeight;
+  Vector2 get enemyAreaSize => Vector2(enemyAreaWidth, enemyAreaHeight);
 
-  double get playerX => 0;
-  double get playerY => characterAreaHeight - characterHeight;
-  Vector2 get playerPosition => Vector2(playerX, playerY);
+  double get playerAreaWidth => characterAreaWidth * 0.4;
+  double get playerAreaHeight => characterAreaHeight;
+  Vector2 get playerAreaSize => Vector2(playerAreaWidth, playerAreaHeight);
 
-  double get enemyX => characterAreaWidth;
-  double get enemyY => characterAreaHeight - characterHeight;
-  Vector2 get enemyPosition => Vector2(enemyX, enemyY);
+  double get playerAreaX => 0;
+  double get playerAreaY => 0; // characterAreaHeight - characterHeight;
+  Vector2 get playerAreaPosition => Vector2(playerAreaX, playerAreaY);
+
+  double get enemyAreaX => characterAreaWidth - playerAreaWidth;
+  double get enemyAreaY => 0; // characterAreaHeight - characterHeight;
+  Vector2 get enemyAreaPosition => Vector2(enemyAreaX, enemyAreaY);
 
 
   // CardArea

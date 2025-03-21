@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../providers/player_provider.dart';
 
-class PlayerComponent extends SpriteAnimationComponent with RiverpodComponentMixin, TapCallbacks, HasGameRef {
+class PlayerComponent extends PositionComponent with RiverpodComponentMixin, TapCallbacks, HasGameRef {
   @override
   void render(Canvas canvas) {
     super.render(canvas);
