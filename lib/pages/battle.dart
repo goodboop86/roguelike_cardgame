@@ -71,36 +71,10 @@ class BattlePage extends Component
       ..size = Vector2(128,128)
       ..position = Vector2(Sizes().enemyAreaWidth/2,Sizes().enemyAreaHeight)..flipHorizontally();
 
-
     player.add(playerAnimation);
+    player.add(HpBar());
     enemy.add(enemyAnimation);
-    // var player_ = PlayerComponent()
-    //   ..animation = SpriteAnimation.fromFrameData(
-    //       await Flame.images.load('noBKG_KnightIdle_strip.png'),
-    //       SpriteAnimationData.sequenced(
-    //         textureSize: Vector2.all(64),
-    //         amount: 15,
-    //         stepTime: 0.08,
-    //       ))
-    //   ..size = Sizes().characterSize
-    //   ..position = Sizes().playerPosition;
 
-    // var enemy_ = EnemyComponent()
-    //   ..animation = SpriteAnimation.fromFrameData(
-    //       await Flame.images.load('noBKG_KnightIdle_strip.png'),
-    //       SpriteAnimationData.sequenced(
-    //         textureSize: Vector2.all(64),
-    //         amount: 15,
-    //         stepTime: 0.08,
-    //       ))
-    //   ..size = Sizes().characterSize
-    //   ..position = Sizes().enemyPosition
-    //   ..flipHorizontally();
-
-    // Enemy の配置 (右上)
-    // characterArea.add(enemy_);
-    //
-    // characterArea.add(player);
   }
 
   void _addButtons() {
@@ -169,7 +143,7 @@ class BattlePage extends Component
 
     // カードのリストを作成
     final cards = <Card_>[];
-    final effectFunctions = [emptyEffect, healEffect, buffEffect, debuffEffect];
+    final effectFunctions = [damageEffect, healEffect, buffEffect, debuffEffect];
     effectFunctions.asMap().forEach((index, effectFunction) {
       // asMap() と forEach() を使用
       final card = Card_(
