@@ -1,6 +1,7 @@
 import 'package:flame/components.dart' hide Timer;
 import 'package:flame/flame.dart';
 import 'package:flame/input.dart';
+import 'package:flame/palette.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:roguelike_cardgame/main_game.dart';
@@ -117,10 +118,20 @@ class BattlePage extends Component
     buttonOnPressedFunctions.asMap().forEach((index, function) {
       final button = ButtonComponent(
         button: RectangleComponent(
-          size: Sizes().buttonSize,
-          paint: Paint()..color = Colors.yellow,
-        ),
+            size: Sizes().buttonSize,
+            paint: Paint()..color = Colors.brown,
+            priority: 0),
         onPressed: function,
+        children: [
+          TextComponent(
+            priority: 1,
+            text: '$index',
+            position: Sizes().buttonSize / 2,
+            anchor: Anchor.center,
+            textRenderer:
+                TextPaint(style: const TextStyle(color: Colors.white)),
+          ),
+        ],
       )
         ..position = Vector2(
           buttonAreaCenterX +
