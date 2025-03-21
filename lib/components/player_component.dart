@@ -33,13 +33,13 @@ class PlayerComponent extends PositionComponent with RiverpodComponentMixin, Tap
   }
 }
 
-class HpBar extends PositionComponent with RiverpodComponentMixin{
+class PlayerHpBar extends PositionComponent with RiverpodComponentMixin{
   double _hp = 100; // FIXME: 最大値をコンストラクタで受け取る必要がある。
   final double _maxHp = 100; // FIXME: 最大値をコンストラクタで受け取る必要がある。
 
 
 
-  HpBar() {
+  PlayerHpBar() {
     size = Vector2(100, 10);
     position = Vector2(0,0);
     anchor = Anchor.topLeft;

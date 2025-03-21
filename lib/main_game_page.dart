@@ -34,6 +34,9 @@ class MainGamePageState extends State<MainGamePage> {
                 'CharacterOverlay': (BuildContext context, MainGame game) {
                   return CharacterOverlayWidget(game: game);
                 },
+                'EnemyTurnOverlay': (BuildContext context, MainGame game) {
+                  return EnemyTurnOverlayWidget(game: game);
+                },
               }),
         ),
       ],
@@ -63,6 +66,35 @@ class CardOverlayWidget extends ConsumerWidget {
             color: Colors.white,
             child: Center(
               child: Text(cardState.toJsonString()),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+class EnemyTurnOverlayWidget extends ConsumerWidget {
+  final MainGame game;
+  const EnemyTurnOverlayWidget({super.key, required this.game});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return GestureDetector(
+      onTap: () {
+        game.overlays.remove('EnemyTurnOverlay');
+        game.resumeEngine();
+      },
+      child: Container(
+        color: Colors.black.withOpacity(0.5),
+        child: Center(
+          child: Container(
+            width: 200,
+            height: 100,
+            color: Colors.white,
+            child: const Center(
+              child: Text("EnemyTurn"),
             ),
           ),
         ),

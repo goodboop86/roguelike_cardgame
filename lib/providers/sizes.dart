@@ -61,20 +61,20 @@ class Sizes {
 
   // Card
   // double get cardWidth => cardAreaWidth * 0.45;
-  double get cardWidth => 128;
+  double get cardWidth => 96;
   // double get cardHeight => cardAreaHeight * 0.45;
-  double get cardHeight => 160;
+  double get cardHeight => 128;
   Vector2 get cardSize => Vector2(cardWidth, cardHeight);
 
-  double get cardMargin => 40.0;
+  double get cardMargin => 20.0;
 
   // ButtonArea
-  double get buttonAreaWidth => screenSize.x * 0.95;
+  double get buttonAreaWidth => screenSize.x * 0.9;
   double get buttonAreaHeight => screenSize.y * 0.05;
   Vector2 get buttonAreaSize => Vector2(buttonAreaWidth, buttonAreaHeight);
 
   double get buttonAreaX => (screenWidth - buttonAreaWidth)/2;
-  double get buttonAreaY => (screenHeight - buttonAreaHeight)/2.5;
+  double get buttonAreaY => (screenHeight - buttonAreaHeight)/2.3;
   Vector2 get buttonAreaPosition => Vector2(buttonAreaX, buttonAreaY);
 
   // Button

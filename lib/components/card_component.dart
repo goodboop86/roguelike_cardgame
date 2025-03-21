@@ -18,7 +18,7 @@ class CardComponent extends RectangleComponent
   void onTapUp(TapUpEvent event) {
     add(SequenceEffect([
       ScaleEffect.to(
-        Vector2.all(1.1), // 1.2倍に拡大
+        Vector2.all(1.05), // 1.05倍に拡大
         EffectController(duration: 0.05), // 0.05秒かけて拡大
       ),
       ScaleEffect.to(
@@ -39,6 +39,23 @@ class CardComponent extends RectangleComponent
 
   @override
   void onLongTapDown(TapDownEvent event) {
+
+    add(SequenceEffect([
+      ScaleEffect.to(
+        Vector2.all(1.05),
+        EffectController(duration: 0.05), // 0.05秒かけて拡大
+      ),
+      ScaleEffect.to(
+        Vector2.all(1.0), // 元の大きさに戻す
+        EffectController(duration: 0.05), // 0.05秒かけて縮小
+      ),
+    ], onComplete: () {
+      arrange();
+    }));
+
+  }
+
+  void arrange(){
     card.effect.effectFunction(ref);
 
     // カードを削除
@@ -47,6 +64,7 @@ class CardComponent extends RectangleComponent
     BattlePage battlePage = findParent<BattlePage>() as BattlePage;
     battlePage.rearrangeCards();
   }
+
 
   @override
   void render(Canvas canvas) {

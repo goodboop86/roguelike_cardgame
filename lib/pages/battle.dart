@@ -58,8 +58,9 @@ class BattlePage extends Component
           stepTime: 0.08,
         ))
       ..anchor = Anchor.bottomCenter
-      ..size = Vector2(128,128)
-    ..position = Vector2(Sizes().playerAreaWidth/2,Sizes().playerAreaHeight);
+      ..size = Vector2(128, 128)
+      ..position =
+          Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
 
     var enemyAnimation = SpriteAnimationComponent.fromFrameData(
         await Flame.images.load('noBKG_KnightIdle_strip.png'),
@@ -67,14 +68,16 @@ class BattlePage extends Component
           textureSize: Vector2.all(64),
           amount: 15,
           stepTime: 0.08,
-        ))..anchor = Anchor.bottomCenter
-      ..size = Vector2(128,128)
-      ..position = Vector2(Sizes().enemyAreaWidth/2,Sizes().enemyAreaHeight)..flipHorizontally();
+        ))
+      ..anchor = Anchor.bottomCenter
+      ..size = Vector2(128, 128)
+      ..position = Vector2(Sizes().enemyAreaWidth / 2, Sizes().enemyAreaHeight)
+      ..flipHorizontally();
 
     player.add(playerAnimation);
-    player.add(HpBar());
+    player.add(PlayerHpBar());
     enemy.add(enemyAnimation);
-
+    enemy.add(EnemyHpBar());
   }
 
   void _addButtons() {
@@ -104,29 +107,28 @@ class BattlePage extends Component
         debugPrint('Button 2 pressed');
       },
       () {
-        debugPrint('Button 3 pressed');
-      },
-      () {
         refreshCards();
+        game.overlays.add('EnemyTurnOverlay');
       }
     ];
-    int buttonNum = buttonOnPressedFunctions.length;
+
+    final buttonAreaCenterX = Sizes().buttonAreaWidth / 2;
+    final buttonAreaCenterY = Sizes().buttonAreaHeight / 2;
     buttonOnPressedFunctions.asMap().forEach((index, function) {
-      final buttonWidth = buttonArea.size.x * 0.2;
-      final buttonMargin =
-          (buttonArea.size.x - buttonWidth * buttonNum) / (buttonNum + 1);
-      final buttonPosition = Vector2(
-        buttonMargin + index * (buttonWidth + buttonMargin),
-        (Sizes().buttonAreaHeight - Sizes().buttonHeight) / 2,
-      );
       final button = ButtonComponent(
         button: RectangleComponent(
           size: Sizes().buttonSize,
-          paint: Paint()..color = Colors.red,
+          paint: Paint()..color = Colors.yellow,
         ),
         onPressed: function,
-      );
-      button.position = buttonPosition;
+      )
+        ..position = Vector2(
+          buttonAreaCenterX +
+              index * (Sizes().buttonWidth + Sizes().margin) -
+              (Sizes().buttonWidth + Sizes().margin), // X 座標を調整
+          buttonAreaCenterY, // Y 座標を調整
+        )
+        ..anchor = Anchor.center;
       buttonArea.add(button);
     });
   }
@@ -143,7 +145,14 @@ class BattlePage extends Component
 
     // カードのリストを作成
     final cards = <Card_>[];
-    final effectFunctions = [damageEffect, healEffect, buffEffect, debuffEffect];
+    final effectFunctions = [
+      damageEffect,
+      healEffect,
+      damageEffect,
+      healEffect,
+      buffEffect,
+      debuffEffect
+    ];
     effectFunctions.asMap().forEach((index, effectFunction) {
       // asMap() と forEach() を使用
       final card = Card_(
@@ -157,16 +166,16 @@ class BattlePage extends Component
     final cardAreaCenterX = Sizes().cardAreaWidth / 2;
     final cardAreaCenterY = Sizes().cardAreaHeight / 2;
     cards.asMap().forEach((index, card) {
-      final row = index ~/ 2;
-      final col = index % 2;
+      final row = index ~/ 3;
+      final col = index % 3;
       final cardComponent = CardComponent(card: card)
         ..size = Sizes().cardSize
         ..anchor = Anchor.center
         ..position = Vector2(
-          cardAreaCenterX  +
+          cardAreaCenterX +
               col * (Sizes().cardWidth + Sizes().cardMargin) -
-              (Sizes().cardWidth + Sizes().cardMargin) / 2, // X 座標を調整
-          cardAreaCenterY  +
+              (Sizes().cardWidth + Sizes().cardMargin), // X 座標を調整
+          cardAreaCenterY +
               row * (Sizes().cardHeight + Sizes().cardMargin) -
               (Sizes().cardHeight + Sizes().cardMargin) / 2, // Y 座標を調整
         ); // カードエリアの中心を基準に位置を計算

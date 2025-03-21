@@ -5,7 +5,7 @@ import 'character_state.dart';
 
 class EnemyState extends CharacterState {
   final String name;
-  final int health;
+  final double health;
   final int mana;
 
   EnemyState({required this.name, required this.health, required this.mana});
