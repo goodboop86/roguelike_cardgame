@@ -31,8 +31,9 @@ class MainGame extends FlameGame
         ParallaxImageData('parallax/8.png'),
         ParallaxImageData('parallax/10.png'),
       ],
-      baseVelocity: Vector2(0.2, 0),
-      position: Vector2(0, -450),
+      baseVelocity: Vector2(0.1, 0),
+        size: Vector2(game.size.x, game.size.y/2.7),
+      position: Vector2(0, 0),
       velocityMultiplierDelta: Vector2(1.8, 1.0),
     );
     add(parallaxComponent);
