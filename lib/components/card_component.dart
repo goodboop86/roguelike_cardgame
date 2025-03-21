@@ -15,6 +15,7 @@ class CardComponent extends RectangleComponent
 
   @override
   void onTapUp(TapUpEvent event) {
+    // overlayでカード情報を表示するために、タップされたカードをアクティブにする。
     ref.read(cardProvider.notifier).setCard(card);
     game.overlays.add('CardOverlay');
     game.pauseEngine();
