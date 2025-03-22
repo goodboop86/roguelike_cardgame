@@ -30,38 +30,70 @@ class BattlePage extends Component
     await _addCharacters();
     _addCards(4);
     _addButtons();
+  }
 
-}
-
-  void _addTimerComponent(){
-
+  void _enemyTurn() {
     final card = Card_(
       name: 'EnemyCard',
-      effect: AllDamageEffect(),
+      effect: PlayerDamageEffect(),
     );
 
     final timerComponent = TimerComponent(
       period: 1,
-
-      onTick: () {
+      onTick: () async {
         card.effect.call(ref);
-      },
 
+        await Future.delayed(const Duration(seconds: 1));
+
+        _playerTurn();
+      },
       removeOnFinish: true,
     );
 
     // RectangleComponentをTimerComponentの子として追加
     timerComponent.add(RectangleComponent(
       size: Vector2(200, 200),
-      position: Sizes().screenSize/2,
+      position: Sizes().screenSize / 2,
       anchor: Anchor.center,
       paint: Paint()..color = Colors.black87,
     ));
 
     // TextComponentをTimerComponentの子として追加
     timerComponent.add(TextComponent(
-      text: 'Timer',
-      position: Sizes().screenSize/2,
+      text: 'Enemy Turn',
+      position: Sizes().screenSize / 2,
+      anchor: Anchor.center,
+      textRenderer: TextPaint(style: TextStyle(color: Colors.white)),
+    ));
+
+    // TimerComponentをゲームに追加
+    add(timerComponent);
+
+    // タイマーを開始
+    timerComponent.timer.start();
+  }
+
+  void _playerTurn() {
+    final timerComponent = TimerComponent(
+      period: 1,
+      onTick: () {
+        debugPrint("PlayerTurn start!");
+      },
+      removeOnFinish: true,
+    );
+
+    // RectangleComponentをTimerComponentの子として追加
+    timerComponent.add(RectangleComponent(
+      size: Vector2(200, 200),
+      position: Sizes().screenSize / 2,
+      anchor: Anchor.center,
+      paint: Paint()..color = Colors.black87,
+    ));
+
+    // TextComponentをTimerComponentの子として追加
+    timerComponent.add(TextComponent(
+      text: 'Player Turn',
+      position: Sizes().screenSize / 2,
       anchor: Anchor.center,
       textRenderer: TextPaint(style: TextStyle(color: Colors.white)),
     ));
@@ -150,7 +182,7 @@ class BattlePage extends Component
       },
       () {
         refreshCards();
-        _addTimerComponent();
+        _enemyTurn();
       }
     ];
 

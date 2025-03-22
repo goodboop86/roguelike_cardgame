@@ -53,7 +53,8 @@ class PlayerHpBar extends PositionComponent with RiverpodComponentMixin{
   void render(Canvas canvas) {
     super.render(canvas);
 
-    _hp = ref.watch(playerProvider).health;
+    hp = ref.watch(playerProvider).health;
+
 
     // 背景
     canvas.drawRect(

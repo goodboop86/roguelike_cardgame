@@ -41,7 +41,7 @@ class EnemyHpBar extends PositionComponent with RiverpodComponentMixin{
   void render(Canvas canvas) {
     super.render(canvas);
 
-    _hp = ref.watch(enemyProvider).health;
+    hp = ref.watch(enemyProvider).health;
 
     // 背景
     canvas.drawRect(

@@ -23,17 +23,14 @@ abstract class CardEffect {
 // }
 
 class AllDamageEffect extends CardEffect {
-
   @override
   void call(ComponentRef ref) {
     ref.read(playerProvider.notifier).takeDamage(10); // Player に 10 ダメージ
     ref.read(enemyProvider.notifier).takeDamage(20); // Enemy に 20 ダメージ
   }
-
 }
 
 class PlayerDamageEffect extends CardEffect {
-
   @override
   void call(ComponentRef ref) {
     ref.read(playerProvider.notifier).takeDamage(10); // Player に 10 ダメージ
@@ -41,41 +38,32 @@ class PlayerDamageEffect extends CardEffect {
 }
 
 class PlayerHealEffect extends CardEffect {
-
   @override
   void call(ComponentRef ref) {
-    ref.read(playerProvider.notifier).heal(10); // Player を 10 回復
+    ref.read(playerProvider.notifier).heal(30); // Player を 10 回復
   }
-
 }
 
 class BuffEffect extends CardEffect {
-
   @override
   void call(ComponentRef ref) {
     print('Buff applied!');
   }
-
 }
 
 class DebuffEffect extends CardEffect {
-
   @override
   void call(ComponentRef ref) {
     print('Debuff applied!');
   }
-
 }
 
 class EmptyEffect extends CardEffect {
-
   @override
   void call(ComponentRef ref) {
     print('do nothing!');
   }
-
 }
-
 
 //
 // void damageEffect(ComponentRef ref) {
