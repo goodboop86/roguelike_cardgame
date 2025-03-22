@@ -6,7 +6,7 @@ import '../models/enemy_state.dart';
 
 final enemyProvider =
     StateNotifierProvider<EnemyStateNotifier, EnemyState>((ref) {
-  return EnemyStateNotifier(EnemyState(name: 'Player', health: 100, mana: 50));
+  return EnemyStateNotifier(EnemyState(name: 'Enemy', health: 100, mana: 50));
 });
 // 敵の状態管理プロバイダ
 

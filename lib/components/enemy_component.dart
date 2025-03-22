@@ -7,11 +7,11 @@ import '../models/enemy_state.dart';
 import '../providers/enemy_provider.dart';
 
 
-class EnemyComponent extends PositionComponent with RiverpodComponentMixin {
+class EnemyComponent extends SpriteAnimationComponent with RiverpodComponentMixin {
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    canvas.drawRect(size.toRect(), Paint()..color = Colors.blue);
+    // canvas.drawRect(size.toRect(), Paint()..color = Colors.blue);
     final enemyState = ref.watch(enemyProvider);
     TextPainter(
       text: TextSpan(text: enemyState.toJsonString(), style: const TextStyle(color: Colors.white)),
@@ -19,5 +19,43 @@ class EnemyComponent extends PositionComponent with RiverpodComponentMixin {
     )..layout(maxWidth: size.x)
       ..paint(canvas, Vector2(0, 0).toOffset());
   }
+}
+
+class EnemyHpBar extends PositionComponent with RiverpodComponentMixin{
+  double _hp = 100; // FIXME: 最大値をコンストラクタで受け取る必要がある。
+  final double _maxHp = 100; // FIXME: 最大値をコンストラクタで受け取る必要がある。
+
+
+
+  EnemyHpBar() {
+    size = Vector2(100, 10);
+    position = Vector2(0,0);
+    anchor = Anchor.topLeft;
+  }
+
+  set hp(double value) {
+    _hp = value.clamp(0, _maxHp);
+  }
+
+  @override
+  void render(Canvas canvas) {
+    super.render(canvas);
+
+    _hp = ref.watch(enemyProvider).health;
+
+    // 背景
+    canvas.drawRect(
+      size.toRect(),
+      Paint()..color = Colors.grey,
+    );
+
+    // HPバー
+    canvas.drawRect(
+      Rect.fromLTWH(0, 0, size.x * (_hp / _maxHp), size.y),
+      Paint()..color = Colors.green,
+    );
+  }
+
+
 }
 

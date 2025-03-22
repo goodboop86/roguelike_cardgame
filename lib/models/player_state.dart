@@ -3,7 +3,7 @@ import 'character_state.dart';
 
 class PlayerState extends CharacterState {
   final String name;
-  final int health;
+  final double health;
   final int mana;
 
   PlayerState({required this.name, required this.health, required this.mana});
