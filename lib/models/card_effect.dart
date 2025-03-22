@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:flame_riverpod/flame_riverpod.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../components/enemy_component.dart';
 import '../providers/enemy_provider.dart';
@@ -20,6 +21,11 @@ class CardEffect {
 void damageEffect(ComponentRef ref) {
   ref.read(playerProvider.notifier).takeDamage(10); // Player に 10 ダメージ
   ref.read(enemyProvider.notifier).takeDamage(20); // Enemy に 20 ダメージ
+}
+
+void enemyEffect(ComponentRef ref) {
+  debugPrint("enemyEffect!");
+  ref.read(playerProvider.notifier).takeDamage(10); // Player に 10 ダメージ
 }
 
 void healEffect(ComponentRef ref) {

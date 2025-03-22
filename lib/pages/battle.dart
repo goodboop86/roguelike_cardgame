@@ -34,11 +34,17 @@ class BattlePage extends Component
 }
 
   void _addTimerComponent(){
+
+    final card = Card_(
+      name: 'EnemyCard',
+      effect: CardEffect(effectFunction: enemyEffect),
+    );
+
     final timerComponent = TimerComponent(
       period: 1,
 
       onTick: () {
-        print('Timer tick!');
+        card.effect.effectFunction(ref);
       },
 
       removeOnFinish: true,
