@@ -10,7 +10,7 @@ import '../models/player_state.dart';
 final cardProvider = StateNotifierProvider<CardStateNotifier, CardState>((ref) {
   return CardStateNotifier(CardState(
       activeCard: Card_(
-          name: 'empty', effect: CardEffect(effectFunction: emptyEffect))));
+          name: 'empty', effect: EmptyEffect())));
 });
 
 class CardStateNotifier extends StateNotifier<CardState> {

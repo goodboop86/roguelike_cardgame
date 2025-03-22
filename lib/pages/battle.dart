@@ -37,14 +37,14 @@ class BattlePage extends Component
 
     final card = Card_(
       name: 'EnemyCard',
-      effect: CardEffect(effectFunction: enemyEffect),
+      effect: AllDamageEffect(),
     );
 
     final timerComponent = TimerComponent(
       period: 1,
 
       onTick: () {
-        card.effect.effectFunction(ref);
+        card.effect.call(ref);
       },
 
       removeOnFinish: true,
@@ -197,19 +197,19 @@ class BattlePage extends Component
 
     // カードのリストを作成
     final cards = <Card_>[];
-    final effectFunctions = [
-      damageEffect,
-      healEffect,
-      damageEffect,
-      healEffect,
-      buffEffect,
-      debuffEffect
+    final effects = [
+      AllDamageEffect(),
+      AllDamageEffect(),
+      AllDamageEffect(),
+      PlayerHealEffect(),
+      BuffEffect(),
+      DebuffEffect(),
     ];
-    effectFunctions.asMap().forEach((index, effectFunction) {
+    effects.asMap().forEach((index, effect) {
       // asMap() と forEach() を使用
       final card = Card_(
         name: 'Card ${index + 1}',
-        effect: CardEffect(effectFunction: effectFunction),
+        effect: effect,
       );
       cards.add(card);
     });

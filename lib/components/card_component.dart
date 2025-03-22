@@ -56,7 +56,7 @@ class CardComponent extends RectangleComponent
   }
 
   void arrange(){
-    card.effect.effectFunction(ref);
+    card.effect.call(ref);
 
     // カードを削除
     removeFromParent();
