@@ -1,12 +1,10 @@
 import 'package:flame/components.dart' hide Timer;
 import 'package:flame/flame.dart';
 import 'package:flame/input.dart';
-import 'package:flame/palette.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:roguelike_cardgame/main_game.dart';
 import 'package:roguelike_cardgame/providers/sizes.dart';
-import 'package:flame/parallax.dart';
 
 import 'dart:async';
 
@@ -33,7 +31,7 @@ class BattlePage extends Component
   }
 
   void _enemyTurn() {
-    final card = Card_(
+    final card = HandCard(
       name: 'EnemyCard',
       effect: PlayerDamageEffect(),
     );
@@ -63,7 +61,7 @@ class BattlePage extends Component
       text: 'Enemy Turn',
       position: Sizes().screenSize / 2,
       anchor: Anchor.center,
-      textRenderer: TextPaint(style: TextStyle(color: Colors.white)),
+      textRenderer: TextPaint(style: const TextStyle(color: Colors.white)),
     ));
 
     // TimerComponentをゲームに追加
@@ -95,7 +93,7 @@ class BattlePage extends Component
       text: 'Player Turn',
       position: Sizes().screenSize / 2,
       anchor: Anchor.center,
-      textRenderer: TextPaint(style: TextStyle(color: Colors.white)),
+      textRenderer: TextPaint(style: const TextStyle(color: Colors.white)),
     ));
 
     // TimerComponentをゲームに追加
@@ -228,7 +226,7 @@ class BattlePage extends Component
     add(cardArea);
 
     // カードのリストを作成
-    final cards = <Card_>[];
+    final cards = <HandCard>[];
     final effects = [
       AllDamageEffect(),
       AllDamageEffect(),
@@ -239,7 +237,7 @@ class BattlePage extends Component
     ];
     effects.asMap().forEach((index, effect) {
       // asMap() と forEach() を使用
-      final card = Card_(
+      final card = HandCard(
         name: 'Card ${index + 1}',
         effect: effect,
       );

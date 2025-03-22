@@ -6,11 +6,11 @@ import 'card_effect.dart';
 
 
 // カードの情報を保持するクラス
-class Card_ implements Jsonable{
+class HandCard implements Jsonable{
   final String name;
   final CardEffect effect;
 
-  Card_({required this.name, required this.effect});
+  HandCard({required this.name, required this.effect});
 
   @override
   Map<String, dynamic> toJson() {

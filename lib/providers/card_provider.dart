@@ -9,14 +9,14 @@ import '../models/player_state.dart';
 // プレイヤーの状態管理プロバイダ
 final cardProvider = StateNotifierProvider<CardStateNotifier, CardState>((ref) {
   return CardStateNotifier(CardState(
-      activeCard: Card_(
+      activeCard: HandCard(
           name: 'empty', effect: EmptyEffect())));
 });
 
 class CardStateNotifier extends StateNotifier<CardState> {
   CardStateNotifier(super.cardState);
 
-  void setCard(Card_ card) {
+  void setCard(HandCard card) {
     state = CardState(activeCard: card);
   }
 }

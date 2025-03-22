@@ -25,4 +25,3 @@ class EnemyState extends CharacterState {
   }
 }
 
-// プレイヤーの状態管理プロバイダ

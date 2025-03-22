@@ -112,11 +112,11 @@ class ExplorePage extends Component
     add(cardArea);
 
     // カードのリストを作成
-    final cards = <Card_>[];
+    final cards = <HandCard>[];
     final effectFunctions = [emptyEffect, healEffect, buffEffect, debuffEffect];
     effectFunctions.asMap().forEach((index, effectFunction) {
       // asMap() と forEach() を使用
-      final card = Card_(
+      final card = HandCard(
         name: 'Card ${index + 1}',
         effect: CardEffect(effectFunction: effectFunction),
       );
