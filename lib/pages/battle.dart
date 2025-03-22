@@ -30,6 +30,41 @@ class BattlePage extends Component
     await _addCharacters();
     _addCards(4);
     _addButtons();
+
+}
+
+  void _addTimerComponent(){
+    final timerComponent = TimerComponent(
+      period: 1,
+
+      onTick: () {
+        print('Timer tick!');
+      },
+
+      removeOnFinish: true,
+    );
+
+    // RectangleComponentをTimerComponentの子として追加
+    timerComponent.add(RectangleComponent(
+      size: Vector2(200, 200),
+      position: Sizes().screenSize/2,
+      anchor: Anchor.center,
+      paint: Paint()..color = Colors.black87,
+    ));
+
+    // TextComponentをTimerComponentの子として追加
+    timerComponent.add(TextComponent(
+      text: 'Timer',
+      position: Sizes().screenSize/2,
+      anchor: Anchor.center,
+      textRenderer: TextPaint(style: TextStyle(color: Colors.white)),
+    ));
+
+    // TimerComponentをゲームに追加
+    add(timerComponent);
+
+    // タイマーを開始
+    timerComponent.timer.start();
   }
 
   Future<void> _addCharacters() async {
@@ -109,7 +144,7 @@ class BattlePage extends Component
       },
       () {
         refreshCards();
-        game.overlays.add('EnemyTurnOverlay');
+        _addTimerComponent();
       }
     ];
 
