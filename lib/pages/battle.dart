@@ -31,7 +31,7 @@ class BattlePage extends Component
   }
 
   void _enemyTurn() {
-    final card = HandCard(
+    final card = ActionCard(
       name: 'EnemyCard',
       effect: PlayerDamageEffect(),
     );
@@ -226,7 +226,7 @@ class BattlePage extends Component
     add(cardArea);
 
     // カードのリストを作成
-    final cards = <HandCard>[];
+    final cards = <ActionCard>[];
     final effects = [
       AllDamageEffect(),
       AllDamageEffect(),
@@ -237,7 +237,7 @@ class BattlePage extends Component
     ];
     effects.asMap().forEach((index, effect) {
       // asMap() と forEach() を使用
-      final card = HandCard(
+      final card = ActionCard(
         name: 'Card ${index + 1}',
         effect: effect,
       );

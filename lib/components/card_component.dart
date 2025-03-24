@@ -9,7 +9,7 @@ import '../providers/card_provider.dart';
 
 class CardComponent extends RectangleComponent
     with TapCallbacks, RiverpodComponentMixin, HasGameRef {
-  final HandCard card;
+  final ActionCard card;
   bool isDragging = false;
 
   CardComponent({required this.card});
