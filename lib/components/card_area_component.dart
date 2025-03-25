@@ -22,3 +22,11 @@ class ButtonAreaComponent extends PositionComponent {
 
 // カードエリアの描画やその他の処理
 }
+
+
+class MapAreaComponent extends PositionComponent {
+  MapAreaComponent({required Vector2 position, required Vector2 size})
+      : super(position: position, size: size);
+
+// カードエリアの描画やその他の処理
+}

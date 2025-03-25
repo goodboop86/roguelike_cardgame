@@ -14,6 +14,8 @@ import '../components/enemy_component.dart';
 import '../components/player_component.dart';
 import '../models/card.dart';
 import '../models/card_effect.dart';
+import '../systems/dungeon.dart';
+import '../systems/event_probabilities.dart';
 
 class ExplorePage extends Component
     with HasGameRef<MainGame>, RiverpodComponentMixin {
@@ -28,6 +30,7 @@ class ExplorePage extends Component
     await _addCharacters();
     _addCards(4);
     _addButtons();
+    _addMap();
   }
 
   void _enemyTurn() {
@@ -185,6 +188,52 @@ class ExplorePage extends Component
         ..anchor = Anchor.center;
       buttonArea.add(button);
     });
+  }
+
+  void _addMap() {
+
+    final mapArea = MapAreaComponent(
+      position: Sizes().buttonAreaPosition,
+      size: Sizes().buttonAreaSize, // カードエリアのサイズ
+    );
+    add(mapArea);
+
+    List<List<Event>> stageList = generateNestedListWithFixedLength(11, 1, 3);
+
+    stageList.asMap().forEach((depth, stages) {
+      stages.asMap().forEach((choice, stage) {
+        final button = ButtonComponent(
+          button: RectangleComponent(
+              size: Sizes().buttonSize/2,
+              paint: Paint()..color = Colors.amber,
+              priority: 0),
+          onPressed: () {},
+          children: [
+            TextComponent(
+              priority: 1,
+              text: '$depth $choice',
+              position: Sizes().buttonSize / 2,
+              anchor: Anchor.center,
+              textRenderer:
+              TextPaint(style: const TextStyle(color: Colors.white)),
+            ),
+          ],
+        )        ..position = Vector2(
+
+              depth * (Sizes().buttonWidth/2 + Sizes().mini_margin) -
+              (Sizes().buttonWidth/2 + Sizes().mini_margin), // X 座標を調整
+          choice * (Sizes().buttonWidth/2 + Sizes().mini_margin), // Y 座標を調整
+        )
+          ..anchor = Anchor.center;
+
+        mapArea.add(button);
+      });
+
+
+    });
+
+
+
   }
 
   void _addCards(int cardCount) {

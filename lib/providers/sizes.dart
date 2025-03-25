@@ -17,6 +17,7 @@ class Sizes {
   double get screenWidth => screenSize.x;
   double get screenHeight => screenSize.y;
   double get margin => 20.0;
+  double get mini_margin => 5.0;
 
 
 
