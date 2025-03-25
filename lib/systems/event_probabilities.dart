@@ -3,7 +3,7 @@ enum Event {
   monster,
   midBoss,
   boss,
-  personal, // merchant, enhancer
+  person, // merchant, enhancer
   treasureChest,
   rest, // bonfire, bench
   end
@@ -14,71 +14,60 @@ enum Monster { goblin, orc, troll, dragon, blackOrc, redDragon }
 final Map<int, Map<Event, double>> firstEventProbabilities = {
   0: {Event.start: 1.0},
   1: {
-    // ステージ1
-    Event.monster: 0.0,
-    Event.personal: 0.6,
+    Event.monster: 1.0,
+    Event.person: 0.0,
     Event.rest: 0.0,
-    Event.treasureChest: 0.4,
+    Event.treasureChest: 0.0,
   },
   2: {
-    // ステージ2
-    Event.monster: 0.5,
-    Event.personal: 0.3,
+    Event.monster: 1.0,
+    Event.person: 0.0,
     Event.rest: 0.0,
-    Event.treasureChest: 0.1,
+    Event.treasureChest: 0.0,
   },
   3: {
-    // ステージ3
-    Event.monster: 0.4,
-    Event.personal: 0.2,
-    Event.rest: 0.3,
-    Event.treasureChest: 0.1,
+    Event.monster: 0.0,
+    Event.person: 1.0,
+    Event.rest: 0.0,
+    Event.treasureChest: 0.0,
   },
   4: {
-    // ステージ4
-    Event.monster: 0.6,
-    Event.personal: 0.2,
-    Event.rest: 0.1,
-    Event.treasureChest: 0.1,
+    Event.monster: 0.0,
+    Event.person: 0.0,
+    Event.rest: 1.0,
+    Event.treasureChest: 0.0,
   },
   5: {
-    // ステージ5
     Event.midBoss: 1.0
   },
   6: {
-    // ステージ6
-    Event.monster: 0.6,
-    Event.personal: 0.2,
-    Event.rest: 0.1,
-    Event.treasureChest: 0.1,
+    Event.monster: 1.0,
+    Event.person: 0.0,
+    Event.rest: 0.0,
+    Event.treasureChest: 0.0,
   },
   7: {
-    // ステージ7
-    Event.monster: 0.6,
-    Event.personal: 0.2,
-    Event.rest: 0.1,
-    Event.treasureChest: 0.1,
+    Event.monster: 1.0,
+    Event.person: 0.0,
+    Event.rest: 0.0,
+    Event.treasureChest: 0.0,
   },
   8: {
-    // ステージ8
-    Event.monster: 0.6,
-    Event.personal: 0.2,
-    Event.rest: 0.1,
-    Event.treasureChest: 0.1,
+    Event.monster: 0.0,
+    Event.person: 1.0,
+    Event.rest: 0.0,
+    Event.treasureChest: 0.0,
   },
   9: {
-    // ステージ9
-    Event.monster: 0.6,
-    Event.personal: 0.2,
-    Event.rest: 0.1,
-    Event.treasureChest: 0.1,
+    Event.monster: 0.0,
+    Event.person: 0.0,
+    Event.rest: 1.0,
+    Event.treasureChest: 0.0,
   },
   10: {
-    // ステージ10
     Event.boss: 1.0
   },
   11: {
-    // ステージ11
     Event.end: 1.0
   },
 };
@@ -86,71 +75,60 @@ final Map<int, Map<Event, double>> firstEventProbabilities = {
 final Map<int, Map<Event, double>> otherEventProbabilities = {
   0: {Event.start: 1.0},
   1: {
-    // ステージ1
-    Event.monster: 0.0,
-    Event.personal: 0.6,
+    Event.monster: 0.5,
+    Event.person: 0.25,
     Event.rest: 0.0,
-    Event.treasureChest: 0.4,
+    Event.treasureChest: 0.25,
   },
   2: {
-    // ステージ2
     Event.monster: 0.5,
-    Event.personal: 0.3,
+    Event.person: 0.25,
     Event.rest: 0.0,
-    Event.treasureChest: 0.1,
+    Event.treasureChest: 0.25,
   },
   3: {
-    // ステージ3
-    Event.monster: 0.4,
-    Event.personal: 0.2,
-    Event.rest: 0.3,
-    Event.treasureChest: 0.1,
+    Event.monster: 0.5,
+    Event.person: 0.25,
+    Event.rest: 0.0,
+    Event.treasureChest: 0.25,
   },
   4: {
-    // ステージ4
-    Event.monster: 0.6,
-    Event.personal: 0.2,
-    Event.rest: 0.1,
-    Event.treasureChest: 0.1,
+    Event.monster: 0.5,
+    Event.person: 0.25,
+    Event.rest: 0.0,
+    Event.treasureChest: 0.25,
   },
   5: {
-    // ステージ5
     Event.midBoss: 1.0
   },
   6: {
-    // ステージ6
-    Event.monster: 0.6,
-    Event.personal: 0.2,
-    Event.rest: 0.1,
-    Event.treasureChest: 0.1,
+    Event.monster: 0.5,
+    Event.person: 0.25,
+    Event.rest: 0.0,
+    Event.treasureChest: 0.25,
   },
   7: {
-    // ステージ7
-    Event.monster: 0.6,
-    Event.personal: 0.2,
-    Event.rest: 0.1,
-    Event.treasureChest: 0.1,
+    Event.monster: 0.5,
+    Event.person: 0.25,
+    Event.rest: 0.0,
+    Event.treasureChest: 0.25,
   },
   8: {
-    // ステージ8
-    Event.monster: 0.6,
-    Event.personal: 0.2,
-    Event.rest: 0.1,
-    Event.treasureChest: 0.1,
+    Event.monster: 0.5,
+    Event.person: 0.25,
+    Event.rest: 0.0,
+    Event.treasureChest: 0.25,
   },
   9: {
-    // ステージ9
-    Event.monster: 0.6,
-    Event.personal: 0.2,
-    Event.rest: 0.1,
-    Event.treasureChest: 0.1,
+    Event.monster: 0.5,
+    Event.person: 0.25,
+    Event.rest: 0.0,
+    Event.treasureChest: 0.25,
   },
   10: {
-    // ステージ10
     Event.boss: 1.0
   },
   11: {
-    // ステージ11
     Event.end: 1.0
   },
 };

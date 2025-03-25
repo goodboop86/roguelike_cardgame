@@ -6,8 +6,16 @@ import 'event_probabilities.dart';
 List<List<Event>> generateNestedListWithFixedLength(int stageLists, int minLength, int maxLength) {
   final nestedList = <List<Event>>[];
 
+  // stageの選択肢の数とその比率
+  final weights = {
+    1: 25,
+    2: 50,
+    3: 25,
+  };
+
   for (int stage = 0; stage < stageLists; stage++) {
-    int listLength = Random().nextInt(maxLength - minLength + 1) + minLength; // 指定された範囲内でランダムな長さを生成
+    // int listLength = Random().nextInt(maxLength - minLength + 1) + minLength; // 指定された範囲内でランダムな長さを生成
+    int listLength = weightedRandom(weights);
     if (stage == 0 || stage == 5 || stage == 10) {
       listLength = 1; // 0, 5, 10番目のリストの長さを1にする
     }
@@ -50,8 +58,24 @@ bool isSpecialStage(int stageId) {
   return specialStages.contains(stageId);
 }
 
+T weightedRandom<T>(Map<T, int> weights) {
+  final random = Random();
+  final totalWeight = weights.values.reduce((a, b) => a + b);
+  var randomNumber = random.nextInt(totalWeight);
+
+  for (final entry in weights.entries) {
+    randomNumber -= entry.value;
+    if (randomNumber < 0) {
+      return entry.key;
+    }
+  }
+
+  // ここに来ることは通常ないはずですが、念のため最初のキーを返します。
+  return weights.keys.first;
+}
+
 void main() {
-  final nestedList = generateNestedListWithFixedLength(11, 2, 3); // 12個のリストを持つ二重リストを生成
+  final nestedList = generateNestedListWithFixedLength(11, 1, 3); // 12個のリストを持つ二重リストを生成
   print(nestedList);
 
 }
