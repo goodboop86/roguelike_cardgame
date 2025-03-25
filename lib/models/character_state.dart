@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:riverpod/riverpod.dart';
 
-import 'card.dart';
 
 abstract interface class Jsonable {
   Map<String, dynamic> toJson();

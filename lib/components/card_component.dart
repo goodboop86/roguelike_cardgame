@@ -79,3 +79,27 @@ class CardComponent extends RectangleComponent
       ..paint(canvas, Vector2(0, 0).toOffset());
   }
 }
+
+
+
+class MapCardComponent extends RectangleComponent
+    with RiverpodComponentMixin, HasGameRef {
+  String name;
+
+  MapCardComponent({required this.name});
+
+
+
+  @override
+  void render(Canvas canvas) {
+    super.render(canvas);
+    canvas.drawRect(size.toRect(), Paint()..color = Colors.green);
+    TextPainter(
+      text: TextSpan(
+          text: name, style: const TextStyle(color: Colors.white)),
+      textDirection: TextDirection.ltr,
+    )
+      ..layout(maxWidth: size.x)
+      ..paint(canvas, Vector2(0, 0).toOffset());
+  }
+}

@@ -1,6 +1,5 @@
 import 'package:riverpod/riverpod.dart';
 
-import '../models/card_effect.dart';
 import '../models/character_state.dart';
 import '../models/enemy_state.dart';
 

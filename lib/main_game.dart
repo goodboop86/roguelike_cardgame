@@ -21,6 +21,7 @@ class MainGame extends FlameGame
 
   @override
   Future<void> onLoad() async {
+    super.onLoad();
     final parallaxComponent = await loadParallaxComponent(
       [
         ParallaxImageData('parallax/1.png'),

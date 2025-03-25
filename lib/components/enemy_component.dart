@@ -3,7 +3,6 @@ import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
-import '../models/enemy_state.dart';
 import '../providers/enemy_provider.dart';
 
 

@@ -18,7 +18,7 @@ import '../models/card_effect.dart';
 class BattlePage extends Component
     with HasGameRef<MainGame>, RiverpodComponentMixin {
   late Function stateCallbackHandler;
-  final List<CardComponent> _cards = []; // カードリストをキャッシュ
+  final List<MapCardComponent> _cards = []; // カードリストをキャッシュ
 
   @override
   Future<void> onLoad() async {

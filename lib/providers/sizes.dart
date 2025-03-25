@@ -83,5 +83,19 @@ class Sizes {
   double get buttonHeight => buttonAreaHeight * 0.8;
   Vector2 get buttonSize => Vector2(buttonWidth, buttonHeight);
 
+  // MapArea
+  double get mapAreaWidth => screenSize.x * 0.9;
+  double get mapAreaHeight => screenSize.y * 0.1;
+  Vector2 get mapAreaSize => Vector2(mapAreaWidth, mapAreaHeight);
+
+  double get mapAreaX => (screenWidth - mapAreaWidth)/2;
+  double get mapAreaY => (screenHeight - mapAreaHeight)/2;
+  Vector2 get mapAreaPosition => Vector2(mapAreaX, mapAreaY);
+
+  // Button
+  double get mapWidth => mapAreaWidth * 0.05;
+  double get mapHeight => mapAreaHeight * 0.2;
+  Vector2 get mapSize => Vector2(mapWidth, mapHeight);
+
 
 }

@@ -3,7 +3,6 @@ import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
-import '../models/player_state.dart';
 import '../providers/player_provider.dart';
 
 class PlayerComponent extends PositionComponent with RiverpodComponentMixin, TapCallbacks, HasGameRef {

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'card.dart';
 import 'character_state.dart';
 
 class EnemyState extends CharacterState {

@@ -10,7 +10,6 @@ import 'dart:async';
 
 import '../components/card_area_component.dart';
 import '../components/card_component.dart';
-import '../components/enemy_component.dart';
 import '../components/player_component.dart';
 import '../models/card.dart';
 import '../models/card_effect.dart';
@@ -20,17 +19,19 @@ import '../systems/event_probabilities.dart';
 class ExplorePage extends Component
     with HasGameRef<MainGame>, RiverpodComponentMixin {
   late Function stateCallbackHandler;
-  final List<CardComponent> _cards = []; // カードリストをキャッシュ
+  final List<MapCardComponent> _cards = []; // カードリストをキャッシュ
 
   @override
   Future<void> onLoad() async {
+    int currentStage = 3;
     super.onLoad();
     Sizes().setScreenSize(game.size);
 
     await _addCharacters();
-    _addCards(4);
     _addButtons();
-    _addMap();
+    List<List<Event>> stageList = generateNestedListWithFixedLength(11, 1, 3);
+    _addMap(stageList);
+    _addMapCards(stageList, currentStage);
   }
 
   void _enemyTurn() {
@@ -120,7 +121,6 @@ class ExplorePage extends Component
 
     characterArea.addAll([player]);
 
-
     var playerAnimation = SpriteAnimationComponent.fromFrameData(
         await Flame.images.load('noBKG_KnightIdle_strip.png'),
         SpriteAnimationData.sequenced(
@@ -131,15 +131,13 @@ class ExplorePage extends Component
       ..anchor = Anchor.bottomCenter
       ..size = Vector2(128, 128)
       ..position =
-      Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
-
+          Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
 
     player.add(playerAnimation);
     player.add(PlayerHpBar());
   }
 
   void _addButtons() {
-
     // カードエリアを作成
     final buttonArea = ButtonAreaComponent(
       position: Sizes().buttonAreaPosition,
@@ -148,13 +146,13 @@ class ExplorePage extends Component
     add(buttonArea);
 
     List buttonOnPressedFunctions = [
-          () {
+      () {
         game.router.pushNamed('home');
       },
-          () {
+      () {
         debugPrint('Button 2 pressed');
       },
-          () {
+      () {
         _enemyTurn();
       }
     ];
@@ -175,7 +173,7 @@ class ExplorePage extends Component
             position: Sizes().buttonSize / 2,
             anchor: Anchor.center,
             textRenderer:
-            TextPaint(style: const TextStyle(color: Colors.white)),
+                TextPaint(style: const TextStyle(color: Colors.white)),
           ),
         ],
       )
@@ -190,21 +188,23 @@ class ExplorePage extends Component
     });
   }
 
-  void _addMap() {
-
+  void _addMap(List<List<Event>> stageList) {
     final mapArea = MapAreaComponent(
-      position: Sizes().buttonAreaPosition,
-      size: Sizes().buttonAreaSize, // カードエリアのサイズ
+      position: Sizes().mapAreaPosition,
+      size: Sizes().mapAreaSize, // カードエリアのサイズ
     );
     add(mapArea);
 
-    List<List<Event>> stageList = generateNestedListWithFixedLength(11, 1, 3);
+    int stageNum = stageList.length;
+    var totalMapWidth = Sizes().mapWidth + Sizes().mini_margin;
 
     stageList.asMap().forEach((depth, stages) {
+      final int choiceNum = stages.length;
+      final totalMapHeight = Sizes().mapHeight + Sizes().mini_margin;
       stages.asMap().forEach((choice, stage) {
         final button = ButtonComponent(
           button: RectangleComponent(
-              size: Sizes().buttonSize/2,
+              size: Sizes().mapSize,
               paint: Paint()..color = Colors.amber,
               priority: 0),
           onPressed: () {},
@@ -212,66 +212,50 @@ class ExplorePage extends Component
             TextComponent(
               priority: 1,
               text: '$depth $choice',
-              position: Sizes().buttonSize / 2,
+              position: Sizes().mapSize,
               anchor: Anchor.center,
               textRenderer:
-              TextPaint(style: const TextStyle(color: Colors.white)),
+                  TextPaint(style: const TextStyle(color: Colors.white)),
             ),
           ],
-        )        ..position = Vector2(
-
-              depth * (Sizes().buttonWidth/2 + Sizes().mini_margin) -
-              (Sizes().buttonWidth/2 + Sizes().mini_margin), // X 座標を調整
-          choice * (Sizes().buttonWidth/2 + Sizes().mini_margin), // Y 座標を調整
-        )
-          ..anchor = Anchor.center;
+        )..position = Vector2(
+            depth * totalMapWidth +
+                (Sizes().mapAreaWidth - (stageNum * totalMapWidth)) /
+                    2, // X 座標を調整
+          choice * totalMapHeight +
+              (Sizes().mapAreaHeight - (choiceNum * totalMapHeight)) /
+                  2
+            // choice * (Sizes().mapWidth / 2 + Sizes().mini_margin)
+          , // Y 座標を調整
+          );
+        // ..anchor = Anchor.center;
 
         mapArea.add(button);
       });
-
-
     });
-
-
-
   }
 
-  void _addCards(int cardCount) {
-    debugPrint("add cards");
+  void _addMapCards(List<List<Event>> stageList, int currentStage) {
+    debugPrint("add map cards");
+
+    List<Event> events = stageList[currentStage];
+
 
     // カードエリアを作成
-    final cardArea = CardAreaComponent(
+    final mapCardArea = MapCardAreaComponent(
       position: Sizes().cardAreaPosition,
       size: Sizes().cardAreaSize, // カードエリアのサイズ
     );
-    add(cardArea);
-
-    // カードのリストを作成
-    final cards = <ActionCard>[];
-    final effects = [
-      AllDamageEffect(),
-      AllDamageEffect(),
-      AllDamageEffect(),
-      PlayerHealEffect(),
-      BuffEffect(),
-      DebuffEffect(),
-    ];
-    effects.asMap().forEach((index, effect) {
-      // asMap() と forEach() を使用
-      final card = ActionCard(
-        name: 'Card ${index + 1}',
-        effect: effect,
-      );
-      cards.add(card);
-    });
+    add(mapCardArea);
 
     // カードコンポーネントを作成し、カードエリアの中心に集める
     final cardAreaCenterX = Sizes().cardAreaWidth / 2;
     final cardAreaCenterY = Sizes().cardAreaHeight / 2;
-    cards.asMap().forEach((index, card) {
+    events.asMap().forEach((index, event) {
+
       final row = index ~/ 3;
       final col = index % 3;
-      final cardComponent = CardComponent(card: card)
+      final cardComponent = MapCardComponent(name: event.name)
         ..size = Sizes().cardSize
         ..anchor = Anchor.center
         ..position = Vector2(
@@ -282,7 +266,8 @@ class ExplorePage extends Component
               row * (Sizes().cardHeight + Sizes().cardMargin) -
               (Sizes().cardHeight + Sizes().cardMargin) / 2, // Y 座標を調整
         ); // カードエリアの中心を基準に位置を計算
-      cardArea.add(cardComponent);
+      mapCardArea.add(cardComponent);
+
     });
   }
 
