@@ -5,6 +5,7 @@ import 'package:flame/game.dart';
 import 'package:flame/parallax.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:roguelike_cardgame/pages/battle.dart';
+import 'package:roguelike_cardgame/pages/explore.dart';
 import 'package:roguelike_cardgame/pages/home.dart';
 import 'dart:async';
 
@@ -43,6 +44,7 @@ class MainGame extends FlameGame
         routes: {
           'home': Route(HomePage.new),
           'battle': Route(BattlePage.new, maintainState: false),
+          'explore': Route(ExplorePage.new, maintainState: false),
         },
         initialRoute: 'home',
       ),

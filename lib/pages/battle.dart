@@ -176,7 +176,7 @@ class BattlePage extends Component
         game.router.pushNamed('home');
       },
       () {
-        debugPrint('Button 2 pressed');
+        game.router.pushNamed('explore');
       },
       () {
         refreshCards();
