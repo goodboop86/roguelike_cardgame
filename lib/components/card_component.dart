@@ -18,12 +18,12 @@ class CardComponent extends RectangleComponent
   void onTapUp(TapUpEvent event) {
     add(SequenceEffect([
       ScaleEffect.to(
-        Vector2.all(1.05), // 1.05倍に拡大
-        EffectController(duration: 0.05), // 0.05秒かけて拡大
+        Vector2.all(0.95), // 1.05倍に拡大
+        EffectController(duration: 0.1), // 0.05秒かけて拡大
       ),
       ScaleEffect.to(
         Vector2.all(1.0), // 元の大きさに戻す
-        EffectController(duration: 0.05), // 0.05秒かけて縮小
+        EffectController(duration: 0.1), // 0.05秒かけて縮小
       ),
     ], onComplete: () {
       overLay();
@@ -42,7 +42,7 @@ class CardComponent extends RectangleComponent
 
     add(SequenceEffect([
       ScaleEffect.to(
-        Vector2.all(1.05),
+        Vector2.all(0.95),
         EffectController(duration: 0.05), // 0.05秒かけて拡大
       ),
       ScaleEffect.to(
