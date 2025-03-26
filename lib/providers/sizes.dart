@@ -59,7 +59,6 @@ class Sizes {
   double get cardAreaY => (screenHeight - cardAreaHeight)/1.1;
   Vector2 get cardAreaPosition => Vector2(cardAreaX, cardAreaY);
 
-
   // Card
   // double get cardWidth => cardAreaWidth * 0.45;
   double get cardWidth => 96;
@@ -68,6 +67,22 @@ class Sizes {
   Vector2 get cardSize => Vector2(cardWidth, cardHeight);
 
   double get cardMargin => 20.0;
+
+  // MapCardArea
+  double get mapCardAreaWidth => screenSize.x * 0.9;
+  double get mapCardAreaHeight => mapCardAreaWidth;
+  Vector2 get mapCardAreaSize => Vector2(mapCardAreaWidth, mapCardAreaHeight);
+
+  double get mapCardAreaX => (screenWidth - mapCardAreaWidth)/2;
+  double get mapCardAreaY => (screenHeight - mapCardAreaHeight)/1.1;
+  Vector2 get mapCardAreaPosition => Vector2(mapCardAreaX, mapCardAreaY);
+
+  // MapCard
+  double get mapCardWidth => mapCardAreaWidth * 0.3;
+  double get mapCardHeight => mapCardAreaHeight * 0.3;
+  Vector2 get mapCardSize => Vector2(mapCardWidth, mapCardHeight);
+  double get mapCardMargin => 20.0;
+
 
   // ButtonArea
   double get buttonAreaWidth => screenSize.x * 0.9;

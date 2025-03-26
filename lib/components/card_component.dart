@@ -151,7 +151,7 @@ class MapCardComponent extends RectangleComponent
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    canvas.drawRect(size.toRect(), Paint()..color = Colors.deepOrange);
+    canvas.drawRect(size.toRect(), Paint()..color = Colors.green);
     TextPainter(
       text: TextSpan(text: name, style: const TextStyle(color: Colors.white)),
       textDirection: TextDirection.ltr,

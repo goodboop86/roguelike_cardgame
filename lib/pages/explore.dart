@@ -203,7 +203,7 @@ class ExplorePage extends Component
       final int choiceNum = stages.length;
       final totalMapHeight = Sizes().mapHeight + Sizes().mini_margin;
 
-      MaterialColor color = depth == currentStage? Colors.deepOrange: Colors.grey;
+      Color color = depth == currentStage? Colors.green: Colors.black12;
       stages.asMap().forEach((choice, stage) {
         final button = ButtonComponent(
           button: RectangleComponent(
@@ -246,28 +246,28 @@ class ExplorePage extends Component
 
     // カードエリアを作成
     final mapCardArea = MapCardAreaComponent(
-      position: Sizes().cardAreaPosition,
-      size: Sizes().cardAreaSize, // カードエリアのサイズ
+      position: Sizes().mapCardAreaPosition,
+      size: Sizes().mapCardAreaSize, // カードエリアのサイズ
     );
     add(mapCardArea);
 
     // カードコンポーネントを作成し、カードエリアの中心に集める
-    final cardAreaCenterX = Sizes().cardAreaWidth / 2;
-    final cardAreaCenterY = Sizes().cardAreaHeight / 2;
+    final cardAreaCenterX = Sizes().mapCardAreaWidth / 2;
+    final cardAreaCenterY = Sizes().mapCardAreaHeight / 2;
     events.asMap().forEach((index, event) {
 
       final row = index ~/ 3;
       final col = index % 3;
       final cardComponent = MapCardComponent(name: event.name)
-        ..size = Sizes().cardSize
+        ..size = Sizes().mapCardSize
         ..anchor = Anchor.center
         ..position = Vector2(
           cardAreaCenterX +
-              col * (Sizes().cardWidth + Sizes().cardMargin) -
-              (Sizes().cardWidth + Sizes().cardMargin), // X 座標を調整
+              col * (Sizes().mapCardWidth + Sizes().mapCardMargin) -
+              (Sizes().mapCardWidth + Sizes().mapCardMargin), // X 座標を調整
           cardAreaCenterY +
-              row * (Sizes().cardHeight + Sizes().cardMargin) -
-              (Sizes().cardHeight + Sizes().cardMargin) / 2, // Y 座標を調整
+              row * (Sizes().mapCardHeight + Sizes().mapCardMargin) -
+              (Sizes().mapCardHeight + Sizes().mapCardMargin) / 2, // Y 座標を調整
         ); // カードエリアの中心を基準に位置を計算
       mapCardArea.add(cardComponent);
 
