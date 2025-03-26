@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
 
 class CardAreaComponent extends PositionComponent {
   CardAreaComponent({required Vector2 position, required Vector2 size})
@@ -15,8 +18,22 @@ class MapCardAreaComponent extends PositionComponent {
 
 
 class CharacterAreaComponent extends PositionComponent {
-  CharacterAreaComponent({required Vector2 position, required Vector2 size})
-      : super(position: position, size: size);
+  CharacterAreaComponent({required Vector2 position, required Vector2 size, required ComponentKey key})
+      : super(position: position, size: size, key: key);
+
+  final Paint paint = Paint()..color = Colors.transparent;
+
+  @override
+  void render(Canvas canvas) {
+    super.render(canvas);
+    canvas.drawRect(size.toRect(), paint);
+  }
+
+  void changeColor(Color color) {
+    paint.color = color;
+  }
+
+
 
 // カードエリアの描画やその他の処理
 }

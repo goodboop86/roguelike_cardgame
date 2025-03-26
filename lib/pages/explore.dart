@@ -109,6 +109,7 @@ class ExplorePage extends Component
 
   Future<void> _addCharacters() async {
     final characterArea = CharacterAreaComponent(
+        key: ComponentKey.named('ExploreCharacterArea'),
       position: Sizes().characterAreaPosition,
       size: Sizes().characterAreaSize, // カードエリアのサイズ
     );

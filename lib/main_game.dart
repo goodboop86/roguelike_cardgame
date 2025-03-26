@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/parallax.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
@@ -10,7 +11,7 @@ import 'package:roguelike_cardgame/pages/home.dart';
 import 'dart:async';
 
 class MainGame extends FlameGame
-    with HasGameRef, RiverpodGameMixin, HasWorldReference {
+    with HasGameRef, RiverpodGameMixin, HasWorldReference, DragCallbacks {
   @override
   var debugMode = true;
 

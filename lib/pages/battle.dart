@@ -106,6 +106,7 @@ class BattlePage extends Component
   Future<void> _addCharacters() async {
     // カードエリアを作成
     final characterArea = CharacterAreaComponent(
+        key: ComponentKey.named('BattleCharacterArea'),
       position: Sizes().characterAreaPosition,
       size: Sizes().characterAreaSize, // カードエリアのサイズ
     );
