@@ -30,7 +30,7 @@ class ExplorePage extends Component
     await _addCharacters();
     _addButtons();
     List<List<Event>> stageList = generateNestedListWithFixedLength(11, 1, 3);
-    _addMap(stageList);
+    _addMap(stageList, currentStage);
     _addMapCards(stageList, currentStage);
   }
 
@@ -189,7 +189,7 @@ class ExplorePage extends Component
     });
   }
 
-  void _addMap(List<List<Event>> stageList) {
+  void _addMap(List<List<Event>> stageList, int currentStage) {
     final mapArea = MapAreaComponent(
       position: Sizes().mapAreaPosition,
       size: Sizes().mapAreaSize, // カードエリアのサイズ
@@ -202,11 +202,13 @@ class ExplorePage extends Component
     stageList.asMap().forEach((depth, stages) {
       final int choiceNum = stages.length;
       final totalMapHeight = Sizes().mapHeight + Sizes().mini_margin;
+
+      MaterialColor color = depth == currentStage? Colors.deepOrange: Colors.grey;
       stages.asMap().forEach((choice, stage) {
         final button = ButtonComponent(
           button: RectangleComponent(
               size: Sizes().mapSize,
-              paint: Paint()..color = Colors.amber,
+              paint: Paint()..color = color,
               priority: 0),
           onPressed: () {},
           children: [
