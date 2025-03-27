@@ -1,6 +1,7 @@
 import 'package:flame/components.dart' hide Timer;
 import 'package:flame/flame.dart';
 import 'package:flame/input.dart';
+import 'package:flame/parallax.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:roguelike_cardgame/main_game.dart';
@@ -33,10 +34,31 @@ class ExplorePage extends World
 
 
   Future<void> _addCharacters() async {
-    final characterArea = CharacterAreaComponent(
-        key: ComponentKey.named('ExploreCharacterArea'),
+
+    final parallaxComponent = await game.loadParallaxComponent(
+      [
+        ParallaxImageData('parallax/1.png'),
+        ParallaxImageData('parallax/2.png'),
+        ParallaxImageData('parallax/3.png'),
+        ParallaxImageData('parallax/5.png'),
+        ParallaxImageData('parallax/6.png'),
+        ParallaxImageData('parallax/7.png'),
+        ParallaxImageData('parallax/8.png'),
+        ParallaxImageData('parallax/10.png'),
+      ],
+      baseVelocity: Vector2(0.1, 0),
+      size: Sizes().characterAreaSize,
       position: Sizes().characterAreaPosition,
-      // position: Vector2(0,0),
+      velocityMultiplierDelta: Vector2(1.8, 1.0),
+    );
+
+    add(parallaxComponent);
+
+
+    // カードエリアを作成
+    final characterArea = CharacterAreaComponent(
+      key: ComponentKey.named('BattleCharacterArea'),
+      position: Sizes().characterAreaPosition,
       size: Sizes().characterAreaSize, // カードエリアのサイズ
     );
     add(characterArea);

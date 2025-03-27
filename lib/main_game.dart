@@ -26,23 +26,6 @@ class MainGame extends FlameGame
   Future<void> onLoad() async {
     super.onLoad();
     Sizes().setScreenSize(size);
-    final parallaxComponent = await loadParallaxComponent(
-      [
-        ParallaxImageData('parallax/1.png'),
-        ParallaxImageData('parallax/2.png'),
-        ParallaxImageData('parallax/3.png'),
-        ParallaxImageData('parallax/5.png'),
-        ParallaxImageData('parallax/6.png'),
-        ParallaxImageData('parallax/7.png'),
-        ParallaxImageData('parallax/8.png'),
-        ParallaxImageData('parallax/10.png'),
-      ],
-      baseVelocity: Vector2(0.1, 0),
-        size: Vector2(game.size.x, game.size.y/2.7),
-      position: Vector2(0, 0),
-      velocityMultiplierDelta: Vector2(1.8, 1.0),
-    );
-    add(parallaxComponent);
 
     add(
       router = RouterComponent(
