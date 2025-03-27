@@ -11,8 +11,6 @@ import 'dart:async';
 import '../components/card_area_component.dart';
 import '../components/card_component.dart';
 import '../components/player_component.dart';
-import '../models/card.dart';
-import '../models/card_effect.dart';
 import '../systems/dungeon.dart';
 import '../systems/event_probabilities.dart';
 

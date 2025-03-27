@@ -23,7 +23,7 @@ class HomePage extends Component with HasGameReference<MainGame> {
       ),
       anchor: Anchor.topLeft,
       onPressed: () {
-        game.router.pushNamed('battle');
+        game.router.pushNamed('explore');
       },
     )..position = game.size / 2;
 
