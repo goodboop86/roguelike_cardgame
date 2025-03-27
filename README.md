@@ -56,3 +56,18 @@ assets/
     characters/         # キャラクター画像
   audio/                # 音声アセット
 ```
+
+
+# TOTO
+
+- マナシステム
+- ターン終了ボタンで、相手のターンのポップアップが出る。
+- 相手のターンが終わると自分のターンのポップアップが出る。
+- 相手のHPがゼロになると、勝利エフェクト発生し、報酬をゲットする。
+
+
+# 画像生成のプロンプト
+
+```
+Magic Barrier, A solid painted touch, black background, simple color palette, Bold line design, Rounded shape,  This is an expression that could be used for illustrations in a card game for smartphones. It is a fantastical, iconic, non-scary two-dimensional illustration. The expression is performed with a sense of dynamism, and there are no human or living things, only effect.
+```
