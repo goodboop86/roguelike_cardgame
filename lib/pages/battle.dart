@@ -105,7 +105,6 @@ class BattlePage extends World
   }
 
   Future<void> _addCharacters() async {
-
     final parallaxComponent = await game.loadParallaxComponent(
       [
         ParallaxImageData('parallax/1.png'),
@@ -125,15 +124,13 @@ class BattlePage extends World
 
     add(parallaxComponent);
 
-
     // カードエリアを作成
     final characterArea = CharacterAreaComponent(
-        key: ComponentKey.named('BattleCharacterArea'),
+      key: ComponentKey.named('BattleCharacterArea'),
       position: Sizes().characterAreaPosition,
       size: Sizes().characterAreaSize, // カードエリアのサイズ
     );
     add(characterArea);
-
 
     // Player の配置 (左上)
     PlayerComponent player = PlayerComponent()
@@ -201,6 +198,10 @@ class BattlePage extends World
       },
       () {
         game.router.pushNamed('explore');
+      },
+      () {
+
+        game.overlays.add('AutoDisappearingOverlay');
       },
       () {
         refreshCards();

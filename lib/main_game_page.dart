@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -37,6 +39,9 @@ class MainGamePageState extends State<MainGamePage> {
                 'EnemyTurnOverlay': (BuildContext context, MainGame game) {
                   return EnemyTurnOverlayWidget(game: game);
                 },
+                'AutoDisappearingOverlay': (BuildContext context, MainGame game) {
+                  return AutoDisappearingOverlayWidget(game: game);
+                }
               }),
         ),
       ],
@@ -177,6 +182,33 @@ class CharacterOverlayWidget extends ConsumerWidget {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class AutoDisappearingOverlayWidget extends StatelessWidget {
+  final MainGame game;
+
+  const AutoDisappearingOverlayWidget({super.key, required this.game});
+
+  @override
+  Widget build(BuildContext context) {
+    // 3秒後にオーバーレイを削除
+    Timer(const Duration(seconds: 3), () {
+      game.overlays.remove('AutoDisappearingOverlay');
+      game.resumeEngine();
+    });
+
+    return Center(
+      child: Container(
+        width: 100,
+        height: 100,
+        color: Colors.black,
+        child: const Center(
+          child: Text('自動的に消えます',
+        style: TextStyle(color: Colors.white))
         ),
       ),
     );
