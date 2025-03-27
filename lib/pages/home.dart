@@ -5,7 +5,7 @@ import 'package:flame/palette.dart';
 
 import '../main_game.dart';
 
-class HomePage extends Component with HasGameReference<MainGame> {
+class HomePage extends World with HasGameReference<MainGame> {
   late final ButtonComponent button;
 
   @override
@@ -25,7 +25,7 @@ class HomePage extends Component with HasGameReference<MainGame> {
       onPressed: () {
         game.router.pushNamed('explore');
       },
-    )..position = game.size / 2;
+    )..anchor = Anchor.center;
 
     add(button);
   }

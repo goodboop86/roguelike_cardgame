@@ -10,8 +10,10 @@ import 'package:roguelike_cardgame/pages/explore.dart';
 import 'package:roguelike_cardgame/pages/home.dart';
 import 'dart:async';
 
+import 'package:roguelike_cardgame/providers/sizes.dart';
+
 class MainGame extends FlameGame
-    with HasGameRef, RiverpodGameMixin, HasWorldReference, DragCallbacks {
+    with HasGameRef, RiverpodGameMixin, DragCallbacks {
   @override
   var debugMode = true;
 
@@ -23,6 +25,7 @@ class MainGame extends FlameGame
   @override
   Future<void> onLoad() async {
     super.onLoad();
+    Sizes().setScreenSize(size);
     final parallaxComponent = await loadParallaxComponent(
       [
         ParallaxImageData('parallax/1.png'),
@@ -44,9 +47,9 @@ class MainGame extends FlameGame
     add(
       router = RouterComponent(
         routes: {
-          'home': Route(HomePage.new),
-          'battle': Route(BattlePage.new, maintainState: false),
-          'explore': Route(ExplorePage.new, maintainState: false),
+          'home': WorldRoute(HomePage.new),
+          'battle': WorldRoute(BattlePage.new, maintainState: false),
+          'explore': WorldRoute(ExplorePage.new, maintainState: false),
         },
         initialRoute: 'home',
       ),

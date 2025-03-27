@@ -14,7 +14,7 @@ import '../components/player_component.dart';
 import '../systems/dungeon.dart';
 import '../systems/event_probabilities.dart';
 
-class ExplorePage extends Component
+class ExplorePage extends World
     with HasGameRef<MainGame>, RiverpodComponentMixin {
   late Function stateCallbackHandler;
   final List<MapCardComponent> _cards = []; // カードリストをキャッシュ
@@ -23,7 +23,6 @@ class ExplorePage extends Component
   Future<void> onLoad() async {
     int currentStage = 3;
     super.onLoad();
-    Sizes().setScreenSize(game.size);
 
     await _addCharacters();
     List<List<Event>> stageList = generateNestedListWithFixedLength(11, 1, 3);
@@ -37,6 +36,7 @@ class ExplorePage extends Component
     final characterArea = CharacterAreaComponent(
         key: ComponentKey.named('ExploreCharacterArea'),
       position: Sizes().characterAreaPosition,
+      // position: Vector2(0,0),
       size: Sizes().characterAreaSize, // カードエリアのサイズ
     );
     add(characterArea);

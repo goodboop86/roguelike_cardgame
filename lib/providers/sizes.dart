@@ -22,12 +22,16 @@ class Sizes {
 
 
   // CharacterArea
-  double get characterAreaWidth => screenSize.x * 0.95;
+  double get characterAreaWidth => screenSize.x;
   double get characterAreaHeight => screenSize.y * 0.3;
   Vector2 get characterAreaSize => Vector2(characterAreaWidth, characterAreaHeight);
 
-  double get characterAreaX => (screenWidth - characterAreaWidth)/2;
-  double get characterAreaY => (screenHeight - characterAreaHeight)/10;
+  double get originX => -screenWidth/2;
+  double get originY => -screenHeight/2;
+  Vector2 get origin =>  Vector2(originX, originY);
+
+  double get characterAreaX => originX;
+  double get characterAreaY => originY + 50;
   Vector2 get characterAreaPosition => Vector2(characterAreaX, characterAreaY);
 
   // Character
@@ -51,12 +55,12 @@ class Sizes {
 
 
   // CardArea
-  double get cardAreaWidth => screenSize.x * 0.9;
+  double get cardAreaWidth => screenSize.x;
   double get cardAreaHeight => screenSize.y * 0.4;
   Vector2 get cardAreaSize => Vector2(cardAreaWidth, cardAreaHeight);
 
-  double get cardAreaX => (screenWidth - cardAreaWidth)/2;
-  double get cardAreaY => (screenHeight - cardAreaHeight)/1.1;
+  double get cardAreaX => originX;
+  double get cardAreaY => originY + screenHeight*0.6;
   Vector2 get cardAreaPosition => Vector2(cardAreaX, cardAreaY);
 
   // Card
@@ -69,12 +73,12 @@ class Sizes {
   double get cardMargin => 20.0;
 
   // MapCardArea
-  double get mapCardAreaWidth => screenSize.x * 0.9;
+  double get mapCardAreaWidth => screenSize.x;
   double get mapCardAreaHeight => mapCardAreaWidth;
   Vector2 get mapCardAreaSize => Vector2(mapCardAreaWidth, mapCardAreaHeight);
 
-  double get mapCardAreaX => (screenWidth - mapCardAreaWidth)/2;
-  double get mapCardAreaY => (screenHeight - mapCardAreaHeight)/1.1;
+  double get mapCardAreaX => originX;
+  double get mapCardAreaY => originY + screenHeight*0.7;
   Vector2 get mapCardAreaPosition => Vector2(mapCardAreaX, mapCardAreaY);
 
   // MapCard
@@ -85,12 +89,12 @@ class Sizes {
 
 
   // ButtonArea
-  double get buttonAreaWidth => screenSize.x * 0.9;
+  double get buttonAreaWidth => screenSize.x;
   double get buttonAreaHeight => screenSize.y * 0.05;
   Vector2 get buttonAreaSize => Vector2(buttonAreaWidth, buttonAreaHeight);
 
-  double get buttonAreaX => (screenWidth - buttonAreaWidth)/2;
-  double get buttonAreaY => (screenHeight - buttonAreaHeight)/2.3;
+  double get buttonAreaX => originX;
+  double get buttonAreaY => originY + screenHeight*0.5;
   Vector2 get buttonAreaPosition => Vector2(buttonAreaX, buttonAreaY);
 
   // Button
@@ -99,12 +103,12 @@ class Sizes {
   Vector2 get buttonSize => Vector2(buttonWidth, buttonHeight);
 
   // MapArea
-  double get mapAreaWidth => screenSize.x * 0.9;
+  double get mapAreaWidth => screenSize.x;
   double get mapAreaHeight => screenSize.y * 0.1;
   Vector2 get mapAreaSize => Vector2(mapAreaWidth, mapAreaHeight);
 
-  double get mapAreaX => (screenWidth - mapAreaWidth)/2;
-  double get mapAreaY => (screenHeight - mapAreaHeight)/2;
+  double get mapAreaX => originX;
+  double get mapAreaY => originY + screenHeight/2;
   Vector2 get mapAreaPosition => Vector2(mapAreaX, mapAreaY);
 
   // Button
