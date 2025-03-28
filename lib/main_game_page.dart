@@ -39,7 +39,8 @@ class MainGamePageState extends State<MainGamePage> {
                 'EnemyTurnOverlay': (BuildContext context, MainGame game) {
                   return EnemyTurnOverlayWidget(game: game);
                 },
-                'AutoDisappearingOverlay': (BuildContext context, MainGame game) {
+                'AutoDisappearingOverlay':
+                    (BuildContext context, MainGame game) {
                   return AutoDisappearingOverlayWidget(game: game);
                 }
               }),
@@ -49,9 +50,9 @@ class MainGamePageState extends State<MainGamePage> {
   }
 }
 
-
 class CardOverlayWidget extends ConsumerWidget {
   final MainGame game;
+
   const CardOverlayWidget({super.key, required this.game});
 
   @override
@@ -79,9 +80,9 @@ class CardOverlayWidget extends ConsumerWidget {
   }
 }
 
-
 class EnemyTurnOverlayWidget extends ConsumerWidget {
   final MainGame game;
+
   const EnemyTurnOverlayWidget({super.key, required this.game});
 
   @override
@@ -108,7 +109,6 @@ class EnemyTurnOverlayWidget extends ConsumerWidget {
   }
 }
 
-
 class CharacterOverlayWidget extends ConsumerWidget {
   final MainGame game;
 
@@ -117,14 +117,8 @@ class CharacterOverlayWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // 画面サイズの8割の領域を計算
-    final screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
-    final screenHeight = MediaQuery
-        .of(context)
-        .size
-        .height * 0.6;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height * 0.6;
 
     return GestureDetector(
       onTap: () {
@@ -154,26 +148,26 @@ class CharacterOverlayWidget extends ConsumerWidget {
                       padding: const EdgeInsets.all(16.0),
                       child: const Text(
                         'ここにテキストを表示します。\n\n'
-                            'スクロール可能なテキストボックスです。\n\n'
-                            'スクロール可能なテキストボックスです。\n\n'
-                            'スクロール可能なテキストボックスです。\n\n'
-                            'スクロール可能なテキストボックスです。\n\n'
-                            'スクロール可能なテキストボックスです。\n\n'
-                            'スクロール可能なテキストボックスです。\n\n'
-                            'スクロール可能なテキストボックスです。\n\n'
-                            'スクロール可能なテキストボックスです。\n\n'
-                            'スクロール可能なテキストボックスです。\n\n'
-                            'スクロール可能なテキストボックスです。\n\n'
-                            'スクロール可能なテキストボックスです。\n\n'
-                            'スクロール可能なテキストボックスです。\n\n'
-                            'スクロール可能なテキストボックスです。\n\n'
-                            'スクロール可能なテキストボックスです。\n\n'
-                            'スクロール可能なテキストボックスです。\n\n'
-                            'スクロール可能なテキストボックスです。\n\n'
-                            'スクロール可能なテキストボックスです。\n\n'
-                            'スクロール可能なテキストボックスです。\n\n'
-                            'スクロール可能なテキストボックスです。\n\n'
-                            '長い文章も表示できます。',
+                        'スクロール可能なテキストボックスです。\n\n'
+                        'スクロール可能なテキストボックスです。\n\n'
+                        'スクロール可能なテキストボックスです。\n\n'
+                        'スクロール可能なテキストボックスです。\n\n'
+                        'スクロール可能なテキストボックスです。\n\n'
+                        'スクロール可能なテキストボックスです。\n\n'
+                        'スクロール可能なテキストボックスです。\n\n'
+                        'スクロール可能なテキストボックスです。\n\n'
+                        'スクロール可能なテキストボックスです。\n\n'
+                        'スクロール可能なテキストボックスです。\n\n'
+                        'スクロール可能なテキストボックスです。\n\n'
+                        'スクロール可能なテキストボックスです。\n\n'
+                        'スクロール可能なテキストボックスです。\n\n'
+                        'スクロール可能なテキストボックスです。\n\n'
+                        'スクロール可能なテキストボックスです。\n\n'
+                        'スクロール可能なテキストボックスです。\n\n'
+                        'スクロール可能なテキストボックスです。\n\n'
+                        'スクロール可能なテキストボックスです。\n\n'
+                        'スクロール可能なテキストボックスです。\n\n'
+                        '長い文章も表示できます。',
                         style: TextStyle(fontSize: 18.0),
                       ),
                     ),
@@ -196,20 +190,16 @@ class AutoDisappearingOverlayWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 3秒後にオーバーレイを削除
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 1), () {
       game.overlays.remove('AutoDisappearingOverlay');
       game.resumeEngine();
     });
 
-    return Center(
-      child: Container(
-        width: 100,
-        height: 100,
-        color: Colors.black,
-        child: const Center(
-          child: Text('自動的に消えます',
-        style: TextStyle(color: Colors.white))
-        ),
+    return Container(
+      color: Colors.black.withValues(alpha: 0.5),
+      child: const Center(
+        child: Text("AutoDisappearingOverlay",
+            style: TextStyle(color: Colors.white)),
       ),
     );
   }
