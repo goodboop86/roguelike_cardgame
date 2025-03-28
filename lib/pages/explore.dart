@@ -10,7 +10,6 @@ import 'package:roguelike_cardgame/providers/sizes.dart';
 import 'dart:async';
 
 import '../components/card_area_component.dart';
-import '../components/card_component.dart';
 import '../components/player_component.dart';
 import '../models/enum.dart';
 import '../systems/dungeon.dart';
@@ -19,7 +18,6 @@ import '../systems/event_probabilities.dart';
 class ExplorePage extends World
     with HasGameRef<MainGame>, RiverpodComponentMixin {
   late Function stateCallbackHandler;
-  final List<MapCardComponent> _cards = []; // カードリストをキャッシュ
 
   @override
   Future<void> onLoad() async {

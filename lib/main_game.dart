@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:flame/parallax.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:roguelike_cardgame/pages/battle.dart';
 import 'package:roguelike_cardgame/pages/explore.dart';

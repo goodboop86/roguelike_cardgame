@@ -43,6 +43,7 @@ class CardComponent extends RectangleComponent
 
   @override
   void onDragStart(DragStartEvent event) {
+    super.onDragStart(event);
     initialPosition = position.clone(); // ドラッグ開始時の位置を保存
     target = game.findByKey(
         ComponentKey.named("BattleCharacterArea")); // TargetComponentを直接取得
@@ -56,6 +57,7 @@ class CardComponent extends RectangleComponent
 
   @override
   void onDragEnd(DragEndEvent event) {
+    super.onDragEnd(event);
     if (isOverlapping) {
       process();
     } else {
@@ -74,6 +76,7 @@ class CardComponent extends RectangleComponent
 
   @override
   void onDragCancel(DragCancelEvent event) {
+    super.onDragCancel(event);
     if (initialPosition != null) {
       // 元の位置までアニメーションで移動
       add(MoveToEffect(
