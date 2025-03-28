@@ -17,4 +17,8 @@ class CardStateNotifier extends StateNotifier<CardState> {
   void setCard(ActionCard card) {
     state = CardState(activeCard: card);
   }
+
+  void hello(){
+    print("hello CardStateNotifier");
+  }
 }

@@ -1,4 +1,5 @@
 enum Event {
+  empty,
   start,
   monster,
   midBoss,

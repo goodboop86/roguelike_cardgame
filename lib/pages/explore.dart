@@ -5,6 +5,7 @@ import 'package:flame/parallax.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:roguelike_cardgame/main_game.dart';
+import 'package:roguelike_cardgame/providers/player_provider.dart';
 import 'package:roguelike_cardgame/providers/sizes.dart';
 
 import 'dart:async';
@@ -12,6 +13,7 @@ import 'dart:async';
 import '../components/card_area_component.dart';
 import '../components/player_component.dart';
 import '../models/enum.dart';
+import '../providers/explore_route_provider.dart';
 import '../systems/dungeon.dart';
 import '../systems/event_probabilities.dart';
 
@@ -20,20 +22,31 @@ class ExplorePage extends World
   late Function stateCallbackHandler;
 
   @override
-  Future<void> onLoad() async {
-    int currentStage = 3;
-    super.onLoad();
+  void onMount(){
+    addToGameWidgetBuild(() {
+      final explore = ref.watch(exploreRouteProvider);
+      if (explore.toJsonString().isNotEmpty) {
+        // 条件を満たしたらCompleterを完了させる
+        print("ExplorePage# ${explore.toJsonString()}");
+      }
+    });
 
+    super.onMount();
+
+
+  }
+
+  @override
+  Future<void> onLoad() async {
+    super.onLoad();
+    int currentStage = 3;
     await _addCharacters();
     List<List<Event>> stageList = generateNestedListWithFixedLength(11, 1, 3);
     _addMap(stageList, currentStage);
     _addMapCards(stageList, currentStage);
   }
 
-
-
   Future<void> _addCharacters() async {
-
     final parallaxComponent = await game.loadParallaxComponent(
       [
         ParallaxImageData('parallax/1.png'),
@@ -52,7 +65,6 @@ class ExplorePage extends World
     );
 
     add(parallaxComponent);
-
 
     // カードエリアを作成
     final characterArea = CharacterAreaComponent(
@@ -85,7 +97,6 @@ class ExplorePage extends World
     player.add(PlayerHpBar());
   }
 
-
   void _addMap(List<List<Event>> stageList, int currentStage) {
     final mapArea = MapAreaComponent(
       position: Sizes().mapAreaPosition,
@@ -100,7 +111,7 @@ class ExplorePage extends World
       final int choiceNum = stages.length;
       final totalMapHeight = Sizes().mapHeight + Sizes().mini_margin;
 
-      Color color = depth == currentStage? Colors.green: Colors.black12;
+      Color color = depth == currentStage ? Colors.green : Colors.black12;
       stages.asMap().forEach((choice, stage) {
         final button = ButtonComponent(
           button: RectangleComponent(
@@ -122,11 +133,10 @@ class ExplorePage extends World
             depth * totalMapWidth +
                 (Sizes().mapAreaWidth - (stageNum * totalMapWidth)) /
                     2, // X 座標を調整
-          choice * totalMapHeight +
-              (Sizes().mapAreaHeight - (choiceNum * totalMapHeight)) /
-                  2
+            choice * totalMapHeight +
+                (Sizes().mapAreaHeight - (choiceNum * totalMapHeight)) / 2
             // choice * (Sizes().mapWidth / 2 + Sizes().mini_margin)
-          , // Y 座標を調整
+            , // Y 座標を調整
           );
         // ..anchor = Anchor.center;
 
@@ -140,7 +150,6 @@ class ExplorePage extends World
 
     List<Event> events = stageList[currentStage];
 
-
     // カードエリアを作成
     final mapCardArea = MapCardAreaComponent(
       position: Sizes().mapCardAreaPosition,
@@ -152,7 +161,6 @@ class ExplorePage extends World
     final cardAreaCenterX = Sizes().mapCardAreaWidth / 2;
     final cardAreaCenterY = Sizes().mapCardAreaHeight / 2;
     events.asMap().forEach((index, event) {
-
       final row = index ~/ 3;
       final col = index % 3;
       // final cardComponent = MapCardComponent(name: event.name)
@@ -172,7 +180,7 @@ class ExplorePage extends World
             size: Sizes().mapCardSize,
             paint: Paint()..color = Colors.green,
             priority: 0),
-        onPressed:() {
+        onPressed: () {
           game.router.pushNamed(ROUTE.battle.name);
         },
         children: [
@@ -180,12 +188,13 @@ class ExplorePage extends World
             priority: 1,
             text: event.name,
             anchor: Anchor.center,
-            position: Sizes().mapCardSize/2,
+            position: Sizes().mapCardSize / 2,
             textRenderer:
-            TextPaint(style: const TextStyle(color: Colors.white)),
+                TextPaint(style: const TextStyle(color: Colors.white)),
           ),
         ],
-      )..anchor = Anchor.center
+      )
+        ..anchor = Anchor.center
         ..position = Vector2(
           cardAreaCenterX +
               col * (Sizes().mapCardWidth + Sizes().mapCardMargin) -
@@ -195,7 +204,6 @@ class ExplorePage extends World
               (Sizes().mapCardHeight + Sizes().mapCardMargin) / 2, // Y 座標を調整
         );
       mapCardArea.add(button);
-
     });
   }
 

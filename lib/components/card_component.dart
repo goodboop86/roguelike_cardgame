@@ -18,6 +18,7 @@ class CardComponent extends RectangleComponent
 
   CardComponent({required this.card});
 
+
   @override
   void onTapUp(TapUpEvent event) {
     add(SequenceEffect([
