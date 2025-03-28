@@ -20,6 +20,7 @@ import '../systems/event_probabilities.dart';
 class ExplorePage extends World
     with HasGameRef<MainGame>, RiverpodComponentMixin {
   late Function stateCallbackHandler;
+  late String str;
 
   @override
   void onMount(){
@@ -27,13 +28,14 @@ class ExplorePage extends World
       final explore = ref.watch(exploreRouteProvider);
       if (explore.toJsonString().isNotEmpty) {
         // 条件を満たしたらCompleterを完了させる
+        str = explore.toJsonString();
         print("ExplorePage# ${explore.toJsonString()}");
+
+        // ここで必要なcomponentをaddする or ..sizeなど変更でも良い。
       }
     });
 
     super.onMount();
-
-
   }
 
   @override
