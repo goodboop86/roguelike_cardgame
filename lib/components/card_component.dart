@@ -5,6 +5,7 @@ import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:roguelike_cardgame/components/card_area_component.dart';
 import '../models/card.dart';
+import '../models/enum.dart';
 import '../pages/battle.dart';
 import '../providers/card_provider.dart';
 
@@ -36,7 +37,7 @@ class CardComponent extends RectangleComponent
   void overLay() {
     // overlayでカード情報を表示するために、タップされたカードをアクティブにする。
     ref.read(cardProvider.notifier).setCard(card);
-    game.overlays.add('CardOverlay');
+    game.overlays.add(OVERLAY.cardOverlay.name);
     game.pauseEngine();
   }
 

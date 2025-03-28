@@ -3,6 +3,7 @@ import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
+import '../models/enum.dart';
 import '../providers/player_provider.dart';
 
 class PlayerComponent extends PositionComponent with RiverpodComponentMixin, TapCallbacks, HasGameRef {
@@ -27,7 +28,7 @@ class PlayerComponent extends PositionComponent with RiverpodComponentMixin, Tap
 
   @override
   void onTapUp(TapUpEvent event) {
-    game.overlays.add('CharacterOverlay');
+    game.overlays.add(OVERLAY.characterOverlay.name);
     game.pauseEngine();
   }
 }

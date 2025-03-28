@@ -74,8 +74,14 @@ T weightedRandom<T>(Map<T, int> weights) {
   return weights.keys.first;
 }
 
+enum Foo {
+  foo,
+  bar
+}
 void main() {
   final nestedList = generateNestedListWithFixedLength(11, 1, 3); // 12個のリストを持つ二重リストを生成
   print(nestedList);
+
+  print(Foo.foo.name);
 
 }

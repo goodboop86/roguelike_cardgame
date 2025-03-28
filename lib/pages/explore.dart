@@ -12,6 +12,7 @@ import 'dart:async';
 import '../components/card_area_component.dart';
 import '../components/card_component.dart';
 import '../components/player_component.dart';
+import '../models/enum.dart';
 import '../systems/dungeon.dart';
 import '../systems/event_probabilities.dart';
 
@@ -174,7 +175,7 @@ class ExplorePage extends World
             paint: Paint()..color = Colors.green,
             priority: 0),
         onPressed:() {
-          game.router.pushNamed('battle');
+          game.router.pushNamed(ROUTE.battle.name);
         },
         children: [
           TextComponent(

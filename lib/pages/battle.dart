@@ -15,6 +15,7 @@ import '../components/enemy_component.dart';
 import '../components/player_component.dart';
 import '../models/card.dart';
 import '../models/card_effect.dart';
+import '../models/enum.dart';
 
 class BattlePage extends World
     with HasGameRef<MainGame>, RiverpodComponentMixin {
@@ -194,14 +195,14 @@ class BattlePage extends World
 
     List buttonOnPressedFunctions = [
       () {
-        game.router.pushNamed('home');
+        game.router.pushNamed(ROUTE.home.name);
       },
       () {
-        game.router.pushNamed('explore');
+        game.router.pushNamed(ROUTE.explore.name);
       },
       () {
 
-        game.overlays.add('AutoDisappearingOverlay');
+        game.overlays.add(OVERLAY.autoDisappearingOverlay.name);
       },
       () {
         refreshCards();

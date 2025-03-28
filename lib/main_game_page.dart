@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:roguelike_cardgame/providers/card_provider.dart';
 
 import 'main_game.dart';
+import 'models/enum.dart';
 
 final GlobalKey<RiverpodAwareGameWidgetState<MainGame>> gameWidgetKey =
     GlobalKey<RiverpodAwareGameWidgetState<MainGame>>();
@@ -30,16 +31,16 @@ class MainGamePageState extends State<MainGamePage> {
               key: gameWidgetKey,
               game: game,
               overlayBuilderMap: {
-                'CardOverlay': (BuildContext context, MainGame game) {
+                OVERLAY.cardOverlay.name: (BuildContext context, MainGame game) {
                   return CardOverlayWidget(game: game);
                 },
-                'CharacterOverlay': (BuildContext context, MainGame game) {
+                OVERLAY.characterOverlay.name: (BuildContext context, MainGame game) {
                   return CharacterOverlayWidget(game: game);
                 },
-                'EnemyTurnOverlay': (BuildContext context, MainGame game) {
+                OVERLAY.enemyTurnOverlay.name: (BuildContext context, MainGame game) {
                   return EnemyTurnOverlayWidget(game: game);
                 },
-                'AutoDisappearingOverlay':
+                OVERLAY.autoDisappearingOverlay.name:
                     (BuildContext context, MainGame game) {
                   return AutoDisappearingOverlayWidget(game: game);
                 }
@@ -60,7 +61,7 @@ class CardOverlayWidget extends ConsumerWidget {
     final cardState = ref.read(cardProvider);
     return GestureDetector(
       onTap: () {
-        game.overlays.remove('CardOverlay');
+        game.overlays.remove(OVERLAY.cardOverlay.name);
         game.resumeEngine();
       },
       child: Container(
@@ -89,7 +90,7 @@ class EnemyTurnOverlayWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () {
-        game.overlays.remove('EnemyTurnOverlay');
+        game.overlays.remove(OVERLAY.enemyTurnOverlay.name);
         game.resumeEngine();
       },
       child: Container(
@@ -122,7 +123,7 @@ class CharacterOverlayWidget extends ConsumerWidget {
 
     return GestureDetector(
       onTap: () {
-        game.overlays.remove('CharacterOverlay');
+        game.overlays.remove(OVERLAY.characterOverlay.name);
         game.resumeEngine();
       },
       behavior: HitTestBehavior.translucent,
@@ -191,7 +192,7 @@ class AutoDisappearingOverlayWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     // 3秒後にオーバーレイを削除
     Timer(const Duration(seconds: 1), () {
-      game.overlays.remove('AutoDisappearingOverlay');
+      game.overlays.remove(OVERLAY.autoDisappearingOverlay.name);
       game.resumeEngine();
     });
 

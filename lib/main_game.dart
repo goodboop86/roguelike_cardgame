@@ -12,6 +12,8 @@ import 'dart:async';
 
 import 'package:roguelike_cardgame/providers/sizes.dart';
 
+import 'models/enum.dart';
+
 class MainGame extends FlameGame
     with HasGameRef, RiverpodGameMixin, DragCallbacks {
   @override
@@ -30,11 +32,11 @@ class MainGame extends FlameGame
     add(
       router = RouterComponent(
         routes: {
-          'home': WorldRoute(HomePage.new),
-          'battle': WorldRoute(BattlePage.new, maintainState: false),
-          'explore': WorldRoute(ExplorePage.new, maintainState: false),
+          ROUTE.home.name: WorldRoute(HomePage.new),
+          ROUTE.battle.name: WorldRoute(BattlePage.new, maintainState: false),
+          ROUTE.explore.name: WorldRoute(ExplorePage.new, maintainState: false),
         },
-        initialRoute: 'home',
+        initialRoute: ROUTE.home.name,
       ),
     );
   }
