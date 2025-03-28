@@ -31,13 +31,6 @@ class ExploreRouteStateNotifier extends StateNotifier<ExploreRouteState> {
   }
 
 
-  int get getStage => state._stage;
-
-  int get getNextStage => state._stage + 1;
-
-  int get getPreviousStage => state._stage - 1;
-
-  List<List<Event>> get getStageList => state._stageList;
 }
 
 class ExploreRouteState implements Jsonable {
@@ -48,6 +41,14 @@ class ExploreRouteState implements Jsonable {
     _stage = stage;
     _stageList = stageList;
   }
+
+  int get getStage => _stage;
+
+  int get getNextStage => _stage + 1;
+
+  int get getPreviousStage => _stage - 1;
+
+  List<List<Event>> get getStageList => _stageList;
 
 
   @override
@@ -63,51 +64,3 @@ class ExploreRouteState implements Jsonable {
   }
 }
 
-
-class ExploreState {
-  // 唯一のインスタンスを保持
-  static final ExploreState _instance = ExploreState._internal();
-
-  // ファクトリーコンストラクタ
-  factory ExploreState() {
-    return _instance;
-  }
-
-  // プライベートコンストラクタ
-  ExploreState._internal();
-
-  late final List<List<Event>> _stageList;
-  late final int _stage;
-
-  int get stage => _stage;
-  List<List<Event>> get  stageList => _stageList;
-
-
-
-  // カウンターをインクリメントするメソッド
-  void incrementStage() {
-    _stage++;
-    // 状態が変更されたことを通知（必要に応じて）
-    _notifyListeners();
-  }
-
-  // リスナーのリスト
-  final List<Function> _listeners = [];
-
-  // リスナーを追加するメソッド
-  void addListener(Function listener) {
-    _listeners.add(listener);
-  }
-
-  // リスナーを削除するメソッド
-  void removeListener(Function listener) {
-    _listeners.remove(listener);
-  }
-
-  // リスナーに状態の変更を通知するメソッド
-  void _notifyListeners() {
-    for (final listener in _listeners) {
-      listener();
-    }
-  }
-}
