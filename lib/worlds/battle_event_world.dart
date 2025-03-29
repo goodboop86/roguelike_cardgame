@@ -15,7 +15,7 @@ import '../models/card_effect.dart';
 import '../models/enum.dart';
 import '../providers/battle_route_provider.dart';
 
-class BattlePage extends World
+class BattleEventWorld extends World
     with HasGameRef<MainGame>, RiverpodComponentMixin, WorldMixin {
   Logger log = Logger('BattlePage');
 

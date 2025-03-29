@@ -210,7 +210,7 @@ mixin WorldMixin on Component {
             paint: Paint()..color = Colors.green,
             priority: 0),
         onPressed: () {
-          router.pushNamed(ROUTE.battle.name);
+          router.pushNamed(event.name);
         },
         children: [
           TextComponent(

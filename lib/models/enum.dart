@@ -1,7 +1,10 @@
 enum ROUTE{
   home,
   explore,
-  battle
+  battle,
+  person,
+  treasureChest,
+  rest, // bonfire, bench
 }
 
 enum OVERLAY{
