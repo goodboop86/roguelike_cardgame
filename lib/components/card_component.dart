@@ -114,10 +114,12 @@ class CardComponent extends RectangleComponent
     card.effect.call(ref);
 
     // カードを削除
-    removeFromParent();
-    // 残りのカードを再配置
-    BattlePage battlePage = findParent<BattlePage>() as BattlePage;
-    battlePage.rearrangeCards();
+    if(isMounted){
+      removeFromParent();
+      // 残りのカードを再配置
+      BattlePage battlePage = findParent<BattlePage>() as BattlePage;
+      battlePage.rearrangeCards();
+    }
   }
 
   // 重なり判定

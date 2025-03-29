@@ -20,19 +20,13 @@ import '../systems/event_probabilities.dart';
 class ExplorePage extends World
     with HasGameRef<MainGame>, RiverpodComponentMixin {
   late Function stateCallbackHandler;
-  late String str;
 
   @override
   void onMount(){
     addToGameWidgetBuild(() {
-      final explore = ref.watch(exploreRouteProvider);
-      if (explore.toJsonString().isNotEmpty) {
-        // 条件を満たしたらCompleterを完了させる
-        str = explore.toJsonString();
-        print("ExplorePage# ${explore.toJsonString()}");
-
-        // ここで必要なcomponentをaddする or ..sizeなど変更でも良い。
-      }
+      ExploreRouteState state = ref.read(exploreRouteProvider);
+      print(state.toJsonString());
+      // ここで必要なcomponentをaddする or ..sizeなど変更でも良い。
     });
 
     super.onMount();
@@ -70,7 +64,7 @@ class ExplorePage extends World
 
     // カードエリアを作成
     final characterArea = CharacterAreaComponent(
-      key: ComponentKey.named('BattleCharacterArea'),
+      key: ComponentKey.named('ExploreCharacterArea'),
       position: Sizes().characterAreaPosition,
       size: Sizes().characterAreaSize, // カードエリアのサイズ
     );
@@ -165,17 +159,6 @@ class ExplorePage extends World
     events.asMap().forEach((index, event) {
       final row = index ~/ 3;
       final col = index % 3;
-      // final cardComponent = MapCardComponent(name: event.name)
-      //   ..size = Sizes().mapCardSize
-      //   ..anchor = Anchor.center
-      //   ..position = Vector2(
-      //     cardAreaCenterX +
-      //         col * (Sizes().mapCardWidth + Sizes().mapCardMargin) -
-      //         (Sizes().mapCardWidth + Sizes().mapCardMargin), // X 座標を調整
-      //     cardAreaCenterY +
-      //         row * (Sizes().mapCardHeight + Sizes().mapCardMargin) -
-      //         (Sizes().mapCardHeight + Sizes().mapCardMargin) / 2, // Y 座標を調整
-      //   ); // カードエリアの中心を基準に位置を計算
 
       final button = ButtonComponent(
         button: RectangleComponent(

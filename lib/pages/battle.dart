@@ -16,20 +16,57 @@ import '../components/player_component.dart';
 import '../models/card.dart';
 import '../models/card_effect.dart';
 import '../models/enum.dart';
+import '../providers/battle_route_provider.dart';
 
 class BattlePage extends World
     with HasGameRef<MainGame>, RiverpodComponentMixin {
   late Function stateCallbackHandler;
   final List<MapCardComponent> _cards = []; // カードリストをキャッシュ
+  bool isReflected = false; // 状態に基づいてMountが反映されたか
+
+  set setReflected(bool val) {
+    isReflected = val;
+    print("$BattlePage Reflected -> $isReflected");
+  }
+
+  @override
+  Future<void> onMount() async {
+    addToGameWidgetBuild(() async {
+      BattleRouteState state = ref.read(battleRouteProvider);
+      print(state.toJsonString());
+
+      if (!isReflected) {
+        await _addCharacters();
+        _addCards(4);
+        _addButtons();
+        setReflected = true;
+      }
+
+      // final explore = ref.watch(battleRouteProvider);
+      //
+      // if (explore.toJsonString().isNotEmpty & !isReflected) {
+      //
+      //   await _addCharacters();
+      //   _addCards(4);
+      //   _addButtons();
+      //
+      //   setReflected = true;
+      //
+      // }
+    });
+
+    super.onMount();
+  }
+
 
   @override
   Future<void> onLoad() async {
-    super.onLoad();
     Sizes().setScreenSize(game.size);
+    super.onLoad();
 
-    await _addCharacters();
-    _addCards(4);
-    _addButtons();
+    // await _addCharacters();
+    // _addCards(4);
+    // _addButtons();
   }
 
   void _enemyTurn() {
@@ -178,7 +215,9 @@ class BattlePage extends World
     void refreshCards() {
       // 現在のカードを削除
       children.whereType<CardAreaComponent>().forEach((area) {
-        remove(area);
+        if (area.isMounted) {
+          remove(area);
+        }
       });
       _cards.clear();
 
@@ -201,13 +240,15 @@ class BattlePage extends World
         game.router.pushNamed(ROUTE.explore.name);
       },
       () {
-
         game.overlays.add(OVERLAY.autoDisappearingOverlay.name);
       },
       () {
         refreshCards();
         _enemyTurn();
-      }
+      },
+      () {
+        game.router.pushNamed(ROUTE.explore.name);
+      },
     ];
 
     final buttonAreaCenterX = Sizes().buttonAreaWidth / 2;
@@ -232,8 +273,7 @@ class BattlePage extends World
       )
         ..position = Vector2(
           buttonAreaCenterX +
-              index * (Sizes().buttonWidth + Sizes().margin) -
-              (Sizes().buttonWidth + Sizes().margin), // X 座標を調整
+              (index - 1.5) * (Sizes().buttonWidth + Sizes().margin), // X 座標を調整
           buttonAreaCenterY, // Y 座標を調整
         )
         ..anchor = Anchor.center;
@@ -242,7 +282,7 @@ class BattlePage extends World
   }
 
   void _addCards(int cardCount) {
-    debugPrint("add cards");
+    debugPrint("add cards $cardCount");
 
     // カードエリアを作成
     final cardArea = CardAreaComponent(
@@ -273,19 +313,19 @@ class BattlePage extends World
     // カードコンポーネントを作成し、カードエリアの中心に集める
     final cardAreaCenterX = Sizes().cardAreaWidth / 2;
     final cardAreaCenterY = Sizes().cardAreaHeight / 2;
+    const colSize = 3; // 横方向のコンポーネントの数
     cards.asMap().forEach((index, card) {
-      final row = index ~/ 3;
-      final col = index % 3;
+      final row = index ~/ colSize;
+      final col = index % colSize;
       final cardComponent = CardComponent(card: card)
         ..size = Sizes().cardSize
         ..anchor = Anchor.center
         ..position = Vector2(
           cardAreaCenterX +
-              col * (Sizes().cardWidth + Sizes().cardMargin) -
-              (Sizes().cardWidth + Sizes().cardMargin), // X 座標を調整
+              (col - 1) * (Sizes().cardWidth + Sizes().cardMargin), // X 座標を調整
           cardAreaCenterY +
-              row * (Sizes().cardHeight + Sizes().cardMargin) -
-              (Sizes().cardHeight + Sizes().cardMargin) / 2, // Y 座標を調整
+              (row - 0.5) *
+                  (Sizes().cardHeight + Sizes().cardMargin), // Y 座標を調整
         ); // カードエリアの中心を基準に位置を計算
       cardArea.add(cardComponent);
     });

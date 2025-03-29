@@ -29,7 +29,7 @@ class BattleRouteState implements Jsonable {
   @override
   Map<String, dynamic> toJson() {
     return {
-      'name': event,
+      'name': event.name,
     };
   }
 

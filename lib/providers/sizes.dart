@@ -60,7 +60,7 @@ class Sizes {
   Vector2 get cardAreaSize => Vector2(cardAreaWidth, cardAreaHeight);
 
   double get cardAreaX => originX;
-  double get cardAreaY => originY + screenHeight*0.6;
+  double get cardAreaY => originY + screenHeight*0.55;
   Vector2 get cardAreaPosition => Vector2(cardAreaX, cardAreaY);
 
   // Card
