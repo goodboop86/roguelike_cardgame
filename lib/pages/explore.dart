@@ -22,7 +22,6 @@ class ExplorePage extends World
     with HasGameRef<MainGame>, RiverpodComponentMixin {
   Logger log = Logger('ExplorePage');
   late Function stateCallbackHandler;
-  bool isReflected = false;
 
   @override
   void onMount(){
@@ -51,8 +50,6 @@ class ExplorePage extends World
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    int currentStage = 3;
-    // await _addCharacters();
   }
 
   Future<void> _addCharacters() async {

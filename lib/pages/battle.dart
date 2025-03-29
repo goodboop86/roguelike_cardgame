@@ -4,6 +4,7 @@ import 'package:flame/input.dart';
 import 'package:flame/parallax.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart' hide Image;
+import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 import 'package:roguelike_cardgame/providers/sizes.dart';
 
@@ -22,6 +23,7 @@ class BattlePage extends World
     with HasGameRef<MainGame>, RiverpodComponentMixin {
   late Function stateCallbackHandler;
   final List<MapCardComponent> _cards = []; // カードリストをキャッシュ
+  Logger log = Logger('BattlePage');
   bool isReflected = false; // 状態に基づいてMountが反映されたか
 
   set setReflected(bool val) {
@@ -33,31 +35,28 @@ class BattlePage extends World
   Future<void> onMount() async {
     addToGameWidgetBuild(() async {
       BattleRouteState state = ref.read(battleRouteProvider);
-      print(state.toJsonString());
 
-      if (!isReflected) {
-        await _addCharacters();
+      final cardArea = children.whereType<CardAreaComponent>();
+      if (cardArea.isEmpty) {
+        log.fine("addCards");
         _addCards(4);
-        _addButtons();
-        setReflected = true;
       }
 
-      // final explore = ref.watch(battleRouteProvider);
-      //
-      // if (explore.toJsonString().isNotEmpty & !isReflected) {
-      //
-      //   await _addCharacters();
-      //   _addCards(4);
-      //   _addButtons();
-      //
-      //   setReflected = true;
-      //
-      // }
+      var characterArea = children.whereType<CharacterAreaComponent>();
+      if (characterArea.isEmpty) {
+        log.fine("addCharacters");
+        await _addCharacters();
+      }
+
+      var buttonArea = children.whereType<ButtonAreaComponent>();
+      if (buttonArea.isEmpty) {
+        log.fine("addButtons");
+        _addButtons();
+      }
     });
 
     super.onMount();
   }
-
 
   @override
   Future<void> onLoad() async {
@@ -282,7 +281,6 @@ class BattlePage extends World
   }
 
   void _addCards(int cardCount) {
-    debugPrint("add cards $cardCount");
 
     // カードエリアを作成
     final cardArea = CardAreaComponent(
