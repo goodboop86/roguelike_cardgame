@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:riverpod/riverpod.dart';
-import 'package:roguelike_cardgame/systems/event_probabilities.dart';
 
 import '../models/character_state.dart';
 import '../models/enum.dart';

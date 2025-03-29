@@ -12,27 +12,25 @@ import '../providers/explore_route_provider.dart';
 class ExplorePage extends World
     with HasGameRef<MainGame>, RiverpodComponentMixin, WorldMixin {
   Logger log = Logger('ExplorePage');
-  late Function stateCallbackHandler;
 
   @override
-  void onMount(){
+  void onMount() {
     addToGameWidgetBuild(() async {
       ExploreRouteState state = ref.read(exploreRouteProvider);
       var mapArea = children.whereType<MapAreaComponent>();
-      if(mapArea.isEmpty){
+      if (mapArea.isEmpty) {
         log.fine("addMap");
         addMap(state.stageList, state.stage);
       }
       var mapCardArea = children.whereType<MapCardAreaComponent>();
-      if(mapCardArea.isEmpty){
+      if (mapCardArea.isEmpty) {
         log.fine("addMapCards");
         addMapCards(state.stageList, state.stage, game.router);
       }
       var characterArea = children.whereType<CharacterAreaComponent>();
-      if(characterArea.isEmpty){
+      if (characterArea.isEmpty) {
         log.fine("addCharacters");
         await addSingleCharacters(game.loadParallaxComponent);
-        // await _addCharacters();
       }
     });
 
@@ -43,7 +41,4 @@ class ExplorePage extends World
   Future<void> onLoad() async {
     super.onLoad();
   }
-
-
-  void setCallback(Function fn) => stateCallbackHandler = fn;
 }

@@ -5,7 +5,6 @@ import 'package:riverpod/riverpod.dart';
 import '../models/character_state.dart';
 import '../models/enum.dart';
 import '../systems/dungeon.dart';
-import '../systems/event_probabilities.dart';
 
 // プレイヤーの状態管理プロバイダ
 final exploreRouteProvider =

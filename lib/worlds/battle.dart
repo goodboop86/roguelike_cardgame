@@ -10,7 +10,6 @@ import 'package:roguelike_cardgame/providers/sizes.dart';
 import 'dart:async';
 
 import '../components/card_area_component.dart';
-import '../components/card_component.dart';
 import '../models/card.dart';
 import '../models/card_effect.dart';
 import '../models/enum.dart';
@@ -18,15 +17,7 @@ import '../providers/battle_route_provider.dart';
 
 class BattlePage extends World
     with HasGameRef<MainGame>, RiverpodComponentMixin, WorldMixin {
-  late Function stateCallbackHandler;
-  final List<MapCardComponent> _cards = []; // カードリストをキャッシュ
   Logger log = Logger('BattlePage');
-  bool isReflected = false; // 状態に基づいてMountが反映されたか
-
-  set setReflected(bool val) {
-    isReflected = val;
-    print("$BattlePage Reflected -> $isReflected");
-  }
 
   @override
   Future<void> onMount() async {
@@ -66,7 +57,7 @@ class BattlePage extends World
 
 
   void _addButtons() {
-    void _playerTurn() {
+    void playerTurn() {
       final timerComponent = TimerComponent(
         period: 1,
         onTick: () {
@@ -97,7 +88,7 @@ class BattlePage extends World
       // タイマーを開始
       timerComponent.timer.start();
     }
-    void _enemyTurn() {
+    void enemyTurn() {
       final card = ActionCard(
         name: 'EnemyCard',
         effect: PlayerDamageEffect(),
@@ -110,7 +101,7 @@ class BattlePage extends World
 
           await Future.delayed(const Duration(seconds: 1));
 
-          _playerTurn();
+          playerTurn();
         },
         removeOnFinish: true,
       );
@@ -169,7 +160,7 @@ class BattlePage extends World
       },
       () {
         refreshCards();
-        _enemyTurn();
+        enemyTurn();
       },
       () {
         game.router.pushNamed(ROUTE.explore.name);
@@ -208,5 +199,4 @@ class BattlePage extends World
 
 
 
-  void setCallback(Function fn) => stateCallbackHandler = fn;
 }
