@@ -35,6 +35,7 @@ class BattlePage extends World
   Future<void> onMount() async {
     addToGameWidgetBuild(() async {
       BattleRouteState state = ref.read(battleRouteProvider);
+      log.config(state.toJsonString());
 
       final cardArea = children.whereType<CardAreaComponent>();
       if (cardArea.isEmpty) {

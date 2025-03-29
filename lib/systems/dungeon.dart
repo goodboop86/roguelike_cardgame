@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import '../models/enum.dart';
 import 'event_probabilities.dart';
 
 // ステージ全体の構成を決める
