@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/input.dart';
 import 'package:flame/parallax.dart';
@@ -284,6 +285,38 @@ mixin WorldMixin on Component {
         ); // カードエリアの中心を基準に位置を計算
       cardArea.add(cardComponent);
     });
+  }
+
+
+  Future<void> startTransition(Vector2 size) async {
+    print("called.");
+    final darkenOverlay = RectangleComponent(
+      size: size,
+      paint: Paint()
+        ..color = Colors.black.withValues(alpha: 0),
+      priority: 1000,
+      position: Sizes().origin
+    );
+
+    add(darkenOverlay);
+    // SequenceEffect を使用して、複数のエフェクトを順番に実行
+    await darkenOverlay.add(
+      SequenceEffect(
+        [
+          // 暗転アニメーション
+          OpacityEffect.to(1, EffectController(duration: 0.5)),
+          // 待機
+          OpacityEffect.to(1, EffectController(duration: 0.5), onComplete: () => (print("wait complete"))),
+          // 明転アニメーション
+          OpacityEffect.to(0, EffectController(duration: 0.5)),
+        ],
+        onComplete: () {
+          remove(darkenOverlay);
+          // 画面遷移処理
+          // ...
+        },
+      ),
+    );
   }
 
 

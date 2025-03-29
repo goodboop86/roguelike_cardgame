@@ -163,7 +163,7 @@ class BattleEventWorld extends World
         enemyTurn();
       },
       () {
-        game.router.pushNamed(ROUTE.explore.name);
+        startTransition(game.size);
       },
     ];
 
