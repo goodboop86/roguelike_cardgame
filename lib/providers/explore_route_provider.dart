@@ -42,13 +42,13 @@ class ExploreRouteState implements Jsonable {
     _stageList = stageList;
   }
 
-  int get getStage => _stage;
+  int get stage => _stage;
 
-  int get getNextStage => _stage + 1;
+  int get nextStage => _stage + 1;
 
-  int get getPreviousStage => _stage - 1;
+  int get previousStage => _stage - 1;
 
-  List<List<Event>> get getStageList => _stageList;
+  List<List<Event>> get stageList => _stageList;
 
 
   @override

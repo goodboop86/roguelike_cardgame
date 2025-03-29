@@ -4,6 +4,7 @@ import 'package:flame/input.dart';
 import 'package:flame/parallax.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart' hide Image;
+import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 import 'package:roguelike_cardgame/providers/player_provider.dart';
 import 'package:roguelike_cardgame/providers/sizes.dart';
@@ -19,14 +20,29 @@ import '../systems/event_probabilities.dart';
 
 class ExplorePage extends World
     with HasGameRef<MainGame>, RiverpodComponentMixin {
+  Logger log = Logger('ExplorePage');
   late Function stateCallbackHandler;
+  bool isReflected = false;
 
   @override
   void onMount(){
-    addToGameWidgetBuild(() {
+    addToGameWidgetBuild(() async {
       ExploreRouteState state = ref.read(exploreRouteProvider);
-      print(state.toJsonString());
-      // ここで必要なcomponentをaddする or ..sizeなど変更でも良い。
+      var mapArea = children.whereType<MapAreaComponent>();
+      if(mapArea.isEmpty){
+        log.fine("addMap");
+        _addMap(state.stageList, state.stage);
+      }
+      var mapCardArea = children.whereType<MapCardAreaComponent>();
+      if(mapCardArea.isEmpty){
+        log.fine("addMapCards");
+        _addMapCards(state.stageList, state.stage);
+      }
+      var characterArea = children.whereType<CharacterAreaComponent>();
+      if(characterArea.isEmpty){
+        log.fine("addCharacters");
+        await _addCharacters();
+      }
     });
 
     super.onMount();
@@ -36,10 +52,7 @@ class ExplorePage extends World
   Future<void> onLoad() async {
     super.onLoad();
     int currentStage = 3;
-    await _addCharacters();
-    List<List<Event>> stageList = generateNestedListWithFixedLength(11, 1, 3);
-    _addMap(stageList, currentStage);
-    _addMapCards(stageList, currentStage);
+    // await _addCharacters();
   }
 
   Future<void> _addCharacters() async {
@@ -142,7 +155,6 @@ class ExplorePage extends World
   }
 
   void _addMapCards(List<List<Event>> stageList, int currentStage) {
-    debugPrint("add map cards");
 
     List<Event> events = stageList[currentStage];
 
