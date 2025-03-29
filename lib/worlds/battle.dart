@@ -6,21 +6,20 @@ import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
+import 'package:roguelike_cardgame/mixin/world_mixin.dart';
 import 'package:roguelike_cardgame/providers/sizes.dart';
 
 import 'dart:async';
 
 import '../components/card_area_component.dart';
 import '../components/card_component.dart';
-import '../components/enemy_component.dart';
-import '../components/player_component.dart';
 import '../models/card.dart';
 import '../models/card_effect.dart';
 import '../models/enum.dart';
 import '../providers/battle_route_provider.dart';
 
 class BattlePage extends World
-    with HasGameRef<MainGame>, RiverpodComponentMixin {
+    with HasGameRef<MainGame>, RiverpodComponentMixin, WorldMixin {
   late Function stateCallbackHandler;
   final List<MapCardComponent> _cards = []; // カードリストをキャッシュ
   Logger log = Logger('BattlePage');
@@ -46,7 +45,7 @@ class BattlePage extends World
       var characterArea = children.whereType<CharacterAreaComponent>();
       if (characterArea.isEmpty) {
         log.fine("addCharacters");
-        await _addCharacters();
+        await addCharacters(game.loadParallaxComponent);
       }
 
       var buttonArea = children.whereType<ButtonAreaComponent>();
@@ -64,9 +63,6 @@ class BattlePage extends World
     Sizes().setScreenSize(game.size);
     super.onLoad();
 
-    // await _addCharacters();
-    // _addCards(4);
-    // _addButtons();
   }
 
   void _enemyTurn() {
@@ -140,75 +136,6 @@ class BattlePage extends World
 
     // タイマーを開始
     timerComponent.timer.start();
-  }
-
-  Future<void> _addCharacters() async {
-    final parallaxComponent = await game.loadParallaxComponent(
-      [
-        ParallaxImageData('parallax/1.png'),
-        ParallaxImageData('parallax/2.png'),
-        ParallaxImageData('parallax/3.png'),
-        ParallaxImageData('parallax/5.png'),
-        ParallaxImageData('parallax/6.png'),
-        ParallaxImageData('parallax/7.png'),
-        ParallaxImageData('parallax/8.png'),
-        ParallaxImageData('parallax/10.png'),
-      ],
-      baseVelocity: Vector2(0.1, 0),
-      size: Sizes().characterAreaSize,
-      position: Sizes().characterAreaPosition,
-      velocityMultiplierDelta: Vector2(1.8, 1.0),
-    );
-
-    add(parallaxComponent);
-
-    // カードエリアを作成
-    final characterArea = CharacterAreaComponent(
-      key: ComponentKey.named('BattleCharacterArea'),
-      position: Sizes().characterAreaPosition,
-      size: Sizes().characterAreaSize, // カードエリアのサイズ
-    );
-    add(characterArea);
-
-    // Player の配置 (左上)
-    PlayerComponent player = PlayerComponent()
-      ..size = Sizes().playerAreaSize
-      ..position = Sizes().playerAreaPosition;
-
-    // Player の配置 (左上)
-    EnemyComponent enemy = EnemyComponent()
-      ..size = Sizes().enemyAreaSize
-      ..position = Sizes().enemyAreaPosition;
-    characterArea.addAll([player, enemy]);
-
-    var playerAnimation = SpriteAnimationComponent.fromFrameData(
-        await Flame.images.load('noBKG_KnightIdle_strip.png'),
-        SpriteAnimationData.sequenced(
-          textureSize: Vector2.all(64),
-          amount: 15,
-          stepTime: 0.08,
-        ))
-      ..anchor = Anchor.bottomCenter
-      ..size = Vector2(128, 128)
-      ..position =
-          Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
-
-    var enemyAnimation = SpriteAnimationComponent.fromFrameData(
-        await Flame.images.load('noBKG_KnightIdle_strip.png'),
-        SpriteAnimationData.sequenced(
-          textureSize: Vector2.all(64),
-          amount: 15,
-          stepTime: 0.08,
-        ))
-      ..anchor = Anchor.bottomCenter
-      ..size = Vector2(128, 128)
-      ..position = Vector2(Sizes().enemyAreaWidth / 2, Sizes().enemyAreaHeight)
-      ..flipHorizontally();
-
-    player.add(playerAnimation);
-    player.add(PlayerHpBar());
-    enemy.add(enemyAnimation);
-    enemy.add(EnemyHpBar());
   }
 
   void _addButtons() {

@@ -4,12 +4,12 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
-import 'package:roguelike_cardgame/pages/battle.dart';
-import 'package:roguelike_cardgame/pages/explore.dart';
-import 'package:roguelike_cardgame/pages/home.dart';
 import 'dart:async';
 
 import 'package:roguelike_cardgame/providers/sizes.dart';
+import 'package:roguelike_cardgame/worlds/battle.dart';
+import 'package:roguelike_cardgame/worlds/explore.dart';
+import 'package:roguelike_cardgame/worlds/home.dart';
 
 import 'models/enum.dart';
 

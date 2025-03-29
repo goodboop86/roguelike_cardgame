@@ -1,59 +1,20 @@
-import 'package:flame/components.dart' hide Timer;
+import 'dart:ui';
+
+import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/input.dart';
 import 'package:flame/parallax.dart';
-import 'package:flame_riverpod/flame_riverpod.dart';
-import 'package:flutter/material.dart' hide Image;
-import 'package:logging/logging.dart';
-import 'package:roguelike_cardgame/main_game.dart';
-import 'package:roguelike_cardgame/providers/player_provider.dart';
-import 'package:roguelike_cardgame/providers/sizes.dart';
-
-import 'dart:async';
+import 'package:flutter/material.dart';
 
 import '../components/card_area_component.dart';
+import '../components/enemy_component.dart';
 import '../components/player_component.dart';
 import '../models/enum.dart';
-import '../providers/explore_route_provider.dart';
-import '../systems/dungeon.dart';
-import '../systems/event_probabilities.dart';
+import '../providers/sizes.dart';
 
-class ExplorePage extends World
-    with HasGameRef<MainGame>, RiverpodComponentMixin {
-  Logger log = Logger('ExplorePage');
-  late Function stateCallbackHandler;
-
-  @override
-  void onMount(){
-    addToGameWidgetBuild(() async {
-      ExploreRouteState state = ref.read(exploreRouteProvider);
-      var mapArea = children.whereType<MapAreaComponent>();
-      if(mapArea.isEmpty){
-        log.fine("addMap");
-        _addMap(state.stageList, state.stage);
-      }
-      var mapCardArea = children.whereType<MapCardAreaComponent>();
-      if(mapCardArea.isEmpty){
-        log.fine("addMapCards");
-        _addMapCards(state.stageList, state.stage);
-      }
-      var characterArea = children.whereType<CharacterAreaComponent>();
-      if(characterArea.isEmpty){
-        log.fine("addCharacters");
-        await _addCharacters();
-      }
-    });
-
-    super.onMount();
-  }
-
-  @override
-  Future<void> onLoad() async {
-    super.onLoad();
-  }
-
-  Future<void> _addCharacters() async {
-    final parallaxComponent = await game.loadParallaxComponent(
+mixin WorldMixin on Component {
+  Future<void> addSingleCharacters(loadParallaxComponent) async {
+    final parallaxComponent = await loadParallaxComponent(
       [
         ParallaxImageData('parallax/1.png'),
         ParallaxImageData('parallax/2.png'),
@@ -97,13 +58,84 @@ class ExplorePage extends World
       ..anchor = Anchor.bottomCenter
       ..size = Vector2(128, 128)
       ..position =
-          Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
+      Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
 
     player.add(playerAnimation);
     player.add(PlayerHpBar());
+
   }
 
-  void _addMap(List<List<Event>> stageList, int currentStage) {
+  Future<void> addCharacters(loadParallaxComponent) async {
+    final parallaxComponent = await loadParallaxComponent(
+      [
+        ParallaxImageData('parallax/1.png'),
+        ParallaxImageData('parallax/2.png'),
+        ParallaxImageData('parallax/3.png'),
+        ParallaxImageData('parallax/5.png'),
+        ParallaxImageData('parallax/6.png'),
+        ParallaxImageData('parallax/7.png'),
+        ParallaxImageData('parallax/8.png'),
+        ParallaxImageData('parallax/10.png'),
+      ],
+      baseVelocity: Vector2(0.1, 0),
+      size: Sizes().characterAreaSize,
+      position: Sizes().characterAreaPosition,
+      velocityMultiplierDelta: Vector2(1.8, 1.0),
+    );
+
+    add(parallaxComponent);
+
+    // カードエリアを作成
+    final characterArea = CharacterAreaComponent(
+      key: ComponentKey.named('BattleCharacterArea'),
+      position: Sizes().characterAreaPosition,
+      size: Sizes().characterAreaSize, // カードエリアのサイズ
+    );
+    add(characterArea);
+
+    // Player の配置 (左上)
+    PlayerComponent player = PlayerComponent()
+      ..size = Sizes().playerAreaSize
+      ..position = Sizes().playerAreaPosition;
+
+    // Player の配置 (左上)
+    EnemyComponent enemy = EnemyComponent()
+      ..size = Sizes().enemyAreaSize
+      ..position = Sizes().enemyAreaPosition;
+    characterArea.addAll([player, enemy]);
+
+    var playerAnimation = SpriteAnimationComponent.fromFrameData(
+        await Flame.images.load('noBKG_KnightIdle_strip.png'),
+        SpriteAnimationData.sequenced(
+          textureSize: Vector2.all(64),
+          amount: 15,
+          stepTime: 0.08,
+        ))
+      ..anchor = Anchor.bottomCenter
+      ..size = Vector2(128, 128)
+      ..position =
+      Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
+
+    var enemyAnimation = SpriteAnimationComponent.fromFrameData(
+        await Flame.images.load('noBKG_KnightIdle_strip.png'),
+        SpriteAnimationData.sequenced(
+          textureSize: Vector2.all(64),
+          amount: 15,
+          stepTime: 0.08,
+        ))
+      ..anchor = Anchor.bottomCenter
+      ..size = Vector2(128, 128)
+      ..position = Vector2(Sizes().enemyAreaWidth / 2, Sizes().enemyAreaHeight)
+      ..flipHorizontally();
+
+    player.add(playerAnimation);
+    player.add(PlayerHpBar());
+    enemy.add(enemyAnimation);
+    enemy.add(EnemyHpBar());
+  }
+
+
+  void addMap(List<List<Event>> stageList, int currentStage) {
     final mapArea = MapAreaComponent(
       position: Sizes().mapAreaPosition,
       size: Sizes().mapAreaSize, // カードエリアのサイズ
@@ -132,18 +164,18 @@ class ExplorePage extends World
               position: Sizes().mapSize,
               anchor: Anchor.center,
               textRenderer:
-                  TextPaint(style: const TextStyle(color: Colors.white)),
+              TextPaint(style: const TextStyle(color: Colors.white)),
             ),
           ],
         )..position = Vector2(
-            depth * totalMapWidth +
-                (Sizes().mapAreaWidth - (stageNum * totalMapWidth)) /
-                    2, // X 座標を調整
-            choice * totalMapHeight +
-                (Sizes().mapAreaHeight - (choiceNum * totalMapHeight)) / 2
-            // choice * (Sizes().mapWidth / 2 + Sizes().mini_margin)
-            , // Y 座標を調整
-          );
+          depth * totalMapWidth +
+              (Sizes().mapAreaWidth - (stageNum * totalMapWidth)) /
+                  2, // X 座標を調整
+          choice * totalMapHeight +
+              (Sizes().mapAreaHeight - (choiceNum * totalMapHeight)) / 2
+          // choice * (Sizes().mapWidth / 2 + Sizes().mini_margin)
+          , // Y 座標を調整
+        );
         // ..anchor = Anchor.center;
 
         mapArea.add(button);
@@ -151,7 +183,7 @@ class ExplorePage extends World
     });
   }
 
-  void _addMapCards(List<List<Event>> stageList, int currentStage) {
+  void addMapCards(List<List<Event>> stageList, int currentStage, router) {
 
     List<Event> events = stageList[currentStage];
 
@@ -175,7 +207,7 @@ class ExplorePage extends World
             paint: Paint()..color = Colors.green,
             priority: 0),
         onPressed: () {
-          game.router.pushNamed(ROUTE.battle.name);
+          router.pushNamed(ROUTE.battle.name);
         },
         children: [
           TextComponent(
@@ -184,7 +216,7 @@ class ExplorePage extends World
             anchor: Anchor.center,
             position: Sizes().mapCardSize / 2,
             textRenderer:
-                TextPaint(style: const TextStyle(color: Colors.white)),
+            TextPaint(style: const TextStyle(color: Colors.white)),
           ),
         ],
       )
@@ -201,5 +233,6 @@ class ExplorePage extends World
     });
   }
 
-  void setCallback(Function fn) => stateCallbackHandler = fn;
+
+
 }

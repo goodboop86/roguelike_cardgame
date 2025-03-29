@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:roguelike_cardgame/components/card_area_component.dart';
 import '../models/card.dart';
 import '../models/enum.dart';
-import '../pages/battle.dart';
+import '../worlds/battle.dart';
 import '../providers/card_provider.dart';
 
 class CardComponent extends RectangleComponent
