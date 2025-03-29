@@ -7,8 +7,11 @@ import 'package:flame/parallax.dart';
 import 'package:flutter/material.dart';
 
 import '../components/card_area_component.dart';
+import '../components/card_component.dart';
 import '../components/enemy_component.dart';
 import '../components/player_component.dart';
+import '../models/card.dart';
+import '../models/card_effect.dart';
 import '../models/enum.dart';
 import '../providers/sizes.dart';
 
@@ -230,6 +233,56 @@ mixin WorldMixin on Component {
               (Sizes().mapCardHeight + Sizes().mapCardMargin) / 2, // Y 座標を調整
         );
       mapCardArea.add(button);
+    });
+  }
+
+
+  void addCards(int _) {
+
+    // カードエリアを作成
+    final cardArea = CardAreaComponent(
+      position: Sizes().cardAreaPosition,
+      size: Sizes().cardAreaSize, // カードエリアのサイズ
+    );
+    add(cardArea);
+
+    // カードのリストを作成
+    final cards = <ActionCard>[];
+    final effects = [
+      AllDamageEffect(),
+      AllDamageEffect(),
+      AllDamageEffect(),
+      PlayerHealEffect(),
+      BuffEffect(),
+      DebuffEffect(),
+    ];
+    effects.asMap().forEach((index, effect) {
+      // asMap() と forEach() を使用
+      final card = ActionCard(
+        name: 'Card ${index + 1}',
+        effect: effect,
+      );
+      cards.add(card);
+    });
+
+    // カードコンポーネントを作成し、カードエリアの中心に集める
+    final cardAreaCenterX = Sizes().cardAreaWidth / 2;
+    final cardAreaCenterY = Sizes().cardAreaHeight / 2;
+    const colSize = 3; // 横方向のコンポーネントの数
+    cards.asMap().forEach((index, card) {
+      final row = index ~/ colSize;
+      final col = index % colSize;
+      final cardComponent = CardComponent(card: card)
+        ..size = Sizes().cardSize
+        ..anchor = Anchor.center
+        ..position = Vector2(
+          cardAreaCenterX +
+              (col - 1) * (Sizes().cardWidth + Sizes().cardMargin), // X 座標を調整
+          cardAreaCenterY +
+              (row - 0.5) *
+                  (Sizes().cardHeight + Sizes().cardMargin), // Y 座標を調整
+        ); // カードエリアの中心を基準に位置を計算
+      cardArea.add(cardComponent);
     });
   }
 

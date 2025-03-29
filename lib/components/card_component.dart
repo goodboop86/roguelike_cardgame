@@ -116,9 +116,6 @@ class CardComponent extends RectangleComponent
     // カードを削除
     if(isMounted){
       removeFromParent();
-      // 残りのカードを再配置
-      BattlePage battlePage = findParent<BattlePage>() as BattlePage;
-      battlePage.rearrangeCards();
     }
   }
 

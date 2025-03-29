@@ -1,7 +1,5 @@
 import 'package:flame/components.dart' hide Timer;
-import 'package:flame/flame.dart';
 import 'package:flame/input.dart';
-import 'package:flame/parallax.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:logging/logging.dart';
@@ -36,16 +34,16 @@ class BattlePage extends World
       BattleRouteState state = ref.read(battleRouteProvider);
       log.config(state.toJsonString());
 
-      final cardArea = children.whereType<CardAreaComponent>();
-      if (cardArea.isEmpty) {
-        log.fine("addCards");
-        _addCards(4);
-      }
-
       var characterArea = children.whereType<CharacterAreaComponent>();
       if (characterArea.isEmpty) {
         log.fine("addCharacters");
         await addCharacters(game.loadParallaxComponent);
+      }
+
+      final cardArea = children.whereType<CardAreaComponent>();
+      if (cardArea.isEmpty) {
+        log.fine("addCards");
+        addCards(4);
       }
 
       var buttonArea = children.whereType<ButtonAreaComponent>();
@@ -65,80 +63,81 @@ class BattlePage extends World
 
   }
 
-  void _enemyTurn() {
-    final card = ActionCard(
-      name: 'EnemyCard',
-      effect: PlayerDamageEffect(),
-    );
 
-    final timerComponent = TimerComponent(
-      period: 1,
-      onTick: () async {
-        card.effect.call(ref);
-
-        await Future.delayed(const Duration(seconds: 1));
-
-        _playerTurn();
-      },
-      removeOnFinish: true,
-    );
-
-    // RectangleComponentをTimerComponentの子として追加
-    timerComponent.add(RectangleComponent(
-      size: Vector2(200, 200),
-      position: Sizes().screenSize / 2,
-      anchor: Anchor.center,
-      paint: Paint()..color = Colors.black87,
-    ));
-
-    // TextComponentをTimerComponentの子として追加
-    timerComponent.add(TextComponent(
-      text: 'Enemy Turn',
-      position: Sizes().screenSize / 2,
-      anchor: Anchor.center,
-      textRenderer: TextPaint(style: const TextStyle(color: Colors.white)),
-    ));
-
-    // TimerComponentをゲームに追加
-    add(timerComponent);
-
-    // タイマーを開始
-    timerComponent.timer.start();
-  }
-
-  void _playerTurn() {
-    final timerComponent = TimerComponent(
-      period: 1,
-      onTick: () {
-        debugPrint("PlayerTurn start!");
-      },
-      removeOnFinish: true,
-    );
-
-    // RectangleComponentをTimerComponentの子として追加
-    timerComponent.add(RectangleComponent(
-      size: Vector2(200, 200),
-      position: Sizes().screenSize / 2,
-      anchor: Anchor.center,
-      paint: Paint()..color = Colors.black87,
-    ));
-
-    // TextComponentをTimerComponentの子として追加
-    timerComponent.add(TextComponent(
-      text: 'Player Turn',
-      position: Sizes().screenSize / 2,
-      anchor: Anchor.center,
-      textRenderer: TextPaint(style: const TextStyle(color: Colors.white)),
-    ));
-
-    // TimerComponentをゲームに追加
-    add(timerComponent);
-
-    // タイマーを開始
-    timerComponent.timer.start();
-  }
 
   void _addButtons() {
+    void _playerTurn() {
+      final timerComponent = TimerComponent(
+        period: 1,
+        onTick: () {
+          debugPrint("PlayerTurn start!");
+        },
+        removeOnFinish: true,
+      );
+
+      // RectangleComponentをTimerComponentの子として追加
+      timerComponent.add(RectangleComponent(
+        size: Vector2(200, 200),
+        position: Sizes().screenSize / 2,
+        anchor: Anchor.center,
+        paint: Paint()..color = Colors.black87,
+      ));
+
+      // TextComponentをTimerComponentの子として追加
+      timerComponent.add(TextComponent(
+        text: 'Player Turn',
+        position: Sizes().screenSize / 2,
+        anchor: Anchor.center,
+        textRenderer: TextPaint(style: const TextStyle(color: Colors.white)),
+      ));
+
+      // TimerComponentをゲームに追加
+      add(timerComponent);
+
+      // タイマーを開始
+      timerComponent.timer.start();
+    }
+    void _enemyTurn() {
+      final card = ActionCard(
+        name: 'EnemyCard',
+        effect: PlayerDamageEffect(),
+      );
+
+      final timerComponent = TimerComponent(
+        period: 1,
+        onTick: () async {
+          card.effect.call(ref);
+
+          await Future.delayed(const Duration(seconds: 1));
+
+          _playerTurn();
+        },
+        removeOnFinish: true,
+      );
+
+      // RectangleComponentをTimerComponentの子として追加
+      timerComponent.add(RectangleComponent(
+        size: Vector2(200, 200),
+        position: Sizes().screenSize / 2,
+        anchor: Anchor.center,
+        paint: Paint()..color = Colors.black87,
+      ));
+
+      // TextComponentをTimerComponentの子として追加
+      timerComponent.add(TextComponent(
+        text: 'Enemy Turn',
+        position: Sizes().screenSize / 2,
+        anchor: Anchor.center,
+        textRenderer: TextPaint(style: const TextStyle(color: Colors.white)),
+      ));
+
+      // TimerComponentをゲームに追加
+      add(timerComponent);
+
+      // タイマーを開始
+      timerComponent.timer.start();
+    }
+
     void refreshCards() {
       // 現在のカードを削除
       children.whereType<CardAreaComponent>().forEach((area) {
@@ -146,10 +145,9 @@ class BattlePage extends World
           remove(area);
         }
       });
-      _cards.clear();
 
       // 新しいカードを生成して配置
-      _addCards(4); // カード枚数を指定
+      addCards(4); // カード枚数を指定
     }
 
     // カードエリアを作成
@@ -208,68 +206,7 @@ class BattlePage extends World
     });
   }
 
-  void _addCards(int cardCount) {
 
-    // カードエリアを作成
-    final cardArea = CardAreaComponent(
-      position: Sizes().cardAreaPosition,
-      size: Sizes().cardAreaSize, // カードエリアのサイズ
-    );
-    add(cardArea);
-
-    // カードのリストを作成
-    final cards = <ActionCard>[];
-    final effects = [
-      AllDamageEffect(),
-      AllDamageEffect(),
-      AllDamageEffect(),
-      PlayerHealEffect(),
-      BuffEffect(),
-      DebuffEffect(),
-    ];
-    effects.asMap().forEach((index, effect) {
-      // asMap() と forEach() を使用
-      final card = ActionCard(
-        name: 'Card ${index + 1}',
-        effect: effect,
-      );
-      cards.add(card);
-    });
-
-    // カードコンポーネントを作成し、カードエリアの中心に集める
-    final cardAreaCenterX = Sizes().cardAreaWidth / 2;
-    final cardAreaCenterY = Sizes().cardAreaHeight / 2;
-    const colSize = 3; // 横方向のコンポーネントの数
-    cards.asMap().forEach((index, card) {
-      final row = index ~/ colSize;
-      final col = index % colSize;
-      final cardComponent = CardComponent(card: card)
-        ..size = Sizes().cardSize
-        ..anchor = Anchor.center
-        ..position = Vector2(
-          cardAreaCenterX +
-              (col - 1) * (Sizes().cardWidth + Sizes().cardMargin), // X 座標を調整
-          cardAreaCenterY +
-              (row - 0.5) *
-                  (Sizes().cardHeight + Sizes().cardMargin), // Y 座標を調整
-        ); // カードエリアの中心を基準に位置を計算
-      cardArea.add(cardComponent);
-    });
-  }
-
-  void rearrangeCards() {
-    final totalCardWidth = _cards.length * Sizes().cardWidth;
-    final totalMarginWidth = (_cards.length - 1) * Sizes().cardMargin;
-    final totalWidth = totalCardWidth + totalMarginWidth;
-
-    final startX = (Sizes().screenWidth - totalWidth) / 2;
-
-    for (int i = 0; i < _cards.length; i++) {
-      _cards[i].position = Vector2(
-          startX + i * (Sizes().cardWidth + Sizes().cardMargin),
-          Sizes().cardHeight);
-    }
-  }
 
   void setCallback(Function fn) => stateCallbackHandler = fn;
 }
