@@ -4,14 +4,15 @@ import 'package:flame/effects.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/input.dart';
 import 'package:flame/parallax.dart';
+import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:roguelike_cardgame/providers/deck_provider.dart';
 
 import '../components/card_area_component.dart';
 import '../components/card_component.dart';
 import '../components/enemy_component.dart';
 import '../components/player_component.dart';
 import '../models/card.dart';
-import '../models/card_effect.dart';
 import '../models/enum.dart';
 import '../providers/sizes.dart';
 
@@ -186,7 +187,7 @@ mixin WorldMixin on Component {
     });
   }
 
-  void addMapCards(List<List<Event>> stageList, int currentStage, router) {
+  void addMapCards(List<List<Event>> stageList, int currentStage, router, ComponentRef ref) {
 
     List<Event> events = stageList[currentStage];
 
@@ -210,6 +211,9 @@ mixin WorldMixin on Component {
             paint: Paint()..color = Colors.green,
             priority: 0),
         onPressed: () {
+          if(event == Event.battle){
+            ref.read(deckProvider.notifier).startTurn();
+          }
           router.pushNamed(event.name);
         },
         children: [
@@ -237,7 +241,7 @@ mixin WorldMixin on Component {
   }
 
 
-  void addCards(int _) {
+  void addCards(List<Card_> cards) {
 
     // カードエリアを作成
     final cardArea = CardAreaComponent(
@@ -245,24 +249,6 @@ mixin WorldMixin on Component {
       size: Sizes().cardAreaSize, // カードエリアのサイズ
     );
     add(cardArea);
-
-    // カードのリストを作成
-    final cards = <Card_>[];
-    final cardDetails = [
-      AllDamageEffect(),
-      AllDamageEffect(),
-      AllDamageEffect(),
-      PlayerHealEffect(),
-      BuffEffect(),
-      DebuffEffect(),
-    ];
-    cardDetails.asMap().forEach((index, effect) {
-      // asMap() と forEach() を使用
-      final card = Card_(
-        effect: effect,
-      );
-      cards.add(card);
-    });
 
     // カードコンポーネントを作成し、カードエリアの中心に集める
     final cardAreaCenterX = Sizes().cardAreaWidth / 2;

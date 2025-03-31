@@ -5,6 +5,7 @@ import 'package:flutter/material.dart' hide Image;
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 import 'package:roguelike_cardgame/mixin/world_mixin.dart';
+import 'package:roguelike_cardgame/providers/deck_provider.dart';
 import 'package:roguelike_cardgame/providers/sizes.dart';
 
 import 'dart:async';
@@ -31,16 +32,25 @@ class BattleEventWorld extends World
         await addCharacters(game.loadParallaxComponent);
       }
 
-      final cardArea = children.whereType<CardAreaComponent>();
-      if (cardArea.isEmpty) {
-        log.fine("addCards");
-        addCards(4);
-      }
 
       var buttonArea = children.whereType<ButtonAreaComponent>();
       if (buttonArea.isEmpty) {
         log.fine("addButtons");
         _addButtons();
+      }
+    });
+
+    addToGameWidgetBuild(() async {
+      DeckState state = ref.read(deckProvider);
+      log.config(state.toJsonString());
+
+      if(state.deck.hand.isNotEmpty){
+        print("deck is not empty!");
+        final cardArea = children.whereType<CardAreaComponent>();
+        if (cardArea.isEmpty) {
+          log.fine("addCards xD");
+          addCards(state.deck.hand);
+        }
       }
     });
 
@@ -132,12 +142,18 @@ class BattleEventWorld extends World
       // 現在のカードを削除
       children.whereType<CardAreaComponent>().forEach((area) {
         if (area.isMounted) {
+          print("remove!!!!!");
           remove(area);
         }
       });
 
+      print("refresh done!");
+      final area = children.whereType<CardAreaComponent>();
+      print("has area? -> $area");
+      print("mounted? --> ${area.first.isMounted}");
+
       // 新しいカードを生成して配置
-      addCards(4); // カード枚数を指定
+      // addCards(); // カード枚数を指定
     }
 
     // カードエリアを作成

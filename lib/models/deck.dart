@@ -6,26 +6,31 @@ import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:roguelike_cardgame/models/card.dart';
 
 
-
 // カードの情報を保持するクラス
 class Deck {
-  final List<Card_> _deck;
+  int maxHandNum;
+  List<Card_> _deck = [];
   final List<Card_> _hand = [];
   final List<Card_> _trash = []; // 墓地
   final List<Card_> _excluded = []; // 除外
   Card_? _lastPlayedCard; // 直前に使ったカード
   int _nextCardDamageBuff = 0; // 次にプレイするカードへのダメージバフ
 
-  Deck({required List<Card_> cards}) : _deck = List.from(cards);
+  List<Card_> get hand => _hand;
 
-  void drawHand() {
-    while (_hand.length < 6 && _deck.isNotEmpty) {
+  Deck({required List<Card_> cards, required this.maxHandNum}) {
+    _deck = List.from(cards);
+  }
+
+
+  void _drawHand() {
+    while (_hand.length < maxHandNum && _deck.isNotEmpty) {
       _hand.add(_deck.removeAt(0));
     }
   }
 
   Deck playCard(Card_ card, ComponentRef ref, FlameGame<World> game) {
-    print("${card.effect.name}");
+    print(card.effect.name);
     if (_hand.contains(card)) {
       _hand.remove(card);
       print("${_hand}");
@@ -43,22 +48,24 @@ class Deck {
     }
   }
 
-  void startTurn() {
+  Deck startTurn() {
     // 手札をデッキに戻す
     _deck.addAll(_hand);
     _hand.clear();
 
     // デッキが6枚未満の場合、墓地のカードをデッキに戻す
-    if (_deck.length < 6) {
+    if (_deck.length < maxHandNum) {
       _deck.addAll(_trash);
       _trash.clear();
     }
 
     // デッキをシャッフルして手札を引く
     _deck.shuffle(Random());
-    drawHand();
+    _drawHand();
     _lastPlayedCard = null; // ターン開始時に直前に使ったカードをリセット
     _nextCardDamageBuff = 0; // ターン開始時にバフをリセット
+
+    return this;
   }
 
   @override

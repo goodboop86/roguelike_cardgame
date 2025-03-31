@@ -13,7 +13,7 @@ import '../models/card.dart';
 
 // プレイヤーの状態管理プロバイダ
 final deckProvider = StateNotifierProvider<DeckStateNotifier, DeckState>((ref) {
-  return DeckStateNotifier(DeckState(deck: Deck(cards: getCards())));
+  return DeckStateNotifier(DeckState(deck: Deck(cards: getCards(), maxHandNum: 4)));
 });
 
 class DeckStateNotifier extends StateNotifier<DeckState> {
@@ -22,6 +22,10 @@ class DeckStateNotifier extends StateNotifier<DeckState> {
   void playCard(Card_ card, ComponentRef ref, FlameGame<World> game) {
     print("DeckNotifier process");
     state = DeckState(deck: state.deck.playCard(card, ref, game));
+  }
+
+  void startTurn() {
+    state = DeckState(deck: state.deck.startTurn());
   }
 }
 
@@ -33,7 +37,7 @@ class DeckState implements Jsonable {
   @override
   Map<String, dynamic> toJson() {
     return {
-      'name': "hello",
+      'deck': deck.toString(),
     };
   }
 

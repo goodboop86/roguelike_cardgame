@@ -25,7 +25,7 @@ class ExploreWorld extends World
       var mapCardArea = children.whereType<MapCardAreaComponent>();
       if (mapCardArea.isEmpty) {
         log.fine("addMapCards");
-        addMapCards(state.stageList, state.stage, game.router);
+        addMapCards(state.stageList, state.stage, game.router, ref);
       }
       var characterArea = children.whereType<CharacterAreaComponent>();
       if (characterArea.isEmpty) {

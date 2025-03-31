@@ -12,6 +12,7 @@ class HomePage extends World
   late final ButtonComponent button;
 
   void _start() {
+    // ステージを作成し、1つ進める
     ref.read(exploreRouteProvider.notifier).initialize(
           stageLength: 11,
           minChoice: 1,
