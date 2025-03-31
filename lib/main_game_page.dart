@@ -65,7 +65,7 @@ class CardOverlayWidget extends ConsumerWidget {
         game.resumeEngine();
       },
       child: Container(
-        color: Colors.black.withOpacity(0.5),
+        color: Colors.black.withValues(alpha: 0.5),
         child: Center(
           child: Container(
             width: 200,
@@ -94,7 +94,7 @@ class EnemyTurnOverlayWidget extends ConsumerWidget {
         game.resumeEngine();
       },
       child: Container(
-        color: Colors.black.withOpacity(0.5),
+        color: Colors.black.withValues(alpha: 0.5),
         child: Center(
           child: Container(
             width: 200,
@@ -135,7 +135,7 @@ class CharacterOverlayWidget extends ConsumerWidget {
             height: screenHeight,
             child: Row(
               children: [
-                Expanded(
+                const Expanded(
                   flex: 2,
                   child: ColoredBox(
                     color: Colors.yellow, // プレイヤー部分を黄色に設定
@@ -144,10 +144,10 @@ class CharacterOverlayWidget extends ConsumerWidget {
                 Expanded(
                   flex: 3,
                   child: ColoredBox(
-                    color: Colors.black.withOpacity(0.5), // 領域部分を透過の黒に設定
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.all(16.0),
-                      child: const Text(
+                    color: Colors.black.withValues(alpha: 0.5), // 領域部分を透過の黒に設定
+                    child: const SingleChildScrollView(
+                      padding: EdgeInsets.all(16.0),
+                      child: Text(
                         'ここにテキストを表示します。\n\n'
                         'スクロール可能なテキストボックスです。\n\n'
                         'スクロール可能なテキストボックスです。\n\n'

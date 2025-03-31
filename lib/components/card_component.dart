@@ -4,13 +4,14 @@ import 'package:flame/components.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:roguelike_cardgame/components/card_area_component.dart';
+import 'package:roguelike_cardgame/providers/deck_provider.dart';
 import '../models/card.dart';
 import '../models/enum.dart';
 import '../providers/card_provider.dart';
 
 class CardComponent extends RectangleComponent
     with TapCallbacks, RiverpodComponentMixin, HasGameRef, DragCallbacks {
-  final ActionCard card;
+  final Card_ card;
   Vector2? initialPosition;
   CharacterAreaComponent? target;
   bool isOverlapping = false;
@@ -110,7 +111,10 @@ class CardComponent extends RectangleComponent
   }
 
   void activate() {
-    card.effect.call(ref);
+    // card.detail.call(ref, game);
+    print("card-effect activate");
+    ref.read(deckProvider.notifier).playCard(card, ref, game);
+
 
     // カードを削除
     if(isMounted){
@@ -124,7 +128,7 @@ class CardComponent extends RectangleComponent
       isOverlapping = toAbsoluteRect().overlaps(target!.toAbsoluteRect());
       if (isOverlapping) {
         // print(target);
-        target?.changeColor(Colors.red.withOpacity(0.5));
+        target?.changeColor(Colors.red.withValues(alpha: 0.5));
       } else {
         target?.changeColor(Colors.transparent);
       }
@@ -137,7 +141,7 @@ class CardComponent extends RectangleComponent
     canvas.drawRect(size.toRect(), Paint()..color = Colors.green);
     TextPainter(
       text: TextSpan(
-          text: card.name, style: const TextStyle(color: Colors.white)),
+          text: card.effect.name, style: const TextStyle(color: Colors.white)),
       textDirection: TextDirection.ltr,
     )
       ..layout(maxWidth: size.x)

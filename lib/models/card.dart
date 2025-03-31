@@ -6,22 +6,39 @@ import 'card_effect.dart';
 
 
 // カードの情報を保持するクラス
-class ActionCard implements Jsonable{
-  final String name;
+class Card_ implements Jsonable{
   final CardEffect effect;
 
-  ActionCard({required this.name, required this.effect});
+  Card_({required this.effect});
 
   @override
   Map<String, dynamic> toJson() {
     return {
-      'name': name,
+      'name': effect.name,
     };
   }
-
   @override
   String toJsonString() {
     return jsonEncode(toJson());
   }
 }
+
+
+List<Card_> getCards() {
+  return [
+    Card_(effect: AllDamageEffect()),
+    Card_(effect: AllDamageEffect()),
+    Card_(effect: AllDamageEffect()),
+    Card_(effect: AllDamageEffect()),
+    Card_(effect: PlayerHealEffect()),
+    Card_(effect: PlayerHealEffect()),
+    Card_(effect: BuffEffect()),
+    Card_(effect: BuffEffect()),
+    Card_(effect: DebuffEffect()),
+    Card_(effect: DebuffEffect()),
+  ];
+}
+
+
+
 

@@ -89,15 +89,14 @@ class BattleEventWorld extends World
       timerComponent.timer.start();
     }
     void enemyTurn() {
-      final card = ActionCard(
-        name: 'EnemyCard',
+      final card = Card_(
         effect: PlayerDamageEffect(),
       );
 
       final timerComponent = TimerComponent(
         period: 1,
         onTick: () async {
-          card.effect.call(ref);
+          card.effect.call(ref, game);
 
           await Future.delayed(const Duration(seconds: 1));
 

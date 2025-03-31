@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
@@ -147,11 +146,11 @@ mixin WorldMixin on Component {
     add(mapArea);
 
     int stageNum = stageList.length;
-    var totalMapWidth = Sizes().mapWidth + Sizes().mini_margin;
+    var totalMapWidth = Sizes().mapWidth + Sizes().miniMargin;
 
     stageList.asMap().forEach((depth, stages) {
       final int choiceNum = stages.length;
-      final totalMapHeight = Sizes().mapHeight + Sizes().mini_margin;
+      final totalMapHeight = Sizes().mapHeight + Sizes().miniMargin;
 
       Color color = depth == currentStage ? Colors.green : Colors.black12;
       stages.asMap().forEach((choice, stage) {
@@ -248,8 +247,8 @@ mixin WorldMixin on Component {
     add(cardArea);
 
     // カードのリストを作成
-    final cards = <ActionCard>[];
-    final effects = [
+    final cards = <Card_>[];
+    final cardDetails = [
       AllDamageEffect(),
       AllDamageEffect(),
       AllDamageEffect(),
@@ -257,10 +256,9 @@ mixin WorldMixin on Component {
       BuffEffect(),
       DebuffEffect(),
     ];
-    effects.asMap().forEach((index, effect) {
+    cardDetails.asMap().forEach((index, effect) {
       // asMap() と forEach() を使用
-      final card = ActionCard(
-        name: 'Card ${index + 1}',
+      final card = Card_(
         effect: effect,
       );
       cards.add(card);

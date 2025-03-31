@@ -3,7 +3,7 @@ import 'card.dart';
 import 'character_state.dart';
 
 class CardState implements Jsonable {
-  final ActionCard activeCard;
+  final Card_ activeCard;
 
   CardState({required this.activeCard});
 
