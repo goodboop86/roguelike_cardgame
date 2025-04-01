@@ -53,7 +53,7 @@ class Deck {
     _deck.addAll(_hand);
     _hand.clear();
 
-    // デッキが6枚未満の場合、墓地のカードをデッキに戻す
+    // デッキがn枚未満の場合、墓地のカードをデッキに戻す
     if (_deck.length < maxHandNum) {
       _deck.addAll(_trash);
       _trash.clear();

@@ -6,7 +6,16 @@ class CardAreaComponent extends PositionComponent {
   CardAreaComponent({required Vector2 position, required Vector2 size})
       : super(position: position, size: size);
 
-// カードエリアの描画やその他の処理
+  @override
+  void onMount(){
+    print("CardAreaComponent#mounted");
+  }
+
+  @override
+  void onRemove(){
+    print("CardAreaComponent#removed");
+  }
+
 }
 
 class MapCardAreaComponent extends PositionComponent {

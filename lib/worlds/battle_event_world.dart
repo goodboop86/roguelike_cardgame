@@ -79,7 +79,7 @@ class BattleEventWorld extends World
       // RectangleComponentをTimerComponentの子として追加
       timerComponent.add(RectangleComponent(
         size: Vector2(200, 200),
-        position: Sizes().screenSize / 2,
+        position: Sizes().origin + Sizes().screenSize / 2,
         anchor: Anchor.center,
         paint: Paint()..color = Colors.black87,
       ));
@@ -87,7 +87,7 @@ class BattleEventWorld extends World
       // TextComponentをTimerComponentの子として追加
       timerComponent.add(TextComponent(
         text: 'Player Turn',
-        position: Sizes().screenSize / 2,
+        position: Sizes().origin + Sizes().screenSize / 2,
         anchor: Anchor.center,
         textRenderer: TextPaint(style: const TextStyle(color: Colors.white)),
       ));
@@ -118,7 +118,7 @@ class BattleEventWorld extends World
       // RectangleComponentをTimerComponentの子として追加
       timerComponent.add(RectangleComponent(
         size: Vector2(200, 200),
-        position: Sizes().screenSize / 2,
+        position: Sizes().origin + Sizes().screenSize / 2,
         anchor: Anchor.center,
         paint: Paint()..color = Colors.black87,
       ));
@@ -126,7 +126,7 @@ class BattleEventWorld extends World
       // TextComponentをTimerComponentの子として追加
       timerComponent.add(TextComponent(
         text: 'Enemy Turn',
-        position: Sizes().screenSize / 2,
+        position: Sizes().origin + Sizes().screenSize / 2,
         anchor: Anchor.center,
         textRenderer: TextPaint(style: const TextStyle(color: Colors.white)),
       ));
@@ -139,18 +139,14 @@ class BattleEventWorld extends World
     }
 
     void refreshCards() {
+      ref.read(deckProvider.notifier).startTurn();
       // 現在のカードを削除
       children.whereType<CardAreaComponent>().forEach((area) {
         if (area.isMounted) {
-          print("remove!!!!!");
           remove(area);
         }
       });
 
-      print("refresh done!");
-      final area = children.whereType<CardAreaComponent>();
-      print("has area? -> $area");
-      print("mounted? --> ${area.first.isMounted}");
 
       // 新しいカードを生成して配置
       // addCards(); // カード枚数を指定
@@ -174,8 +170,8 @@ class BattleEventWorld extends World
         game.overlays.add(OVERLAY.autoDisappearingOverlay.name);
       },
       () {
-        refreshCards();
         enemyTurn();
+        refreshCards();
       },
       () {
         startTransition(game.size);
