@@ -18,13 +18,13 @@ import '../providers/battle_route_provider.dart';
 
 class BattleEventWorld extends World
     with HasGameRef<MainGame>, RiverpodComponentMixin, WorldMixin {
-  Logger log = Logger('BattlePage');
+  Logger log = Logger('BattleEventWorld');
 
   @override
   Future<void> onMount() async {
     addToGameWidgetBuild(() async {
       BattleRouteState state = ref.read(battleRouteProvider);
-      log.config(state.toJsonString());
+      // TODO: 受け取ったEventに従ってEnemyを設置する
 
       var characterArea = children.whereType<CharacterAreaComponent>();
       if (characterArea.isEmpty) {
@@ -42,7 +42,6 @@ class BattleEventWorld extends World
 
     addToGameWidgetBuild(() async {
       DeckState state = ref.read(deckProvider);
-      log.config(state.toJsonString());
 
       if(state.deck.hand.isNotEmpty){
         final cardArea = children.whereType<CardAreaComponent>();
@@ -126,24 +125,25 @@ class BattleEventWorld extends World
       removeOnFinish: true,
     );
 
-    // RectangleComponentをTimerComponentの子として追加
-    timerComponent.add(RectangleComponent(
-      size: Vector2(200, 200),
-      position: Sizes().origin + Sizes().screenSize / 2,
-      anchor: Anchor.center,
-      paint: Paint()..color = Colors.black87,
-    ));
-
-    // TextComponentをTimerComponentの子として追加
-    timerComponent.add(TextComponent(
-      text: 'Enemy Turn',
-      position: Sizes().origin + Sizes().screenSize / 2,
-      anchor: Anchor.center,
-      textRenderer: TextPaint(style: const TextStyle(color: Colors.white)),
-    ));
-
     // TimerComponentをゲームに追加
     add(timerComponent);
+
+    // // RectangleComponentをTimerComponentの子として追加
+    // timerComponent.add(RectangleComponent(
+    //   size: Vector2(200, 200),
+    //   position: Sizes().origin + Sizes().screenSize / 2,
+    //   anchor: Anchor.center,
+    //   paint: Paint()..color = Colors.black87,
+    // ));
+    //
+    // // TextComponentをTimerComponentの子として追加
+    // timerComponent.add(TextComponent(
+    //   text: 'Enemy Turn',
+    //   position: Sizes().origin + Sizes().screenSize / 2,
+    //   anchor: Anchor.center,
+    //   textRenderer: TextPaint(style: const TextStyle(color: Colors.white)),
+    // ));
+
 
     // タイマーを開始
     timerComponent.timer.start();

@@ -22,7 +22,6 @@ class ExploreRouteStateNotifier extends StateNotifier<ExploreRouteState> {
       stageList:
           generateNestedListWithFixedLength(stageLength, minChoice, maxChoice),
     );
-    print("initialized!");
   }
 
   void incrementStage() {

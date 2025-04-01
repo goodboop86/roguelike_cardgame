@@ -1,4 +1,3 @@
-
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/flame.dart';
@@ -6,6 +5,7 @@ import 'package:flame/input.dart';
 import 'package:flame/parallax.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/providers/deck_provider.dart';
 
 import '../components/card_area_component.dart';
@@ -17,6 +17,8 @@ import '../models/enum.dart';
 import '../providers/sizes.dart';
 
 mixin WorldMixin on Component {
+  Logger log = Logger('WorldMixin');
+
   Future<void> addSingleCharacters(loadParallaxComponent) async {
     final parallaxComponent = await loadParallaxComponent(
       [
@@ -66,7 +68,6 @@ mixin WorldMixin on Component {
 
     player.add(playerAnimation);
     player.add(PlayerHpBar());
-
   }
 
   Future<void> addCharacters(loadParallaxComponent) async {
@@ -158,7 +159,8 @@ mixin WorldMixin on Component {
         final button = ButtonComponent(
           button: RectangleComponent(
               size: Sizes().mapSize,
-              paint: Paint()..color = color,
+              paint: Paint()
+                ..color = color,
               priority: 0),
           onPressed: () {},
           children: [
@@ -171,15 +173,16 @@ mixin WorldMixin on Component {
               TextPaint(style: const TextStyle(color: Colors.white)),
             ),
           ],
-        )..position = Vector2(
-          depth * totalMapWidth +
-              (Sizes().mapAreaWidth - (stageNum * totalMapWidth)) /
-                  2, // X 座標を調整
-          choice * totalMapHeight +
-              (Sizes().mapAreaHeight - (choiceNum * totalMapHeight)) / 2
-          // choice * (Sizes().mapWidth / 2 + Sizes().mini_margin)
-          , // Y 座標を調整
-        );
+        )
+          ..position = Vector2(
+            depth * totalMapWidth +
+                (Sizes().mapAreaWidth - (stageNum * totalMapWidth)) /
+                    2, // X 座標を調整
+            choice * totalMapHeight +
+                (Sizes().mapAreaHeight - (choiceNum * totalMapHeight)) / 2
+            // choice * (Sizes().mapWidth / 2 + Sizes().mini_margin)
+            , // Y 座標を調整
+          );
         // ..anchor = Anchor.center;
 
         mapArea.add(button);
@@ -187,8 +190,8 @@ mixin WorldMixin on Component {
     });
   }
 
-  void addMapCards(List<List<Event>> stageList, int currentStage, router, ComponentRef ref) {
-
+  void addMapCards(List<List<Event>> stageList, int currentStage, router,
+      ComponentRef ref) {
     List<Event> events = stageList[currentStage];
 
     // カードエリアを作成
@@ -208,10 +211,11 @@ mixin WorldMixin on Component {
       final button = ButtonComponent(
         button: RectangleComponent(
             size: Sizes().mapCardSize,
-            paint: Paint()..color = Colors.green,
+            paint: Paint()
+              ..color = Colors.green,
             priority: 0),
         onPressed: () {
-          if(event == Event.battle){
+          if (event == Event.battle) {
             ref.read(deckProvider.notifier).startTurn();
           }
           router.pushNamed(event.name);
@@ -242,7 +246,6 @@ mixin WorldMixin on Component {
 
 
   void addCards(List<Card_> cards) {
-
     // カードエリアを作成
     final cardArea = CardAreaComponent(
       position: Sizes().cardAreaPosition,
@@ -273,26 +276,36 @@ mixin WorldMixin on Component {
 
 
   Future<void> startTransition(Vector2 size) async {
-    print("called.");
+    log.info("startTransition.");
     final darkenOverlay = RectangleComponent(
-      size: size,
-      paint: Paint()
-        ..color = Colors.black.withValues(alpha: 0),
-      priority: 1000,
-      position: Sizes().origin
+        size: size,
+        paint: Paint()
+          ..color = Colors.black.withValues(alpha: 0),
+        priority: 1000,
+        position: Sizes().origin
     );
 
     add(darkenOverlay);
+    TextComponent text = TextComponent(
+      priority: 1,
+      text: 'test',
+      position: Sizes().screenSize/2,
+      anchor: Anchor.center,
+      textRenderer:
+      TextPaint(style: const TextStyle(color: Colors.white, fontSize: 24)),
+    );
     // SequenceEffect を使用して、複数のエフェクトを順番に実行
     await darkenOverlay.add(
       SequenceEffect(
         [
           // 暗転アニメーション
-          OpacityEffect.to(1, EffectController(duration: 0.5)),
-          // 待機
-          OpacityEffect.to(1, EffectController(duration: 0.5), onComplete: () => (print("wait complete"))),
+          OpacityEffect.to(1, EffectController(duration: 0.4), onComplete: () =>
+          {darkenOverlay.add(text)}),
+              // 待機
+              OpacityEffect.to(1, EffectController(duration: 0.7),
+              onComplete: () => {darkenOverlay.remove(text)}),
           // 明転アニメーション
-          OpacityEffect.to(0, EffectController(duration: 0.5)),
+          OpacityEffect.to(0, EffectController(duration: 0.4)),
         ],
         onComplete: () {
           remove(darkenOverlay);
@@ -302,7 +315,6 @@ mixin WorldMixin on Component {
       ),
     );
   }
-
 
 
 }

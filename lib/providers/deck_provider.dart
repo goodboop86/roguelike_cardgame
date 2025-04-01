@@ -20,7 +20,6 @@ class DeckStateNotifier extends StateNotifier<DeckState> {
   DeckStateNotifier(super.initialState);
 
   void playCard(Card_ card, ComponentRef ref, FlameGame<World> game) {
-    print("DeckNotifier process");
     state = DeckState(deck: state.deck.playCard(card, ref, game));
   }
 

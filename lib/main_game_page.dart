@@ -4,6 +4,8 @@ import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:roguelike_cardgame/providers/card_provider.dart';
+import 'package:roguelike_cardgame/providers/deck_provider.dart';
+import 'package:roguelike_cardgame/worlds/battle_event_world.dart';
 
 import 'main_game.dart';
 import 'models/enum.dart';

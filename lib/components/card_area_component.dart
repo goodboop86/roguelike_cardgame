@@ -1,19 +1,22 @@
 
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 
 class CardAreaComponent extends PositionComponent {
   CardAreaComponent({required Vector2 position, required Vector2 size})
       : super(position: position, size: size);
 
+  Logger log = Logger('CardAreaComponent');
+
   @override
   void onMount(){
-    print("CardAreaComponent#mounted");
+    log.info("mounted");
   }
 
   @override
   void onRemove(){
-    print("CardAreaComponent#removed");
+    log.info("removed");
   }
 
 }

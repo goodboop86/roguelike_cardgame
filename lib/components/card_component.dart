@@ -3,6 +3,7 @@ import 'package:flame/events.dart';
 import 'package:flame/components.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/components/card_area_component.dart';
 import 'package:roguelike_cardgame/providers/deck_provider.dart';
 import '../models/card.dart';
@@ -11,12 +12,13 @@ import '../providers/card_provider.dart';
 
 class CardComponent extends RectangleComponent
     with TapCallbacks, RiverpodComponentMixin, HasGameRef, DragCallbacks {
+  CardComponent({required this.card});
+  Logger log = Logger('CardComponent');
   final Card_ card;
   Vector2? initialPosition;
   CharacterAreaComponent? target;
-  bool isOverlapping = false;
 
-  CardComponent({required this.card});
+  bool isOverlapping = false;
 
 
   @override
@@ -111,8 +113,7 @@ class CardComponent extends RectangleComponent
   }
 
   void activate() {
-    // card.detail.call(ref, game);
-    print("card-effect activate");
+    log.info("card-effect activate");
     ref.read(deckProvider.notifier).playCard(card, ref, game);
 
 
@@ -127,7 +128,6 @@ class CardComponent extends RectangleComponent
     if (target != null) {
       isOverlapping = toAbsoluteRect().overlaps(target!.toAbsoluteRect());
       if (isOverlapping) {
-        // print(target);
         target?.changeColor(Colors.red.withValues(alpha: 0.5));
       } else {
         target?.changeColor(Colors.transparent);

@@ -3,11 +3,13 @@ import 'dart:math';
 import 'package:flame/camera.dart';
 import 'package:flame/game.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
+import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/models/card.dart';
 
 
 // カードの情報を保持するクラス
 class Deck {
+  Logger log = Logger('Deck');
   int maxHandNum;
   List<Card_> _deck = [];
   final List<Card_> _hand = [];
@@ -30,10 +32,9 @@ class Deck {
   }
 
   Deck playCard(Card_ card, ComponentRef ref, FlameGame<World> game) {
-    print(card.effect.name);
+    log.info("playCard");
     if (_hand.contains(card)) {
       _hand.remove(card);
-      print("${_hand}");
       card.effect.call(ref, game); // カードの効果を実行（直前のカードとデッキを渡す）
       if ('exile' == card.effect) {
         _excluded.add(card);
@@ -49,6 +50,7 @@ class Deck {
   }
 
   Deck startTurn() {
+    log.info("startTurn");
     // 手札をデッキに戻す
     _deck.addAll(_hand);
     _hand.clear();
