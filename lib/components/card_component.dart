@@ -12,7 +12,9 @@ import '../providers/card_provider.dart';
 
 class CardComponent extends RectangleComponent
     with TapCallbacks, RiverpodComponentMixin, HasGameRef, DragCallbacks {
-  CardComponent({required this.card});
+  CardComponent({required this.card}) {
+    super.priority = 100;
+  }
   Logger log = Logger('CardComponent');
   final Card_ card;
   Vector2? initialPosition;

@@ -7,6 +7,7 @@ import '../providers/enemy_provider.dart';
 
 
 class EnemyComponent extends SpriteAnimationComponent with RiverpodComponentMixin {
+  EnemyComponent({super.key});
   @override
   void render(Canvas canvas) {
     super.render(canvas);

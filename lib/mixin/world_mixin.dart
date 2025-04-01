@@ -49,9 +49,10 @@ mixin WorldMixin on Component {
     add(characterArea);
 
     // Player の配置 (左上)
-    PlayerComponent player = PlayerComponent()
-      ..size = Sizes().playerAreaSize
-      ..position = Sizes().playerAreaPosition;
+    PlayerComponent player =
+        PlayerComponent(key: ComponentKey.named('ExplorePlayer'))
+          ..size = Sizes().playerAreaSize
+          ..position = Sizes().playerAreaPosition;
 
     characterArea.addAll([player]);
 
@@ -99,45 +100,62 @@ mixin WorldMixin on Component {
     );
     add(characterArea);
 
-    // Player の配置 (左上)
-    PlayerComponent player = PlayerComponent()
-      ..size = Sizes().playerAreaSize
-      ..position = Sizes().playerAreaPosition;
-
-    // Player の配置 (左上)
-    EnemyComponent enemy = EnemyComponent()
-      ..size = Sizes().enemyAreaSize
-      ..position = Sizes().enemyAreaPosition;
-    characterArea.addAll([player, enemy]);
-
-    var playerAnimation = SpriteAnimationComponent.fromFrameData(
+    bool playerExists =
+        characterArea.children.any((component) => component is PlayerComponent);
+    if (!playerExists) {
+      // Player の配置 (左上)
+      PlayerComponent player = PlayerComponent(key: ComponentKey.named('Player'))
+        ..size = Sizes().playerAreaSize
+        ..position = Sizes().playerAreaPosition;
+      var playerAnimation = SpriteAnimationComponent.fromFrameData(
         await Flame.images.load('noBKG_KnightIdle_strip.png'),
         SpriteAnimationData.sequenced(
           textureSize: Vector2.all(64),
           amount: 15,
           stepTime: 0.08,
-        ))
-      ..anchor = Anchor.bottomCenter
-      ..size = Vector2(128, 128)
-      ..position =
-          Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
+        ),
+        key: ComponentKey.named("PlayerAnimation"),
+      )
+        ..anchor = Anchor.bottomCenter
+        ..size = Vector2(128, 128)
+        ..position =
+        Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
 
-    var enemyAnimation = SpriteAnimationComponent.fromFrameData(
+      player.add(playerAnimation);
+      player.add(PlayerHpBar());
+      characterArea.add(player);
+    }
+
+    bool enemyExists =
+        characterArea.children.any((component) => component is EnemyComponent);
+    if (!enemyExists) {
+      // Player の配置 (左上)
+      EnemyComponent enemy = EnemyComponent(key: ComponentKey.named('Enemy'))
+        ..size = Sizes().enemyAreaSize
+        ..position = Sizes().enemyAreaPosition;
+      var enemyAnimation = SpriteAnimationComponent.fromFrameData(
         await Flame.images.load('noBKG_KnightIdle_strip.png'),
         SpriteAnimationData.sequenced(
           textureSize: Vector2.all(64),
           amount: 15,
           stepTime: 0.08,
-        ))
-      ..anchor = Anchor.bottomCenter
-      ..size = Vector2(128, 128)
-      ..position = Vector2(Sizes().enemyAreaWidth / 2, Sizes().enemyAreaHeight)
-      ..flipHorizontally();
+        ),
+        key: ComponentKey.named("EnemyAnimation"),
+      )
+        ..anchor = Anchor.bottomCenter
+        ..size = Vector2(128, 128)
+        ..position = Vector2(Sizes().enemyAreaWidth / 2, Sizes().enemyAreaHeight)
+        ..flipHorizontally();
 
-    player.add(playerAnimation);
-    player.add(PlayerHpBar());
-    enemy.add(enemyAnimation);
-    enemy.add(EnemyHpBar());
+
+      enemy.add(enemyAnimation);
+      enemy.add(EnemyHpBar());
+      characterArea.add(enemy);
+    }
+
+
+
+
   }
 
   void addMap(List<List<Event>> stageList, int currentStage) {
@@ -205,7 +223,6 @@ mixin WorldMixin on Component {
     events.asMap().forEach((index, event) {
       final row = index ~/ 3;
       final col = index % 3;
-
 
       final button = ButtonComponent(
         button: RectangleComponent(
@@ -288,8 +305,7 @@ mixin WorldMixin on Component {
               onComplete: () => {
                     darkenOverlay.add(transitionText
                       ..text = message
-                      ..position = Sizes().screenSize / 2
-                    )
+                      ..position = Sizes().screenSize / 2)
                   }),
           // 待機
           OpacityEffect.to(1, EffectController(duration: 0.7),

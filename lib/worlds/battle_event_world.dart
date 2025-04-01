@@ -44,7 +44,9 @@ class BattleEventWorld extends World
 
       if (state.deck.hand.isNotEmpty) {
         final cardArea = children.whereType<CardAreaComponent>();
-        if (cardArea.isEmpty) {
+        // characterエリアより後にaddして描画が上に来るようにする。
+        var characterArea = children.whereType<CharacterAreaComponent>();
+        if (cardArea.isEmpty & characterArea.isNotEmpty) {
           log.fine("addCards");
           addCards(state.deck.hand);
         }

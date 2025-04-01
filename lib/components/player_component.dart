@@ -7,6 +7,7 @@ import '../models/enum.dart';
 import '../providers/player_provider.dart';
 
 class PlayerComponent extends PositionComponent with RiverpodComponentMixin, TapCallbacks, HasGameRef {
+  PlayerComponent({required super.key});
   final double _maxHp = 100;
 
 
