@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/providers/deck_provider.dart';
 
+import '../components/basic_component.dart';
 import '../components/card_area_component.dart';
 import '../components/card_component.dart';
 import '../components/enemy_component.dart';
@@ -64,7 +65,7 @@ mixin WorldMixin on Component {
       ..anchor = Anchor.bottomCenter
       ..size = Vector2(128, 128)
       ..position =
-      Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
+          Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
 
     player.add(playerAnimation);
     player.add(PlayerHpBar());
@@ -119,7 +120,7 @@ mixin WorldMixin on Component {
       ..anchor = Anchor.bottomCenter
       ..size = Vector2(128, 128)
       ..position =
-      Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
+          Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
 
     var enemyAnimation = SpriteAnimationComponent.fromFrameData(
         await Flame.images.load('noBKG_KnightIdle_strip.png'),
@@ -138,7 +139,6 @@ mixin WorldMixin on Component {
     enemy.add(enemyAnimation);
     enemy.add(EnemyHpBar());
   }
-
 
   void addMap(List<List<Event>> stageList, int currentStage) {
     final mapArea = MapAreaComponent(
@@ -159,8 +159,7 @@ mixin WorldMixin on Component {
         final button = ButtonComponent(
           button: RectangleComponent(
               size: Sizes().mapSize,
-              paint: Paint()
-                ..color = color,
+              paint: Paint()..color = color,
               priority: 0),
           onPressed: () {},
           children: [
@@ -170,11 +169,10 @@ mixin WorldMixin on Component {
               position: Sizes().mapSize,
               anchor: Anchor.center,
               textRenderer:
-              TextPaint(style: const TextStyle(color: Colors.white)),
+                  TextPaint(style: const TextStyle(color: Colors.white)),
             ),
           ],
-        )
-          ..position = Vector2(
+        )..position = Vector2(
             depth * totalMapWidth +
                 (Sizes().mapAreaWidth - (stageNum * totalMapWidth)) /
                     2, // X 座標を調整
@@ -190,8 +188,8 @@ mixin WorldMixin on Component {
     });
   }
 
-  void addMapCards(List<List<Event>> stageList, int currentStage, router,
-      ComponentRef ref) {
+  void addMapCards(
+      List<List<Event>> stageList, int currentStage, router, ComponentRef ref) {
     List<Event> events = stageList[currentStage];
 
     // カードエリアを作成
@@ -208,11 +206,11 @@ mixin WorldMixin on Component {
       final row = index ~/ 3;
       final col = index % 3;
 
+
       final button = ButtonComponent(
         button: RectangleComponent(
             size: Sizes().mapCardSize,
-            paint: Paint()
-              ..color = Colors.green,
+            paint: Paint()..color = Colors.green,
             priority: 0),
         onPressed: () {
           if (event == Event.battle) {
@@ -227,7 +225,7 @@ mixin WorldMixin on Component {
             anchor: Anchor.center,
             position: Sizes().mapCardSize / 2,
             textRenderer:
-            TextPaint(style: const TextStyle(color: Colors.white)),
+                TextPaint(style: const TextStyle(color: Colors.white)),
           ),
         ],
       )
@@ -243,7 +241,6 @@ mixin WorldMixin on Component {
       mapCardArea.add(button);
     });
   }
-
 
   void addCards(List<Card_> cards) {
     // カードエリアを作成
@@ -274,40 +271,34 @@ mixin WorldMixin on Component {
     });
   }
 
-
-  Future<void> startTransition(Vector2 size) async {
+  Future<void> startTransition(
+      {required String message, required Function next}) async {
     log.info("startTransition.");
-    final darkenOverlay = RectangleComponent(
-        size: size,
-        paint: Paint()
-          ..color = Colors.black.withValues(alpha: 0),
-        priority: 1000,
-        position: Sizes().origin
-    );
 
-    add(darkenOverlay);
-    TextComponent text = TextComponent(
-      priority: 1,
-      text: 'test',
-      position: Sizes().screenSize/2,
-      anchor: Anchor.center,
-      textRenderer:
-      TextPaint(style: const TextStyle(color: Colors.white, fontSize: 24)),
-    );
+    add(darkenOverlay
+      ..size = Sizes().screenSize
+      ..position = Sizes().origin);
+
     // SequenceEffect を使用して、複数のエフェクトを順番に実行
     await darkenOverlay.add(
       SequenceEffect(
         [
           // 暗転アニメーション
-          OpacityEffect.to(1, EffectController(duration: 0.4), onComplete: () =>
-          {darkenOverlay.add(text)}),
-              // 待機
-              OpacityEffect.to(1, EffectController(duration: 0.7),
-              onComplete: () => {darkenOverlay.remove(text)}),
+          OpacityEffect.to(1, EffectController(duration: 0.4),
+              onComplete: () => {
+                    darkenOverlay.add(transitionText
+                      ..text = message
+                      ..position = Sizes().screenSize / 2
+                    )
+                  }),
+          // 待機
+          OpacityEffect.to(1, EffectController(duration: 0.7),
+              onComplete: () => {darkenOverlay.remove(transitionText)}),
           // 明転アニメーション
           OpacityEffect.to(0, EffectController(duration: 0.4)),
         ],
         onComplete: () {
+          next();
           remove(darkenOverlay);
           // 画面遷移処理
           // ...
@@ -315,6 +306,4 @@ mixin WorldMixin on Component {
       ),
     );
   }
-
-
 }

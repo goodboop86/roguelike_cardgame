@@ -32,7 +32,6 @@ class BattleEventWorld extends World
         await addCharacters(game.loadParallaxComponent);
       }
 
-
       var buttonArea = children.whereType<ButtonAreaComponent>();
       if (buttonArea.isEmpty) {
         log.fine("addButtons");
@@ -43,7 +42,7 @@ class BattleEventWorld extends World
     addToGameWidgetBuild(() async {
       DeckState state = ref.read(deckProvider);
 
-      if(state.deck.hand.isNotEmpty){
+      if (state.deck.hand.isNotEmpty) {
         final cardArea = children.whereType<CardAreaComponent>();
         if (cardArea.isEmpty) {
           log.fine("addCards");
@@ -59,39 +58,6 @@ class BattleEventWorld extends World
   Future<void> onLoad() async {
     Sizes().setScreenSize(game.size);
     super.onLoad();
-
-  }
-
-  void playerTurn() {
-    final timerComponent = TimerComponent(
-      period: 1,
-      onTick: () {
-        refreshCards();
-      },
-      removeOnFinish: true,
-    );
-
-    // RectangleComponentをTimerComponentの子として追加
-    timerComponent.add(RectangleComponent(
-      size: Vector2(200, 200),
-      position: Sizes().origin + Sizes().screenSize / 2,
-      anchor: Anchor.center,
-      paint: Paint()..color = Colors.black87,
-    ));
-
-    // TextComponentをTimerComponentの子として追加
-    timerComponent.add(TextComponent(
-      text: 'Player Turn',
-      position: Sizes().origin + Sizes().screenSize / 2,
-      anchor: Anchor.center,
-      textRenderer: TextPaint(style: const TextStyle(color: Colors.white)),
-    ));
-
-    // TimerComponentをゲームに追加
-    add(timerComponent);
-
-    // タイマーを開始
-    timerComponent.timer.start();
   }
 
   void refreshCards() {
@@ -102,57 +68,23 @@ class BattleEventWorld extends World
         remove(area);
       }
     });
-
-
-    // 新しいカードを生成して配置
-    // addCards(); // カード枚数を指定
   }
 
-  void enemyTurn() {
-    final card = Card_(
-      effect: PlayerDamageEffect(),
-    );
+  Future<void> enemyPhase() async {
 
-    final timerComponent = TimerComponent(
-      period: 1,
-      onTick: () async {
-        card.effect.call(ref, game);
-
+    await Future.delayed(const Duration(seconds: 1));
+    PlayerDamageEffect().call(ref, game);
+    startTransition(
+      message: 'player-turn',
+      next: () async {
         await Future.delayed(const Duration(seconds: 1));
-
-        playerTurn();
+        refreshCards();
       },
-      removeOnFinish: true,
     );
-
-    // TimerComponentをゲームに追加
-    add(timerComponent);
-
-    // // RectangleComponentをTimerComponentの子として追加
-    // timerComponent.add(RectangleComponent(
-    //   size: Vector2(200, 200),
-    //   position: Sizes().origin + Sizes().screenSize / 2,
-    //   anchor: Anchor.center,
-    //   paint: Paint()..color = Colors.black87,
-    // ));
-    //
-    // // TextComponentをTimerComponentの子として追加
-    // timerComponent.add(TextComponent(
-    //   text: 'Enemy Turn',
-    //   position: Sizes().origin + Sizes().screenSize / 2,
-    //   anchor: Anchor.center,
-    //   textRenderer: TextPaint(style: const TextStyle(color: Colors.white)),
-    // ));
-
-
-    // タイマーを開始
-    timerComponent.timer.start();
   }
 
 
   void _addButtons() {
-
-
     // カードエリアを作成
     final buttonArea = ButtonAreaComponent(
       position: Sizes().buttonAreaPosition,
@@ -171,10 +103,11 @@ class BattleEventWorld extends World
         game.overlays.add(OVERLAY.autoDisappearingOverlay.name);
       },
       () {
-        enemyTurn();
-      },
-      () {
-        startTransition(game.size);
+        startTransition(
+            message: "enemy-turn.",
+            next: () {
+              enemyPhase();
+            });
       },
     ];
 
@@ -207,7 +140,4 @@ class BattleEventWorld extends World
       buttonArea.add(button);
     });
   }
-
-
-
 }
