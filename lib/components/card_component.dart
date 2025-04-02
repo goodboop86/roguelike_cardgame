@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/components/card_area_component.dart';
 import 'package:roguelike_cardgame/providers/deck_provider.dart';
+import 'package:roguelike_cardgame/providers/player_provider.dart';
 import '../models/card.dart';
 import '../models/enum.dart';
 import '../providers/card_provider.dart';
@@ -62,8 +63,9 @@ class CardComponent extends RectangleComponent
 
   @override
   void onDragEnd(DragEndEvent event) {
+    int mana = ref.read(playerProvider).mana;
     super.onDragEnd(event);
-    if (isOverlapping) {
+    if (isOverlapping & (mana >= card.effect.manaCost)) {
       process();
     } else {
       if (initialPosition != null) {
@@ -116,6 +118,7 @@ class CardComponent extends RectangleComponent
 
   void activate() {
     log.info("card-effect activate");
+    ref.read(playerProvider.notifier).useMana(card.effect.manaCost);
     ref.read(deckProvider.notifier).playCard(card, ref, game);
 
 
@@ -143,7 +146,7 @@ class CardComponent extends RectangleComponent
     canvas.drawRect(size.toRect(), Paint()..color = Colors.green);
     TextPainter(
       text: TextSpan(
-          text: card.effect.name, style: const TextStyle(color: Colors.white)),
+          text: card.toJsonString(), style: const TextStyle(color: Colors.white)),
       textDirection: TextDirection.ltr,
     )
       ..layout(maxWidth: size.x)

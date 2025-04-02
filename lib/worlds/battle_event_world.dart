@@ -6,12 +6,12 @@ import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 import 'package:roguelike_cardgame/mixin/world_mixin.dart';
 import 'package:roguelike_cardgame/providers/deck_provider.dart';
+import 'package:roguelike_cardgame/providers/player_provider.dart';
 import 'package:roguelike_cardgame/providers/sizes.dart';
 
 import 'dart:async';
 
 import '../components/card_area_component.dart';
-import '../models/card.dart';
 import '../models/card_effect.dart';
 import '../models/enum.dart';
 import '../providers/battle_route_provider.dart';
@@ -63,6 +63,7 @@ class BattleEventWorld extends World
   }
 
   void refreshCards() {
+    ref.read(playerProvider.notifier).resetMana();
     ref.read(deckProvider.notifier).startTurn();
     // 現在のカードを削除
     children.whereType<CardAreaComponent>().forEach((area) {

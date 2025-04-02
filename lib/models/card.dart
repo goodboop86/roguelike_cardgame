@@ -15,6 +15,7 @@ class Card_ implements Jsonable{
   Map<String, dynamic> toJson() {
     return {
       'name': effect.name,
+      'manaCost': effect.manaCost,
     };
   }
   @override

@@ -7,6 +7,7 @@ import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/providers/deck_provider.dart';
+import 'package:roguelike_cardgame/providers/player_provider.dart';
 
 import '../components/basic_component.dart';
 import '../components/card_area_component.dart';
@@ -231,6 +232,7 @@ mixin WorldMixin on Component {
             priority: 0),
         onPressed: () {
           if (event == Event.battle) {
+            ref.read(playerProvider.notifier).reset();
             ref.read(deckProvider.notifier).startTurn();
           }
           router.pushNamed(event.name);
