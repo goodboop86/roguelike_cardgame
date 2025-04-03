@@ -11,10 +11,14 @@ class EnemyState extends CharacterState {
 
   EnemyState(
       {required this.name,
-      required this.health,
-      required this.mana,
+      required double health,
+      required int mana,
       required this.maxMana,
-      required this.maxHealth});
+      required this.maxHealth}) {
+    // health, manaが規定以上/以下にならないようにする。
+    this.health = health.clamp(0.0, maxHealth);
+    this.mana = mana.clamp(0, maxMana);
+  }
 
   @override
   Map<String, dynamic> toJson() {
