@@ -33,13 +33,16 @@ class MainGamePageState extends State<MainGamePage> {
               key: gameWidgetKey,
               game: game,
               overlayBuilderMap: {
-                OVERLAY.cardOverlay.name: (BuildContext context, MainGame game) {
+                OVERLAY.cardOverlay.name:
+                    (BuildContext context, MainGame game) {
                   return CardOverlayWidget(game: game);
                 },
-                OVERLAY.characterOverlay.name: (BuildContext context, MainGame game) {
+                OVERLAY.characterOverlay.name:
+                    (BuildContext context, MainGame game) {
                   return CharacterOverlayWidget(game: game);
                 },
-                OVERLAY.enemyTurnOverlay.name: (BuildContext context, MainGame game) {
+                OVERLAY.enemyTurnOverlay.name:
+                    (BuildContext context, MainGame game) {
                   return EnemyTurnOverlayWidget(game: game);
                 },
                 OVERLAY.autoDisappearingOverlay.name:

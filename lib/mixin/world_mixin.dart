@@ -6,6 +6,8 @@ import 'package:flame/parallax.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:roguelike_cardgame/models/enemy_state.dart';
+import 'package:roguelike_cardgame/models/player_state.dart';
 import 'package:roguelike_cardgame/providers/deck_provider.dart';
 import 'package:roguelike_cardgame/providers/player_provider.dart';
 
@@ -70,10 +72,13 @@ mixin WorldMixin on Component {
           Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
 
     player.add(playerAnimation);
-    player.add(PlayerHpBar());
+    // player.add(PlayerHpBar());
   }
 
-  Future<void> addCharacters(loadParallaxComponent) async {
+  Future<void> addCharacters(
+      {required Function loadParallaxComponent,
+      required PlayerState playerState,
+      required EnemyState enemyState}) async {
     final parallaxComponent = await loadParallaxComponent(
       [
         ParallaxImageData('parallax/1.png'),
@@ -105,9 +110,10 @@ mixin WorldMixin on Component {
         characterArea.children.any((component) => component is PlayerComponent);
     if (!playerExists) {
       // Player の配置 (左上)
-      PlayerComponent player = PlayerComponent(key: ComponentKey.named('Player'))
-        ..size = Sizes().playerAreaSize
-        ..position = Sizes().playerAreaPosition;
+      PlayerComponent player =
+          PlayerComponent(key: ComponentKey.named('Player'))
+            ..size = Sizes().playerAreaSize
+            ..position = Sizes().playerAreaPosition;
       var playerAnimation = SpriteAnimationComponent.fromFrameData(
         await Flame.images.load('noBKG_KnightIdle_strip.png'),
         SpriteAnimationData.sequenced(
@@ -120,10 +126,13 @@ mixin WorldMixin on Component {
         ..anchor = Anchor.bottomCenter
         ..size = Vector2(128, 128)
         ..position =
-        Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
+            Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
 
       player.add(playerAnimation);
-      player.add(PlayerHpBar());
+      player.add(PlayerHpBar(
+        hp: playerState.health,
+        maxHp: playerState.maxHealth,
+      ));
       characterArea.add(player);
     }
 
@@ -145,18 +154,14 @@ mixin WorldMixin on Component {
       )
         ..anchor = Anchor.bottomCenter
         ..size = Vector2(128, 128)
-        ..position = Vector2(Sizes().enemyAreaWidth / 2, Sizes().enemyAreaHeight)
+        ..position =
+            Vector2(Sizes().enemyAreaWidth / 2, Sizes().enemyAreaHeight)
         ..flipHorizontally();
 
-
       enemy.add(enemyAnimation);
-      enemy.add(EnemyHpBar());
+      enemy.add(EnemyHpBar(hp: enemyState.health, maxHp: enemyState.maxHealth));
       characterArea.add(enemy);
     }
-
-
-
-
   }
 
   void addMap(List<List<Event>> stageList, int currentStage) {

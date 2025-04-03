@@ -1,4 +1,4 @@
-enum ROUTE{
+enum ROUTE {
   home,
   explore,
   battle,
@@ -7,7 +7,7 @@ enum ROUTE{
   rest, // bonfire, bench
 }
 
-enum OVERLAY{
+enum OVERLAY {
   cardOverlay,
   characterOverlay,
   enemyTurnOverlay,

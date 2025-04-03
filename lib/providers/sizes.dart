@@ -1,4 +1,3 @@
-
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 
@@ -13,22 +12,22 @@ class Sizes {
   void setScreenSize(Vector2 size) {
     screenSize = size;
   }
+
   // Screen
   double get screenWidth => screenSize.x;
   double get screenHeight => screenSize.y;
   double get margin => 20.0;
   double get miniMargin => 5.0;
 
-
-
   // CharacterArea
   double get characterAreaWidth => screenSize.x;
   double get characterAreaHeight => screenSize.y * 0.3;
-  Vector2 get characterAreaSize => Vector2(characterAreaWidth, characterAreaHeight);
+  Vector2 get characterAreaSize =>
+      Vector2(characterAreaWidth, characterAreaHeight);
 
-  double get originX => -screenWidth/2;
-  double get originY => -screenHeight/2;
-  Vector2 get origin =>  Vector2(originX, originY);
+  double get originX => -screenWidth / 2;
+  double get originY => -screenHeight / 2;
+  Vector2 get origin => Vector2(originX, originY);
 
   double get characterAreaX => originX;
   double get characterAreaY => originY + 50;
@@ -53,14 +52,13 @@ class Sizes {
   double get enemyAreaY => 0; // characterAreaHeight - characterHeight;
   Vector2 get enemyAreaPosition => Vector2(enemyAreaX, enemyAreaY);
 
-
   // CardArea
   double get cardAreaWidth => screenSize.x;
   double get cardAreaHeight => screenSize.y * 0.4;
   Vector2 get cardAreaSize => Vector2(cardAreaWidth, cardAreaHeight);
 
   double get cardAreaX => originX;
-  double get cardAreaY => originY + screenHeight*0.55;
+  double get cardAreaY => originY + screenHeight * 0.55;
   Vector2 get cardAreaPosition => Vector2(cardAreaX, cardAreaY);
 
   // Card
@@ -78,7 +76,7 @@ class Sizes {
   Vector2 get mapCardAreaSize => Vector2(mapCardAreaWidth, mapCardAreaHeight);
 
   double get mapCardAreaX => originX;
-  double get mapCardAreaY => originY + screenHeight*0.7;
+  double get mapCardAreaY => originY + screenHeight * 0.7;
   Vector2 get mapCardAreaPosition => Vector2(mapCardAreaX, mapCardAreaY);
 
   // MapCard
@@ -87,14 +85,13 @@ class Sizes {
   Vector2 get mapCardSize => Vector2(mapCardWidth, mapCardHeight);
   double get mapCardMargin => 20.0;
 
-
   // ButtonArea
   double get buttonAreaWidth => screenSize.x;
   double get buttonAreaHeight => screenSize.y * 0.05;
   Vector2 get buttonAreaSize => Vector2(buttonAreaWidth, buttonAreaHeight);
 
   double get buttonAreaX => originX;
-  double get buttonAreaY => originY + screenHeight*0.5;
+  double get buttonAreaY => originY + screenHeight * 0.5;
   Vector2 get buttonAreaPosition => Vector2(buttonAreaX, buttonAreaY);
 
   // Button
@@ -108,13 +105,11 @@ class Sizes {
   Vector2 get mapAreaSize => Vector2(mapAreaWidth, mapAreaHeight);
 
   double get mapAreaX => originX;
-  double get mapAreaY => originY + screenHeight/2;
+  double get mapAreaY => originY + screenHeight / 2;
   Vector2 get mapAreaPosition => Vector2(mapAreaX, mapAreaY);
 
   // Button
   double get mapWidth => mapAreaWidth * 0.05;
   double get mapHeight => mapAreaHeight * 0.2;
   Vector2 get mapSize => Vector2(mapWidth, mapHeight);
-
-
 }

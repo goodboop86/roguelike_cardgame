@@ -1,12 +1,11 @@
-
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
 import '../providers/enemy_provider.dart';
 
-
-class EnemyComponent extends SpriteAnimationComponent with RiverpodComponentMixin {
+class EnemyComponent extends SpriteAnimationComponent
+    with RiverpodComponentMixin {
   EnemyComponent({super.key});
   @override
   void render(Canvas canvas) {
@@ -14,22 +13,25 @@ class EnemyComponent extends SpriteAnimationComponent with RiverpodComponentMixi
     // canvas.drawRect(size.toRect(), Paint()..color = Colors.blue);
     final enemyState = ref.watch(enemyProvider);
     TextPainter(
-      text: TextSpan(text: enemyState.toJsonString(), style: const TextStyle(color: Colors.white)),
+      text: TextSpan(
+          text: enemyState.toJsonString(),
+          style: const TextStyle(color: Colors.white)),
       textDirection: TextDirection.ltr,
-    )..layout(maxWidth: size.x)
+    )
+      ..layout(maxWidth: size.x)
       ..paint(canvas, Vector2(0, 0).toOffset());
   }
 }
 
-class EnemyHpBar extends PositionComponent with RiverpodComponentMixin{
-  double _hp = 100; // FIXME: 最大値をコンストラクタで受け取る必要がある。
-  final double _maxHp = 100; // FIXME: 最大値をコンストラクタで受け取る必要がある。
+class EnemyHpBar extends PositionComponent with RiverpodComponentMixin {
+  late double _hp;
+  late final double _maxHp;
 
-
-
-  EnemyHpBar() {
+  EnemyHpBar({required hp, required double maxHp}) {
+    _hp = hp;
+    _maxHp = maxHp;
     size = Vector2(100, 10);
-    position = Vector2(0,0);
+    position = Vector2(0, 0);
     anchor = Anchor.topLeft;
   }
 
@@ -55,7 +57,4 @@ class EnemyHpBar extends PositionComponent with RiverpodComponentMixin{
       Paint()..color = Colors.green,
     );
   }
-
-
 }
-

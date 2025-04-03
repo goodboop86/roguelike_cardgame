@@ -6,9 +6,7 @@ import '../models/card_state.dart';
 
 // プレイヤーの状態管理プロバイダ
 final cardProvider = StateNotifierProvider<CardStateNotifier, CardState>((ref) {
-  return CardStateNotifier(CardState(
-      activeCard: Card_(
-          effect: EmptyEffect())));
+  return CardStateNotifier(CardState(activeCard: Card_(effect: EmptyEffect())));
 });
 
 class CardStateNotifier extends StateNotifier<CardState> {

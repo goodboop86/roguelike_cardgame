@@ -6,7 +6,6 @@ import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/models/card.dart';
 
-
 // カードの情報を保持するクラス
 class Deck {
   Logger log = Logger('Deck');
@@ -23,7 +22,6 @@ class Deck {
   Deck({required List<Card_> cards, required this.maxHandNum}) {
     _deck = List.from(cards);
   }
-
 
   void _drawHand() {
     while (_hand.length < maxHandNum && _deck.isNotEmpty) {
@@ -75,5 +73,3 @@ class Deck {
     return 'デッキ: $_deck\n手札: $_hand\n墓地: $_trash\n除外: $_excluded\n直前に使ったカード: $_lastPlayedCard\n次のカードへのダメージバフ: $_nextCardDamageBuff';
   }
 }
-
-

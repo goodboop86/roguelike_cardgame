@@ -54,6 +54,7 @@ class PlayerStateNotifier extends CharacterStateNotifier<PlayerState> {
   }
 
   void reset() {
+    print("---> ${state.maxHealth}");
     state = PlayerState(
       name: state.name,
       maxHealth: state.maxHealth,

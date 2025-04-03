@@ -9,7 +9,9 @@ import '../systems/dungeon.dart';
 // プレイヤーの状態管理プロバイダ
 final exploreRouteProvider =
     StateNotifierProvider<ExploreRouteStateNotifier, ExploreRouteState>((ref) {
-  return ExploreRouteStateNotifier(ExploreRouteState(stage: 0, stageList: [[Event.empty]]));
+  return ExploreRouteStateNotifier(ExploreRouteState(stage: 0, stageList: [
+    [Event.empty]
+  ]));
 });
 
 class ExploreRouteStateNotifier extends StateNotifier<ExploreRouteState> {
@@ -28,8 +30,6 @@ class ExploreRouteStateNotifier extends StateNotifier<ExploreRouteState> {
     state =
         ExploreRouteState(stage: state._stage + 1, stageList: state._stageList);
   }
-
-
 }
 
 class ExploreRouteState implements Jsonable {
@@ -49,7 +49,6 @@ class ExploreRouteState implements Jsonable {
 
   List<List<Event>> get stageList => _stageList;
 
-
   @override
   Map<String, int> toJson() {
     return {
@@ -62,4 +61,3 @@ class ExploreRouteState implements Jsonable {
     return jsonEncode(toJson());
   }
 }
-

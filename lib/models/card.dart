@@ -4,9 +4,8 @@ import 'package:roguelike_cardgame/models/character_state.dart';
 
 import 'card_effect.dart';
 
-
 // カードの情報を保持するクラス
-class Card_ implements Jsonable{
+class Card_ implements Jsonable {
   final CardEffect effect;
 
   Card_({required this.effect});
@@ -18,12 +17,12 @@ class Card_ implements Jsonable{
       'manaCost': effect.manaCost,
     };
   }
+
   @override
   String toJsonString() {
     return jsonEncode(toJson());
   }
 }
-
 
 List<Card_> getCards() {
   return [
@@ -39,7 +38,3 @@ List<Card_> getCards() {
     Card_(effect: DebuffEffect()),
   ];
 }
-
-
-
-

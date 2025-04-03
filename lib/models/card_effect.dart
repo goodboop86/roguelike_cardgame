@@ -53,7 +53,8 @@ class AllDamageEffect extends CardEffect {
     Component? playerAnimation =
         game.findByKey(ComponentKey.named("PlayerAnimation"));
 
-    final playerNotifier = ref.read(playerProvider.notifier); // Player に 10 ダメージ
+    final playerNotifier =
+        ref.read(playerProvider.notifier); // Player に 10 ダメージ
     final enemyNotifier = ref.read(enemyProvider.notifier); // Enemy に 20 ダメージ;
 
     playerAnimation!.add(SequenceEffect([

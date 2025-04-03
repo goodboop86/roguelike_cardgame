@@ -4,7 +4,8 @@ import '../models/enum.dart';
 import 'event_probabilities.dart';
 
 // ステージ全体の構成を決める
-List<List<Event>> generateNestedListWithFixedLength(int stageLists, int minLength, int maxLength) {
+List<List<Event>> generateNestedListWithFixedLength(
+    int stageLists, int minLength, int maxLength) {
   final nestedList = <List<Event>>[];
 
   // stageの選択肢の数とその比率
@@ -20,7 +21,8 @@ List<List<Event>> generateNestedListWithFixedLength(int stageLists, int minLengt
     if (stage == 0 || stage == 5 || stage == 10) {
       listLength = 1; // 0, 5, 10番目のリストの長さを1にする
     }
-    final innerList = List.generate(listLength, (idx) => assignEvent(idx, stage)); // 連番でリストを生成
+    final innerList = List.generate(
+        listLength, (idx) => assignEvent(idx, stage)); // 連番でリストを生成
     nestedList.add(innerList);
   }
 
@@ -36,7 +38,7 @@ Event assignEvent(int idx, int stageId) {
   final randomNumber = random.nextDouble();
   double cumulativeProbability = 0.0;
   Map<Event, double> probabilities;
-  if(idx == 0) {
+  if (idx == 0) {
     probabilities = firstEventProbabilities[stageId] ?? {};
   } else {
     probabilities = otherEventProbabilities[stageId] ?? {};
@@ -55,7 +57,7 @@ Event assignEvent(int idx, int stageId) {
 }
 
 bool isSpecialStage(int stageId) {
-  List<int> specialStages = [1,5,10,15,20];
+  List<int> specialStages = [1, 5, 10, 15, 20];
   return specialStages.contains(stageId);
 }
 
@@ -75,14 +77,12 @@ T weightedRandom<T>(Map<T, int> weights) {
   return weights.keys.first;
 }
 
-enum Foo {
-  foo,
-  bar
-}
+enum Foo { foo, bar }
+
 void main() {
-  final nestedList = generateNestedListWithFixedLength(11, 1, 3); // 12個のリストを持つ二重リストを生成
+  final nestedList =
+      generateNestedListWithFixedLength(11, 1, 3); // 12個のリストを持つ二重リストを生成
   print(nestedList);
 
   print(Foo.foo.name);
-
 }

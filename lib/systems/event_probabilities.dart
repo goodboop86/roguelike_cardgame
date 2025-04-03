@@ -1,4 +1,3 @@
-
 import '../models/enum.dart';
 
 enum Monster { goblin, orc, troll, dragon, blackOrc, redDragon }
@@ -29,9 +28,7 @@ final Map<int, Map<Event, double>> firstEventProbabilities = {
     Event.rest: 1.0,
     Event.treasureChest: 0.0,
   },
-  5: {
-    Event.midBoss: 1.0
-  },
+  5: {Event.midBoss: 1.0},
   6: {
     Event.battle: 1.0,
     Event.person: 0.0,
@@ -56,12 +53,8 @@ final Map<int, Map<Event, double>> firstEventProbabilities = {
     Event.rest: 1.0,
     Event.treasureChest: 0.0,
   },
-  10: {
-    Event.boss: 1.0
-  },
-  11: {
-    Event.end: 1.0
-  },
+  10: {Event.boss: 1.0},
+  11: {Event.end: 1.0},
 };
 
 final Map<int, Map<Event, double>> otherEventProbabilities = {
@@ -90,9 +83,7 @@ final Map<int, Map<Event, double>> otherEventProbabilities = {
     Event.rest: 0.0,
     Event.treasureChest: 0.25,
   },
-  5: {
-    Event.midBoss: 1.0
-  },
+  5: {Event.midBoss: 1.0},
   6: {
     Event.battle: 0.5,
     Event.person: 0.25,
@@ -117,10 +108,6 @@ final Map<int, Map<Event, double>> otherEventProbabilities = {
     Event.rest: 0.0,
     Event.treasureChest: 0.25,
   },
-  10: {
-    Event.boss: 1.0
-  },
-  11: {
-    Event.end: 1.0
-  },
+  10: {Event.boss: 1.0},
+  11: {Event.end: 1.0},
 };

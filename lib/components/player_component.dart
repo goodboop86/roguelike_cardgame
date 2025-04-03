@@ -6,11 +6,9 @@ import 'package:flutter/material.dart';
 import '../models/enum.dart';
 import '../providers/player_provider.dart';
 
-class PlayerComponent extends PositionComponent with RiverpodComponentMixin, TapCallbacks, HasGameRef {
+class PlayerComponent extends PositionComponent
+    with RiverpodComponentMixin, TapCallbacks, HasGameRef {
   PlayerComponent({required super.key});
-  final double _maxHp = 100;
-
-
 
   @override
   void render(Canvas canvas) {
@@ -34,15 +32,15 @@ class PlayerComponent extends PositionComponent with RiverpodComponentMixin, Tap
   }
 }
 
-class PlayerHpBar extends PositionComponent with RiverpodComponentMixin{
-  double _hp = 100; // FIXME: 最大値をコンストラクタで受け取る必要がある。
-  final double _maxHp = 100; // FIXME: 最大値をコンストラクタで受け取る必要がある。
+class PlayerHpBar extends PositionComponent with RiverpodComponentMixin {
+  late double _hp;
+  late final double _maxHp;
 
-
-
-  PlayerHpBar() {
+  PlayerHpBar({required hp, required double maxHp}) {
+    _hp = hp;
+    _maxHp = maxHp;
     size = Vector2(100, 10);
-    position = Vector2(0,0);
+    position = Vector2(0, 0);
     anchor = Anchor.topLeft;
   }
 
@@ -56,7 +54,6 @@ class PlayerHpBar extends PositionComponent with RiverpodComponentMixin{
 
     hp = ref.watch(playerProvider).health;
 
-
     // 背景
     canvas.drawRect(
       size.toRect(),
@@ -69,6 +66,4 @@ class PlayerHpBar extends PositionComponent with RiverpodComponentMixin{
       Paint()..color = Colors.green,
     );
   }
-
-
 }

@@ -33,11 +33,16 @@ class MainGame extends FlameGame
       router = RouterComponent(
         routes: {
           ROUTE.home.name: WorldRoute(HomePage.new),
-          ROUTE.battle.name: WorldRoute(BattleEventWorld.new, maintainState: false),
-          ROUTE.person.name: WorldRoute(PersonEventWorld.new, maintainState: false),
-          ROUTE.rest.name: WorldRoute(PersonEventWorld.new, maintainState: false),
-          ROUTE.treasureChest.name: WorldRoute(PersonEventWorld.new, maintainState: false),
-          ROUTE.explore.name: WorldRoute(ExploreWorld.new, maintainState: false),
+          ROUTE.battle.name:
+              WorldRoute(BattleEventWorld.new, maintainState: false),
+          ROUTE.person.name:
+              WorldRoute(PersonEventWorld.new, maintainState: false),
+          ROUTE.rest.name:
+              WorldRoute(PersonEventWorld.new, maintainState: false),
+          ROUTE.treasureChest.name:
+              WorldRoute(PersonEventWorld.new, maintainState: false),
+          ROUTE.explore.name:
+              WorldRoute(ExploreWorld.new, maintainState: false),
         },
         initialRoute: ROUTE.home.name,
       ),

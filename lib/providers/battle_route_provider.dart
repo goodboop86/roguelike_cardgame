@@ -5,18 +5,16 @@ import 'package:riverpod/riverpod.dart';
 import '../models/character_state.dart';
 import '../models/enum.dart';
 
-
 // プレイヤーの状態管理プロバイダ
 final battleRouteProvider =
     StateNotifierProvider<BattleRouteStateNotifier, BattleRouteState>((ref) {
-  return BattleRouteStateNotifier(
-      BattleRouteState(event: Event.start));
+  return BattleRouteStateNotifier(BattleRouteState(event: Event.start));
 });
 
 class BattleRouteStateNotifier extends StateNotifier<BattleRouteState> {
   BattleRouteStateNotifier(super.initialState);
 
-  Event getEvent(){
+  Event getEvent() {
     return state.event;
   }
 }

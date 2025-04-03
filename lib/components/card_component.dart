@@ -23,7 +23,6 @@ class CardComponent extends RectangleComponent
 
   bool isOverlapping = false;
 
-
   @override
   void onTapUp(TapUpEvent event) {
     add(SequenceEffect([
@@ -121,9 +120,8 @@ class CardComponent extends RectangleComponent
     ref.read(playerProvider.notifier).useMana(card.effect.manaCost);
     ref.read(deckProvider.notifier).playCard(card, ref, game);
 
-
     // カードを削除
-    if(isMounted){
+    if (isMounted) {
       removeFromParent();
     }
   }
@@ -146,7 +144,8 @@ class CardComponent extends RectangleComponent
     canvas.drawRect(size.toRect(), Paint()..color = Colors.green);
     TextPainter(
       text: TextSpan(
-          text: card.toJsonString(), style: const TextStyle(color: Colors.white)),
+          text: card.toJsonString(),
+          style: const TextStyle(color: Colors.white)),
       textDirection: TextDirection.ltr,
     )
       ..layout(maxWidth: size.x)

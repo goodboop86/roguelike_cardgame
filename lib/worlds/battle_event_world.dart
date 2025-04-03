@@ -5,7 +5,10 @@ import 'package:flutter/material.dart' hide Image;
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 import 'package:roguelike_cardgame/mixin/world_mixin.dart';
+import 'package:roguelike_cardgame/models/enemy_state.dart';
+import 'package:roguelike_cardgame/models/player_state.dart';
 import 'package:roguelike_cardgame/providers/deck_provider.dart';
+import 'package:roguelike_cardgame/providers/enemy_provider.dart';
 import 'package:roguelike_cardgame/providers/player_provider.dart';
 import 'package:roguelike_cardgame/providers/sizes.dart';
 
@@ -24,12 +27,19 @@ class BattleEventWorld extends World
   Future<void> onMount() async {
     addToGameWidgetBuild(() async {
       BattleRouteState state = ref.read(battleRouteProvider);
+      PlayerState playerState = ref.read(playerProvider);
+      EnemyState enemyState = ref.read(enemyProvider);
       // TODO: 受け取ったEventに従ってEnemyを設置する
 
       var characterArea = children.whereType<CharacterAreaComponent>();
-      if (characterArea.isEmpty) {
+      if (characterArea.isEmpty &
+          (playerState != null) &
+          (enemyState != null)) {
         log.fine("addCharacters");
-        await addCharacters(game.loadParallaxComponent);
+        await addCharacters(
+            loadParallaxComponent: game.loadParallaxComponent,
+            playerState: playerState,
+            enemyState: enemyState);
       }
 
       var buttonArea = children.whereType<ButtonAreaComponent>();
@@ -74,7 +84,6 @@ class BattleEventWorld extends World
   }
 
   Future<void> enemyPhase() async {
-
     await Future.delayed(const Duration(seconds: 1));
     PlayerDamageEffect().call(ref, game);
     startTransition(
@@ -85,7 +94,6 @@ class BattleEventWorld extends World
       },
     );
   }
-
 
   void _addButtons() {
     // カードエリアを作成
