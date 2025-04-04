@@ -114,6 +114,9 @@ class BattleEventWorld extends World
         game.overlays.add(OVERLAY.autoDisappearingOverlay.name);
       },
       () {
+        CardAreaComponent cardArea =
+            children.whereType<CardAreaComponent>().first as CardAreaComponent;
+        cardArea.lock();
         startTransition(
             message: "enemy-turn.",
             next: () {

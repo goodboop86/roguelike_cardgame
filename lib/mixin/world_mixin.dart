@@ -308,17 +308,17 @@ mixin WorldMixin on Component {
       SequenceEffect(
         [
           // 暗転アニメーション
-          OpacityEffect.to(1, EffectController(duration: 0.4),
+          OpacityEffect.to(0.6, EffectController(duration: 0.1),
               onComplete: () => {
                     darkenOverlay.add(transitionText
                       ..text = message
                       ..position = Sizes().screenSize / 2)
                   }),
           // 待機
-          OpacityEffect.to(1, EffectController(duration: 0.7),
+          OpacityEffect.to(0.6, EffectController(duration: 0.5),
               onComplete: () => {darkenOverlay.remove(transitionText)}),
           // 明転アニメーション
-          OpacityEffect.to(0, EffectController(duration: 0.4)),
+          OpacityEffect.to(0, EffectController(duration: 0.1)),
         ],
         onComplete: () {
           next();

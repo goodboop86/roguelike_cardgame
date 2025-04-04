@@ -16,6 +16,7 @@ class CardComponent extends RectangleComponent
   CardComponent({required this.card}) {
     super.priority = 100;
   }
+
   Logger log = Logger('CardComponent');
   final Card_ card;
   Vector2? initialPosition;
@@ -25,18 +26,20 @@ class CardComponent extends RectangleComponent
 
   @override
   void onTapUp(TapUpEvent event) {
-    add(SequenceEffect([
-      ScaleEffect.to(
-        Vector2.all(0.95), // 1.05倍に拡大
-        EffectController(duration: 0.1), // 0.05秒かけて拡大
-      ),
-      ScaleEffect.to(
-        Vector2.all(1.0), // 元の大きさに戻す
-        EffectController(duration: 0.1), // 0.05秒かけて縮小
-      ),
-    ], onComplete: () {
-      overLay();
-    }));
+    if (!(parent as CardAreaComponent).locked) {
+      add(SequenceEffect([
+        ScaleEffect.to(
+          Vector2.all(0.95), // 1.05倍に拡大
+          EffectController(duration: 0.1), // 0.05秒かけて拡大
+        ),
+        ScaleEffect.to(
+          Vector2.all(1.0), // 元の大きさに戻す
+          EffectController(duration: 0.1), // 0.05秒かけて縮小
+        ),
+      ], onComplete: () {
+        overLay();
+      }));
+    }
   }
 
   void overLay() {
@@ -56,8 +59,10 @@ class CardComponent extends RectangleComponent
 
   @override
   void onDragUpdate(DragUpdateEvent event) {
-    position.add(event.localDelta); // ドラッグに応じてコンポーネントの位置を更新
-    checkOverlap();
+    if (!(parent as CardAreaComponent).locked) {
+      position.add(event.localDelta); // ドラッグに応じてコンポーネントの位置を更新
+      checkOverlap();
+    }
   }
 
   @override

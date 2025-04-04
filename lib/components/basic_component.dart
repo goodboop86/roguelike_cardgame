@@ -1,12 +1,19 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 
-RectangleComponent darkenOverlay = RectangleComponent(
-  paint: Paint()..color = Colors.black.withValues(alpha: 0),
-  priority: 1000,
-);
+class OverlayComponent extends RectangleComponent with TapCallbacks {
+  @override
+  void onTapDown(TapDownEvent event) {
+    print("blocked!!!!");
+  } // タッチイベントを消費する
+}
+
+RectangleComponent darkenOverlay = OverlayComponent()
+  ..paint.color = Colors.black.withValues(alpha: 0)
+  ..priority = 1000;
 
 TextComponent transitionText = TextComponent(
   priority: 1,

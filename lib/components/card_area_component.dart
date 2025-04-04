@@ -6,11 +6,22 @@ class CardAreaComponent extends PositionComponent {
   CardAreaComponent({required Vector2 position, required Vector2 size})
       : super(position: position, size: size);
 
+  bool locked = true;
+
   Logger log = Logger('CardAreaComponent');
+
+  void lock() {
+    locked = true;
+  }
+
+  void unlock() {
+    locked = false;
+  }
 
   @override
   void onMount() {
     log.info("mounted");
+    unlock();
   }
 
   @override
