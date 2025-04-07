@@ -1,8 +1,13 @@
+import 'dart:ui';
+
 import 'package:flame/components.dart' hide Timer;
+import 'package:flame/input.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
+import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 import 'package:roguelike_cardgame/mixin/world_mixin.dart';
+import 'package:roguelike_cardgame/valueroutes/pupup_factory.dart';
 
 import 'dart:async';
 
@@ -12,6 +17,8 @@ import '../models/player_state.dart';
 import '../providers/battle_route_provider.dart';
 import '../providers/enemy_provider.dart';
 import '../providers/player_provider.dart';
+import '../providers/sizes.dart';
+import '../valueroutes/popup.dart';
 
 class PersonEventWorld extends World
     with HasGameRef<MainGame>, RiverpodComponentMixin, WorldMixin {
@@ -34,6 +41,12 @@ class PersonEventWorld extends World
             loadParallaxComponent: game.loadParallaxComponent,
             playerState: playerState,
             enemyState: enemyState);
+
+        final value = await game.router.pushAndWait(ValueRouteFactory.create("int"));
+
+        print(value);
+
+
       }
     });
 

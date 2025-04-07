@@ -5,7 +5,7 @@ import 'event_probabilities.dart';
 
 // ステージ全体の構成を決める
 List<List<Event>> generateNestedListWithFixedLength(
-    int stageLists, int minLength, int maxLength) {
+    int stageLists, int minLength, int maxLength, bool isDebug) {
   final nestedList = <List<Event>>[];
 
   // stageの選択肢の数とその比率
@@ -26,6 +26,9 @@ List<List<Event>> generateNestedListWithFixedLength(
     nestedList.add(innerList);
   }
 
+  if(isDebug){
+    return [[Event.start], [Event.battle, Event.person, Event.treasureChest]];
+  }
   return nestedList;
 }
 
@@ -81,7 +84,7 @@ enum Foo { foo, bar }
 
 void main() {
   final nestedList =
-      generateNestedListWithFixedLength(11, 1, 3); // 12個のリストを持つ二重リストを生成
+      generateNestedListWithFixedLength(11, 1, 3, true); // 12個のリストを持つ二重リストを生成
   print(nestedList);
 
   print(Foo.foo.name);

@@ -7,6 +7,7 @@ import 'package:flame_riverpod/flame_riverpod.dart';
 import 'dart:async';
 
 import 'package:roguelike_cardgame/providers/sizes.dart';
+import 'package:roguelike_cardgame/valueroutes/popup.dart';
 import 'package:roguelike_cardgame/worlds/battle_event_world.dart';
 import 'package:roguelike_cardgame/worlds/explore_world.dart';
 import 'package:roguelike_cardgame/worlds/home.dart';

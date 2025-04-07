@@ -22,7 +22,7 @@ class ExploreRouteStateNotifier extends StateNotifier<ExploreRouteState> {
     state = ExploreRouteState(
       stage: 0,
       stageList:
-          generateNestedListWithFixedLength(stageLength, minChoice, maxChoice),
+          generateNestedListWithFixedLength(stageLength, minChoice, maxChoice, true),
     );
   }
 
