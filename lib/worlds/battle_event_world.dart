@@ -14,6 +14,7 @@ import 'package:roguelike_cardgame/providers/sizes.dart';
 
 import 'dart:async';
 
+import '../components/button_component.dart';
 import '../components/card_area_component.dart';
 import '../models/card_effect.dart';
 import '../models/enum.dart';
@@ -128,23 +129,7 @@ class BattleEventWorld extends World
     final buttonAreaCenterX = Sizes().buttonAreaWidth / 2;
     final buttonAreaCenterY = Sizes().buttonAreaHeight / 2;
     buttonOnPressedFunctions.asMap().forEach((index, function) {
-      final button = ButtonComponent(
-        button: RectangleComponent(
-            size: Sizes().buttonSize,
-            paint: Paint()..color = Colors.brown,
-            priority: 0),
-        onPressed: function,
-        children: [
-          TextComponent(
-            priority: 1,
-            text: '$index',
-            position: Sizes().buttonSize / 2,
-            anchor: Anchor.center,
-            textRenderer:
-                TextPaint(style: const TextStyle(color: Colors.white)),
-          ),
-        ],
-      )
+      final button = OptionButtonComponent(text: '$index', func: function)
         ..position = Vector2(
           buttonAreaCenterX +
               (index - 1.5) * (Sizes().buttonWidth + Sizes().margin), // X 座標を調整

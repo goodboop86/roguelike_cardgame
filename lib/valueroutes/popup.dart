@@ -9,8 +9,10 @@ import 'package:flame/geometry.dart';
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
+import 'package:roguelike_cardgame/components/basic_component.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 
+import '../components/button_component.dart';
 import '../providers/sizes.dart';
 
 class StringRoute extends ValueRoute<String> with HasGameReference<MainGame> {
@@ -91,4 +93,24 @@ class DialogBackground extends RectangleComponent with TapCallbacks {
           anchor: Anchor.center,
           paint: Paint()..color = const Color(0xee858585),
         );
+}
+
+class MyDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
+  MyDialogRoute() : super(value: -1, transparent: true);
+
+  @override
+  Component build() {
+    final size = Vector2(250, 130);
+    return DialogBackground(
+      position: game.size / 2,
+      size: size,
+      children: [
+        BasicButtonComponent(text: 'hello?', func: () {
+          completeWith(
+            12345, // return value
+          );
+        })
+      ],
+    );
+  }
 }

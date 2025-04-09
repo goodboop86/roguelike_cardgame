@@ -42,7 +42,9 @@ class PersonEventWorld extends World
             playerState: playerState,
             enemyState: enemyState);
 
-        final value = await game.router.pushAndWait(ValueRouteFactory.create("int"));
+
+        final value = await game.router.pushAndWait(MyDialogRoute());
+        // final value = await game.router.pushAndWait(ValueRouteFactory.create("int"));
 
         print(value);
 
