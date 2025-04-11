@@ -129,7 +129,7 @@ mixin WorldMixin on Component {
       //       Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
 
       SpriteAnimationGroupComponent? playerAnimation = await SpriteSource()
-          .loadCharacterComponent(path: 'dragon.png', onStart: CharState.idle);
+          .loadCharacterComponent(path: 'dragon.png', onStart: CharState.idle, key: ComponentKey.named("PlayerAnimation"));
 
       player.add(playerAnimation!
         ..anchor = Anchor.bottomCenter

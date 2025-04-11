@@ -31,7 +31,7 @@ class BattleEventWorld extends World
   Future<void> onLoad() async {
     Sizes().setScreenSize(game.size);
 
-    playerComponent = await SpriteSource().loadCharacterComponent(path: 'dragon.png', onStart: CharState.idle, );
+    playerComponent = await SpriteSource().loadCharacterComponent(path: 'dragon.png', onStart: CharState.idle, key: ComponentKey.named("PlayerAnimation"), );
 
     super.onLoad();
   }
@@ -50,7 +50,6 @@ class BattleEventWorld extends World
           (enemyState != null)) {
         log.fine("addCharacters");
 
-          add(playerComponent!);
 
 
         await addCharacters(
