@@ -17,6 +17,7 @@ class BasicButtonComponent extends ButtonComponent {
       paint: Paint()..color = Colors.brown,
       priority: 0,
     ),
+    anchor: Anchor.center,
     children: [
       TextComponent(
         priority: 1,

@@ -19,10 +19,24 @@ import '../components/card_area_component.dart';
 import '../models/card_effect.dart';
 import '../models/enum.dart';
 import '../providers/battle_route_provider.dart';
+import '../spritesheet/spritesheet.dart';
 
 class BattleEventWorld extends World
     with HasGameRef<MainGame>, RiverpodComponentMixin, WorldMixin {
   Logger log = Logger('BattleEventWorld');
+
+  late SpriteAnimationGroupComponent playerComponent;
+
+
+  @override
+  Future<void> onLoad() async {
+    Sizes().setScreenSize(game.size);
+
+    SpriteSource source = SpriteSource();
+    await source.load();
+    playerComponent = source.getAnimation();
+    super.onLoad();
+  }
 
   @override
   Future<void> onMount() async {
@@ -37,6 +51,11 @@ class BattleEventWorld extends World
           (playerState != null) &
           (enemyState != null)) {
         log.fine("addCharacters");
+
+        playerComponent.current = SpriteType.slash;
+
+        add(playerComponent);
+
         await addCharacters(
             loadParallaxComponent: game.loadParallaxComponent,
             playerState: playerState,
@@ -65,12 +84,6 @@ class BattleEventWorld extends World
     });
 
     super.onMount();
-  }
-
-  @override
-  Future<void> onLoad() async {
-    Sizes().setScreenSize(game.size);
-    super.onLoad();
   }
 
   void refreshCards() {

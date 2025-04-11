@@ -63,9 +63,9 @@ class Sizes {
 
   // Card
   // double get cardWidth => cardAreaWidth * 0.45;
-  double get cardWidth => 96;
+  double get cardWidth => 64;
   // double get cardHeight => cardAreaHeight * 0.45;
-  double get cardHeight => 96;
+  double get cardHeight => 64;
   Vector2 get cardSize => Vector2(cardWidth, cardHeight);
 
   double get cardMargin => 20.0;

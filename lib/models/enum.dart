@@ -25,3 +25,20 @@ enum Event {
   rest, // bonfire, bench
   end
 }
+
+enum SpriteType {
+  idle,
+  ready,
+  run,
+  crawl,
+  climb,
+  jump,
+  push,
+  jab,
+  slash,
+  shot,
+  fire,
+  block,
+  death,
+  roll
+}
