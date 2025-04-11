@@ -1,7 +1,6 @@
 import 'package:flame/components.dart' hide Timer;
 import 'package:flame/input.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
-import 'package:flutter/material.dart' hide Image;
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 import 'package:roguelike_cardgame/mixin/world_mixin.dart';
@@ -25,16 +24,15 @@ class BattleEventWorld extends World
     with HasGameRef<MainGame>, RiverpodComponentMixin, WorldMixin {
   Logger log = Logger('BattleEventWorld');
 
-  late SpriteAnimationGroupComponent playerComponent;
+  late SpriteAnimationGroupComponent? playerComponent;
 
 
   @override
   Future<void> onLoad() async {
     Sizes().setScreenSize(game.size);
 
-    SpriteSource source = SpriteSource();
-    await source.load();
-    playerComponent = source.getAnimation(onStart: SpriteType.slash);
+    playerComponent = await SpriteSource().loadCharacterComponent(path: 'dragon.png', onStart: CharState.idle, );
+
     super.onLoad();
   }
 
@@ -52,8 +50,8 @@ class BattleEventWorld extends World
           (enemyState != null)) {
         log.fine("addCharacters");
 
+          add(playerComponent!);
 
-        add(playerComponent);
 
         await addCharacters(
             loadParallaxComponent: game.loadParallaxComponent,

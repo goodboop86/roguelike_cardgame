@@ -26,7 +26,7 @@ enum Event {
   end
 }
 
-enum SpriteType {
+enum CharState {
   idle,
   ready,
   run,
