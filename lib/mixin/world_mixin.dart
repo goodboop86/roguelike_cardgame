@@ -19,6 +19,7 @@ import '../components/player_component.dart';
 import '../models/card.dart';
 import '../models/enum.dart';
 import '../providers/sizes.dart';
+import '../spritesheet/spritesheet.dart';
 
 mixin WorldMixin on Component {
   Logger log = Logger('WorldMixin');
@@ -53,9 +54,9 @@ mixin WorldMixin on Component {
 
     // Player の配置 (左上)
     PlayerComponent player =
-        PlayerComponent(key: ComponentKey.named('ExplorePlayer'))
-          ..size = Sizes().playerAreaSize
-          ..position = Sizes().playerAreaPosition;
+    PlayerComponent(key: ComponentKey.named('ExplorePlayer'))
+      ..size = Sizes().playerAreaSize
+      ..position = Sizes().playerAreaPosition;
 
     characterArea.addAll([player]);
 
@@ -69,16 +70,15 @@ mixin WorldMixin on Component {
       ..anchor = Anchor.bottomCenter
       ..size = Vector2(128, 128)
       ..position =
-          Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
+      Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
 
     player.add(playerAnimation);
     // player.add(PlayerHpBar());
   }
 
-  Future<void> addCharacters(
-      {required Function loadParallaxComponent,
-      required PlayerState playerState,
-      required EnemyState enemyState}) async {
+  Future<void> addCharacters({required Function loadParallaxComponent,
+    required PlayerState playerState,
+    required EnemyState enemyState}) async {
     final parallaxComponent = await loadParallaxComponent(
       [
         ParallaxImageData('parallax/1.png'),
@@ -107,28 +107,34 @@ mixin WorldMixin on Component {
     add(characterArea);
 
     bool playerExists =
-        characterArea.children.any((component) => component is PlayerComponent);
+    characterArea.children.any((component) => component is PlayerComponent);
     if (!playerExists) {
       // Player の配置 (左上)
       PlayerComponent player =
-          PlayerComponent(key: ComponentKey.named('Player'))
-            ..size = Sizes().playerAreaSize
-            ..position = Sizes().playerAreaPosition;
-      var playerAnimation = SpriteAnimationComponent.fromFrameData(
-        await Flame.images.load('noBKG_KnightIdle_strip.png'),
-        SpriteAnimationData.sequenced(
-          textureSize: Vector2.all(64),
-          amount: 15,
-          stepTime: 0.08,
-        ),
-        key: ComponentKey.named("PlayerAnimation"),
-      )
-        ..anchor = Anchor.bottomCenter
-        ..size = Vector2(128, 128)
-        ..position =
-            Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
+      PlayerComponent(key: ComponentKey.named('Player'))
+        ..size = Sizes().playerAreaSize
+        ..position = Sizes().playerAreaPosition;
+      // var playerAnimation = SpriteAnimationComponent.fromFrameData(
+      //   await Flame.images.load('noBKG_KnightIdle_strip.png'),
+      //   SpriteAnimationData.sequenced(
+      //     textureSize: Vector2.all(64),
+      //     amount: 15,
+      //     stepTime: 0.08,
+      //   ),
+      //   key: ComponentKey.named("PlayerAnimation"),
+      // )
+      //   ..anchor = Anchor.bottomCenter
+      //   ..size = Vector2(128, 128)
+      //   ..position =
+      //       Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
 
-      player.add(playerAnimation);
+      SpriteAnimationGroupComponent? playerAnimation = await SpriteSource()
+          .loadCharacterComponent(path: 'dragon.png', onStart: CharState.idle);
+
+      player.add(playerAnimation!
+        ..anchor = Anchor.bottomCenter
+        ..position =
+        Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight));
       player.add(PlayerHpBar(
         hp: playerState.health,
         maxHp: playerState.maxHealth,
@@ -137,7 +143,7 @@ mixin WorldMixin on Component {
     }
 
     bool enemyExists =
-        characterArea.children.any((component) => component is EnemyComponent);
+    characterArea.children.any((component) => component is EnemyComponent);
     if (!enemyExists) {
       // Player の配置 (左上)
       EnemyComponent enemy = EnemyComponent(key: ComponentKey.named('Enemy'))
@@ -155,7 +161,7 @@ mixin WorldMixin on Component {
         ..anchor = Anchor.bottomCenter
         ..size = Vector2(128, 128)
         ..position =
-            Vector2(Sizes().enemyAreaWidth / 2, Sizes().enemyAreaHeight)
+        Vector2(Sizes().enemyAreaWidth / 2, Sizes().enemyAreaHeight)
         ..flipHorizontally();
 
       enemy.add(enemyAnimation);
@@ -183,7 +189,8 @@ mixin WorldMixin on Component {
         final button = ButtonComponent(
           button: RectangleComponent(
               size: Sizes().mapSize,
-              paint: Paint()..color = color,
+              paint: Paint()
+                ..color = color,
               priority: 0),
           onPressed: () {},
           children: [
@@ -193,10 +200,11 @@ mixin WorldMixin on Component {
               position: Sizes().mapSize,
               anchor: Anchor.center,
               textRenderer:
-                  TextPaint(style: const TextStyle(color: Colors.white)),
+              TextPaint(style: const TextStyle(color: Colors.white)),
             ),
           ],
-        )..position = Vector2(
+        )
+          ..position = Vector2(
             depth * totalMapWidth +
                 (Sizes().mapAreaWidth - (stageNum * totalMapWidth)) /
                     2, // X 座標を調整
@@ -212,8 +220,8 @@ mixin WorldMixin on Component {
     });
   }
 
-  void addMapCards(
-      List<List<Event>> stageList, int currentStage, router, ComponentRef ref) {
+  void addMapCards(List<List<Event>> stageList, int currentStage, router,
+      ComponentRef ref) {
     List<Event> events = stageList[currentStage];
 
     // カードエリアを作成
@@ -233,7 +241,8 @@ mixin WorldMixin on Component {
       final button = ButtonComponent(
         button: RectangleComponent(
             size: Sizes().mapCardSize,
-            paint: Paint()..color = Colors.green,
+            paint: Paint()
+              ..color = Colors.green,
             priority: 0),
         onPressed: () {
           if (event == Event.battle) {
@@ -249,7 +258,7 @@ mixin WorldMixin on Component {
             anchor: Anchor.center,
             position: Sizes().mapCardSize / 2,
             textRenderer:
-                TextPaint(style: const TextStyle(color: Colors.white)),
+            TextPaint(style: const TextStyle(color: Colors.white)),
           ),
         ],
       )
@@ -309,11 +318,12 @@ mixin WorldMixin on Component {
         [
           // 暗転アニメーション
           OpacityEffect.to(0.6, EffectController(duration: 0.1),
-              onComplete: () => {
-                    darkenOverlay.add(transitionText
-                      ..text = message
-                      ..position = Sizes().screenSize / 2)
-                  }),
+              onComplete: () =>
+              {
+                darkenOverlay.add(transitionText
+                  ..text = message
+                  ..position = Sizes().screenSize / 2)
+              }),
           // 待機
           OpacityEffect.to(0.6, EffectController(duration: 0.5),
               onComplete: () => {darkenOverlay.remove(transitionText)}),
