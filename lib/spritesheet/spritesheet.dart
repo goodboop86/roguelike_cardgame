@@ -13,8 +13,8 @@ class SpriteSource {
   Future<void> load() async {
     playerSpriteSheet = SpriteSheet(
       image: await Flame.images.load('dragon.png'),
-      srcSize: Vector2(48.0, 48.0),
-      spacing: 16.0
+      srcSize: Vector2(64.0, 64.0),
+      spacing: 0.0
     );
     enemySpriteSheet = SpriteSheet(
       image: await Flame.images.load('swordsman.png'),
@@ -22,7 +22,7 @@ class SpriteSource {
     );
   }
 
-  SpriteAnimationGroupComponent getAnimation() {
+  SpriteAnimationGroupComponent getAnimation({required SpriteType onStart}) {
     SpriteAnimation idle =
         playerSpriteSheet.createAnimation(row: 0, stepTime: 0.15, to: 2);
     SpriteAnimation ready =
@@ -77,7 +77,7 @@ class SpriteSource {
         SpriteType.climb: playerSpriteSheet.createAnimation(row: 4, stepTime: 0.3, to: 2),
         SpriteType.jump: playerSpriteSheet.createAnimation(row: 5, stepTime: 0.2, to: 3, loop: false),
         SpriteType.push: playerSpriteSheet.createAnimation(row: 6, stepTime: 0.2, to: 3, loop: false),
-        SpriteType.jab: playerSpriteSheet.createAnimation(row: 7, stepTime: 0.2, to: 3, loop: false),
+        SpriteType.jab: playerSpriteSheet.createAnimation(row: 7, stepTime: 0.2, to: 3, loop: true),
         SpriteType.slash: playerSpriteSheet.createAnimation(row: 8, stepTime: 0.15, to: 4, loop: false),
         SpriteType.shot: playerSpriteSheet.createAnimation(row: 9, stepTime: 0.15, to: 4, loop: false),
         SpriteType.fire: playerSpriteSheet.createAnimation(row: 10, stepTime: 0.3, to: 2, loop: false),
@@ -85,7 +85,7 @@ class SpriteSource {
         SpriteType.death: playerSpriteSheet.createAnimation(row: 12, stepTime: 0.2, to: 3, loop: false),
         SpriteType.roll: playerSpriteSheet.createAnimation(row: 13, stepTime: 0.067, to: 9, loop: false),
       },
-      current: SpriteType.death,
+      current: onStart,
     );
 
     animationGroup.animationTickers?[SpriteType.jump]?.onComplete = (){

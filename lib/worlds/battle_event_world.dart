@@ -34,7 +34,7 @@ class BattleEventWorld extends World
 
     SpriteSource source = SpriteSource();
     await source.load();
-    playerComponent = source.getAnimation();
+    playerComponent = source.getAnimation(onStart: SpriteType.slash);
     super.onLoad();
   }
 
@@ -52,7 +52,6 @@ class BattleEventWorld extends World
           (enemyState != null)) {
         log.fine("addCharacters");
 
-        playerComponent.current = SpriteType.slash;
 
         add(playerComponent);
 
