@@ -25,8 +25,8 @@ import '../spritesheet/spritesheet.dart';
 mixin WorldMixin on Component {
   Logger log = Logger('WorldMixin');
 
-  Future<void> addSingleCharacters(loadParallaxComponent, ComponentRef ref) async {
-
+  Future<void> addSingleCharacters(
+      loadParallaxComponent, ComponentRef ref) async {
     add(SpriteSource().getParallax(name: "default")!);
 
     // カードエリアを作成
@@ -38,21 +38,18 @@ mixin WorldMixin on Component {
     add(characterArea);
 
     // Player の配置 (左上)
-    PlayerComponent player =
-    PlayerComponent(key: ComponentKey.named('ExplorePlayer'), path: 'dragon.png')
+    PlayerComponent player = PlayerComponent(
+        key: ComponentKey.named('ExplorePlayer'), path: 'dragon.png')
       ..size = Sizes().playerAreaSize
       ..position = Sizes().playerAreaPosition;
 
     characterArea.addAll([player]);
-
-
   }
 
-  Future<void> addCharacters({required Function loadParallaxComponent,
-    required ComponentRef ref}) async {
-
-
-    add(SpriteSource().getParallax(name: "default")!);
+  Future<void> addCharacters(
+      {required Function loadParallaxComponent,
+      required ComponentRef ref}) async {
+    // add(SpriteSource().getParallax(name: "default")!);
 
     final characterArea = CharacterAreaComponent(
       key: ComponentKey.named('BattleCharacterArea'),
@@ -62,19 +59,19 @@ mixin WorldMixin on Component {
     add(characterArea);
 
     bool playerExists =
-    characterArea.children.any((component) => component is PlayerComponent);
+        characterArea.children.any((component) => component is PlayerComponent);
     if (!playerExists) {
       // Player の配置 (左上)
       PlayerComponent player =
-      PlayerComponent(key: ComponentKey.named('Player'), path: 'dragon.png')
-        ..size = Sizes().playerAreaSize
-        ..position = Sizes().playerAreaPosition;
+          PlayerComponent(key: ComponentKey.named('Player'), path: 'dragon.png')
+            ..size = Sizes().playerAreaSize
+            ..position = Sizes().playerAreaPosition;
 
       characterArea.add(player);
     }
 
     bool enemyExists =
-    characterArea.children.any((component) => component is EnemyComponent);
+        characterArea.children.any((component) => component is EnemyComponent);
     if (!enemyExists) {
       // Player の配置 (左上)
       EnemyComponent enemy = EnemyComponent(key: ComponentKey.named('Enemy'))
@@ -92,11 +89,13 @@ mixin WorldMixin on Component {
         ..anchor = Anchor.bottomCenter
         ..size = Vector2(128, 128)
         ..position =
-        Vector2(Sizes().enemyAreaWidth / 2, Sizes().enemyAreaHeight)
+            Vector2(Sizes().enemyAreaWidth / 2, Sizes().enemyAreaHeight)
         ..flipHorizontally();
 
       enemy.add(enemyAnimation);
-      enemy.add(EnemyHpBar(hp: ref.read(enemyProvider).health, maxHp: ref.read(enemyProvider).maxHealth));
+      enemy.add(EnemyHpBar(
+          hp: ref.read(enemyProvider).health,
+          maxHp: ref.read(enemyProvider).maxHealth));
       characterArea.add(enemy);
     }
   }
@@ -120,8 +119,7 @@ mixin WorldMixin on Component {
         final button = ButtonComponent(
           button: RectangleComponent(
               size: Sizes().mapSize,
-              paint: Paint()
-                ..color = color,
+              paint: Paint()..color = color,
               priority: 0),
           onPressed: () {},
           children: [
@@ -131,11 +129,10 @@ mixin WorldMixin on Component {
               position: Sizes().mapSize,
               anchor: Anchor.center,
               textRenderer:
-              TextPaint(style: const TextStyle(color: Colors.white)),
+                  TextPaint(style: const TextStyle(color: Colors.white)),
             ),
           ],
-        )
-          ..position = Vector2(
+        )..position = Vector2(
             depth * totalMapWidth +
                 (Sizes().mapAreaWidth - (stageNum * totalMapWidth)) /
                     2, // X 座標を調整
@@ -151,8 +148,8 @@ mixin WorldMixin on Component {
     });
   }
 
-  void addMapCards(List<List<Event>> stageList, int currentStage, router,
-      ComponentRef ref) {
+  void addMapCards(
+      List<List<Event>> stageList, int currentStage, router, ComponentRef ref) {
     List<Event> events = stageList[currentStage];
 
     // カードエリアを作成
@@ -172,8 +169,7 @@ mixin WorldMixin on Component {
       final button = ButtonComponent(
         button: RectangleComponent(
             size: Sizes().mapCardSize,
-            paint: Paint()
-              ..color = Colors.green,
+            paint: Paint()..color = Colors.green,
             priority: 0),
         onPressed: () {
           if (event == Event.battle) {
@@ -189,7 +185,7 @@ mixin WorldMixin on Component {
             anchor: Anchor.center,
             position: Sizes().mapCardSize / 2,
             textRenderer:
-            TextPaint(style: const TextStyle(color: Colors.white)),
+                TextPaint(style: const TextStyle(color: Colors.white)),
           ),
         ],
       )
@@ -249,12 +245,11 @@ mixin WorldMixin on Component {
         [
           // 暗転アニメーション
           OpacityEffect.to(0.6, EffectController(duration: 0.1),
-              onComplete: () =>
-              {
-                darkenOverlay.add(transitionText
-                  ..text = message
-                  ..position = Sizes().screenSize / 2)
-              }),
+              onComplete: () => {
+                    darkenOverlay.add(transitionText
+                      ..text = message
+                      ..position = Sizes().screenSize / 2)
+                  }),
           // 待機
           OpacityEffect.to(0.6, EffectController(duration: 0.5),
               onComplete: () => {darkenOverlay.remove(transitionText)}),

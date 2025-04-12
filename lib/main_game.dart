@@ -3,10 +3,12 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flame/parallax.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'dart:async';
 
 import 'package:roguelike_cardgame/providers/sizes.dart';
+import 'package:roguelike_cardgame/spritesheet/spritesheet.dart';
 import 'package:roguelike_cardgame/valueroutes/popup.dart';
 import 'package:roguelike_cardgame/worlds/battle_event_world.dart';
 import 'package:roguelike_cardgame/worlds/explore_world.dart';
@@ -17,7 +19,10 @@ import 'models/enum.dart';
 
 class MainGame extends FlameGame
     with HasGameRef, RiverpodGameMixin, DragCallbacks {
-  MainGame() : super(camera: CameraComponent.withFixedResolution(width: Sizes().gameWidth, height: Sizes().gameHeight));
+  MainGame()
+      : super(
+            camera: CameraComponent.withFixedResolution(
+                width: Sizes().gameWidth, height: Sizes().gameHeight));
   @override
   var debugMode = true;
 
@@ -28,8 +33,30 @@ class MainGame extends FlameGame
 
   @override
   Future<void> onLoad() async {
-    super.onLoad();
-    Sizes().setScreenSize(size);
+    await SpriteSource().storeCharacterComponent(
+        path: 'dragon.png',
+        onStart: CharState.idle,
+        key: ComponentKey.named("PlayerAnimation"));
+
+    ParallaxComponent parallax = await loadParallaxComponent(
+      [
+        'parallax/1.png',
+        'parallax/2.png',
+        'parallax/3.png',
+        'parallax/5.png',
+        'parallax/6.png',
+        'parallax/7.png',
+        'parallax/8.png',
+        'parallax/10.png'
+      ].map((path) => ParallaxImageData(path)).toList(),
+      baseVelocity: Vector2(0.1, 0),
+      size: Sizes().gameSize,
+      position: Sizes().gamePosition,
+      velocityMultiplierDelta: Vector2(1.8, 1.0),
+    );
+
+    SpriteSource()
+        .storeParallaxComponent(name: 'default', parallaxComponent: parallax);
 
     add(
       router = RouterComponent(
@@ -49,5 +76,7 @@ class MainGame extends FlameGame
         initialRoute: ROUTE.home.name,
       ),
     );
+
+    super.onLoad();
   }
 }

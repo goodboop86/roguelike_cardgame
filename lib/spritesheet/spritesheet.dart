@@ -20,11 +20,9 @@ class SpriteSource {
         key: ComponentKey.named("PlayerAnimation"));
   }
 
-
   Future<void> storeParallaxComponent(
       {required ParallaxComponent parallaxComponent,
       required String name}) async {
-
     if (!_parallaxCache.containsKey(name)) {
       try {
         _parallaxCache[name] = parallaxComponent;

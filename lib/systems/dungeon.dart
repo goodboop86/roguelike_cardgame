@@ -26,8 +26,11 @@ List<List<Event>> generateNestedListWithFixedLength(
     nestedList.add(innerList);
   }
 
-  if(isDebug){
-    return [[Event.start], [Event.battle, Event.person, Event.treasureChest]];
+  if (isDebug) {
+    return [
+      [Event.start],
+      [Event.battle, Event.person, Event.treasureChest]
+    ];
   }
   return nestedList;
 }

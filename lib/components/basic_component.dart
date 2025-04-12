@@ -24,9 +24,3 @@ TextComponent transitionText = TextComponent(
   textRenderer:
       TextPaint(style: const TextStyle(color: Colors.white, fontSize: 24)),
 );
-
-
-
-
-
-

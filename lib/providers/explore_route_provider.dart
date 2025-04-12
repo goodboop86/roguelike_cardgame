@@ -21,8 +21,8 @@ class ExploreRouteStateNotifier extends StateNotifier<ExploreRouteState> {
       {required stageLength, required minChoice, required maxChoice}) {
     state = ExploreRouteState(
       stage: 0,
-      stageList:
-          generateNestedListWithFixedLength(stageLength, minChoice, maxChoice, true),
+      stageList: generateNestedListWithFixedLength(
+          stageLength, minChoice, maxChoice, true),
     );
   }
 

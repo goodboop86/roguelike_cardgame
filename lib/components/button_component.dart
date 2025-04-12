@@ -12,23 +12,24 @@ class BasicButtonComponent extends ButtonComponent {
 
   BasicButtonComponent({required this.text, this.func})
       : super(
-    button: RectangleComponent(
-      size: Sizes().buttonSize,
-      paint: Paint()..color = Colors.brown,
-      priority: 0,
-    ),
-    anchor: Anchor.center,
-    children: [
-      TextComponent(
-        priority: 1,
-        text: text,
-        position: Sizes().buttonSize / 2,
-        anchor: Anchor.center,
-        textRenderer: TextPaint(style: const TextStyle(color: Colors.white)),
-      ),
-    ],
-    onPressed: func,
-  );
+          button: RectangleComponent(
+            size: Sizes().buttonSize,
+            paint: Paint()..color = Colors.brown,
+            priority: 0,
+          ),
+          anchor: Anchor.center,
+          children: [
+            TextComponent(
+              priority: 1,
+              text: text,
+              position: Sizes().buttonSize / 2,
+              anchor: Anchor.center,
+              textRenderer:
+                  TextPaint(style: const TextStyle(color: Colors.white)),
+            ),
+          ],
+          onPressed: func,
+        );
 
   @override
   Future<void> onLoad() async {
@@ -44,23 +45,23 @@ class OptionButtonComponent extends ButtonComponent {
 
   OptionButtonComponent({required this.text, this.func})
       : super(
-    button: RectangleComponent(
-        size: Sizes().buttonSize,
-        paint: Paint()..color = Colors.brown,
-        priority: 0),
-    onPressed: func,
-    anchor: Anchor.center,
-    children: [
-      TextComponent(
-        priority: 1,
-        text: text,
-        position: Sizes().buttonSize / 2,
-        anchor: Anchor.center,
-        textRenderer:
-        TextPaint(style: const TextStyle(color: Colors.white)),
-      ),
-    ],
-  );
+          button: RectangleComponent(
+              size: Sizes().buttonSize,
+              paint: Paint()..color = Colors.brown,
+              priority: 0),
+          onPressed: func,
+          anchor: Anchor.center,
+          children: [
+            TextComponent(
+              priority: 1,
+              text: text,
+              position: Sizes().buttonSize / 2,
+              anchor: Anchor.center,
+              textRenderer:
+                  TextPaint(style: const TextStyle(color: Colors.white)),
+            ),
+          ],
+        );
 
   @override
   Future<void> onLoad() async {

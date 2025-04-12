@@ -29,33 +29,6 @@ class BattleEventWorld extends World
 
   @override
   Future<void> onLoad() async {
-    Sizes().setScreenSize(game.size);
-
-    await SpriteSource().storeCharacterComponent(
-        path: 'dragon.png',
-        onStart: CharState.idle,
-        key: ComponentKey.named("PlayerAnimation"));
-
-    ParallaxComponent parallax = await game.loadParallaxComponent(
-      [
-        'parallax/1.png',
-        'parallax/2.png',
-        'parallax/3.png',
-        'parallax/5.png',
-        'parallax/6.png',
-        'parallax/7.png',
-        'parallax/8.png',
-        'parallax/10.png'
-      ].map((path) => ParallaxImageData(path)).toList(),
-      baseVelocity: Vector2(0.1, 0),
-      size: Sizes().gameSize,
-      position: Sizes().gamePosition,
-      velocityMultiplierDelta: Vector2(1.8, 1.0),
-    );
-
-    SpriteSource()
-        .storeParallaxComponent(name: 'default', parallaxComponent: parallax);
-
     super.onLoad();
   }
 

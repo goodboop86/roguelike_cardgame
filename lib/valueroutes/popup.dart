@@ -78,7 +78,7 @@ class IntRoute extends ValueRoute<int> with HasGameReference<MainGame> {
               position: Sizes().buttonSize / 2,
               anchor: Anchor.center,
               textRenderer:
-              TextPaint(style: const TextStyle(color: Colors.white)),
+                  TextPaint(style: const TextStyle(color: Colors.white)),
             ),
           ],
         )
@@ -105,11 +105,13 @@ class MyDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
       position: game.size / 2,
       size: size,
       children: [
-        BasicButtonComponent(text: 'hello?', func: () {
-          completeWith(
-            12345, // return value
-          );
-        })
+        BasicButtonComponent(
+            text: 'hello?',
+            func: () {
+              completeWith(
+                12345, // return value
+              );
+            })
       ],
     );
   }

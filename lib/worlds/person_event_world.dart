@@ -38,16 +38,12 @@ class PersonEventWorld extends World
           (enemyState != null)) {
         log.fine("addCharacters");
         await addCharacters(
-            loadParallaxComponent: game.loadParallaxComponent,
-            ref: ref);
-
+            loadParallaxComponent: game.loadParallaxComponent, ref: ref);
 
         final value = await game.router.pushAndWait(MyDialogRoute());
         // final value = await game.router.pushAndWait(ValueRouteFactory.create("int"));
 
         print(value);
-
-
       }
     });
 

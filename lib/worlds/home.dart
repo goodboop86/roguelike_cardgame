@@ -25,8 +25,10 @@ class HomePage extends World
 
   @override
   Future<void> onLoad() async {
-    add(BasicButtonComponent(text: 'start', func: () {
-      _start();
-    }));
+    add(BasicButtonComponent(
+        text: 'start',
+        func: () {
+          _start();
+        }));
   }
 }

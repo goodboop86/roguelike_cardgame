@@ -11,9 +11,8 @@ import '../spritesheet/spritesheet.dart';
 
 class PlayerComponent extends PositionComponent
     with RiverpodComponentMixin, TapCallbacks, HasGameRef {
-  PlayerComponent(
-      {required super.key, required String path})
-      : super(children: [
+  PlayerComponent({required super.key, required String path})
+      : super(priority: 10, children: [
           SpriteSource().getCharacter(path: path)!
             ..anchor = Anchor.bottomCenter
             ..position =
@@ -24,7 +23,6 @@ class PlayerComponent extends PositionComponent
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    // canvas.drawRect(size.toRect(), Paint()..color = Colors.blue);
     final playerState = ref.watch(playerProvider);
     TextPainter(
       text: TextSpan(
@@ -46,6 +44,7 @@ class PlayerComponent extends PositionComponent
 class PlayerHpBar extends PositionComponent with RiverpodComponentMixin {
   late double _hp;
   late double _maxHp;
+  bool _isInitialized = false;
 
   PlayerHpBar({hp, maxHp}) {
     size = Vector2(100, 10);
@@ -58,6 +57,7 @@ class PlayerHpBar extends PositionComponent with RiverpodComponentMixin {
     addToGameWidgetBuild(() async {
       _maxHp = ref.read(playerProvider).maxHealth;
       _hp = ref.read(playerProvider).maxHealth;
+      _isInitialized = true;
     });
     super.onMount();
   }
@@ -70,19 +70,21 @@ class PlayerHpBar extends PositionComponent with RiverpodComponentMixin {
   void render(Canvas canvas) {
     super.render(canvas);
 
-    hp = ref.watch(playerProvider).health;
+    if (_isInitialized) {
+      hp = ref.watch(playerProvider).health;
 
-    // 背景
-    canvas.drawRect(
-      size.toRect(),
-      Paint()..color = Colors.grey,
-    );
+      // 背景
+      canvas.drawRect(
+        size.toRect(),
+        Paint()..color = Colors.grey,
+      );
 
-    // HPバー
-    canvas.drawRect(
-      Rect.fromLTWH(0, 0, size.x * (_hp / _maxHp), size.y),
-      Paint()..color = Colors.green,
-    );
+      // HPバー
+      canvas.drawRect(
+        Rect.fromLTWH(0, 0, size.x * (_hp / _maxHp), size.y),
+        Paint()..color = Colors.green,
+      );
+    }
   }
 }
 
