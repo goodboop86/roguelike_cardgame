@@ -17,7 +17,7 @@ import 'models/enum.dart';
 
 class MainGame extends FlameGame
     with HasGameRef, RiverpodGameMixin, DragCallbacks {
-  MainGame() : super(camera: CameraComponent.withFixedResolution(width: 384, height: 768));
+  MainGame() : super(camera: CameraComponent.withFixedResolution(width: Sizes().gameWidth, height: Sizes().gameHeight));
   @override
   var debugMode = true;
 

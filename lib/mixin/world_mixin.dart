@@ -18,31 +18,16 @@ import '../components/enemy_component.dart';
 import '../components/player_component.dart';
 import '../models/card.dart';
 import '../models/enum.dart';
+import '../providers/enemy_provider.dart';
 import '../providers/sizes.dart';
 import '../spritesheet/spritesheet.dart';
 
 mixin WorldMixin on Component {
   Logger log = Logger('WorldMixin');
 
-  Future<void> addSingleCharacters(loadParallaxComponent) async {
-    final parallaxComponent = await loadParallaxComponent(
-      [
-        ParallaxImageData('parallax/1.png'),
-        ParallaxImageData('parallax/2.png'),
-        ParallaxImageData('parallax/3.png'),
-        ParallaxImageData('parallax/5.png'),
-        ParallaxImageData('parallax/6.png'),
-        ParallaxImageData('parallax/7.png'),
-        ParallaxImageData('parallax/8.png'),
-        ParallaxImageData('parallax/10.png'),
-      ],
-      baseVelocity: Vector2(0.1, 0),
-      size: Sizes().characterAreaSize,
-      position: Sizes().characterAreaPosition,
-      velocityMultiplierDelta: Vector2(1.8, 1.0),
-    );
+  Future<void> addSingleCharacters(loadParallaxComponent, ComponentRef ref) async {
 
-    add(parallaxComponent);
+    add(SpriteSource().getParallax(name: "default")!);
 
     // カードエリアを作成
     final characterArea = CharacterAreaComponent(
@@ -54,51 +39,21 @@ mixin WorldMixin on Component {
 
     // Player の配置 (左上)
     PlayerComponent player =
-    PlayerComponent(key: ComponentKey.named('ExplorePlayer'))
+    PlayerComponent(key: ComponentKey.named('ExplorePlayer'), path: 'dragon.png')
       ..size = Sizes().playerAreaSize
       ..position = Sizes().playerAreaPosition;
 
     characterArea.addAll([player]);
 
-    var playerAnimation = SpriteAnimationComponent.fromFrameData(
-        await Flame.images.load('noBKG_KnightIdle_strip.png'),
-        SpriteAnimationData.sequenced(
-          textureSize: Vector2.all(64),
-          amount: 15,
-          stepTime: 0.08,
-        ))
-      ..anchor = Anchor.bottomCenter
-      ..size = Vector2(128, 128)
-      ..position =
-      Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
 
-    player.add(playerAnimation);
-    // player.add(PlayerHpBar());
   }
 
   Future<void> addCharacters({required Function loadParallaxComponent,
-    required PlayerState playerState,
-    required EnemyState enemyState}) async {
-    final parallaxComponent = await loadParallaxComponent(
-      [
-        ParallaxImageData('parallax/1.png'),
-        ParallaxImageData('parallax/2.png'),
-        ParallaxImageData('parallax/3.png'),
-        ParallaxImageData('parallax/5.png'),
-        ParallaxImageData('parallax/6.png'),
-        ParallaxImageData('parallax/7.png'),
-        ParallaxImageData('parallax/8.png'),
-        ParallaxImageData('parallax/10.png'),
-      ],
-      baseVelocity: Vector2(0.1, 0),
-      size: Sizes().characterAreaSize,
-      position: Sizes().characterAreaPosition,
-      velocityMultiplierDelta: Vector2(1.8, 1.0),
-    );
+    required ComponentRef ref}) async {
 
-    add(parallaxComponent);
 
-    // カードエリアを作成
+    add(SpriteSource().getParallax(name: "default")!);
+
     final characterArea = CharacterAreaComponent(
       key: ComponentKey.named('BattleCharacterArea'),
       position: Sizes().characterAreaPosition,
@@ -111,34 +66,10 @@ mixin WorldMixin on Component {
     if (!playerExists) {
       // Player の配置 (左上)
       PlayerComponent player =
-      PlayerComponent(key: ComponentKey.named('Player'))
+      PlayerComponent(key: ComponentKey.named('Player'), path: 'dragon.png')
         ..size = Sizes().playerAreaSize
         ..position = Sizes().playerAreaPosition;
-      // var playerAnimation = SpriteAnimationComponent.fromFrameData(
-      //   await Flame.images.load('noBKG_KnightIdle_strip.png'),
-      //   SpriteAnimationData.sequenced(
-      //     textureSize: Vector2.all(64),
-      //     amount: 15,
-      //     stepTime: 0.08,
-      //   ),
-      //   key: ComponentKey.named("PlayerAnimation"),
-      // )
-      //   ..anchor = Anchor.bottomCenter
-      //   ..size = Vector2(128, 128)
-      //   ..position =
-      //       Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight);
 
-      SpriteAnimationGroupComponent? playerAnimation = await SpriteSource()
-          .loadCharacterComponent(path: 'dragon.png', onStart: CharState.idle, key: ComponentKey.named("PlayerAnimation"));
-
-      player.add(playerAnimation!
-        ..anchor = Anchor.bottomCenter
-        ..position =
-        Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight));
-      player.add(PlayerHpBar(
-        hp: playerState.health,
-        maxHp: playerState.maxHealth,
-      ));
       characterArea.add(player);
     }
 
@@ -165,7 +96,7 @@ mixin WorldMixin on Component {
         ..flipHorizontally();
 
       enemy.add(enemyAnimation);
-      enemy.add(EnemyHpBar(hp: enemyState.health, maxHp: enemyState.maxHealth));
+      enemy.add(EnemyHpBar(hp: ref.read(enemyProvider).health, maxHp: ref.read(enemyProvider).maxHealth));
       characterArea.add(enemy);
     }
   }

@@ -1,5 +1,6 @@
 import 'package:flame/components.dart' hide Timer;
 import 'package:flame/input.dart';
+import 'package:flame/parallax.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
@@ -26,12 +27,34 @@ class BattleEventWorld extends World
 
   late SpriteAnimationGroupComponent? playerComponent;
 
-
   @override
   Future<void> onLoad() async {
     Sizes().setScreenSize(game.size);
 
-    playerComponent = await SpriteSource().loadCharacterComponent(path: 'dragon.png', onStart: CharState.idle, key: ComponentKey.named("PlayerAnimation"), );
+    await SpriteSource().storeCharacterComponent(
+        path: 'dragon.png',
+        onStart: CharState.idle,
+        key: ComponentKey.named("PlayerAnimation"));
+
+    ParallaxComponent parallax = await game.loadParallaxComponent(
+      [
+        'parallax/1.png',
+        'parallax/2.png',
+        'parallax/3.png',
+        'parallax/5.png',
+        'parallax/6.png',
+        'parallax/7.png',
+        'parallax/8.png',
+        'parallax/10.png'
+      ].map((path) => ParallaxImageData(path)).toList(),
+      baseVelocity: Vector2(0.1, 0),
+      size: Sizes().gameSize,
+      position: Sizes().gamePosition,
+      velocityMultiplierDelta: Vector2(1.8, 1.0),
+    );
+
+    SpriteSource()
+        .storeParallaxComponent(name: 'default', parallaxComponent: parallax);
 
     super.onLoad();
   }
@@ -50,12 +73,8 @@ class BattleEventWorld extends World
           (enemyState != null)) {
         log.fine("addCharacters");
 
-
-
         await addCharacters(
-            loadParallaxComponent: game.loadParallaxComponent,
-            playerState: playerState,
-            enemyState: enemyState);
+            loadParallaxComponent: game.loadParallaxComponent, ref: ref);
       }
 
       var buttonArea = children.whereType<ButtonAreaComponent>();

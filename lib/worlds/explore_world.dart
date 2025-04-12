@@ -30,7 +30,7 @@ class ExploreWorld extends World
       var characterArea = children.whereType<CharacterAreaComponent>();
       if (characterArea.isEmpty) {
         log.fine("addCharacters");
-        await addSingleCharacters(game.loadParallaxComponent);
+        await addSingleCharacters(game.loadParallaxComponent,  ref);
       }
     });
 
