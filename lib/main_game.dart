@@ -1,15 +1,28 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/parallax.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
-import 'package:roguelike_cardgame/pages/battle.dart';
-import 'package:roguelike_cardgame/pages/home.dart';
 import 'dart:async';
 
+import 'package:roguelike_cardgame/providers/sizes.dart';
+import 'package:roguelike_cardgame/spritesheet/spritesheet.dart';
+import 'package:roguelike_cardgame/valueroutes/popup.dart';
+import 'package:roguelike_cardgame/worlds/battle_event_world.dart';
+import 'package:roguelike_cardgame/worlds/explore_world.dart';
+import 'package:roguelike_cardgame/worlds/home.dart';
+import 'package:roguelike_cardgame/worlds/person_event_world.dart';
+
+import 'models/enum.dart';
+
 class MainGame extends FlameGame
-    with HasGameRef, RiverpodGameMixin, HasWorldReference {
+    with HasGameRef, RiverpodGameMixin, DragCallbacks {
+  MainGame()
+      : super(
+            camera: CameraComponent.withFixedResolution(
+                width: Sizes().gameWidth, height: Sizes().gameHeight));
   @override
   var debugMode = true;
 
@@ -20,32 +33,50 @@ class MainGame extends FlameGame
 
   @override
   Future<void> onLoad() async {
-    final parallaxComponent = await loadParallaxComponent(
+    await SpriteSource().storeCharacterComponent(
+        path: 'dragon.png',
+        onStart: CharState.idle,
+        key: ComponentKey.named("PlayerAnimation"));
+
+    ParallaxComponent parallax = await loadParallaxComponent(
       [
-        ParallaxImageData('parallax/1.png'),
-        ParallaxImageData('parallax/2.png'),
-        ParallaxImageData('parallax/3.png'),
-        ParallaxImageData('parallax/5.png'),
-        ParallaxImageData('parallax/6.png'),
-        ParallaxImageData('parallax/7.png'),
-        ParallaxImageData('parallax/8.png'),
-        ParallaxImageData('parallax/10.png'),
-      ],
+        'parallax/1.png',
+        'parallax/2.png',
+        'parallax/3.png',
+        'parallax/5.png',
+        'parallax/6.png',
+        'parallax/7.png',
+        'parallax/8.png',
+        'parallax/10.png'
+      ].map((path) => ParallaxImageData(path)).toList(),
       baseVelocity: Vector2(0.1, 0),
-        size: Vector2(game.size.x, game.size.y/2.7),
-      position: Vector2(0, 0),
+      size: Sizes().gameSize,
+      position: Sizes().gamePosition,
       velocityMultiplierDelta: Vector2(1.8, 1.0),
     );
-    add(parallaxComponent);
+
+    SpriteSource()
+        .storeParallaxComponent(name: 'default', parallaxComponent: parallax);
 
     add(
       router = RouterComponent(
         routes: {
-          'home': Route(HomePage.new),
-          'battle': Route(BattlePage.new, maintainState: false),
+          ROUTE.home.name: WorldRoute(HomePage.new),
+          ROUTE.battle.name:
+              WorldRoute(BattleEventWorld.new, maintainState: false),
+          ROUTE.person.name:
+              WorldRoute(PersonEventWorld.new, maintainState: false),
+          ROUTE.rest.name:
+              WorldRoute(PersonEventWorld.new, maintainState: false),
+          ROUTE.treasureChest.name:
+              WorldRoute(PersonEventWorld.new, maintainState: false),
+          ROUTE.explore.name:
+              WorldRoute(ExploreWorld.new, maintainState: false),
         },
-        initialRoute: 'home',
+        initialRoute: ROUTE.home.name,
       ),
     );
+
+    super.onLoad();
   }
 }

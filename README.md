@@ -56,3 +56,19 @@ assets/
     characters/         # キャラクター画像
   audio/                # 音声アセット
 ```
+
+
+# TOTO
+
+- デッキのprovider作成。デッキ、使い終わったカード、手札など。またそれを表示できるOverlay
+- マナがないとカードが使えない。エラーメッセージを出す(provider + popup)
+- 相手のHPがゼロになると、勝利エフェクト発生し、報酬をゲットする。その後ボタンを押すとexploreに戻る。
+- event.person押したら人物に移行。ポップアップを表示して押したら消え、アクション選択、押したら反映。その後ボタンを押すとexploreに戻る。
+- event.rest押したら休憩に移行。ポップアップを表示して押したら消え、アクション選択、押したら反映。その後ボタンを押すとexploreに戻る。
+- キャラクター選択画面
+
+# 画像生成のプロンプト
+
+```
+Magic Barrier, A solid painted touch, black background, simple color palette, Bold line design, Rounded shape,  This is an expression that could be used for illustrations in a card game for smartphones. It is a fantastical, iconic, non-scary two-dimensional illustration. The expression is performed with a sense of dynamism, and there are no human or living things, only effect.
+```
