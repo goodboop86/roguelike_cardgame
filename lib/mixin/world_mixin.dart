@@ -64,28 +64,10 @@ mixin WorldMixin on Component {
         characterArea.children.any((component) => component is EnemyComponent);
     if (!enemyExists) {
       // Player の配置 (左上)
-      EnemyComponent enemy = EnemyComponent(key: ComponentKey.named('Enemy'), path: 'dragon.png')
-        ..size = Sizes().enemyAreaSize
-        ..position = Sizes().enemyAreaPosition;
-      var enemyAnimation = SpriteAnimationComponent.fromFrameData(
-        await Flame.images.load('noBKG_KnightIdle_strip.png'),
-        SpriteAnimationData.sequenced(
-          textureSize: Vector2.all(64),
-          amount: 15,
-          stepTime: 0.08,
-        ),
-        key: ComponentKey.named("EnemyAnimation"),
-      )
-        ..anchor = Anchor.bottomCenter
-        ..size = Vector2(128, 128)
-        ..position =
-            Vector2(Sizes().enemyAreaWidth / 2, Sizes().enemyAreaHeight)
-        ..flipHorizontally();
-
-      enemy.add(enemyAnimation);
-      // enemy.add(EnemyHpBar(
-      //     hp: ref.read(enemyProvider).health,
-      //     maxHp: ref.read(enemyProvider).maxHealth));
+      EnemyComponent enemy =
+          EnemyComponent(key: ComponentKey.named('Enemy'), path: 'enemy.png')
+            ..size = Sizes().enemyAreaSize
+            ..position = Sizes().enemyAreaPosition;
       characterArea.add(enemy);
     }
   }

@@ -50,6 +50,13 @@ class MainGame extends FlameGame
       onStart: CharState.idle,
       srcSize: Vector2(64.0, 64.0),);
 
+    await AssetSource().storeAnimation(
+      path: 'enemy.png',
+      key: ComponentKey.named("EnemyAnimation"),
+      size: Vector2(128, 128),
+      onStart: CharState.idle,
+      srcSize: Vector2(64.0, 64.0),);
+
     // sprite
     await AssetSource().storeSprite(
         path: 'background.png',

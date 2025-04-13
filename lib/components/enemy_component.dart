@@ -7,11 +7,16 @@ import '../providers/player_provider.dart';
 import '../providers/sizes.dart';
 import '../spritesheet/spritesheet.dart';
 
-class EnemyComponent extends PositionComponent
-    with RiverpodComponentMixin {
-  EnemyComponent({required super.key, required String path}) : super(priority: 10, children:[
-    EnemyHpBar()
-  ]);
+class EnemyComponent extends PositionComponent with RiverpodComponentMixin {
+  EnemyComponent({required super.key, required String path})
+      : super(priority: 10, children: [
+          AssetSource().getAnimation(name: path)!
+            ..anchor = Anchor.bottomCenter
+            ..position = Vector2(
+                Sizes().enemyAreaWidth / 2 - 10, Sizes().enemyAreaHeight)
+            ..flipHorizontally(),
+          EnemyHpBar()
+        ]);
 
   @override
   void render(Canvas canvas) {
@@ -30,8 +35,7 @@ class EnemyComponent extends PositionComponent
 }
 
 class EnemyHpBar extends HpBar {
-
-  EnemyHpBar(): super();
+  EnemyHpBar() : super();
 
   @override
   Future<void> onMount() async {
@@ -86,6 +90,4 @@ abstract class HpBar extends PositionComponent with RiverpodComponentMixin {
   }
 
   double getHealth();
-
-
 }

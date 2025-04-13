@@ -23,7 +23,7 @@ class AssetSource {
     if (!_animationCache.containsKey(path)) {
       SpriteAnimationGroupComponent component = CharacterAnimationComponent(
         anchor: Anchor.center,
-        priority: 10,
+        priority: 20,
         size: size,
         key: key,
         sheet:
