@@ -46,6 +46,13 @@ mixin WorldMixin on Component {
     characterArea.addAll([player]);
   }
 
+  Future<void> addBackgrounds() async {
+    add(AssetSource().getParallax(name: "default")!);
+    add(AssetSource().getSprite(name: "background.png")!
+      ..position = Sizes().backgroundPosition
+    ..priority = 0);
+  }
+
   Future<void> addCharacters(
       {required Function loadParallaxComponent,
       required ComponentRef ref}) async {

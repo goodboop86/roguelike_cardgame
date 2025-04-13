@@ -41,13 +41,12 @@ class MainGame extends FlameGame
       onStart: CharState.idle,
       srcSize: Vector2(64.0, 64.0),);
 
-    // animation
+    // sprite
     await AssetSource().storeSprite(
         path: 'background.png',
         key: ComponentKey.named("Background"),
-        size: Vector2(416, 576));
+        size: Sizes().backgroundSize);
 
-    Sizes().gameSize;
 
     // parallax
     ParallaxComponent parallax = await loadParallaxComponent(
@@ -61,7 +60,7 @@ class MainGame extends FlameGame
         'parallax/8.png',
         'parallax/10.png'
       ].map((path) => ParallaxImageData(path)).toList(),
-      baseVelocity: Vector2(0.1, 0),
+      baseVelocity: Vector2(1, 0),
       size: Sizes().gameSize,
       position: Sizes().origin,
       velocityMultiplierDelta: Vector2(1.8, 1.0),

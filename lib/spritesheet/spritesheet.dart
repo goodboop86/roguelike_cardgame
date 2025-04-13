@@ -14,29 +14,24 @@ class AssetSource {
   final Map<String, ParallaxComponent> _parallaxCache = {};
   final Map<String, SpriteComponent> _spriteCache = {};
 
-
   Future<void> storeAnimation(
       {required String path,
-        required CharState onStart,
-        required Vector2 srcSize,
-        required Vector2 size,
-        required ComponentKey key}) async {
+      required CharState onStart,
+      required Vector2 srcSize,
+      required Vector2 size,
+      required ComponentKey key}) async {
     if (!_animationCache.containsKey(path)) {
-      try {
-        SpriteAnimationGroupComponent component = CharacterAnimationComponent(
-          anchor: Anchor.center,
-          priority: 10,
-          size: size,
-          key: key,
-          sheet: SpriteSheet(
-              image: await Flame.images.load(path), srcSize: srcSize),
-          current: onStart,
-        );
-
-        _animationCache[path] = component;
-      } catch (e) {
-        log.warning('Error loading image: $path - $e');
-      }
+      SpriteAnimationGroupComponent component = CharacterAnimationComponent(
+        anchor: Anchor.center,
+        priority: 10,
+        size: size,
+        key: key,
+        sheet:
+            SpriteSheet(image: await Flame.images.load(path), srcSize: srcSize),
+        current: onStart,
+      );
+      _animationCache[path] = component;
+      log.fine("store sprite: ${path}");
     }
   }
 
@@ -46,8 +41,9 @@ class AssetSource {
       required ComponentKey key}) async {
     if (!_spriteCache.containsKey(path)) {
       SpriteComponent sprite = SpriteComponent(
-          size: size, sprite: await Sprite.load(path), key: key, priority: 10);
+          size: size, sprite: await Sprite.load(path), key: key, priority: 10, anchor: Anchor.center,);
       _spriteCache[path] = sprite;
+      log.fine("store sprite: $path");
     }
   }
 
@@ -55,24 +51,25 @@ class AssetSource {
       {required ParallaxComponent parallaxComponent,
       required String name}) async {
     if (!_parallaxCache.containsKey(name)) {
-        _parallaxCache[name] = parallaxComponent;
+      _parallaxCache[name] = parallaxComponent;
+      log.fine("store parallax: $name");
     }
   }
 
-  SpriteAnimationGroupComponent? getAnimation({required String path}) {
-    if (_animationCache.containsKey(path)) {
-      return _animationCache[path];
+  SpriteAnimationGroupComponent? getAnimation({required String name}) {
+    if (_animationCache.containsKey(name)) {
+      return _animationCache[name];
     } else {
-      log.warning('not found: $path');
+      log.warning('not found: $name');
       return null;
     }
   }
 
-  SpriteComponent? getSprite({required String path}) {
-    if (_spriteCache.containsKey(path)) {
-      return _spriteCache[path];
+  SpriteComponent? getSprite({required String name}) {
+    if (_spriteCache.containsKey(name)) {
+      return _spriteCache[name];
     } else {
-      log.warning('not found: $path');
+      log.warning('not found: $name');
       return null;
     }
   }
@@ -85,8 +82,6 @@ class AssetSource {
       return null;
     }
   }
-
-
 
   static final AssetSource _instance = AssetSource._internal();
 

@@ -45,6 +45,7 @@ class OptionButtonComponent extends ButtonComponent {
 
   OptionButtonComponent({required this.text, this.func})
       : super(
+    priority: 20,
           button: RectangleComponent(
               size: Sizes().buttonSize,
               paint: Paint()..color = Colors.brown,

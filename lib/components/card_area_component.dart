@@ -40,7 +40,7 @@ class CharacterAreaComponent extends PositionComponent {
       {required Vector2 position,
       required Vector2 size,
       required ComponentKey key})
-      : super(position: position, size: size, key: key);
+      : super(position: position, size: size, key: key, priority: 20);
 
   final Paint paint = Paint()..color = Colors.transparent;
 

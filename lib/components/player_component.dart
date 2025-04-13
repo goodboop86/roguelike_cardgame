@@ -13,7 +13,7 @@ class PlayerComponent extends PositionComponent
     with RiverpodComponentMixin, TapCallbacks, HasGameRef {
   PlayerComponent({required super.key, required String path})
       : super(priority: 10, children: [
-          AssetSource().getAnimation(path: path)!
+          AssetSource().getAnimation(name: path)!
             ..anchor = Anchor.bottomCenter
             ..position =
                 Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight),

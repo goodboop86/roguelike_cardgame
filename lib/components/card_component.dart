@@ -14,7 +14,7 @@ import '../providers/card_provider.dart';
 class CardComponent extends RectangleComponent
     with TapCallbacks, RiverpodComponentMixin, HasGameRef, DragCallbacks {
   CardComponent({required this.card}) {
-    super.priority = 10;
+    super.priority = 20;
   }
 
   Logger log = Logger('CardComponent');

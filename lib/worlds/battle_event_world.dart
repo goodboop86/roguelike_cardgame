@@ -40,10 +40,45 @@ class BattleEventWorld extends World
       EnemyState enemyState = ref.read(enemyProvider);
       // TODO: 受け取ったEventに従ってEnemyを設置する
 
+      Component? background = game.findByKey(
+          ComponentKey.named("Background"));
+      if (background == null) {
+        log.fine("addBackgrounds");
+        addBackgrounds();
+      }
+
+
+
       var characterArea = children.whereType<CharacterAreaComponent>();
-      if (characterArea.isEmpty &
+      if (characterArea.isEmpty & (background != null) & background!.isMounted &
           (playerState != null) &
           (enemyState != null)) {
+        log.fine("addCharacters");
+
+        await addCharacters(
+            loadParallaxComponent: game.loadParallaxComponent, ref: ref);
+      }
+
+      var buttonArea = children.whereType<ButtonAreaComponent>();
+      if (buttonArea.isEmpty & (background != null) & background!.isMounted) {
+        log.fine("addButtons");
+        _addButtons();
+      }
+    });
+
+    addToGameWidgetBuild(() async {
+
+      Component? background = game.findByKey(
+              ComponentKey.named("Background"));
+      BattleRouteState state = ref.read(battleRouteProvider);
+      PlayerState playerState = ref.read(playerProvider);
+      EnemyState enemyState = ref.read(enemyProvider);
+      // TODO: 受け取ったEventに従ってEnemyを設置する
+
+      var characterArea = children.whereType<CharacterAreaComponent>();
+      if (characterArea.isEmpty &
+      (playerState != null) &
+      (enemyState != null)) {
         log.fine("addCharacters");
 
         await addCharacters(
@@ -56,6 +91,8 @@ class BattleEventWorld extends World
         _addButtons();
       }
     });
+
+
 
     addToGameWidgetBuild(() async {
       DeckState state = ref.read(deckProvider);

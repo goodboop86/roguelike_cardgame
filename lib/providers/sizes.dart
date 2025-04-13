@@ -39,7 +39,7 @@ class Sizes {
 
   double get backgroundX => 0;
 
-  double get backgroundY => endY - backgroundHeight;
+  double get backgroundY => endY - backgroundHeight/2;
 
   Vector2 get backgroundPosition => Vector2(backgroundX, backgroundY);
 
