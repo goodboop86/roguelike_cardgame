@@ -50,19 +50,24 @@ class BattleEventWorld extends World
 
 
       var characterArea = children.whereType<CharacterAreaComponent>();
-      if (characterArea.isEmpty & (background != null) & background!.isMounted &
-          (playerState != null) &
-          (enemyState != null)) {
-        log.fine("addCharacters");
+      if(background != null){
+        if (characterArea.isEmpty & background!.isMounted &
+        (playerState != null) &
+        (enemyState != null)) {
+          log.fine("addCharacters");
 
-        await addCharacters(
-            loadParallaxComponent: game.loadParallaxComponent, ref: ref);
+          await addCharacters(
+              loadParallaxComponent: game.loadParallaxComponent, ref: ref);
+        }
+
+
       }
-
       var buttonArea = children.whereType<ButtonAreaComponent>();
-      if (buttonArea.isEmpty & (background != null) & background!.isMounted) {
-        log.fine("addButtons");
-        _addButtons();
+      if(background != null){
+        if (buttonArea.isEmpty  & background!.isMounted) {
+          log.fine("addButtons");
+          _addButtons();
+        }
       }
     });
 

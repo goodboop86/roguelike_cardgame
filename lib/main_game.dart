@@ -1,10 +1,13 @@
 import 'dart:ui';
 
+import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/parallax.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
+import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'dart:async';
 
 import 'package:roguelike_cardgame/providers/sizes.dart';
@@ -23,16 +26,22 @@ class MainGame extends FlameGame
       : super(
       camera: CameraComponent.withFixedResolution(
           width: Sizes().gameWidth, height: Sizes().gameHeight));
+
+  Logger log = Logger('MainGame');
   @override
   var debugMode = true;
 
   @override
-  Color backgroundColor() => const Color.fromRGBO(89, 106, 108, 1.0);
+  // Color backgroundColor() => const Color.fromRGBO(89, 106, 108, 1.0);
+  Color backgroundColor() => Colors.black;
 
   late final RouterComponent router;
 
   @override
   Future<void> onLoad() async {
+    log.info(size);
+
+
     // animation
     await AssetSource().storeAnimation(
       path: 'dragon.png',
@@ -62,7 +71,7 @@ class MainGame extends FlameGame
       ].map((path) => ParallaxImageData(path)).toList(),
       baseVelocity: Vector2(1, 0),
       size: Sizes().gameSize,
-      position: Sizes().origin,
+      position: Sizes().gameTopLeft,
       velocityMultiplierDelta: Vector2(1.8, 1.0),
     );
 

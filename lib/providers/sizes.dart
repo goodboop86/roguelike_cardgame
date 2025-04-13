@@ -18,17 +18,18 @@ class Sizes {
 
   Vector2 get gameSize => Vector2(gameWidth, gameHeight);
 
-  double get originX => -gameWidth / 2;
+  double get gameOriginX => -gameWidth / 2;
 
-  double get originY => -gameHeight / 2;
+  double get gameOriginY => -gameHeight / 2;
 
-  Vector2 get origin => Vector2(originX, originY);
+  double get gameEndX => gameWidth / 2;
 
-  double get endX => gameWidth / 2;
+  double get gameEndY => gameHeight / 2;
 
-  double get endY => gameHeight / 2;
-
-  Vector2 get end => Vector2(originX, originY);
+  Vector2 get gameTopLeft => Vector2(gameOriginX, gameOriginY);
+  Vector2 get gameTopRight => Vector2(gameEndX, gameOriginY);
+  Vector2 get gameBottomLeft => Vector2(gameOriginX, gameEndY);
+  Vector2 get gameBottomRight => Vector2(gameEndX, gameEndY);
 
   // Background
   double get backgroundWidth => gameWidth;
@@ -39,9 +40,18 @@ class Sizes {
 
   double get backgroundX => 0;
 
-  double get backgroundY => endY - backgroundHeight/2;
+  double get backgroundY => gameEndY - backgroundHeight/2;
 
   Vector2 get backgroundPosition => Vector2(backgroundX, backgroundY);
+
+  // gradient
+  double get topGradientX => gameOriginX;
+  double get topGradientY => gameOriginY;
+  Vector2 get topGradientPosition => Vector2(gameOriginX, gameOriginY);
+  double get bottomGradientX => gameOriginX;
+  double get bottomGradientY => gameOriginY + 26 * blockSize;
+  Vector2 get bottomGradientPosition => Vector2(bottomGradientX, bottomGradientY);
+
 
   // CharacterArea
   double get characterAreaWidth => gameWidth;
@@ -51,9 +61,9 @@ class Sizes {
   Vector2 get characterAreaSize =>
       Vector2(characterAreaWidth, characterAreaHeight);
 
-  double get characterAreaX => originX;
+  double get characterAreaX => gameOriginX;
 
-  double get characterAreaY => originY + 6 * blockSize;
+  double get characterAreaY => gameOriginY + 6 * blockSize;
 
   Vector2 get characterAreaPosition => Vector2(characterAreaX, characterAreaY);
 
@@ -87,9 +97,9 @@ class Sizes {
 
   Vector2 get buttonAreaSize => Vector2(buttonAreaWidth, buttonAreaHeight);
 
-  double get buttonAreaX => originX;
+  double get buttonAreaX => gameOriginX;
 
-  double get buttonAreaY => originY + 12 * blockSize;
+  double get buttonAreaY => gameOriginY + 12 * blockSize;
 
   Vector2 get buttonAreaPosition => Vector2(buttonAreaX, buttonAreaY);
 
@@ -107,9 +117,9 @@ class Sizes {
 
   Vector2 get cardAreaSize => Vector2(cardAreaWidth, cardAreaHeight);
 
-  double get cardAreaX => originX;
+  double get cardAreaX => gameOriginX;
 
-  double get cardAreaY => originY + 16 * blockSize;
+  double get cardAreaY => gameOriginY + 16 * blockSize;
 
   Vector2 get cardAreaPosition => Vector2(cardAreaX, cardAreaY);
 
@@ -129,9 +139,9 @@ class Sizes {
 
   Vector2 get mapCardAreaSize => Vector2(mapCardAreaWidth, mapCardAreaHeight);
 
-  double get mapCardAreaX => originX;
+  double get mapCardAreaX => gameOriginX;
 
-  double get mapCardAreaY => originY + 16 * blockSize;
+  double get mapCardAreaY => gameOriginY + 16 * blockSize;
 
   Vector2 get mapCardAreaPosition => Vector2(mapCardAreaX, mapCardAreaY);
 
@@ -151,9 +161,9 @@ class Sizes {
 
   Vector2 get mapAreaSize => Vector2(mapAreaWidth, mapAreaHeight);
 
-  double get mapAreaX => originX;
+  double get mapAreaX => gameOriginX;
 
-  double get mapAreaY => originY + 12 * blockSize;
+  double get mapAreaY => gameOriginY + 12 * blockSize;
 
   Vector2 get mapAreaPosition => Vector2(mapAreaX, mapAreaY);
 

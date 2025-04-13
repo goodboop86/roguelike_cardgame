@@ -11,6 +11,7 @@ import 'package:roguelike_cardgame/models/player_state.dart';
 import 'package:roguelike_cardgame/providers/deck_provider.dart';
 import 'package:roguelike_cardgame/providers/player_provider.dart';
 
+import '../components/BackgroundComponent.dart';
 import '../components/basic_component.dart';
 import '../components/card_area_component.dart';
 import '../components/card_component.dart';
@@ -48,9 +49,12 @@ mixin WorldMixin on Component {
 
   Future<void> addBackgrounds() async {
     add(AssetSource().getParallax(name: "default")!);
+
+    log.info("---> ${Sizes().gameEndY}");
     add(AssetSource().getSprite(name: "background.png")!
       ..position = Sizes().backgroundPosition
-    ..priority = 0);
+      ..priority = 0);
+    addAll([topGradient, bottomGradient]);
   }
 
   Future<void> addCharacters(
@@ -244,7 +248,7 @@ mixin WorldMixin on Component {
 
     add(darkenOverlay
       ..size = Sizes().gameSize
-      ..position = Sizes().origin);
+      ..position = Sizes().gameTopLeft);
 
     // SequenceEffect を使用して、複数のエフェクトを順番に実行
     await darkenOverlay.add(
