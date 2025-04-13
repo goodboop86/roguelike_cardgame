@@ -48,9 +48,10 @@ class BattleEventWorld extends World
       }
 
 
-
       var characterArea = children.whereType<CharacterAreaComponent>();
+      var buttonArea = children.whereType<ButtonAreaComponent>();
       if(background != null){
+
         if (characterArea.isEmpty & background!.isMounted &
         (playerState != null) &
         (enemyState != null)) {
@@ -60,43 +61,12 @@ class BattleEventWorld extends World
               loadParallaxComponent: game.loadParallaxComponent, ref: ref);
         }
 
-
-      }
-      var buttonArea = children.whereType<ButtonAreaComponent>();
-      if(background != null){
         if (buttonArea.isEmpty  & background!.isMounted) {
           log.fine("addButtons");
           _addButtons();
         }
       }
     });
-
-    addToGameWidgetBuild(() async {
-
-      Component? background = game.findByKey(
-              ComponentKey.named("Background"));
-      BattleRouteState state = ref.read(battleRouteProvider);
-      PlayerState playerState = ref.read(playerProvider);
-      EnemyState enemyState = ref.read(enemyProvider);
-      // TODO: 受け取ったEventに従ってEnemyを設置する
-
-      var characterArea = children.whereType<CharacterAreaComponent>();
-      if (characterArea.isEmpty &
-      (playerState != null) &
-      (enemyState != null)) {
-        log.fine("addCharacters");
-
-        await addCharacters(
-            loadParallaxComponent: game.loadParallaxComponent, ref: ref);
-      }
-
-      var buttonArea = children.whereType<ButtonAreaComponent>();
-      if (buttonArea.isEmpty) {
-        log.fine("addButtons");
-        _addButtons();
-      }
-    });
-
 
 
     addToGameWidgetBuild(() async {

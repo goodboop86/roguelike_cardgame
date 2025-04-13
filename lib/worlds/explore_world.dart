@@ -26,21 +26,31 @@ class ExploreWorld extends World
   void onMount() {
     addToGameWidgetBuild(() async {
       ExploreRouteState state = ref.read(exploreRouteProvider);
-      var mapArea = children.whereType<MapAreaComponent>();
-      if (mapArea.isEmpty) {
-        log.fine("addMap");
-        addMap(state.stageList, state.stage);
+
+      Component? background = game.findByKey(ComponentKey.named("Background"));
+      if (background == null) {
+        log.fine("addBackgrounds");
+        addBackgrounds();
       }
-      var mapCardArea = children.whereType<MapCardAreaComponent>();
-      if (mapCardArea.isEmpty) {
-        log.fine("addMapCards");
-        addMapCards(state.stageList, state.stage, game.router, ref);
-      }
+
       var characterArea = children.whereType<CharacterAreaComponent>();
-      if (characterArea.isEmpty) {
-        log.fine("addCharacters");
-        await addCharacters(
-            loadParallaxComponent: game.loadParallaxComponent, ref: ref);
+      var mapArea = children.whereType<MapAreaComponent>();
+      var mapCardArea = children.whereType<MapCardAreaComponent>();
+
+      if (background != null) {
+        if (characterArea.isEmpty & background!.isMounted) {
+          log.fine("addCharacters");
+          await addCharacters(
+              loadParallaxComponent: game.loadParallaxComponent, ref: ref);
+        }
+        if (mapArea.isEmpty & background!.isMounted) {
+          log.fine("addMap");
+          addMap(state.stageList, state.stage);
+        }
+        if (mapCardArea.isEmpty & background!.isMounted) {
+          log.fine("addMapCards");
+          addMapCards(state.stageList, state.stage, game.router, ref);
+        }
       }
     });
 
