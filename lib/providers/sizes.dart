@@ -40,7 +40,7 @@ class Sizes {
 
   double get backgroundX => 0;
 
-  double get backgroundY => gameEndY - backgroundHeight/2;
+  double get backgroundY => gameEndY - backgroundHeight / 2;
 
   Vector2 get backgroundPosition => Vector2(backgroundX, backgroundY);
 
@@ -50,8 +50,8 @@ class Sizes {
   Vector2 get topGradientPosition => Vector2(gameOriginX, gameOriginY);
   double get bottomGradientX => gameOriginX;
   double get bottomGradientY => gameOriginY + 26 * blockSize;
-  Vector2 get bottomGradientPosition => Vector2(bottomGradientX, bottomGradientY);
-
+  Vector2 get bottomGradientPosition =>
+      Vector2(bottomGradientX, bottomGradientY);
 
   // CharacterArea
   double get characterAreaWidth => gameWidth;

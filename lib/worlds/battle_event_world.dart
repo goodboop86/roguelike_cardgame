@@ -40,34 +40,31 @@ class BattleEventWorld extends World
       EnemyState enemyState = ref.read(enemyProvider);
       // TODO: 受け取ったEventに従ってEnemyを設置する
 
-      Component? background = game.findByKey(
-          ComponentKey.named("Background"));
+      Component? background = game.findByKey(ComponentKey.named("Background"));
       if (background == null) {
         log.fine("addBackgrounds");
         addBackgrounds();
       }
 
-
       var characterArea = children.whereType<CharacterAreaComponent>();
       var buttonArea = children.whereType<ButtonAreaComponent>();
-      if(background != null){
-
-        if (characterArea.isEmpty & background!.isMounted &
-        (playerState != null) &
-        (enemyState != null)) {
+      if (background != null) {
+        if (characterArea.isEmpty &
+            background!.isMounted &
+            (playerState != null) &
+            (enemyState != null)) {
           log.fine("addCharacters");
 
           await addCharacters(
               loadParallaxComponent: game.loadParallaxComponent, ref: ref);
         }
 
-        if (buttonArea.isEmpty  & background!.isMounted) {
+        if (buttonArea.isEmpty & background!.isMounted) {
           log.fine("addButtons");
           _addButtons();
         }
       }
     });
-
 
     addToGameWidgetBuild(() async {
       DeckState state = ref.read(deckProvider);

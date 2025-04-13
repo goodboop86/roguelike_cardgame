@@ -13,6 +13,7 @@ import 'package:roguelike_cardgame/providers/player_provider.dart';
 
 import '../components/BackgroundComponent.dart';
 import '../components/basic_component.dart';
+import '../components/button_component.dart';
 import '../components/card_area_component.dart';
 import '../components/card_component.dart';
 import '../components/enemy_component.dart';
@@ -172,6 +173,61 @@ mixin WorldMixin on Component {
         );
       mapCardArea.add(button);
     });
+
+    // Debug
+    AdvancedButtonComponent executeButton = AdvancedButtonComponent(
+      defaultSkin: RectangleComponent(
+        size: Vector2(50, 50), // 幅100、高さ50のサイズ
+        paint: Paint()..color = Colors.red, // 青色で塗りつぶし
+        position: Vector2(0, 0), // 描画位置 (左上隅の座標)
+      ),
+      disabledSkin: RectangleComponent(
+        size: Vector2(50, 50), // 幅100、高さ50のサイズ
+        paint: Paint()..color = Colors.grey, // 青色で塗りつぶし
+        position: Vector2(0, 0), // 描画位置 (左上隅の座標)
+      ),
+    )..isDisabled = true;
+    mapCardArea.add(executeButton);
+
+    events.asMap().forEach((index, event) {
+      // debug
+      RectangleComponent noSelected = RectangleComponent(
+        size: Vector2(50, 50), // 幅100、高さ50のサイズ
+        paint: Paint()..color = Colors.blue, // 青色で塗りつぶし
+        position: Vector2(0, 0), // 描画位置 (左上隅の座標)
+      );
+
+      RectangleComponent selected = RectangleComponent(
+        size: Vector2(50, 50), // 幅100、高さ50のサイズ
+        paint: Paint()..color = Colors.red, // 青色で塗りつぶし
+        position: Vector2(0, 0), // 描画位置 (左上隅の座標)
+      );
+
+      final row = index ~/ 3;
+      final col = index % 3;
+
+      final key = ComponentKey.unique();
+
+      StageButtonComponent button = StageButtonComponent(
+          priority: 30,
+          position: Vector2(0, 0),
+          defaultSkin: noSelected,
+          defaultSelectedSkin: selected,
+          key: key)
+        ..position = Vector2(50.0 * (col + 1), 0);
+
+      mapCardArea.add(button
+        ..onSelectedChanged = (bool val) {
+          if (val) {
+            mapCardArea.disableAllStageExclusive(key: key);
+          }
+          mapCardArea.updateExecuteButton(isSelected: val);
+        });
+
+      log.info("add ToggleButtonComponent");
+    });
+
+    // toggleButton.isSelected = true;
   }
 
   void addCards(List<Card_> cards) {

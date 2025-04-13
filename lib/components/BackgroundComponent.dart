@@ -7,17 +7,15 @@ import '../providers/sizes.dart';
 
 class GradientBackground extends PositionComponent
     with HasGameReference<MainGame> {
-  GradientBackground(
-      {required super.position, required this.shader})
+  GradientBackground({required super.position, required this.shader})
       : super(anchor: Anchor.topLeft);
 
   Shader shader;
 
-
   @override
   void render(Canvas canvas) {
-    Paint paint = Paint()
-      ..shader = shader;
-    canvas.drawRect(Rect.fromLTWH(0, 0, Sizes().gameWidth, Sizes().gameHeight), paint);
+    Paint paint = Paint()..shader = shader;
+    canvas.drawRect(
+        Rect.fromLTWH(0, 0, Sizes().gameWidth, Sizes().gameHeight), paint);
   }
 }

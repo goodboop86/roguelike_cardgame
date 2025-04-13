@@ -45,7 +45,7 @@ class OptionButtonComponent extends ButtonComponent {
 
   OptionButtonComponent({required this.text, this.func})
       : super(
-    priority: 20,
+          priority: 20,
           button: RectangleComponent(
               size: Sizes().buttonSize,
               paint: Paint()..color = Colors.brown,
@@ -63,11 +63,32 @@ class OptionButtonComponent extends ButtonComponent {
             ),
           ],
         );
+}
+
+class StageButtonComponent extends ToggleButtonComponent {
+  StageButtonComponent(
+      {super.onPressed,
+      super.onSelectedChanged,
+      super.onChangeState,
+      super.defaultSkin,
+      super.downSkin,
+      super.disabledSkin,
+      super.defaultSelectedSkin,
+      super.downAndSelectedSkin,
+      super.disabledAndSelectedSkin,
+      super.defaultLabel,
+      super.disabledLabel,
+      super.defaultSelectedLabel,
+      super.disabledAndSelectedLabel,
+      super.size,
+      super.position,
+      super.scale,
+      super.angle,
+      super.anchor,
+      super.children,
+      super.priority,
+      required this.key});
 
   @override
-  Future<void> onLoad() async {
-    // 必要であれば、ボタン固有のアセットロードや初期化処理をここで行う
-    // 例: ボタンの画像スプライトをロードするなど
-    await super.onLoad();
-  }
+  ComponentKey key;
 }

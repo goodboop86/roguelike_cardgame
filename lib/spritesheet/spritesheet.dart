@@ -31,7 +31,7 @@ class AssetSource {
             SpriteSheet(image: await Flame.images.load(path), srcSize: srcSize),
         current: onStart,
       );
-      if(flip){
+      if (flip) {
         component.flipHorizontally();
       }
       _animationCache[path] = component;
@@ -45,7 +45,12 @@ class AssetSource {
       required ComponentKey key}) async {
     if (!_spriteCache.containsKey(path)) {
       SpriteComponent sprite = SpriteComponent(
-          size: size, sprite: await Sprite.load(path), key: key, priority: 10, anchor: Anchor.center,);
+        size: size,
+        sprite: await Sprite.load(path),
+        key: key,
+        priority: 10,
+        anchor: Anchor.center,
+      );
       _spriteCache[path] = sprite;
       log.fine("store sprite: $path");
     }
