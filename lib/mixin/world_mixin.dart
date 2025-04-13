@@ -143,7 +143,7 @@ mixin WorldMixin on Component {
             size: Sizes().mapCardSize,
             paint: Paint()..color = Colors.green,
             priority: 0),
-        onPressed: () {
+        onReleased: () {
           if (event == Event.battle) {
             ref.read(playerProvider.notifier).reset();
             ref.read(deckProvider.notifier).startTurn();

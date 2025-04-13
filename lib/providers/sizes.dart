@@ -92,7 +92,7 @@ class Sizes {
   // ButtonArea
   double get buttonAreaWidth => gameWidth;
 
-  double get buttonAreaHeight => 2 * blockSize;
+  double get buttonAreaHeight => blockSize;
 
   Vector2 get buttonAreaSize => Vector2(buttonAreaWidth, buttonAreaHeight);
 
@@ -105,7 +105,7 @@ class Sizes {
   // Button
   double get buttonWidth => 2 * blockSize;
 
-  double get buttonHeight => 2 * blockSize;
+  double get buttonHeight => blockSize;
 
   Vector2 get buttonSize => Vector2(buttonWidth, buttonHeight);
 
