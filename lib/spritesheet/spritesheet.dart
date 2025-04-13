@@ -8,35 +8,71 @@ import '../components/player_component.dart';
 import '../models/enum.dart';
 import '../providers/sizes.dart';
 
-class SpriteSource {
+class AssetSource {
   Logger log = Logger('SpriteSource');
-  final Map<String, SpriteAnimationGroupComponent> _characterCache = {};
+  final Map<String, SpriteAnimationGroupComponent> _animationCache = {};
   final Map<String, ParallaxComponent> _parallaxCache = {};
+  final Map<String, SpriteComponent> _spriteCache = {};
 
-  Future<void> storeCharacter() async {
-    storeCharacterComponent(
-        path: 'dragon.png',
-        onStart: CharState.idle,
-        key: ComponentKey.named("PlayerAnimation"));
-  }
 
-  Future<void> storeParallaxComponent(
-      {required ParallaxComponent parallaxComponent,
-      required String name}) async {
-    if (!_parallaxCache.containsKey(name)) {
+  Future<void> storeAnimation(
+      {required String path,
+        required CharState onStart,
+        required Vector2 srcSize,
+        required Vector2 size,
+        required ComponentKey key}) async {
+    if (!_animationCache.containsKey(path)) {
       try {
-        _parallaxCache[name] = parallaxComponent;
+        SpriteAnimationGroupComponent component = CharacterAnimationComponent(
+          anchor: Anchor.center,
+          priority: 10,
+          size: size,
+          key: key,
+          sheet: SpriteSheet(
+              image: await Flame.images.load(path), srcSize: srcSize),
+          current: onStart,
+        );
+
+        _animationCache[path] = component;
       } catch (e) {
-        log.warning('Error store parallax: $name - $e');
+        log.warning('Error loading image: $path - $e');
       }
     }
   }
 
-  SpriteAnimationGroupComponent? getCharacter({required String path}) {
-    if (_characterCache.containsKey(path)) {
-      return _characterCache[path];
+  Future<void> storeSprite(
+      {required Vector2 size,
+      required String path,
+      required ComponentKey key}) async {
+    if (!_spriteCache.containsKey(path)) {
+      SpriteComponent sprite = SpriteComponent(
+          size: size, sprite: await Sprite.load(path), key: key, priority: 10);
+      _spriteCache[path] = sprite;
+    }
+  }
+
+  Future<void> storeParallax(
+      {required ParallaxComponent parallaxComponent,
+      required String name}) async {
+    if (!_parallaxCache.containsKey(name)) {
+        _parallaxCache[name] = parallaxComponent;
+    }
+  }
+
+  SpriteAnimationGroupComponent? getAnimation({required String path}) {
+    if (_animationCache.containsKey(path)) {
+      return _animationCache[path];
     } else {
-      log.warning('Sprite not found: $path');
+      log.warning('not found: $path');
+      return null;
+    }
+  }
+
+  SpriteComponent? getSprite({required String path}) {
+    if (_spriteCache.containsKey(path)) {
+      return _spriteCache[path];
+    } else {
+      log.warning('not found: $path');
       return null;
     }
   }
@@ -45,99 +81,20 @@ class SpriteSource {
     if (_parallaxCache.containsKey(name)) {
       return _parallaxCache[name];
     } else {
-      log.warning('Parallax not found: $name');
+      log.warning('not found: $name');
       return null;
     }
   }
 
-  Future<void> storeCharacterComponent(
-      {required String path,
-      required CharState onStart,
-      required ComponentKey key}) async {
-    return await _storeCharacterSpriteComponent(
-        path: path,
-        onStart: onStart,
-        srcSize: Vector2(64.0, 64.0),
-        size: Vector2(128, 128),
-        key: key);
-  }
 
-  Future<void> _storeCharacterSpriteComponent(
-      {required String path,
-      required CharState onStart,
-      required Vector2 srcSize,
-      required Vector2 size,
-      required ComponentKey key}) async {
-    if (!_characterCache.containsKey(path)) {
-      try {
-        SpriteAnimationGroupComponent component = CharacterAnimationComponent(
-          anchor: Anchor.center,
-          priority: 1,
-          size: size,
-          key: key,
-          sheet: SpriteSheet(
-              image: await Flame.images.load(path), srcSize: srcSize),
-          current: onStart,
-        );
 
-        _characterCache[path] = component;
-      } catch (e) {
-        log.warning('Error loading image: $path - $e');
-      }
-    }
-  }
-
-  // Future<SpriteAnimationGroupComponent?> loadCharacterComponent(
-
-  //     required CharState onStart,
-
-  // Future<SpriteAnimationGroupComponent?> _loadCharacterSpriteComponent(
-
-  //     {required String path,
-  //     required CharState onStart,
-  //     required Vector2 srcSize,
-  //     required Vector2 size,
-  //     required ComponentKey key}) async {
-  //   if (_characterCache.containsKey(path)) {
-  //     return _characterCache[path];
-  //   }
-  //
-  //   try {
-  //     SpriteAnimationGroupComponent component = CharacterAnimationComponent(
-  //       anchor: Anchor.center,
-  //       priority: 1,
-  //       size: size,
-  //       key: key,
-  //       sheet:
-  //           SpriteSheet(image: await Flame.images.load(path), srcSize: srcSize),
-  //       current: onStart,
-  //     );
-  //
-  //     _characterCache[path] = component;
-  //
-  //     return component;
-  //   } catch (e) {
-  //     log.warning('Error loading image: $path - $e');
-  //     return null;
-  //   }
-  // }
-  //     {required String path,
-  //     required ComponentKey key}) async {
-  //   return await _loadCharacterSpriteComponent(
-  //       path: path,
-  //       onStart: onStart,
-  //       srcSize: Vector2(64.0, 64.0),
-  //       size: Vector2(128, 128),
-  //       key: key);
-  // }
-
-  static final SpriteSource _instance = SpriteSource._internal();
+  static final AssetSource _instance = AssetSource._internal();
 
   // プライベートなコンストラクタ (外部からのインスタンス化を防ぐ)
-  SpriteSource._internal();
+  AssetSource._internal();
 
   // ファクトリーコンストラクタ (常に同じインスタンスを返す)
-  factory SpriteSource() {
+  factory AssetSource() {
     return _instance;
   }
 }

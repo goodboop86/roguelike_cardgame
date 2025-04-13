@@ -27,7 +27,7 @@ mixin WorldMixin on Component {
 
   Future<void> addSingleCharacters(
       loadParallaxComponent, ComponentRef ref) async {
-    add(SpriteSource().getParallax(name: "default")!);
+    add(AssetSource().getParallax(name: "default")!);
 
     // カードエリアを作成
     final characterArea = CharacterAreaComponent(

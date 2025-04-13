@@ -33,11 +33,15 @@ class MainGame extends FlameGame
 
   @override
   Future<void> onLoad() async {
-    await SpriteSource().storeCharacterComponent(
+
+    // character sprite
+    await AssetSource().storeAnimation(
         path: 'dragon.png',
         onStart: CharState.idle,
-        key: ComponentKey.named("PlayerAnimation"));
+        key: ComponentKey.named("PlayerAnimation"), srcSize: Vector2(64.0, 64.0), size: Vector2(128, 128));
 
+
+    // parallax
     ParallaxComponent parallax = await loadParallaxComponent(
       [
         'parallax/1.png',
@@ -55,8 +59,8 @@ class MainGame extends FlameGame
       velocityMultiplierDelta: Vector2(1.8, 1.0),
     );
 
-    SpriteSource()
-        .storeParallaxComponent(name: 'default', parallaxComponent: parallax);
+    AssetSource()
+        .storeParallax(name: 'default', parallaxComponent: parallax);
 
     add(
       router = RouterComponent(
