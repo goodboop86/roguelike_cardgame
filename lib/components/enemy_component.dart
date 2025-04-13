@@ -3,10 +3,16 @@ import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
 import '../providers/enemy_provider.dart';
+import '../providers/player_provider.dart';
+import '../providers/sizes.dart';
+import '../spritesheet/spritesheet.dart';
 
-class EnemyComponent extends SpriteAnimationComponent
+class EnemyComponent extends PositionComponent
     with RiverpodComponentMixin {
-  EnemyComponent({super.key});
+  EnemyComponent({required super.key, required String path}) : super(priority: 10, children:[
+    EnemyHpBar()
+  ]);
+
   @override
   void render(Canvas canvas) {
     super.render(canvas);
@@ -23,13 +29,32 @@ class EnemyComponent extends SpriteAnimationComponent
   }
 }
 
-class EnemyHpBar extends PositionComponent with RiverpodComponentMixin {
-  late double _hp;
-  late final double _maxHp;
+class EnemyHpBar extends HpBar {
 
-  EnemyHpBar({required hp, required double maxHp}) {
-    _hp = hp;
-    _maxHp = maxHp;
+  EnemyHpBar(): super();
+
+  @override
+  Future<void> onMount() async {
+    addToGameWidgetBuild(() async {
+      _maxHp = ref.read(enemyProvider).maxHealth;
+      _hp = ref.read(enemyProvider).maxHealth;
+      _isInitialized = true;
+    });
+    super.onMount();
+  }
+
+  @override
+  double getHealth() {
+    return ref.watch(playerProvider).health;
+  }
+}
+
+abstract class HpBar extends PositionComponent with RiverpodComponentMixin {
+  late double _hp;
+  late double _maxHp;
+  bool _isInitialized = false;
+
+  HpBar() {
     size = Vector2(100, 10);
     position = Vector2(0, 0);
     anchor = Anchor.topLeft;
@@ -43,18 +68,24 @@ class EnemyHpBar extends PositionComponent with RiverpodComponentMixin {
   void render(Canvas canvas) {
     super.render(canvas);
 
-    hp = ref.watch(enemyProvider).health;
+    if (_isInitialized) {
+      hp = getHealth();
 
-    // 背景
-    canvas.drawRect(
-      size.toRect(),
-      Paint()..color = Colors.grey,
-    );
+      // 背景
+      canvas.drawRect(
+        size.toRect(),
+        Paint()..color = Colors.grey,
+      );
 
-    // HPバー
-    canvas.drawRect(
-      Rect.fromLTWH(0, 0, size.x * (_hp / _maxHp), size.y),
-      Paint()..color = Colors.green,
-    );
+      // HPバー
+      canvas.drawRect(
+        Rect.fromLTWH(0, 0, size.x * (_hp / _maxHp), size.y),
+        Paint()..color = Colors.green,
+      );
+    }
   }
+
+  double getHealth();
+
+
 }

@@ -26,27 +26,6 @@ import '../spritesheet/spritesheet.dart';
 mixin WorldMixin on Component {
   Logger log = Logger('WorldMixin');
 
-  Future<void> addSingleCharacters(
-      loadParallaxComponent, ComponentRef ref) async {
-    add(AssetSource().getParallax(name: "default")!);
-
-    // カードエリアを作成
-    final characterArea = CharacterAreaComponent(
-      key: ComponentKey.named('ExploreCharacterArea'),
-      position: Sizes().characterAreaPosition,
-      size: Sizes().characterAreaSize, // カードエリアのサイズ
-    );
-    add(characterArea);
-
-    // Player の配置 (左上)
-    PlayerComponent player = PlayerComponent(
-        key: ComponentKey.named('ExplorePlayer'), path: 'dragon.png')
-      ..size = Sizes().playerAreaSize
-      ..position = Sizes().playerAreaPosition;
-
-    characterArea.addAll([player]);
-  }
-
   Future<void> addBackgrounds() async {
     add(AssetSource().getParallax(name: "default")!);
 
@@ -85,7 +64,7 @@ mixin WorldMixin on Component {
         characterArea.children.any((component) => component is EnemyComponent);
     if (!enemyExists) {
       // Player の配置 (左上)
-      EnemyComponent enemy = EnemyComponent(key: ComponentKey.named('Enemy'))
+      EnemyComponent enemy = EnemyComponent(key: ComponentKey.named('Enemy'), path: 'dragon.png')
         ..size = Sizes().enemyAreaSize
         ..position = Sizes().enemyAreaPosition;
       var enemyAnimation = SpriteAnimationComponent.fromFrameData(
@@ -104,9 +83,9 @@ mixin WorldMixin on Component {
         ..flipHorizontally();
 
       enemy.add(enemyAnimation);
-      enemy.add(EnemyHpBar(
-          hp: ref.read(enemyProvider).health,
-          maxHp: ref.read(enemyProvider).maxHealth));
+      // enemy.add(EnemyHpBar(
+      //     hp: ref.read(enemyProvider).health,
+      //     maxHp: ref.read(enemyProvider).maxHealth));
       characterArea.add(enemy);
     }
   }
