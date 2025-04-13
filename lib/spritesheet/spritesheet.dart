@@ -19,7 +19,8 @@ class AssetSource {
       required CharState onStart,
       required Vector2 srcSize,
       required Vector2 size,
-      required ComponentKey key}) async {
+      required ComponentKey key,
+      bool flip = false}) async {
     if (!_animationCache.containsKey(path)) {
       SpriteAnimationGroupComponent component = CharacterAnimationComponent(
         anchor: Anchor.center,
@@ -30,6 +31,9 @@ class AssetSource {
             SpriteSheet(image: await Flame.images.load(path), srcSize: srcSize),
         current: onStart,
       );
+      if(flip){
+        component.flipHorizontally();
+      }
       _animationCache[path] = component;
       log.fine("store sprite: ${path}");
     }

@@ -53,7 +53,7 @@ mixin WorldMixin on Component {
     if (!playerExists) {
       // Player の配置 (左上)
       PlayerComponent player =
-          PlayerComponent(key: ComponentKey.named('Player'), path: 'dragon.png')
+          PlayerComponent(key: ComponentKey.named('Player'), path: 'player.png')
             ..size = Sizes().playerAreaSize
             ..position = Sizes().playerAreaPosition;
 
@@ -65,7 +65,7 @@ mixin WorldMixin on Component {
     if (!enemyExists) {
       // Player の配置 (左上)
       EnemyComponent enemy =
-          EnemyComponent(key: ComponentKey.named('Enemy'), path: 'enemy.png')
+          EnemyComponent(key: ComponentKey.named('Enemy'), path: 'dragon.png')
             ..size = Sizes().enemyAreaSize
             ..position = Sizes().enemyAreaPosition;
       characterArea.add(enemy);

@@ -63,7 +63,7 @@ class Sizes {
 
   double get characterAreaX => gameOriginX;
 
-  double get characterAreaY => gameOriginY + 6 * blockSize;
+  double get characterAreaY => gameOriginY + 5 * blockSize;
 
   Vector2 get characterAreaPosition => Vector2(characterAreaX, characterAreaY);
 
@@ -76,7 +76,7 @@ class Sizes {
   Vector2 get playerAreaSize => Vector2(playerAreaWidth, playerAreaHeight);
 
   double get playerAreaX => 0; // characterAreaXから見て0
-  double get playerAreaY => 0; // characterAreaYから見て0
+  double get playerAreaY => 1.5 * blockSize; // sprite内の余白分
   Vector2 get playerAreaPosition => Vector2(playerAreaX, playerAreaY);
 
   double get enemyAreaWidth => 4 * blockSize;
@@ -86,8 +86,7 @@ class Sizes {
   Vector2 get enemyAreaSize => Vector2(enemyAreaWidth, enemyAreaHeight);
 
   double get enemyAreaX => characterAreaWidth - enemyAreaWidth;
-
-  double get enemyAreaY => 0; // characterAreaYから見て0
+  double get enemyAreaY => 1.5 * blockSize; // sprite内の余白分
   Vector2 get enemyAreaPosition => Vector2(enemyAreaX, enemyAreaY);
 
   // ButtonArea

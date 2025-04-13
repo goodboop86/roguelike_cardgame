@@ -13,8 +13,7 @@ class EnemyComponent extends PositionComponent with RiverpodComponentMixin {
           AssetSource().getAnimation(name: path)!
             ..anchor = Anchor.bottomCenter
             ..position = Vector2(
-                Sizes().enemyAreaWidth / 2 - 10, Sizes().enemyAreaHeight)
-            ..flipHorizontally(),
+                Sizes().enemyAreaWidth / 2 - 10, Sizes().enemyAreaHeight),
           EnemyHpBar()
         ]);
 
