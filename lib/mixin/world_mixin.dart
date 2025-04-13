@@ -236,7 +236,7 @@ mixin WorldMixin on Component {
     log.info("startTransition.");
 
     add(darkenOverlay
-      ..size = Sizes().screenSize
+      ..size = Sizes().gameSize
       ..position = Sizes().origin);
 
     // SequenceEffect を使用して、複数のエフェクトを順番に実行
@@ -248,7 +248,7 @@ mixin WorldMixin on Component {
               onComplete: () => {
                     darkenOverlay.add(transitionText
                       ..text = message
-                      ..position = Sizes().screenSize / 2)
+                      ..position = Sizes().gameSize / 2)
                   }),
           // 待機
           OpacityEffect.to(0.6, EffectController(duration: 0.5),

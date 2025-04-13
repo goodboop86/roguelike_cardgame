@@ -8,36 +8,40 @@ class Sizes {
 
   Sizes._internal();
 
-  late Vector2 screenSize;
-
-  void setScreenSize(Vector2 size) {
-    screenSize = size;
-  }
-
   // Block
   double get blockSize => 32.0;
 
   // Game
-  double get gameWidth => 13 * blockSize;
+  double get gameWidth => 13 * blockSize; // 416
 
-  double get gameHeight => 27 * blockSize;
+  double get gameHeight => 27 * blockSize; // 864
 
   Vector2 get gameSize => Vector2(gameWidth, gameHeight);
 
-  double get gameX => -gameWidth / 2;
+  double get originX => -gameWidth / 2;
 
-  double get gameY => -gameHeight / 2;
+  double get originY => -gameHeight / 2;
 
-  Vector2 get gamePosition => Vector2(gameX, gameY);
+  Vector2 get origin => Vector2(originX, originY);
 
-  // Screen
-  double get screenWidth => screenSize.x;
+  double get endX => gameWidth / 2;
 
-  double get screenHeight => screenSize.y;
+  double get endY => gameHeight / 2;
 
-  double get margin => 20.0;
+  Vector2 get end => Vector2(originX, originY);
 
-  double get miniMargin => 5.0;
+  // Background
+  double get backgroundWidth => gameWidth;
+
+  double get backgroundHeight => 18 * blockSize;
+
+  Vector2 get backgroundSize => Vector2(backgroundWidth, backgroundHeight);
+
+  double get backgroundX => 0;
+
+  double get backgroundY => endY - backgroundHeight;
+
+  Vector2 get backgroundPosition => Vector2(backgroundX, backgroundY);
 
   // CharacterArea
   double get characterAreaWidth => gameWidth;
@@ -47,15 +51,9 @@ class Sizes {
   Vector2 get characterAreaSize =>
       Vector2(characterAreaWidth, characterAreaHeight);
 
-  double get originX => -gameWidth / 2;
+  double get characterAreaX => originX;
 
-  double get originY => -gameHeight / 2;
-
-  Vector2 get origin => Vector2(originX, originY);
-
-  double get characterAreaX => gameX;
-
-  double get characterAreaY => gameY + 6 * blockSize;
+  double get characterAreaY => originY + 6 * blockSize;
 
   Vector2 get characterAreaPosition => Vector2(characterAreaX, characterAreaY);
 
@@ -89,9 +87,9 @@ class Sizes {
 
   Vector2 get buttonAreaSize => Vector2(buttonAreaWidth, buttonAreaHeight);
 
-  double get buttonAreaX => gameX;
+  double get buttonAreaX => originX;
 
-  double get buttonAreaY => gameY + 12 * blockSize;
+  double get buttonAreaY => originY + 12 * blockSize;
 
   Vector2 get buttonAreaPosition => Vector2(buttonAreaX, buttonAreaY);
 
@@ -109,9 +107,9 @@ class Sizes {
 
   Vector2 get cardAreaSize => Vector2(cardAreaWidth, cardAreaHeight);
 
-  double get cardAreaX => gameX;
+  double get cardAreaX => originX;
 
-  double get cardAreaY => gameY + 16 * blockSize;
+  double get cardAreaY => originY + 16 * blockSize;
 
   Vector2 get cardAreaPosition => Vector2(cardAreaX, cardAreaY);
 
@@ -131,9 +129,9 @@ class Sizes {
 
   Vector2 get mapCardAreaSize => Vector2(mapCardAreaWidth, mapCardAreaHeight);
 
-  double get mapCardAreaX => gameX;
+  double get mapCardAreaX => originX;
 
-  double get mapCardAreaY => gameY + 16 * blockSize;
+  double get mapCardAreaY => originY + 16 * blockSize;
 
   Vector2 get mapCardAreaPosition => Vector2(mapCardAreaX, mapCardAreaY);
 
@@ -153,9 +151,9 @@ class Sizes {
 
   Vector2 get mapAreaSize => Vector2(mapAreaWidth, mapAreaHeight);
 
-  double get mapAreaX => gameX;
+  double get mapAreaX => originX;
 
-  double get mapAreaY => gameY + 12 * blockSize;
+  double get mapAreaY => originY + 12 * blockSize;
 
   Vector2 get mapAreaPosition => Vector2(mapAreaX, mapAreaY);
 
@@ -165,4 +163,9 @@ class Sizes {
   double get mapHeight => mapAreaHeight * 0.2;
 
   Vector2 get mapSize => Vector2(mapWidth, mapHeight);
+
+  // margin
+  double get margin => 20.0;
+
+  double get miniMargin => 5.0;
 }

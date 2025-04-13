@@ -21,8 +21,8 @@ class MainGame extends FlameGame
     with HasGameRef, RiverpodGameMixin, DragCallbacks {
   MainGame()
       : super(
-            camera: CameraComponent.withFixedResolution(
-                width: Sizes().gameWidth, height: Sizes().gameHeight));
+      camera: CameraComponent.withFixedResolution(
+          width: Sizes().gameWidth, height: Sizes().gameHeight));
   @override
   var debugMode = true;
 
@@ -33,13 +33,21 @@ class MainGame extends FlameGame
 
   @override
   Future<void> onLoad() async {
-
-    // character sprite
+    // animation
     await AssetSource().storeAnimation(
-        path: 'dragon.png',
-        onStart: CharState.idle,
-        key: ComponentKey.named("PlayerAnimation"), srcSize: Vector2(64.0, 64.0), size: Vector2(128, 128));
+      path: 'dragon.png',
+      key: ComponentKey.named("PlayerAnimation"),
+      size: Vector2(128, 128),
+      onStart: CharState.idle,
+      srcSize: Vector2(64.0, 64.0),);
 
+    // animation
+    await AssetSource().storeSprite(
+        path: 'background.png',
+        key: ComponentKey.named("Background"),
+        size: Vector2(416, 576));
+
+    Sizes().gameSize;
 
     // parallax
     ParallaxComponent parallax = await loadParallaxComponent(
@@ -55,27 +63,26 @@ class MainGame extends FlameGame
       ].map((path) => ParallaxImageData(path)).toList(),
       baseVelocity: Vector2(0.1, 0),
       size: Sizes().gameSize,
-      position: Sizes().gamePosition,
+      position: Sizes().origin,
       velocityMultiplierDelta: Vector2(1.8, 1.0),
     );
 
-    AssetSource()
-        .storeParallax(name: 'default', parallaxComponent: parallax);
+    AssetSource().storeParallax(name: 'default', parallaxComponent: parallax);
 
     add(
       router = RouterComponent(
         routes: {
           ROUTE.home.name: WorldRoute(HomePage.new),
           ROUTE.battle.name:
-              WorldRoute(BattleEventWorld.new, maintainState: false),
+          WorldRoute(BattleEventWorld.new, maintainState: false),
           ROUTE.person.name:
-              WorldRoute(PersonEventWorld.new, maintainState: false),
+          WorldRoute(PersonEventWorld.new, maintainState: false),
           ROUTE.rest.name:
-              WorldRoute(PersonEventWorld.new, maintainState: false),
+          WorldRoute(PersonEventWorld.new, maintainState: false),
           ROUTE.treasureChest.name:
-              WorldRoute(PersonEventWorld.new, maintainState: false),
+          WorldRoute(PersonEventWorld.new, maintainState: false),
           ROUTE.explore.name:
-              WorldRoute(ExploreWorld.new, maintainState: false),
+          WorldRoute(ExploreWorld.new, maintainState: false),
         },
         initialRoute: ROUTE.home.name,
       ),
