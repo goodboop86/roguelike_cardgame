@@ -90,13 +90,13 @@ class Sizes {
   Vector2 get enemyAreaPosition => Vector2(enemyAreaX, enemyAreaY);
 
   // ButtonArea
-  double get buttonAreaWidth => gameWidth;
+  double get buttonAreaWidth => gameWidth - 1 * blockSize;
 
   double get buttonAreaHeight => blockSize;
 
   Vector2 get buttonAreaSize => Vector2(buttonAreaWidth, buttonAreaHeight);
 
-  double get buttonAreaX => gameOriginX;
+  double get buttonAreaX => gameOriginX + 0.5 * blockSize;
 
   double get buttonAreaY => gameOriginY + 12 * blockSize;
 
@@ -110,13 +110,13 @@ class Sizes {
   Vector2 get buttonSize => Vector2(buttonWidth, buttonHeight);
 
   // CardArea
-  double get cardAreaWidth => gameWidth;
+  double get cardAreaWidth => gameWidth - 1 * blockSize;
 
   double get cardAreaHeight => 8 * blockSize;
 
   Vector2 get cardAreaSize => Vector2(cardAreaWidth, cardAreaHeight);
 
-  double get cardAreaX => gameOriginX;
+  double get cardAreaX => gameOriginX + 0.5 * blockSize;
 
   double get cardAreaY => gameOriginY + 16 * blockSize;
 
@@ -132,13 +132,13 @@ class Sizes {
   double get cardMargin => 20.0;
 
   // MapCardArea
-  double get mapCardAreaWidth => gameWidth;
+  double get mapCardAreaWidth => gameWidth - 1 * blockSize;
 
-  double get mapCardAreaHeight => mapCardAreaWidth;
+  double get mapCardAreaHeight => 8 * blockSize;
 
   Vector2 get mapCardAreaSize => Vector2(mapCardAreaWidth, mapCardAreaHeight);
 
-  double get mapCardAreaX => gameOriginX;
+  double get mapCardAreaX => gameOriginX + 0.5 * blockSize;
 
   double get mapCardAreaY => gameOriginY + 16 * blockSize;
 
@@ -154,13 +154,13 @@ class Sizes {
   double get mapCardMargin => cardMargin;
 
   // MapArea
-  double get mapAreaWidth => gameWidth;
+  double get mapAreaWidth => gameWidth - 1 * blockSize;
 
   double get mapAreaHeight => 3 * blockSize;
 
   Vector2 get mapAreaSize => Vector2(mapAreaWidth, mapAreaHeight);
 
-  double get mapAreaX => gameOriginX;
+  double get mapAreaX => gameOriginX + 0.5 * blockSize;
 
   double get mapAreaY => gameOriginY + 12 * blockSize;
 

@@ -112,12 +112,12 @@ class BattleEventWorld extends World
   }
 
   Future<void> enemyPhase() async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(milliseconds: 500));
     PlayerDamageEffect().call(ref, game);
     startTransition(
       message: 'player-turn',
       next: () async {
-        await Future.delayed(const Duration(seconds: 1));
+        await Future.delayed(const Duration(milliseconds: 500));
         refreshCards();
       },
     );

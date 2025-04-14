@@ -166,7 +166,7 @@ mixin WorldMixin on Component, HasGameRef<MainGame> {
               col * (Sizes().mapCardWidth + Sizes().mapCardMargin) -
               (Sizes().mapCardWidth + Sizes().mapCardMargin), // X 座標を調整
           cardAreaCenterY +
-              row * (Sizes().mapCardHeight + Sizes().mapCardMargin) -
+              (row + 1) * (Sizes().mapCardHeight + Sizes().mapCardMargin) -
               (Sizes().mapCardHeight + Sizes().mapCardMargin) / 2, // Y 座標を調整
         );
       mapCardArea.add(button);
@@ -272,7 +272,8 @@ mixin WorldMixin on Component, HasGameRef<MainGame> {
       SequenceEffect(
         [
           // 暗転アニメーション
-          OpacityEffect.to(0.6, EffectController(duration: 0.5),
+          OpacityEffect.to(
+              0.6, EffectController(startDelay: 0.2, duration: 0.5),
               onComplete: () => {
                     darkenOverlay.add(transitionText
                       ..text = message
