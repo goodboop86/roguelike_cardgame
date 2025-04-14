@@ -35,8 +35,11 @@ class CardAreaComponent extends PositionComponent with HasGameRef<MainGame> {
 }
 
 class MapCardAreaComponent extends PositionComponent with HasGameRef<MainGame> {
-  MapCardAreaComponent({required Vector2 position, required Vector2 size})
-      : super(position: position, size: size);
+  MapCardAreaComponent(
+      {required Vector2 super.position,
+      required Vector2 super.size,
+      required super.anchor})
+      : super();
 
   Logger log = Logger('MapCardAreaComponent');
 

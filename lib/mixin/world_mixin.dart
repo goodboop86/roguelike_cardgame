@@ -125,85 +125,109 @@ mixin WorldMixin on Component, HasGameRef<MainGame> {
 
   void addMapCards(List<List<Event>> stageList, int currentStage,
       RouterComponent router, ComponentRef ref) {
+    // カードコンポーネントを作成し、カードエリアの中心に集める
+    // final cardAreaCenterX = Sizes().mapCardAreaWidth / 2;
+    // final cardAreaCenterY = Sizes().mapCardAreaHeight / 2;
+    // events.asMap().forEach((index, event) {
+    //   final row = index ~/ 3;
+    //   final col = index % 3;
+    //
+    //   final button = ButtonComponent(
+    //     button: RectangleComponent(
+    //         size: Sizes().mapCardSize,
+    //         paint: Paint()..color = Colors.green,
+    //         priority: 0),
+    //     onReleased: () {
+    //       game.router.pushNamed(event.name);
+    //     },
+    //     children: [
+    //       TextComponent(
+    //         priority: 1,
+    //         text: event.name,
+    //         anchor: Anchor.center,
+    //         position: Sizes().mapCardSize / 2,
+    //         textRenderer:
+    //             TextPaint(style: const TextStyle(color: Colors.white)),
+    //       ),
+    //     ],
+    //   )
+    //     ..anchor = Anchor.center
+    //     ..position = Vector2(
+    //       cardAreaCenterX +
+    //           col * (Sizes().mapCardWidth + Sizes().mapCardMargin) -
+    //           (Sizes().mapCardWidth + Sizes().mapCardMargin), // X 座標を調整
+    //       cardAreaCenterY +
+    //           (Sizes().blockSize + Sizes().mapCardMargin) / 2, // Y 座標を調整
+    //     );
+    //   mapCardArea.add(button);
+    // });
+
     List<Event> events = stageList[currentStage];
 
     // カードエリアを作成
+    double mapCardWidth_ = Sizes().mapCardWidth + Sizes().mapCardMargin;
+    double mapCardAreaWidth =
+        events.length * mapCardWidth_ - Sizes().mapCardMargin;
+
+    Vector2 mapCardAreaSize =
+        Vector2(mapCardAreaWidth, Sizes().mapCardAreaHeight);
+
+    double mapCardAreaX =
+        Sizes().gameOriginX + (Sizes().gameWidth - mapCardAreaWidth) / 2;
+    Vector2 mapCardAreaPosition = Vector2(mapCardAreaX, Sizes().mapCardAreaY);
+
     final mapCardArea = MapCardAreaComponent(
-      position: Sizes().mapCardAreaPosition,
-      size: Sizes().mapCardAreaSize, // カードエリアのサイズ
+      position: mapCardAreaPosition,
+      size: mapCardAreaSize,
+      anchor: Anchor.topLeft,
     );
     add(mapCardArea);
 
-    // カードコンポーネントを作成し、カードエリアの中心に集める
-    final cardAreaCenterX = Sizes().mapCardAreaWidth / 2;
-    final cardAreaCenterY = Sizes().mapCardAreaHeight / 2;
-    events.asMap().forEach((index, event) {
-      final row = index ~/ 3;
-      final col = index % 3;
-
-      final button = ButtonComponent(
-        button: RectangleComponent(
-            size: Sizes().mapCardSize,
-            paint: Paint()..color = Colors.green,
-            priority: 0),
-        onReleased: () {
-          game.router.pushNamed(event.name);
-        },
-        children: [
-          TextComponent(
-            priority: 1,
-            text: event.name,
-            anchor: Anchor.center,
-            position: Sizes().mapCardSize / 2,
-            textRenderer:
-                TextPaint(style: const TextStyle(color: Colors.white)),
-          ),
-        ],
-      )
-        ..anchor = Anchor.center
-        ..position = Vector2(
-          cardAreaCenterX +
-              col * (Sizes().mapCardWidth + Sizes().mapCardMargin) -
-              (Sizes().mapCardWidth + Sizes().mapCardMargin), // X 座標を調整
-          cardAreaCenterY +
-              (row + 1) * (Sizes().mapCardHeight + Sizes().mapCardMargin) -
-              (Sizes().mapCardHeight + Sizes().mapCardMargin) / 2, // Y 座標を調整
-        );
-      mapCardArea.add(button);
-    });
-
     // Debug
     AdvancedButtonComponent executeButton = AdvancedButtonComponent(
+        defaultLabel: TextComponent(
+          priority: 1,
+          text: "default",
+          anchor: Anchor.center,
+          position: Sizes().mapCardSize / 2,
+          textRenderer: TextPaint(style: const TextStyle(color: Colors.white)),
+        ),
+        disabledLabel: TextComponent(
+          priority: 1,
+          text: "disable",
+          anchor: Anchor.center,
+          position: Sizes().mapCardSize / 2,
+          textRenderer: TextPaint(style: const TextStyle(color: Colors.white)),
+        ),
         defaultSkin: RectangleComponent(
-          size: Vector2(50, 50), // 幅100、高さ50のサイズ
+          size: Sizes().wideButtonSize, // 幅100、高さ50のサイズ
           paint: Paint()..color = Colors.red, // 青色で塗りつぶし
           position: Vector2(0, 0), // 描画位置 (左上隅の座標)
         ),
         disabledSkin: RectangleComponent(
-          size: Vector2(50, 50), // 幅100、高さ50のサイズ
+          size: Sizes().wideButtonSize, // 幅100、高さ50のサイズ
           paint: Paint()..color = Colors.grey, // 青色で塗りつぶし
           position: Vector2(0, 0), // 描画位置 (左上隅の座標)
         ),
         onPressed: () => {mapCardArea.pupUp()})
+      ..position = Vector2((mapCardAreaWidth - Sizes().wideButtonWidth) / 2,
+          5 * Sizes().blockSize)
       ..isDisabled = true;
     mapCardArea.add(executeButton);
 
     events.asMap().forEach((index, event) {
       // debug
       RectangleComponent noSelected = RectangleComponent(
-        size: Vector2(50, 50), // 幅100、高さ50のサイズ
+        size: Sizes().mapCardSize,
         paint: Paint()..color = Colors.blue, // 青色で塗りつぶし
         position: Vector2(0, 0), // 描画位置 (左上隅の座標)
       );
 
       RectangleComponent selected = RectangleComponent(
-        size: Vector2(50, 50), // 幅100、高さ50のサイズ
+        size: Sizes().mapCardSize,
         paint: Paint()..color = Colors.red, // 青色で塗りつぶし
         position: Vector2(0, 0), // 描画位置 (左上隅の座標)
       );
-
-      final row = index ~/ 3;
-      final col = index % 3;
 
       final key = ComponentKey.unique();
 
@@ -214,7 +238,7 @@ mixin WorldMixin on Component, HasGameRef<MainGame> {
           defaultSelectedSkin: selected,
           key: key,
           value: event)
-        ..position = Vector2(50.0 * (col + 1), 0);
+        ..position = Vector2(mapCardWidth_ * index, Sizes().blockSize);
 
       mapCardArea.add(button
         ..onSelectedChanged = (bool val) {
