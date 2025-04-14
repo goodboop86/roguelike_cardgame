@@ -65,8 +65,8 @@ class OptionButtonComponent extends ButtonComponent {
         );
 }
 
-class StageButtonComponent extends ToggleButtonComponent {
-  StageButtonComponent(
+class ChoiceButtonComponent<T> extends ToggleButtonComponent {
+  ChoiceButtonComponent(
       {super.onPressed,
       super.onSelectedChanged,
       super.onChangeState,
@@ -87,8 +87,32 @@ class StageButtonComponent extends ToggleButtonComponent {
       super.anchor,
       super.children,
       super.priority,
+      required this.value,
       required this.key});
 
   @override
   ComponentKey key;
+
+  T value;
+}
+
+class ExecuteButtonComponent<T> extends AdvancedButtonComponent {
+  ExecuteButtonComponent(
+      {super.onPressed,
+      super.onChangeState,
+      super.defaultSkin,
+      super.downSkin,
+      super.disabledSkin,
+      super.defaultLabel,
+      super.disabledLabel,
+      super.size,
+      super.position,
+      super.scale,
+      super.angle,
+      super.anchor,
+      super.children,
+      super.priority,
+      required this.value});
+
+  T value;
 }

@@ -1,10 +1,12 @@
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:roguelike_cardgame/main_game.dart';
 
+import '../models/enum.dart';
 import 'button_component.dart';
 
-class CardAreaComponent extends PositionComponent {
+class CardAreaComponent extends PositionComponent with HasGameRef<MainGame> {
   CardAreaComponent({required Vector2 position, required Vector2 size})
       : super(position: position, size: size);
 
@@ -32,14 +34,16 @@ class CardAreaComponent extends PositionComponent {
   }
 }
 
-class MapCardAreaComponent extends PositionComponent {
+class MapCardAreaComponent extends PositionComponent with HasGameRef<MainGame> {
   MapCardAreaComponent({required Vector2 position, required Vector2 size})
       : super(position: position, size: size);
 
+  Logger log = Logger('MapCardAreaComponent');
+
   void disableAllStageExclusive({required ComponentKey key}) {
     // 受け取ったkey以外のコンポーネントをinactiveにする。
-    Iterable<StageButtonComponent> buttons =
-        children.whereType<StageButtonComponent>();
+    Iterable<ChoiceButtonComponent> buttons =
+        children.whereType<ChoiceButtonComponent>();
     for (var button in buttons) {
       if (button.key != key) {
         button.isSelected = false;
@@ -56,14 +60,22 @@ class MapCardAreaComponent extends PositionComponent {
     if (isSelected) {
       executeButton.isDisabled = false;
     } else {
-      Iterable<StageButtonComponent> buttons =
-          children.whereType<StageButtonComponent>();
+      Iterable<ChoiceButtonComponent> buttons =
+          children.whereType<ChoiceButtonComponent>();
       bool anySelected =
           buttons.map((button) => button.isSelected).any((val) => val == true);
       if (!anySelected) {
         executeButton.isDisabled = true;
       }
     }
+  }
+
+  void pupUp() {
+    Iterable<ChoiceButtonComponent> buttons =
+        children.whereType<ChoiceButtonComponent>();
+    Event event = buttons.where((button) => button.isSelected).first.value;
+    log.info(event);
+    game.router.pushNamed(event.name);
   }
 }
 

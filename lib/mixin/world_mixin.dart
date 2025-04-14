@@ -1,11 +1,13 @@
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/flame.dart';
+import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/parallax.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:roguelike_cardgame/main_game.dart';
 import 'package:roguelike_cardgame/models/enemy_state.dart';
 import 'package:roguelike_cardgame/models/player_state.dart';
 import 'package:roguelike_cardgame/providers/deck_provider.dart';
@@ -24,7 +26,7 @@ import '../providers/enemy_provider.dart';
 import '../providers/sizes.dart';
 import '../spritesheet/spritesheet.dart';
 
-mixin WorldMixin on Component {
+mixin WorldMixin on Component, HasGameRef<MainGame> {
   Logger log = Logger('WorldMixin');
 
   Future<void> addBackgrounds() async {
@@ -121,8 +123,8 @@ mixin WorldMixin on Component {
     });
   }
 
-  void addMapCards(
-      List<List<Event>> stageList, int currentStage, router, ComponentRef ref) {
+  void addMapCards(List<List<Event>> stageList, int currentStage,
+      RouterComponent router, ComponentRef ref) {
     List<Event> events = stageList[currentStage];
 
     // カードエリアを作成
@@ -145,11 +147,7 @@ mixin WorldMixin on Component {
             paint: Paint()..color = Colors.green,
             priority: 0),
         onReleased: () {
-          if (event == Event.battle) {
-            ref.read(playerProvider.notifier).reset();
-            ref.read(deckProvider.notifier).startTurn();
-          }
-          router.pushNamed(event.name);
+          game.router.pushNamed(event.name);
         },
         children: [
           TextComponent(
@@ -176,17 +174,18 @@ mixin WorldMixin on Component {
 
     // Debug
     AdvancedButtonComponent executeButton = AdvancedButtonComponent(
-      defaultSkin: RectangleComponent(
-        size: Vector2(50, 50), // 幅100、高さ50のサイズ
-        paint: Paint()..color = Colors.red, // 青色で塗りつぶし
-        position: Vector2(0, 0), // 描画位置 (左上隅の座標)
-      ),
-      disabledSkin: RectangleComponent(
-        size: Vector2(50, 50), // 幅100、高さ50のサイズ
-        paint: Paint()..color = Colors.grey, // 青色で塗りつぶし
-        position: Vector2(0, 0), // 描画位置 (左上隅の座標)
-      ),
-    )..isDisabled = true;
+        defaultSkin: RectangleComponent(
+          size: Vector2(50, 50), // 幅100、高さ50のサイズ
+          paint: Paint()..color = Colors.red, // 青色で塗りつぶし
+          position: Vector2(0, 0), // 描画位置 (左上隅の座標)
+        ),
+        disabledSkin: RectangleComponent(
+          size: Vector2(50, 50), // 幅100、高さ50のサイズ
+          paint: Paint()..color = Colors.grey, // 青色で塗りつぶし
+          position: Vector2(0, 0), // 描画位置 (左上隅の座標)
+        ),
+        onPressed: () => {mapCardArea.pupUp()})
+      ..isDisabled = true;
     mapCardArea.add(executeButton);
 
     events.asMap().forEach((index, event) {
@@ -208,12 +207,13 @@ mixin WorldMixin on Component {
 
       final key = ComponentKey.unique();
 
-      StageButtonComponent button = StageButtonComponent(
+      ChoiceButtonComponent button = ChoiceButtonComponent<Event>(
           priority: 30,
           position: Vector2(0, 0),
           defaultSkin: noSelected,
           defaultSelectedSkin: selected,
-          key: key)
+          key: key,
+          value: event)
         ..position = Vector2(50.0 * (col + 1), 0);
 
       mapCardArea.add(button

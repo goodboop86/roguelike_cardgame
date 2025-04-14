@@ -26,6 +26,7 @@ class BattleEventWorld extends World
   Logger log = Logger('BattleEventWorld');
 
   late SpriteAnimationGroupComponent? playerComponent;
+  bool deckInitialized = false;
 
   @override
   Future<void> onLoad() async {
@@ -64,10 +65,18 @@ class BattleEventWorld extends World
           _addButtons();
         }
       }
+
+      // DeckStateNotifier deckNotifier = ref.read(deckProvider.notifier);
+      // if((deckNotifier != null ) & !deckInitialized) {
+      //   deckNotifier.startTurn();
+      //   deckInitialized = true;
+      //   log.info("deckNotifier started.");
+      // }
     });
 
     addToGameWidgetBuild(() async {
-      DeckState state = ref.read(deckProvider);
+      DeckState state = ref.watch(deckProvider);
+      log.info("check deck exists");
 
       if (state.deck.hand.isNotEmpty) {
         final cardArea = children.whereType<CardAreaComponent>();
@@ -119,7 +128,8 @@ class BattleEventWorld extends World
         game.router.pushNamed(ROUTE.home.name);
       },
       () {
-        game.router.pushNamed(ROUTE.explore.name);
+        ref.read(deckProvider.notifier).startTurn();
+        // game.router.pushNamed(ROUTE.explore.name);
       },
       () {
         game.overlays.add(OVERLAY.autoDisappearingOverlay.name);
