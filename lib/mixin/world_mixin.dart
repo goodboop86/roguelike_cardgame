@@ -200,19 +200,20 @@ mixin WorldMixin on Component, HasGameRef<MainGame> {
           textRenderer: TextPaint(style: const TextStyle(color: Colors.white)),
         ),
         defaultSkin: RectangleComponent(
-          size: Sizes().wideButtonSize, // 幅100、高さ50のサイズ
-          paint: Paint()..color = Colors.red, // 青色で塗りつぶし
-          position: Vector2(0, 0), // 描画位置 (左上隅の座標)
+          size: Sizes().wideButtonSize,
+          paint: Paint()..color = Colors.red,
+          position: Vector2(0, 0),
         ),
         disabledSkin: RectangleComponent(
-          size: Sizes().wideButtonSize, // 幅100、高さ50のサイズ
-          paint: Paint()..color = Colors.grey, // 青色で塗りつぶし
-          position: Vector2(0, 0), // 描画位置 (左上隅の座標)
+          size: Sizes().wideButtonSize,
+          paint: Paint()..color = Colors.grey,
+          position: Vector2(0, 0),
         ),
         onPressed: () => {mapCardArea.pupUp()})
       ..position = Vector2((mapCardAreaWidth - Sizes().wideButtonWidth) / 2,
           5 * Sizes().blockSize)
       ..isDisabled = true;
+
     mapCardArea.add(executeButton);
 
     events.asMap().forEach((index, event) {

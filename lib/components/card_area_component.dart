@@ -1,9 +1,11 @@
 import 'package:flame/components.dart';
+import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 
 import '../models/enum.dart';
+import '../providers/sizes.dart';
 import 'button_component.dart';
 
 class CardAreaComponent extends PositionComponent with HasGameRef<MainGame> {
@@ -78,7 +80,25 @@ class MapCardAreaComponent extends PositionComponent with HasGameRef<MainGame> {
         children.whereType<ChoiceButtonComponent>();
     Event event = buttons.where((button) => button.isSelected).first.value;
     log.info(event);
-    game.router.pushNamed(event.name);
+    game.router.currentRoute.add(ButtonComponent(
+        position: Sizes().gameSize / 2,
+        anchor: Anchor.center,
+        onReleased: () => {game.router.pushNamed(event.name)},
+        button: RectangleComponent(
+          size: Vector2(200, 200),
+          paint: Paint()..color = Colors.red,
+        ),
+        children: [
+          TextComponent(
+            priority: 100,
+            text: '$event',
+            anchor: Anchor.center,
+            position: Vector2(200, 200) / 2,
+            textRenderer:
+                TextPaint(style: const TextStyle(color: Colors.white)),
+          ),
+        ]));
+    // game.router.pushNamed(event.name);
   }
 }
 
