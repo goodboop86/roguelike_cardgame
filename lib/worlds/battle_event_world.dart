@@ -35,6 +35,14 @@ class BattleEventWorld extends World
 
   @override
   Future<void> onMount() async {
+    startTransition(
+      message: 'player-turn',
+      next: () async {
+        await Future.delayed(const Duration(seconds: 0));
+        refreshCards();
+      },
+    );
+
     addToGameWidgetBuild(() async {
       BattleRouteState state = ref.read(battleRouteProvider);
       PlayerState playerState = ref.read(playerProvider);
@@ -128,8 +136,8 @@ class BattleEventWorld extends World
         game.router.pushNamed(ROUTE.home.name);
       },
       () {
-        ref.read(deckProvider.notifier).startTurn();
-        // game.router.pushNamed(ROUTE.explore.name);
+        // ref.read(deckProvider.notifier).startTurn();
+        game.router.pushNamed(ROUTE.explore.name);
       },
       () {
         game.overlays.add(OVERLAY.autoDisappearingOverlay.name);

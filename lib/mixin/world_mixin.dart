@@ -272,7 +272,7 @@ mixin WorldMixin on Component, HasGameRef<MainGame> {
       SequenceEffect(
         [
           // 暗転アニメーション
-          OpacityEffect.to(0.6, EffectController(duration: 0.1),
+          OpacityEffect.to(0.6, EffectController(duration: 0.5),
               onComplete: () => {
                     darkenOverlay.add(transitionText
                       ..text = message
@@ -282,7 +282,7 @@ mixin WorldMixin on Component, HasGameRef<MainGame> {
           OpacityEffect.to(0.6, EffectController(duration: 0.5),
               onComplete: () => {darkenOverlay.remove(transitionText)}),
           // 明転アニメーション
-          OpacityEffect.to(0, EffectController(duration: 0.1)),
+          OpacityEffect.to(0, EffectController(duration: 0.5)),
         ],
         onComplete: () {
           next();
