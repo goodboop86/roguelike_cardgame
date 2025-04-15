@@ -112,14 +112,14 @@ class Sizes {
   // WideButton
   double get wideButtonWidth => 3 * blockSize;
 
-  double get wideButtonHeight => 2 * blockSize;
+  double get wideButtonHeight => 1 * blockSize;
 
   Vector2 get wideButtonSize => Vector2(wideButtonWidth, wideButtonHeight);
 
   // CardArea
   double get cardAreaWidth => gameWidth - 1 * blockSize;
 
-  double get cardAreaHeight => 8 * blockSize;
+  double get cardAreaHeight => 10 * blockSize;
 
   Vector2 get cardAreaSize => Vector2(cardAreaWidth, cardAreaHeight);
 
@@ -132,7 +132,7 @@ class Sizes {
   // Card
   double get cardWidth => 3 * blockSize;
 
-  double get cardHeight => 3 * blockSize;
+  double get cardHeight => 4 * blockSize;
 
   Vector2 get cardSize => Vector2(cardWidth, cardHeight);
 

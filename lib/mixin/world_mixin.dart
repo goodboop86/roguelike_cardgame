@@ -213,7 +213,7 @@ mixin WorldMixin on Component, HasGameRef<MainGame> {
           mapCardArea.pupUp();
         })
       ..position = Vector2((mapCardAreaWidth - Sizes().wideButtonWidth) / 2,
-          5 * Sizes().blockSize)
+          6 * Sizes().blockSize)
       ..isDisabled = true;
 
     mapCardArea.add(executeButton);
