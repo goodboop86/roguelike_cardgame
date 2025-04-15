@@ -40,6 +40,9 @@ class MainGame extends FlameGame
   @override
   Future<void> onLoad() async {
     log.info(size);
+    log.info(camera.viewport.virtualSize);
+    log.info(camera.viewport.size);
+
 
     // animation
     await AssetSource().storeAnimation(

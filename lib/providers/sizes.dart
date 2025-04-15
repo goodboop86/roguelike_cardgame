@@ -125,7 +125,7 @@ class Sizes {
 
   double get cardAreaX => gameOriginX + 0.5 * blockSize;
 
-  double get cardAreaY => gameOriginY + 16 * blockSize;
+  double get cardAreaY => gameOriginY + 14 * blockSize;
 
   Vector2 get cardAreaPosition => Vector2(cardAreaX, cardAreaY);
 
