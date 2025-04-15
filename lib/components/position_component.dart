@@ -22,7 +22,7 @@ class RoundedRectangleOutlineBox extends PositionComponent {
 
     // 塗りつぶし (透過の黒)
     final fillPaint = Paint()
-      ..color = Colors.black.withOpacity(0.7) // 透過の黒
+      ..color = Colors.black.withValues(alpha: 0.7) // 透過の黒
       ..style = PaintingStyle.fill;
 
     // 輪郭線 (赤)

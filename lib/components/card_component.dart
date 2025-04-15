@@ -13,14 +13,26 @@ import '../providers/card_provider.dart';
 
 class CardComponent extends RectangleComponent
     with TapCallbacks, RiverpodComponentMixin, HasGameRef, DragCallbacks {
-  CardComponent({required this.card}) {
+  CardComponent(
+      {required this.card,
+        this.borderRadius = 3.0,
+      this.strokeWidth = 3.0,
+      this.fillColor = Colors.black,
+      this.strokeColor = Colors.red}) {
     super.priority = 20;
   }
+
+  @override
+  Color get backgroundColor => Colors.black;
 
   Logger log = Logger('CardComponent');
   final Card_ card;
   Vector2? initialPosition;
   CharacterAreaComponent? target;
+  final double borderRadius;
+  final double strokeWidth;
+  final Color fillColor; // 塗りつぶし色を受け取る
+  final Color strokeColor; // 輪郭線の色を受け取る
 
   bool isOverlapping = false;
 
@@ -146,15 +158,35 @@ class CardComponent extends RectangleComponent
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    canvas.drawRect(size.toRect(), Paint()..color = Colors.green);
-    TextPainter(
-      text: TextSpan(
-          text: card.toJsonString(),
-          style: const TextStyle(color: Colors.white)),
-      textDirection: TextDirection.ltr,
-    )
-      ..layout(maxWidth: size.x)
-      ..paint(canvas, Vector2(0, 0).toOffset());
+
+    // 塗りつぶし
+    final fillPaint = Paint()
+      ..color = fillColor
+      ..style = PaintingStyle.fill;
+
+    // 輪郭線
+    final strokePaint = Paint()
+      ..color = strokeColor
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = strokeWidth;
+
+    final rrect = RRect.fromRectAndRadius(
+      size.toRect(),
+      Radius.circular(borderRadius),
+    );
+
+    canvas.drawRRect(rrect, fillPaint);   // まず塗りつぶし
+    canvas.drawRRect(rrect, strokePaint); // 次に輪郭線
+
+    // canvas.drawRect(size.toRect(), Paint()..color = Colors.green);
+    // TextPainter(
+    //   text: TextSpan(
+    //       text: card.toJsonString(),
+    //       style: const TextStyle(color: Colors.white)),
+    //   textDirection: TextDirection.ltr,
+    // )
+    //   ..layout(maxWidth: size.x)
+    //   ..paint(canvas, Vector2(0, 0).toOffset());
   }
 }
 
