@@ -6,6 +6,7 @@ import 'package:roguelike_cardgame/main_game.dart';
 
 import '../models/enum.dart';
 import '../providers/sizes.dart';
+import 'basic_component.dart';
 import 'button_component.dart';
 
 class CardAreaComponent extends PositionComponent with HasGameRef<MainGame> {
@@ -80,8 +81,9 @@ class MapCardAreaComponent extends PositionComponent with HasGameRef<MainGame> {
         children.whereType<ChoiceButtonComponent>();
     Event event = buttons.where((button) => button.isSelected).first.value;
     log.info(event);
-    game.router.currentRoute.add(ButtonComponent(
-        position: Sizes().gameSize / 2,
+
+    final button = ButtonComponent(
+        // position: Vector2(0,0),
         anchor: Anchor.center,
         onReleased: () => {game.router.pushNamed(event.name)},
         button: RectangleComponent(
@@ -97,7 +99,12 @@ class MapCardAreaComponent extends PositionComponent with HasGameRef<MainGame> {
             textRenderer:
                 TextPaint(style: const TextStyle(color: Colors.white)),
           ),
-        ]));
+        ]);
+
+    parent!.add(darkenOverlay..priority = 20);
+    parent!.add(button..priority = 40);
+
+    // game.router.currentRoute.add(button);
     // game.router.pushNamed(event.name);
   }
 }

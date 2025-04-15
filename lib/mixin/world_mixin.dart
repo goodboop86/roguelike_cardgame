@@ -209,7 +209,9 @@ mixin WorldMixin on Component, HasGameRef<MainGame> {
           paint: Paint()..color = Colors.grey,
           position: Vector2(0, 0),
         ),
-        onPressed: () => {mapCardArea.pupUp()})
+        onPressed: () {
+          mapCardArea.pupUp();
+        })
       ..position = Vector2((mapCardAreaWidth - Sizes().wideButtonWidth) / 2,
           5 * Sizes().blockSize)
       ..isDisabled = true;
@@ -288,9 +290,7 @@ mixin WorldMixin on Component, HasGameRef<MainGame> {
       {required String message, required Function next}) async {
     log.info("startTransition.");
 
-    add(darkenOverlay
-      ..size = Sizes().gameSize
-      ..position = Sizes().gameTopLeft);
+    add(darkenOverlay);
 
     // SequenceEffect を使用して、複数のエフェクトを順番に実行
     await darkenOverlay.add(

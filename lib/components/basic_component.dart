@@ -16,7 +16,9 @@ class OverlayComponent extends RectangleComponent with TapCallbacks {
 }
 
 RectangleComponent darkenOverlay = OverlayComponent()
-  ..paint.color = Colors.black.withValues(alpha: 0)
+  ..size = Sizes().gameSize
+  ..anchor = Anchor.center
+  ..paint.color = Colors.black.withValues(alpha: 0.5)
   ..priority = 1000;
 
 TextComponent transitionText = TextComponent(
