@@ -82,6 +82,12 @@ class MapCardAreaComponent extends PositionComponent with HasGameRef<MainGame> {
     Event event = buttons.where((button) => button.isSelected).first.value;
     log.info(event);
 
+    final overlay = OverlayComponent()
+      ..size = Sizes().gameSize
+      ..anchor = Anchor.center
+      ..paint.color = Colors.black.withValues(alpha: 0.5)
+      ..priority = 20;
+
     final button = ButtonComponent(
         // position: Vector2(0,0),
         anchor: Anchor.center,
@@ -101,7 +107,7 @@ class MapCardAreaComponent extends PositionComponent with HasGameRef<MainGame> {
           ),
         ]);
 
-    parent!.add(darkenOverlay..priority = 20);
+    parent!.add(overlay);
     parent!.add(button..priority = 40);
 
     // game.router.currentRoute.add(button);
