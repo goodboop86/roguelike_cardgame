@@ -6,6 +6,7 @@ import 'package:roguelike_cardgame/main_game.dart';
 
 import '../models/enum.dart';
 import '../providers/sizes.dart';
+import '../valueroutes/popup.dart';
 import 'basic_component.dart';
 import 'button_component.dart';
 
@@ -76,7 +77,7 @@ class MapCardAreaComponent extends PositionComponent with HasGameRef<MainGame> {
     }
   }
 
-  void pupUp() {
+  Future<void> pupUp() async {
     Iterable<ChoiceButtonComponent> buttons =
         children.whereType<ChoiceButtonComponent>();
     Event event = buttons.where((button) => button.isSelected).first.value;
@@ -107,8 +108,13 @@ class MapCardAreaComponent extends PositionComponent with HasGameRef<MainGame> {
           ),
         ]);
 
-    parent!.add(overlay);
-    parent!.add(button..priority = 40);
+    // parent!.add(overlay);
+    // parent!.add(button..priority = 40);
+    bool value = await game.router.pushAndWait(MyBoolDialogRoute());
+
+    if (value) {
+      game.router.pushNamed(event.name);
+    }
 
     // game.router.currentRoute.add(button);
     // game.router.pushNamed(event.name);

@@ -9,6 +9,18 @@ import '../providers/sizes.dart';
 import 'BackgroundComponent.dart';
 
 class OverlayComponent extends RectangleComponent with TapCallbacks {
+  OverlayComponent({
+    super.position,
+    super.size,
+    super.scale,
+    super.angle,
+    super.anchor,
+    super.children,
+    super.priority,
+    super.paint,
+    super.paintLayers,
+    super.key,
+  });
   @override
   void onTapDown(TapDownEvent event) {
     print("blocked!!!!");

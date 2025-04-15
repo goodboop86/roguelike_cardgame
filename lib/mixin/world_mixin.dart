@@ -319,4 +319,8 @@ mixin WorldMixin on Component, HasGameRef<MainGame> {
       ),
     );
   }
+
+  Future<T> pushAndWait<T>(ValueRoute<T> route) async {
+    return await game.router.pushAndWait(route) as T;
+  }
 }

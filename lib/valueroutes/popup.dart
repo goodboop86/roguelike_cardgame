@@ -88,9 +88,8 @@ class IntRoute extends ValueRoute<int> with HasGameReference<MainGame> {
 }
 
 class DialogBackground extends RectangleComponent with TapCallbacks {
-  DialogBackground({super.position, super.size, super.children})
+  DialogBackground({super.position, super.size, super.children, super.anchor})
       : super(
-          anchor: Anchor.center,
           paint: Paint()..color = const Color(0xee858585),
         );
 }
@@ -100,19 +99,56 @@ class MyDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
 
   @override
   Component build() {
-    final size = Vector2(250, 130);
-    return DialogBackground(
-      position: game.size / 2,
-      size: size,
-      children: [
-        BasicButtonComponent(
-            text: 'hello?',
-            func: () {
-              completeWith(
-                12345, // return value
-              );
-            })
-      ],
-    );
+    return OverlayComponent(
+        paint: Paint()..color = Colors.black.withValues(alpha: 0.5),
+        size: game.canvasSize,
+        children: [
+          DialogBackground(
+            position: game.canvasSize / 2,
+            size: Sizes().cardSize * 2,
+            anchor: Anchor.center,
+            children: [
+              BasicButtonComponent(
+                  position: Sizes().cardSize,
+                  anchor: Anchor.center,
+                  text: 'hello?',
+                  func: () {
+                    completeWith(
+                      12345, // return value
+                    );
+                  })
+            ],
+          )
+        ]);
+  }
+}
+
+class MyBoolDialogRoute extends ValueRoute<bool>
+    with HasGameReference<MainGame> {
+  MyBoolDialogRoute() : super(value: false, transparent: false);
+
+  @override
+  Component build() {
+    return OverlayComponent(
+        paint: Paint()..color = Colors.black.withValues(alpha: 0.5),
+        size: game.canvasSize,
+        children: [
+          DialogBackground(
+            position: game.canvasSize / 2,
+            size: Sizes().cardSize * 2,
+            anchor: Anchor.center,
+            children: [
+              BasicButtonComponent(
+                  position: Sizes().cardSize,
+                  anchor: Anchor.center,
+                  text: 'hello?',
+                  func: () {
+                    completeWith(
+                      true, // return value
+                    );
+                  })
+            ],
+          )
+        ]);
   }
 }

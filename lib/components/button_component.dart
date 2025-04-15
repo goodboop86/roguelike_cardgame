@@ -10,14 +10,27 @@ class BasicButtonComponent extends ButtonComponent {
   final String text;
   final VoidCallback? func;
 
-  BasicButtonComponent({required this.text, this.func})
+  BasicButtonComponent(
+      {required this.text,
+      this.func,
+      // super.button,
+      super.buttonDown,
+      // super.onPressed,
+      super.onReleased,
+      super.onCancelled,
+      super.position,
+      super.size,
+      super.scale,
+      super.angle,
+      super.anchor,
+      // super.children,
+      super.priority})
       : super(
           button: RectangleComponent(
             size: Sizes().buttonSize,
             paint: Paint()..color = Colors.brown,
             priority: 0,
           ),
-          anchor: Anchor.center,
           children: [
             TextComponent(
               priority: 1,
