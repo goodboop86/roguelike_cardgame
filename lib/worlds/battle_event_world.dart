@@ -1,6 +1,4 @@
 import 'package:flame/components.dart' hide Timer;
-import 'package:flame/input.dart';
-import 'package:flame/parallax.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
@@ -11,15 +9,10 @@ import 'package:roguelike_cardgame/models/player_state.dart';
 import 'package:roguelike_cardgame/providers/deck_provider.dart';
 import 'package:roguelike_cardgame/providers/enemy_provider.dart';
 import 'package:roguelike_cardgame/providers/player_provider.dart';
-import 'package:roguelike_cardgame/providers/sizes.dart';
 
 import 'dart:async';
 
-import '../components/button_component.dart';
 import '../components/card_area_component.dart';
-import '../models/card_effect.dart';
-import '../models/enum.dart';
-import '../providers/battle_route_provider.dart';
 
 class BattleEventWorld extends World
     with
@@ -27,6 +20,7 @@ class BattleEventWorld extends World
         RiverpodComponentMixin,
         HasBattleArea,
         HasCommonArea {
+  @override
   Logger log = Logger('BattleEventWorld');
 
   late SpriteAnimationGroupComponent? playerComponent;
@@ -48,7 +42,7 @@ class BattleEventWorld extends World
     );
 
     addToGameWidgetBuild(() async {
-      BattleRouteState state = ref.read(battleRouteProvider);
+      // BattleRouteState state = ref.read(battleRouteProvider);
       PlayerState playerState = ref.read(playerProvider);
       EnemyState enemyState = ref.read(enemyProvider);
       // TODO: 受け取ったEventに従ってEnemyを設置する
@@ -65,7 +59,7 @@ class BattleEventWorld extends World
 
       if (background != null) {
         if (characterArea.isEmpty &
-            background!.isMounted &
+            background.isMounted &
             (playerState != null) &
             (enemyState != null)) {
           log.fine("addCharacters");
@@ -74,12 +68,12 @@ class BattleEventWorld extends World
               loadParallaxComponent: game.loadParallaxComponent, ref: ref);
         }
 
-        if (buttonArea.isEmpty & background!.isMounted) {
+        if (buttonArea.isEmpty & background.isMounted) {
           log.fine("addButtons");
-          _addBattleButtons();
+          addBattleButtons();
         }
 
-        if (uiArea.isEmpty & background!.isMounted) {
+        if (uiArea.isEmpty & background.isMounted) {
           log.fine("addUI");
           addUi();
         }
@@ -102,73 +96,5 @@ class BattleEventWorld extends World
     });
 
     super.onMount();
-  }
-
-  void refreshCards() {
-    ref.read(playerProvider.notifier).resetMana();
-    ref.read(deckProvider.notifier).startTurn();
-    // 現在のカードを削除
-    children.whereType<CardAreaComponent>().forEach((area) {
-      if (area.isMounted) {
-        remove(area);
-      }
-    });
-  }
-
-  Future<void> enemyPhase() async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    PlayerDamageEffect().call(ref, game);
-    startTransition(
-      message: 'player-turn',
-      next: () async {
-        await Future.delayed(const Duration(milliseconds: 500));
-        refreshCards();
-      },
-    );
-  }
-
-  void _addBattleButtons() {
-    // カードエリアを作成
-    final buttonArea = ButtonAreaComponent(
-      position: Sizes().buttonAreaPosition,
-      size: Sizes().buttonAreaSize, // カードエリアのサイズ
-    );
-    add(buttonArea);
-
-    List buttonOnPressedFunctions = [
-      () {
-        game.router.pushNamed(ROUTE.home.name);
-      },
-      () {
-        // ref.read(deckProvider.notifier).startTurn();
-        game.router.pushNamed(ROUTE.explore.name);
-      },
-      () {
-        game.overlays.add(OVERLAY.autoDisappearingOverlay.name);
-      },
-      () {
-        CardAreaComponent cardArea =
-            children.whereType<CardAreaComponent>().first as CardAreaComponent;
-        cardArea.lock();
-        startTransition(
-            message: "enemy-turn.",
-            next: () {
-              enemyPhase();
-            });
-      },
-    ];
-
-    final buttonAreaCenterX = Sizes().buttonAreaWidth / 2;
-    final buttonAreaCenterY = Sizes().buttonAreaHeight / 2;
-    buttonOnPressedFunctions.asMap().forEach((index, function) {
-      final button = OptionButtonComponent(text: '$index', func: function)
-        ..position = Vector2(
-          buttonAreaCenterX +
-              (index - 1.5) * (Sizes().buttonWidth + Sizes().margin), // X 座標を調整
-          buttonAreaCenterY, // Y 座標を調整
-        )
-        ..anchor = Anchor.center;
-      buttonArea.add(button);
-    });
   }
 }

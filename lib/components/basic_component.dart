@@ -2,11 +2,10 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:flame/input.dart';
 import 'package:flutter/material.dart' hide Gradient;
 
 import '../providers/sizes.dart';
-import 'BackgroundComponent.dart';
+import 'background_component.dart';
 
 class OverlayComponent extends RectangleComponent with TapCallbacks {
   OverlayComponent({

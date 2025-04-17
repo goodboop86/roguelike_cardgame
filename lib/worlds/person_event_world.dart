@@ -1,14 +1,9 @@
-import 'dart:ui';
-
 import 'package:flame/components.dart' hide Timer;
-import 'package:flame/input.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
-import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 import 'package:roguelike_cardgame/mixin/has_common_area.dart';
 import 'package:roguelike_cardgame/mixin/has_battle_area.dart';
-import 'package:roguelike_cardgame/valueroutes/pupup_factory.dart';
 
 import 'dart:async';
 
@@ -18,7 +13,6 @@ import '../models/player_state.dart';
 import '../providers/battle_route_provider.dart';
 import '../providers/enemy_provider.dart';
 import '../providers/player_provider.dart';
-import '../providers/sizes.dart';
 import '../valueroutes/popup.dart';
 
 class PersonEventWorld extends World
@@ -58,7 +52,7 @@ class PersonEventWorld extends World
         }
 
         var uiArea = children.whereType<UiAreaComponent>();
-        if (uiArea.isEmpty & background!.isMounted) {
+        if (uiArea.isEmpty & background.isMounted) {
           log.fine("addUI");
           addUi();
         }

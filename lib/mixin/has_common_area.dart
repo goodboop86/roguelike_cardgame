@@ -72,7 +72,9 @@ mixin HasCommonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     UIButtonComponent homeButton =
         UIButtonComponent(button: AssetSource().getSprite(name: "home.png"))
           ..size = Sizes().blockSize
-          ..onPressed = () => {game.router.pushNamed(ROUTE.home.name)};
+          ..onPressed = () {
+            game.router.pushNamed(ROUTE.home.name);
+          };
     UIButtonComponent questionButton =
         UIButtonComponent(button: AssetSource().getSprite(name: "question.png"))
           ..size = Sizes().blockSize
@@ -86,6 +88,6 @@ mixin HasCommonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   }
 
   Future<T> pushAndWait<T>(ValueRoute<T> route) async {
-    return await game.router.pushAndWait(route) as T;
+    return await game.router.pushAndWait(route);
   }
 }

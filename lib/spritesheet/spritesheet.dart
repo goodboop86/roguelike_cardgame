@@ -1,12 +1,10 @@
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
-import 'package:flame/parallax.dart';
 import 'package:flame/sprite.dart';
 import 'package:logging/logging.dart';
 
 import '../components/player_component.dart';
 import '../models/enum.dart';
-import '../providers/sizes.dart';
 
 class AssetSource {
   Logger log = Logger('SpriteSource');

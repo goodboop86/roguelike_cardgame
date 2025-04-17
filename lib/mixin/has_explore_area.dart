@@ -158,8 +158,4 @@ mixin HasExploreArea
 
     // toggleButton.isSelected = true;
   }
-
-  Future<T> pushAndWait<T>(ValueRoute<T> route) async {
-    return await game.router.pushAndWait(route) as T;
-  }
 }

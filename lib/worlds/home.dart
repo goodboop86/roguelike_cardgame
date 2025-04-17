@@ -1,6 +1,5 @@
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
-import 'package:flame/palette.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:roguelike_cardgame/components/button_component.dart';
 import 'package:roguelike_cardgame/models/enum.dart';

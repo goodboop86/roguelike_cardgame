@@ -5,9 +5,7 @@ import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 
 import '../models/enum.dart';
-import '../providers/sizes.dart';
 import '../valueroutes/popup.dart';
-import 'basic_component.dart';
 import 'button_component.dart';
 
 class CardAreaComponent extends RectangleComponent with HasGameRef<MainGame> {
@@ -84,31 +82,6 @@ class MapCardAreaComponent extends PositionComponent with HasGameRef<MainGame> {
         children.whereType<ChoiceButtonComponent>();
     Event event = buttons.where((button) => button.isSelected).first.value;
     log.info(event);
-
-    final overlay = OverlayComponent()
-      ..size = Sizes().gameSize
-      ..anchor = Anchor.center
-      ..paint.color = Colors.black.withValues(alpha: 0.5)
-      ..priority = 20;
-
-    final button = ButtonComponent(
-        // position: Vector2(0,0),
-        anchor: Anchor.center,
-        onReleased: () => {game.router.pushNamed(event.name)},
-        button: RectangleComponent(
-          size: Vector2(200, 200),
-          paint: Paint()..color = Colors.red,
-        ),
-        children: [
-          TextComponent(
-            priority: 100,
-            text: '$event',
-            anchor: Anchor.center,
-            position: Vector2(200, 200) / 2,
-            textRenderer:
-                TextPaint(style: const TextStyle(color: Colors.white)),
-          ),
-        ]);
 
     // parent!.add(overlay);
     // parent!.add(button..priority = 40);
