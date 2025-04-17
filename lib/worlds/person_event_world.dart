@@ -32,18 +32,29 @@ class PersonEventWorld extends World
       EnemyState enemyState = ref.read(enemyProvider);
       log.config(state.toJsonString());
 
-      var characterArea = children.whereType<CharacterAreaComponent>();
-      if (characterArea.isEmpty &
-          (playerState != null) &
-          (enemyState != null)) {
-        log.fine("addCharacters");
-        await addCharacters(
-            loadParallaxComponent: game.loadParallaxComponent, ref: ref);
+      Component? background = game.findByKey(ComponentKey.named("Background"));
+      if (background == null) {
+        log.fine("addBackgrounds");
+        addBackgrounds();
+      }
 
-        final value = await game.router.pushAndWait(MyDialogRoute());
+      if (background != null) {
+
+        var characterArea = children.whereType<CharacterAreaComponent>();
+        if (characterArea.isEmpty &
+        (playerState != null) &
+        (enemyState != null)) {
+          log.fine("addCharacters");
+          await addCharacters(
+              loadParallaxComponent: game.loadParallaxComponent, ref: ref);
+
+          final value = await game.router.pushAndWait(MyDialogRoute());
+          print(value);
+
+      }
+
         // final value = await game.router.pushAndWait(ValueRouteFactory.create("int"));
 
-        print(value);
       }
     });
 
