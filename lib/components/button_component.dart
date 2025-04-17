@@ -27,7 +27,7 @@ class BasicButtonComponent extends ButtonComponent {
       super.priority})
       : super(
           button: RectangleComponent(
-            size: Sizes().buttonSize,
+            size: Sizes.buttonSize,
             paint: Paint()..color = Colors.brown,
             priority: 0,
           ),
@@ -35,7 +35,7 @@ class BasicButtonComponent extends ButtonComponent {
             TextComponent(
               priority: 1,
               text: text,
-              position: Sizes().buttonSize / 2,
+              position: Sizes.buttonSize / 2,
               anchor: Anchor.center,
               textRenderer:
                   TextPaint(style: const TextStyle(color: Colors.white)),
@@ -96,7 +96,7 @@ class DialogButtonComponent extends ButtonComponent {
       super.priority})
       : super(
           button: RectangleComponent(
-            size: Sizes().dialogButtonSize,
+            size: Sizes.dialogButtonSize,
             paint: paint,
             priority: 0,
           ),
@@ -104,7 +104,7 @@ class DialogButtonComponent extends ButtonComponent {
             TextComponent(
               priority: 1,
               text: text,
-              position: Sizes().dialogButtonSize / 2,
+              position: Sizes.dialogButtonSize / 2,
               anchor: Anchor.center,
               textRenderer:
                   TextPaint(style: const TextStyle(color: Colors.white)),
@@ -129,7 +129,7 @@ class OptionButtonComponent extends ButtonComponent {
       : super(
           priority: 20,
           button: RectangleComponent(
-              size: Sizes().buttonSize,
+              size: Sizes.buttonSize,
               paint: Paint()..color = Colors.brown,
               priority: 0),
           onPressed: func,
@@ -138,7 +138,7 @@ class OptionButtonComponent extends ButtonComponent {
             TextComponent(
               priority: 1,
               text: text,
-              position: Sizes().buttonSize / 2,
+              position: Sizes.buttonSize / 2,
               anchor: Anchor.center,
               textRenderer:
                   TextPaint(style: const TextStyle(color: Colors.white)),

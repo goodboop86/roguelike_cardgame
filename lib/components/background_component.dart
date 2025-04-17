@@ -16,6 +16,6 @@ class GradientBackground extends PositionComponent
   void render(Canvas canvas) {
     Paint paint = Paint()..shader = shader;
     canvas.drawRect(
-        Rect.fromLTWH(0, 0, Sizes().gameWidth, Sizes().gameHeight), paint);
+        Rect.fromLTWH(0, 0, Sizes.gameWidth, Sizes.gameHeight), paint);
   }
 }

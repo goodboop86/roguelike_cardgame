@@ -19,7 +19,8 @@ class OverlayComponent extends RectangleComponent with TapCallbacks {
     super.paint,
     super.paintLayers,
     super.key,
-  });
+  }) {
+  }
   @override
   void onTapDown(TapDownEvent event) {
     print("blocked!!!!");
@@ -27,7 +28,7 @@ class OverlayComponent extends RectangleComponent with TapCallbacks {
 }
 
 RectangleComponent darkenOverlay = OverlayComponent()
-  ..size = Sizes().gameSize
+  ..size = Sizes.gameSize
   ..anchor = Anchor.center
   ..paint.color = Colors.black.withValues(alpha: 0.5)
   ..priority = 1000;
@@ -40,10 +41,10 @@ TextComponent transitionText = TextComponent(
 );
 
 GradientBackground topGradient = GradientBackground(
-    position: Sizes().gameTopLeft,
+    position: Sizes.gameTopLeft,
     shader: Gradient.linear(
-      Offset(Sizes().gameWidth / 2, 0),
-      Offset(Sizes().gameWidth / 2, Sizes().blockLength),
+      Offset(Sizes.gameWidth / 2, 0),
+      Offset(Sizes.gameWidth / 2, Sizes.blockLength),
       [
         Colors.black,
         Colors.transparent,
@@ -51,10 +52,10 @@ GradientBackground topGradient = GradientBackground(
     ));
 
 GradientBackground bottomGradient = GradientBackground(
-  position: Sizes().bottomGradientPosition,
+  position: Sizes.bottomGradientPosition,
   shader: Gradient.linear(
-    Offset(Sizes().gameWidth / 2, 0),
-    Offset(Sizes().gameWidth / 2, Sizes().blockLength),
+    Offset(Sizes.gameWidth / 2, 0),
+    Offset(Sizes.gameWidth / 2, Sizes.blockLength),
     [
       Colors.transparent,
       Colors.black,

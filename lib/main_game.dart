@@ -24,7 +24,7 @@ class MainGame extends FlameGame
   MainGame()
       : super(
             camera: CameraComponent.withFixedResolution(
-                width: Sizes().gameWidth, height: Sizes().gameHeight));
+                width: Sizes.gameWidth, height: Sizes.gameHeight));
 
   Logger log = Logger('MainGame');
   @override
@@ -63,17 +63,17 @@ class MainGame extends FlameGame
     await AssetSource().storeSpriteComponent(
         path: 'background.png',
         key: ComponentKey.named("Background"),
-        size: Sizes().backgroundSize);
+        size: Sizes.backgroundSize);
 
     await AssetSource().storeSprite(
         path: 'home.png',
         key: ComponentKey.named("home"),
-        size: Sizes().blockSize);
+        size: Sizes.blockSize);
 
     await AssetSource().storeSprite(
         path: 'question.png',
         key: ComponentKey.named("question"),
-        size: Sizes().blockSize);
+        size: Sizes.blockSize);
 
     // parallax
     ParallaxComponent parallax = await loadParallaxComponent(
@@ -88,8 +88,8 @@ class MainGame extends FlameGame
         'parallax/10.png'
       ].map((path) => ParallaxImageData(path)).toList(),
       baseVelocity: Vector2(1, 0),
-      size: Sizes().gameSize,
-      position: Sizes().gameTopLeft,
+      size: Sizes.gameSize,
+      position: Sizes.gameTopLeft,
       velocityMultiplierDelta: Vector2(1.8, 1.0),
     );
 

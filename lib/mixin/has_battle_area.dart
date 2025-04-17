@@ -22,27 +22,27 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   void addCards(List<Card_> cards) {
     // カードエリアを作成
     final cardArea = CardAreaComponent(
-      position: Sizes().cardAreaPosition,
-      size: Sizes().cardAreaSize, // カードエリアのサイズ
+      position: Sizes.cardAreaPosition,
+      size: Sizes.cardAreaSize, // カードエリアのサイズ
     );
     add(cardArea);
 
     // カードコンポーネントを作成し、カードエリアの中心に集める
-    final cardAreaCenterX = Sizes().cardAreaWidth / 2;
-    final cardAreaCenterY = Sizes().cardAreaHeight / 2;
+    final cardAreaCenterX = Sizes.cardAreaWidth / 2;
+    final cardAreaCenterY = Sizes.cardAreaHeight / 2;
     const colSize = 3; // 横方向のコンポーネントの数
     cards.asMap().forEach((index, card) {
       final row = index ~/ colSize;
       final col = index % colSize;
       final cardComponent = CardComponent(card: card)
-        ..size = Sizes().cardSize
+        ..size = Sizes.cardSize
         ..anchor = Anchor.center
         ..position = Vector2(
           cardAreaCenterX +
-              (col - 1) * (Sizes().cardWidth + Sizes().cardMargin), // X 座標を調整
+              (col - 1) * (Sizes.cardWidth + Sizes.cardMargin), // X 座標を調整
           cardAreaCenterY +
               (row - 0.5) *
-                  (Sizes().cardHeight + Sizes().cardMargin), // Y 座標を調整
+                  (Sizes.cardHeight + Sizes.cardMargin), // Y 座標を調整
         ); // カードエリアの中心を基準に位置を計算
       cardArea.add(cardComponent);
     });
@@ -64,7 +64,7 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
               onComplete: () => {
                     darkenOverlay.add(transitionText
                       ..text = message
-                      ..position = Sizes().gameSize / 2)
+                      ..position = Sizes.gameSize / 2)
                   }),
           // 待機
           OpacityEffect.to(0.6, EffectController(duration: 0.5),
@@ -108,8 +108,8 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   void addBattleButtons() {
     // カードエリアを作成
     final buttonArea = ButtonAreaComponent(
-      position: Sizes().buttonAreaPosition,
-      size: Sizes().buttonAreaSize, // カードエリアのサイズ
+      position: Sizes.buttonAreaPosition,
+      size: Sizes.buttonAreaSize, // カードエリアのサイズ
     );
     add(buttonArea);
 
@@ -136,13 +136,13 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
       },
     ];
 
-    final buttonAreaCenterX = Sizes().buttonAreaWidth / 2;
-    final buttonAreaCenterY = Sizes().buttonAreaHeight / 2;
+    final buttonAreaCenterX = Sizes.buttonAreaWidth / 2;
+    final buttonAreaCenterY = Sizes.buttonAreaHeight / 2;
     buttonOnPressedFunctions.asMap().forEach((index, function) {
       final button = OptionButtonComponent(text: '$index', func: function)
         ..position = Vector2(
           buttonAreaCenterX +
-              (index - 1.5) * (Sizes().buttonWidth + Sizes().margin), // X 座標を調整
+              (index - 1.5) * (Sizes.buttonWidth + Sizes.margin), // X 座標を調整
           buttonAreaCenterY, // Y 座標を調整
         )
         ..anchor = Anchor.center;

@@ -19,9 +19,9 @@ mixin HasCommonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   Future<void> addBackgrounds() async {
     add(AssetSource().getParallax(name: "default")!);
 
-    log.info("---> ${Sizes().gameEndY}");
+    log.info("---> ${Sizes.gameEndY}");
     add(AssetSource().getSpriteComponent(name: "background.png")!
-      ..position = Sizes().backgroundPosition
+      ..position = Sizes.backgroundPosition
       ..priority = 0);
     addAll([topGradient, bottomGradient]);
   }
@@ -33,8 +33,8 @@ mixin HasCommonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
 
     final characterArea = CharacterAreaComponent(
       key: ComponentKey.named('BattleCharacterArea'),
-      position: Sizes().characterAreaPosition,
-      size: Sizes().characterAreaSize, // カードエリアのサイズ
+      position: Sizes.characterAreaPosition,
+      size: Sizes.characterAreaSize, // カードエリアのサイズ
     );
     add(characterArea);
 
@@ -44,8 +44,8 @@ mixin HasCommonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
       // Player の配置 (左上)
       PlayerComponent player =
           PlayerComponent(key: ComponentKey.named('Player'), path: 'player.png')
-            ..size = Sizes().playerAreaSize
-            ..position = Sizes().playerAreaPosition;
+            ..size = Sizes.playerAreaSize
+            ..position = Sizes.playerAreaPosition;
 
       characterArea.add(player);
     }
@@ -56,34 +56,34 @@ mixin HasCommonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
       // Player の配置 (左上)
       EnemyComponent enemy =
           EnemyComponent(key: ComponentKey.named('Enemy'), path: 'dragon.png')
-            ..size = Sizes().enemyAreaSize
-            ..position = Sizes().enemyAreaPosition;
+            ..size = Sizes.enemyAreaSize
+            ..position = Sizes.enemyAreaPosition;
       characterArea.add(enemy);
     }
   }
 
   void addUi() {
     final uiArea = UiAreaComponent(
-      position: Sizes().uiAreaPosition,
-      size: Sizes().uiAreaSize, // カードエリアのサイズ
+      position: Sizes.uiAreaPosition,
+      size: Sizes.uiAreaSize, // カードエリアのサイズ
     );
     add(uiArea);
 
     UIButtonComponent homeButton =
         UIButtonComponent(button: AssetSource().getSprite(name: "home.png"))
-          ..size = Sizes().blockSize
+          ..size = Sizes.blockSize
           ..onPressed = () {
             game.router.pushNamed(ROUTE.home.name);
           };
     UIButtonComponent questionButton =
         UIButtonComponent(button: AssetSource().getSprite(name: "question.png"))
-          ..size = Sizes().blockSize
+          ..size = Sizes.blockSize
           ..onPressed = () {};
 
     uiArea.addAll([
       homeButton,
       questionButton
-        ..position = Vector2(Sizes().uiAreaWidth - Sizes().blockLength, 0)
+        ..position = Vector2(Sizes.uiAreaWidth - Sizes.blockLength, 0)
     ]);
   }
 

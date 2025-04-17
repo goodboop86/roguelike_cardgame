@@ -16,7 +16,7 @@ class PlayerComponent extends PositionComponent
           AssetSource().getAnimation(name: path)!
             ..anchor = Anchor.bottomCenter
             ..position =
-                Vector2(Sizes().playerAreaWidth / 2, Sizes().playerAreaHeight),
+                Vector2(Sizes.playerAreaWidth / 2, Sizes.playerAreaHeight),
           PlayerHpBar()
         ]);
 

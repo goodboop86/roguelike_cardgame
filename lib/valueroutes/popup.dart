@@ -25,7 +25,7 @@ class StringRoute extends ValueRoute<String> with HasGameReference<MainGame> {
       children: [
         ButtonComponent(
           button: RectangleComponent(
-              size: Sizes().buttonSize,
+              size: Sizes.buttonSize,
               paint: Paint()..color = Colors.brown,
               priority: 0),
           onPressed: () {
@@ -37,7 +37,7 @@ class StringRoute extends ValueRoute<String> with HasGameReference<MainGame> {
             TextComponent(
               priority: 1,
               text: 'hello',
-              position: Sizes().buttonSize / 2,
+              position: Sizes.buttonSize / 2,
               anchor: Anchor.center,
               textRenderer:
                   TextPaint(style: const TextStyle(color: Colors.white)),
@@ -61,7 +61,7 @@ class IntRoute extends ValueRoute<int> with HasGameReference<MainGame> {
       children: [
         ButtonComponent(
           button: RectangleComponent(
-              size: Sizes().buttonSize,
+              size: Sizes.buttonSize,
               paint: Paint()..color = Colors.brown,
               priority: 0),
           onPressed: () {
@@ -73,7 +73,7 @@ class IntRoute extends ValueRoute<int> with HasGameReference<MainGame> {
             TextComponent(
               priority: 1,
               text: 'hello',
-              position: Sizes().buttonSize / 2,
+              position: Sizes.buttonSize / 2,
               anchor: Anchor.center,
               textRenderer:
                   TextPaint(style: const TextStyle(color: Colors.white)),
@@ -103,11 +103,11 @@ class MyDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
         children: [
           DialogBackground(
             position: game.canvasSize / 2,
-            size: Sizes().cardSize * 2,
+            size: Sizes.cardSize * 2,
             anchor: Anchor.center,
             children: [
               BasicButtonComponent(
-                  position: Sizes().cardSize,
+                  position: Sizes.cardSize,
                   anchor: Anchor.center,
                   text: 'hello?',
                   func: () {
@@ -133,12 +133,12 @@ class MyBoolDialogRoute extends ValueRoute<bool>
         children: [
           DialogBackground(
             position: game.canvasSize / 2,
-            size: Sizes().dialogSize,
+            size: Sizes.dialogSize,
             anchor: Anchor.center,
             children: [
               DialogButtonComponent(
                   position: Vector2(
-                      0, Sizes().dialogHeight - Sizes().dialogButtonHeight),
+                      0, Sizes.dialogHeight - Sizes.dialogButtonHeight),
                   anchor: Anchor.topLeft,
                   text: 'Yes',
                   func: () {
@@ -149,8 +149,8 @@ class MyBoolDialogRoute extends ValueRoute<bool>
                   paint: Paint()..color = Colors.yellow.withValues(alpha: 0.6)),
               DialogButtonComponent(
                   position: Vector2(
-                      Sizes().dialogWidth - Sizes().dialogButtonWidth,
-                      Sizes().dialogHeight - Sizes().dialogButtonHeight),
+                      Sizes.dialogWidth - Sizes.dialogButtonWidth,
+                      Sizes.dialogHeight - Sizes.dialogButtonHeight),
                   anchor: Anchor.topLeft,
                   text: 'No',
                   func: () {
