@@ -90,7 +90,7 @@ class IntRoute extends ValueRoute<int> with HasGameReference<MainGame> {
 class DialogBackground extends RectangleComponent with TapCallbacks {
   DialogBackground({super.position, super.size, super.children, super.anchor})
       : super(
-          paint: Paint()..color = const Color(0xee858585),
+          paint: Paint()..color = Colors.black.withValues(alpha: 0.8),
         );
 }
 
@@ -135,18 +135,27 @@ class MyBoolDialogRoute extends ValueRoute<bool>
         children: [
           DialogBackground(
             position: game.canvasSize / 2,
-            size: Sizes().cardSize * 2,
+            size: Sizes().dialogSize,
             anchor: Anchor.center,
             children: [
-              BasicButtonComponent(
-                  position: Sizes().cardSize,
-                  anchor: Anchor.center,
-                  text: 'hello?',
+              DialogButtonComponent(
+                  position: Vector2(0, Sizes().dialogHeight-Sizes().dialogButtonHeight),
+                  anchor: Anchor.topLeft,
+                  text: 'No',
+                  func: () {
+                    completeWith(
+                      false, // return value
+                    );
+                  }, paint: Paint()..color=Colors.grey.withValues(alpha: 0.6)),
+              DialogButtonComponent(
+                  position: Vector2(Sizes().dialogWidth-Sizes().dialogButtonWidth, Sizes().dialogHeight-Sizes().dialogButtonHeight),
+                  anchor: Anchor.topLeft,
+                  text: 'Yes',
                   func: () {
                     completeWith(
                       true, // return value
                     );
-                  })
+                  }, paint: Paint()..color=Colors.yellow.withValues(alpha: 0.6))
             ],
           )
         ]);

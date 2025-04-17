@@ -180,6 +180,22 @@ class Sizes {
 
   Vector2 get mapSize => Vector2(mapWidth, mapHeight);
 
+  // Dialog
+
+  double get dialogWidth => 8 * blockSize;
+
+  double get dialogHeight => 12 * blockSize;
+
+  Vector2 get dialogSize => Vector2(dialogWidth, dialogHeight);
+
+  // DialogButton
+
+  double get dialogButtonWidth => 4 * blockSize;
+
+  double get dialogButtonHeight => 1.5 * blockSize;
+
+  Vector2 get dialogButtonSize => Vector2(dialogButtonWidth, dialogButtonHeight);
+
   // margin
   double get margin => 20.0;
 
