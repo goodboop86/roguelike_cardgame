@@ -30,6 +30,7 @@ class PersonEventWorld extends World
       BattleRouteState state = ref.read(battleRouteProvider);
       PlayerState playerState = ref.read(playerProvider);
       EnemyState enemyState = ref.read(enemyProvider);
+
       log.config(state.toJsonString());
 
       Component? background = game.findByKey(ComponentKey.named("Background"));
@@ -39,22 +40,25 @@ class PersonEventWorld extends World
       }
 
       if (background != null) {
-
         var characterArea = children.whereType<CharacterAreaComponent>();
         if (characterArea.isEmpty &
-        (playerState != null) &
-        (enemyState != null)) {
+            (playerState != null) &
+            (enemyState != null)) {
           log.fine("addCharacters");
           await addCharacters(
               loadParallaxComponent: game.loadParallaxComponent, ref: ref);
 
           final value = await game.router.pushAndWait(MyDialogRoute());
           print(value);
+        }
 
-      }
+        var uiArea = children.whereType<UiAreaComponent>();
+        if (uiArea.isEmpty & background!.isMounted) {
+          log.fine("addUI");
+          addUi();
+        }
 
         // final value = await game.router.pushAndWait(ValueRouteFactory.create("int"));
-
       }
     });
 

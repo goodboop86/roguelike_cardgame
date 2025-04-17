@@ -26,7 +26,7 @@ import '../providers/enemy_provider.dart';
 import '../providers/sizes.dart';
 import '../spritesheet/spritesheet.dart';
 
-mixin WorldMixin on Component, HasGameRef<MainGame> {
+mixin WorldMixin on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   Logger log = Logger('WorldMixin');
 
   Future<void> addBackgrounds() async {
@@ -123,44 +123,22 @@ mixin WorldMixin on Component, HasGameRef<MainGame> {
     });
   }
 
+  void addUi() {
+
+    final uiArea = UiAreaComponent(
+      position: Sizes().uiAreaPosition,
+      size: Sizes().uiAreaSize, // カードエリアのサイズ
+    );
+    add(uiArea);
+
+    BasicButtonComponent homeButton = BasicButtonComponent(text: 'home');
+    BasicButtonComponent hintButton = BasicButtonComponent(text: 'hint');
+
+    uiArea.addAll([homeButton, hintButton..position=Vector2(Sizes().uiAreaWidth - Sizes().buttonWidth, 0)]);
+  }
+
   void addMapCards(List<List<Event>> stageList, int currentStage,
       RouterComponent router, ComponentRef ref) {
-    // カードコンポーネントを作成し、カードエリアの中心に集める
-    // final cardAreaCenterX = Sizes().mapCardAreaWidth / 2;
-    // final cardAreaCenterY = Sizes().mapCardAreaHeight / 2;
-    // events.asMap().forEach((index, event) {
-    //   final row = index ~/ 3;
-    //   final col = index % 3;
-    //
-    //   final button = ButtonComponent(
-    //     button: RectangleComponent(
-    //         size: Sizes().mapCardSize,
-    //         paint: Paint()..color = Colors.green,
-    //         priority: 0),
-    //     onReleased: () {
-    //       game.router.pushNamed(event.name);
-    //     },
-    //     children: [
-    //       TextComponent(
-    //         priority: 1,
-    //         text: event.name,
-    //         anchor: Anchor.center,
-    //         position: Sizes().mapCardSize / 2,
-    //         textRenderer:
-    //             TextPaint(style: const TextStyle(color: Colors.white)),
-    //       ),
-    //     ],
-    //   )
-    //     ..anchor = Anchor.center
-    //     ..position = Vector2(
-    //       cardAreaCenterX +
-    //           col * (Sizes().mapCardWidth + Sizes().mapCardMargin) -
-    //           (Sizes().mapCardWidth + Sizes().mapCardMargin), // X 座標を調整
-    //       cardAreaCenterY +
-    //           (Sizes().blockSize + Sizes().mapCardMargin) / 2, // Y 座標を調整
-    //     );
-    //   mapCardArea.add(button);
-    // });
 
     List<Event> events = stageList[currentStage];
 

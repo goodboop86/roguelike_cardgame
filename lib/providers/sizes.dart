@@ -103,7 +103,7 @@ class Sizes {
   Vector2 get buttonAreaPosition => Vector2(buttonAreaX, buttonAreaY);
 
   // Button
-  double get buttonWidth => 2 * blockSize;
+  double get buttonWidth => blockSize;
 
   double get buttonHeight => blockSize;
 
@@ -199,13 +199,13 @@ class Sizes {
   // UIArea
   double get uiAreaWidth => gameWidth - 1 * blockSize;
 
-  double get uiAreaHeight => 3 * blockSize;
+  double get uiAreaHeight => 1 * blockSize;
 
   Vector2 get uiAreaSize => Vector2(uiAreaWidth, uiAreaHeight);
 
   double get uiAreaX => gameOriginX + 0.5 * blockSize;
 
-  double get uiAreaY => gameOriginY + 20 * blockSize;
+  double get uiAreaY => gameOriginY + 25 * blockSize;
 
   Vector2 get uiAreaPosition => Vector2(uiAreaX, uiAreaY);
 

@@ -158,3 +158,10 @@ class MapAreaComponent extends PositionComponent {
 
 // カードエリアの描画やその他の処理
 }
+
+class UiAreaComponent extends PositionComponent {
+  UiAreaComponent({required Vector2 position, required Vector2 size})
+      : super(position: position, size: size);
+
+// カードエリアの描画やその他の処理
+}
