@@ -196,6 +196,19 @@ class Sizes {
 
   Vector2 get dialogButtonSize => Vector2(dialogButtonWidth, dialogButtonHeight);
 
+  // UIArea
+  double get uiAreaWidth => gameWidth - 1 * blockSize;
+
+  double get uiAreaHeight => 3 * blockSize;
+
+  Vector2 get uiAreaSize => Vector2(uiAreaWidth, uiAreaHeight);
+
+  double get uiAreaX => gameOriginX + 0.5 * blockSize;
+
+  double get uiAreaY => gameOriginY + 20 * blockSize;
+
+  Vector2 get uiAreaPosition => Vector2(uiAreaX, uiAreaY);
+
   // margin
   double get margin => 20.0;
 
