@@ -52,6 +52,29 @@ class BasicButtonComponent extends ButtonComponent {
   }
 }
 
+class UIButtonComponent extends SpriteButtonComponent {
+  UIButtonComponent(
+      {
+        super.button,
+        super.buttonDown,
+        super.onPressed,
+        super.position,
+        super.size,
+        super.scale,
+        super.angle,
+        super.anchor,
+        super.children,
+        super.priority,})
+      : super();
+
+  @override
+  Future<void> onLoad() async {
+    // 必要であれば、ボタン固有のアセットロードや初期化処理をここで行う
+    // 例: ボタンの画像スプライトをロードするなど
+    await super.onLoad();
+  }
+}
+
 class DialogButtonComponent extends ButtonComponent {
   final String text;
   final VoidCallback? func;

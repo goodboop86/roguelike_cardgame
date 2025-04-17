@@ -12,7 +12,8 @@ class AssetSource {
   Logger log = Logger('SpriteSource');
   final Map<String, SpriteAnimationGroupComponent> _animationCache = {};
   final Map<String, ParallaxComponent> _parallaxCache = {};
-  final Map<String, SpriteComponent> _spriteCache = {};
+  final Map<String, SpriteComponent> _spriteComponentCache = {};
+  final Map<String, Sprite> _spriteCache = {};
 
   Future<void> storeAnimation(
       {required String path,
@@ -39,11 +40,11 @@ class AssetSource {
     }
   }
 
-  Future<void> storeSprite(
+  Future<void> storeSpriteComponent(
       {required Vector2 size,
       required String path,
       required ComponentKey key}) async {
-    if (!_spriteCache.containsKey(path)) {
+    if (!_spriteComponentCache.containsKey(path)) {
       SpriteComponent sprite = SpriteComponent(
         size: size,
         sprite: await Sprite.load(path),
@@ -51,6 +52,17 @@ class AssetSource {
         priority: 10,
         anchor: Anchor.center,
       );
+      _spriteComponentCache[path] = sprite;
+      log.fine("store sprite: $path");
+    }
+  }
+
+  Future<void> storeSprite(
+      {required Vector2 size,
+      required String path,
+      required ComponentKey key}) async {
+    if (!_spriteCache.containsKey(path)) {
+      Sprite sprite = await Sprite.load(path);
       _spriteCache[path] = sprite;
       log.fine("store sprite: $path");
     }
@@ -74,7 +86,16 @@ class AssetSource {
     }
   }
 
-  SpriteComponent? getSprite({required String name}) {
+  SpriteComponent? getSpriteComponent({required String name}) {
+    if (_spriteComponentCache.containsKey(name)) {
+      return _spriteComponentCache[name];
+    } else {
+      log.warning('not found: $name');
+      return null;
+    }
+  }
+
+  Sprite? getSprite({required String name}) {
     if (_spriteCache.containsKey(name)) {
       return _spriteCache[name];
     } else {
@@ -82,6 +103,7 @@ class AssetSource {
       return null;
     }
   }
+
 
   ParallaxComponent? getParallax({required String name}) {
     if (_parallaxCache.containsKey(name)) {

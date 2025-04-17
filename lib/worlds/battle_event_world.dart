@@ -81,12 +81,6 @@ class BattleEventWorld extends World
         }
       }
 
-      // DeckStateNotifier deckNotifier = ref.read(deckProvider.notifier);
-      // if((deckNotifier != null ) & !deckInitialized) {
-      //   deckNotifier.startTurn();
-      //   deckInitialized = true;
-      //   log.info("deckNotifier started.");
-      // }
     });
 
     addToGameWidgetBuild(() async {

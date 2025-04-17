@@ -33,7 +33,7 @@ mixin WorldMixin on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     add(AssetSource().getParallax(name: "default")!);
 
     log.info("---> ${Sizes().gameEndY}");
-    add(AssetSource().getSprite(name: "background.png")!
+    add(AssetSource().getSpriteComponent(name: "background.png")!
       ..position = Sizes().backgroundPosition
       ..priority = 0);
     addAll([topGradient, bottomGradient]);
@@ -124,22 +124,30 @@ mixin WorldMixin on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   }
 
   void addUi() {
-
     final uiArea = UiAreaComponent(
       position: Sizes().uiAreaPosition,
       size: Sizes().uiAreaSize, // カードエリアのサイズ
     );
     add(uiArea);
 
-    BasicButtonComponent homeButton = BasicButtonComponent(text: 'home');
-    BasicButtonComponent hintButton = BasicButtonComponent(text: 'hint');
+    UIButtonComponent homeButton =
+        UIButtonComponent(button: AssetSource().getSprite(name: "home.png"))
+          ..size = Sizes().blockSize
+          ..onPressed = ()=>{game.router.pushNamed(ROUTE.home.name)};
+    UIButtonComponent questionButton =
+        UIButtonComponent(button: AssetSource().getSprite(name: "question.png"))
+          ..size = Sizes().blockSize
+          ..onPressed = () {};
 
-    uiArea.addAll([homeButton, hintButton..position=Vector2(Sizes().uiAreaWidth - Sizes().buttonWidth, 0)]);
+    uiArea.addAll([
+      homeButton,
+      questionButton
+        ..position = Vector2(Sizes().uiAreaWidth - Sizes().blockLength, 0)
+    ]);
   }
 
   void addMapCards(List<List<Event>> stageList, int currentStage,
       RouterComponent router, ComponentRef ref) {
-
     List<Event> events = stageList[currentStage];
 
     // カードエリアを作成
@@ -191,7 +199,7 @@ mixin WorldMixin on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
           mapCardArea.pupUp();
         })
       ..position = Vector2((mapCardAreaWidth - Sizes().wideButtonWidth) / 2,
-          6 * Sizes().blockSize)
+          6 * Sizes().blockLength)
       ..isDisabled = true;
 
     mapCardArea.add(executeButton);
@@ -219,7 +227,7 @@ mixin WorldMixin on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
           defaultSelectedSkin: selected,
           key: key,
           value: event)
-        ..position = Vector2(mapCardWidth_ * index, Sizes().blockSize);
+        ..position = Vector2(mapCardWidth_ * index, Sizes().blockLength);
 
       mapCardArea.add(button
         ..onSelectedChanged = (bool val) {

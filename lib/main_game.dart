@@ -62,10 +62,20 @@ class MainGame extends FlameGame
         flip: true);
 
     // sprite
-    await AssetSource().storeSprite(
+    await AssetSource().storeSpriteComponent(
         path: 'background.png',
         key: ComponentKey.named("Background"),
         size: Sizes().backgroundSize);
+
+    await AssetSource().storeSprite(
+        path: 'home.png',
+        key: ComponentKey.named("home"),
+        size: Sizes().blockSize);
+
+    await AssetSource().storeSprite(
+        path: 'question.png',
+        key: ComponentKey.named("question"),
+        size: Sizes().blockSize);
 
     // parallax
     ParallaxComponent parallax = await loadParallaxComponent(
