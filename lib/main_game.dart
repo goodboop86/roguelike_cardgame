@@ -43,7 +43,6 @@ class MainGame extends FlameGame
     log.info(camera.viewport.virtualSize);
     log.info(camera.viewport.size);
 
-
     // animation
     await AssetSource().storeAnimation(
       path: 'player.png',

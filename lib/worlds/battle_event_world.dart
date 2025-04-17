@@ -4,7 +4,8 @@ import 'package:flame/parallax.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
-import 'package:roguelike_cardgame/mixin/world_mixin.dart';
+import 'package:roguelike_cardgame/mixin/has_common_area.dart';
+import 'package:roguelike_cardgame/mixin/has_battle_area.dart';
 import 'package:roguelike_cardgame/models/enemy_state.dart';
 import 'package:roguelike_cardgame/models/player_state.dart';
 import 'package:roguelike_cardgame/providers/deck_provider.dart';
@@ -19,10 +20,13 @@ import '../components/card_area_component.dart';
 import '../models/card_effect.dart';
 import '../models/enum.dart';
 import '../providers/battle_route_provider.dart';
-import '../spritesheet/spritesheet.dart';
 
 class BattleEventWorld extends World
-    with HasGameRef<MainGame>, RiverpodComponentMixin, WorldMixin {
+    with
+        HasGameRef<MainGame>,
+        RiverpodComponentMixin,
+        HasBattleArea,
+        HasCommonArea {
   Logger log = Logger('BattleEventWorld');
 
   late SpriteAnimationGroupComponent? playerComponent;
@@ -72,7 +76,7 @@ class BattleEventWorld extends World
 
         if (buttonArea.isEmpty & background!.isMounted) {
           log.fine("addButtons");
-          _addButtons();
+          _addBattleButtons();
         }
 
         if (uiArea.isEmpty & background!.isMounted) {
@@ -80,7 +84,6 @@ class BattleEventWorld extends World
           addUi();
         }
       }
-
     });
 
     addToGameWidgetBuild(() async {
@@ -124,7 +127,7 @@ class BattleEventWorld extends World
     );
   }
 
-  void _addButtons() {
+  void _addBattleButtons() {
     // カードエリアを作成
     final buttonArea = ButtonAreaComponent(
       position: Sizes().buttonAreaPosition,

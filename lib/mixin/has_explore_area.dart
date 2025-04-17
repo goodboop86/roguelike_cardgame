@@ -1,79 +1,18 @@
 import 'package:flame/components.dart';
-import 'package:flame/effects.dart';
-import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
-import 'package:flame/parallax.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
-import 'package:roguelike_cardgame/models/enemy_state.dart';
-import 'package:roguelike_cardgame/models/player_state.dart';
-import 'package:roguelike_cardgame/providers/deck_provider.dart';
-import 'package:roguelike_cardgame/providers/player_provider.dart';
-
-import '../components/BackgroundComponent.dart';
-import '../components/basic_component.dart';
 import '../components/button_component.dart';
 import '../components/card_area_component.dart';
-import '../components/card_component.dart';
-import '../components/enemy_component.dart';
-import '../components/player_component.dart';
-import '../models/card.dart';
 import '../models/enum.dart';
-import '../providers/enemy_provider.dart';
 import '../providers/sizes.dart';
-import '../spritesheet/spritesheet.dart';
 
-mixin WorldMixin on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
-  Logger log = Logger('WorldMixin');
-
-  Future<void> addBackgrounds() async {
-    add(AssetSource().getParallax(name: "default")!);
-
-    log.info("---> ${Sizes().gameEndY}");
-    add(AssetSource().getSpriteComponent(name: "background.png")!
-      ..position = Sizes().backgroundPosition
-      ..priority = 0);
-    addAll([topGradient, bottomGradient]);
-  }
-
-  Future<void> addCharacters(
-      {required Function loadParallaxComponent,
-      required ComponentRef ref}) async {
-    // add(SpriteSource().getParallax(name: "default")!);
-
-    final characterArea = CharacterAreaComponent(
-      key: ComponentKey.named('BattleCharacterArea'),
-      position: Sizes().characterAreaPosition,
-      size: Sizes().characterAreaSize, // カードエリアのサイズ
-    );
-    add(characterArea);
-
-    bool playerExists =
-        characterArea.children.any((component) => component is PlayerComponent);
-    if (!playerExists) {
-      // Player の配置 (左上)
-      PlayerComponent player =
-          PlayerComponent(key: ComponentKey.named('Player'), path: 'player.png')
-            ..size = Sizes().playerAreaSize
-            ..position = Sizes().playerAreaPosition;
-
-      characterArea.add(player);
-    }
-
-    bool enemyExists =
-        characterArea.children.any((component) => component is EnemyComponent);
-    if (!enemyExists) {
-      // Player の配置 (左上)
-      EnemyComponent enemy =
-          EnemyComponent(key: ComponentKey.named('Enemy'), path: 'dragon.png')
-            ..size = Sizes().enemyAreaSize
-            ..position = Sizes().enemyAreaPosition;
-      characterArea.add(enemy);
-    }
-  }
+mixin HasExploreArea
+    on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
+  Logger log = Logger('HasBattleArea');
 
   void addMap(List<List<Event>> stageList, int currentStage) {
     final mapArea = MapAreaComponent(
@@ -121,29 +60,6 @@ mixin WorldMixin on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
         mapArea.add(button);
       });
     });
-  }
-
-  void addUi() {
-    final uiArea = UiAreaComponent(
-      position: Sizes().uiAreaPosition,
-      size: Sizes().uiAreaSize, // カードエリアのサイズ
-    );
-    add(uiArea);
-
-    UIButtonComponent homeButton =
-        UIButtonComponent(button: AssetSource().getSprite(name: "home.png"))
-          ..size = Sizes().blockSize
-          ..onPressed = ()=>{game.router.pushNamed(ROUTE.home.name)};
-    UIButtonComponent questionButton =
-        UIButtonComponent(button: AssetSource().getSprite(name: "question.png"))
-          ..size = Sizes().blockSize
-          ..onPressed = () {};
-
-    uiArea.addAll([
-      homeButton,
-      questionButton
-        ..position = Vector2(Sizes().uiAreaWidth - Sizes().blockLength, 0)
-    ]);
   }
 
   void addMapCards(List<List<Event>> stageList, int currentStage,
@@ -241,69 +157,6 @@ mixin WorldMixin on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     });
 
     // toggleButton.isSelected = true;
-  }
-
-  void addCards(List<Card_> cards) {
-    // カードエリアを作成
-    final cardArea = CardAreaComponent(
-      position: Sizes().cardAreaPosition,
-      size: Sizes().cardAreaSize, // カードエリアのサイズ
-    );
-    add(cardArea);
-
-    // カードコンポーネントを作成し、カードエリアの中心に集める
-    final cardAreaCenterX = Sizes().cardAreaWidth / 2;
-    final cardAreaCenterY = Sizes().cardAreaHeight / 2;
-    const colSize = 3; // 横方向のコンポーネントの数
-    cards.asMap().forEach((index, card) {
-      final row = index ~/ colSize;
-      final col = index % colSize;
-      final cardComponent = CardComponent(card: card)
-        ..size = Sizes().cardSize
-        ..anchor = Anchor.center
-        ..position = Vector2(
-          cardAreaCenterX +
-              (col - 1) * (Sizes().cardWidth + Sizes().cardMargin), // X 座標を調整
-          cardAreaCenterY +
-              (row - 0.5) *
-                  (Sizes().cardHeight + Sizes().cardMargin), // Y 座標を調整
-        ); // カードエリアの中心を基準に位置を計算
-      cardArea.add(cardComponent);
-    });
-  }
-
-  Future<void> startTransition(
-      {required String message, required Function next}) async {
-    log.info("startTransition.");
-
-    add(darkenOverlay);
-
-    // SequenceEffect を使用して、複数のエフェクトを順番に実行
-    await darkenOverlay.add(
-      SequenceEffect(
-        [
-          // 暗転アニメーション
-          OpacityEffect.to(
-              0.6, EffectController(startDelay: 0.2, duration: 0.5),
-              onComplete: () => {
-                    darkenOverlay.add(transitionText
-                      ..text = message
-                      ..position = Sizes().gameSize / 2)
-                  }),
-          // 待機
-          OpacityEffect.to(0.6, EffectController(duration: 0.5),
-              onComplete: () => {darkenOverlay.remove(transitionText)}),
-          // 明転アニメーション
-          OpacityEffect.to(0, EffectController(duration: 0.5)),
-        ],
-        onComplete: () {
-          next();
-          remove(darkenOverlay);
-          // 画面遷移処理
-          // ...
-        },
-      ),
-    );
   }
 
   Future<T> pushAndWait<T>(ValueRoute<T> route) async {

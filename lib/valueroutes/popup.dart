@@ -139,23 +139,28 @@ class MyBoolDialogRoute extends ValueRoute<bool>
             anchor: Anchor.center,
             children: [
               DialogButtonComponent(
-                  position: Vector2(0, Sizes().dialogHeight-Sizes().dialogButtonHeight),
+                  position: Vector2(
+                      0, Sizes().dialogHeight - Sizes().dialogButtonHeight),
                   anchor: Anchor.topLeft,
                   text: 'Yes',
                   func: () {
                     completeWith(
                       true, // return value
                     );
-                  }, paint: Paint()..color=Colors.yellow.withValues(alpha: 0.6)),
+                  },
+                  paint: Paint()..color = Colors.yellow.withValues(alpha: 0.6)),
               DialogButtonComponent(
-                  position: Vector2(Sizes().dialogWidth-Sizes().dialogButtonWidth, Sizes().dialogHeight-Sizes().dialogButtonHeight),
+                  position: Vector2(
+                      Sizes().dialogWidth - Sizes().dialogButtonWidth,
+                      Sizes().dialogHeight - Sizes().dialogButtonHeight),
                   anchor: Anchor.topLeft,
                   text: 'No',
                   func: () {
                     completeWith(
                       false, // return value
                     );
-                  }, paint: Paint()..color=Colors.grey.withValues(alpha: 0.6))
+                  },
+                  paint: Paint()..color = Colors.grey.withValues(alpha: 0.6))
             ],
           )
         ]);

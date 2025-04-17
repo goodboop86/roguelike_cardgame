@@ -6,18 +6,25 @@ import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
-import 'package:roguelike_cardgame/mixin/world_mixin.dart';
+import 'package:roguelike_cardgame/mixin/has_common_area.dart';
+import 'package:roguelike_cardgame/mixin/has_battle_area.dart';
 
 import 'dart:async';
 
 import '../components/card_area_component.dart';
+import '../mixin/has_explore_area.dart';
 import '../models/enum.dart';
 import '../providers/explore_route_provider.dart';
 import '../providers/sizes.dart';
 import '../spritesheet/spritesheet.dart';
 
 class ExploreWorld extends World
-    with HasGameRef<MainGame>, RiverpodComponentMixin, WorldMixin {
+    with
+        HasGameRef<MainGame>,
+        RiverpodComponentMixin,
+        HasBattleArea,
+        HasCommonArea,
+        HasExploreArea {
   Logger log = Logger('ExplorePage');
 
   @override

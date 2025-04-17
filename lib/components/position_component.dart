@@ -1,4 +1,3 @@
-
 import 'dart:ui';
 
 import 'package:flame/components.dart';
@@ -36,7 +35,7 @@ class RoundedRectangleOutlineBox extends PositionComponent {
       Radius.circular(borderRadius),
     );
 
-    canvas.drawRRect(rrect, fillPaint);   // まず塗りつぶし
+    canvas.drawRRect(rrect, fillPaint); // まず塗りつぶし
     canvas.drawRRect(rrect, strokePaint); // 次に輪郭線
   }
 }

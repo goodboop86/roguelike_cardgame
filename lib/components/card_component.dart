@@ -15,7 +15,7 @@ class CardComponent extends RectangleComponent
     with TapCallbacks, RiverpodComponentMixin, HasGameRef, DragCallbacks {
   CardComponent(
       {required this.card,
-        this.borderRadius = 3.0,
+      this.borderRadius = 3.0,
       this.strokeWidth = 3.0,
       this.fillColor = Colors.black,
       this.strokeColor = Colors.red}) {
@@ -175,7 +175,7 @@ class CardComponent extends RectangleComponent
       Radius.circular(borderRadius),
     );
 
-    canvas.drawRRect(rrect, fillPaint);   // まず塗りつぶし
+    canvas.drawRRect(rrect, fillPaint); // まず塗りつぶし
     canvas.drawRRect(rrect, strokePaint); // 次に輪郭線
 
     // canvas.drawRect(size.toRect(), Paint()..color = Colors.green);

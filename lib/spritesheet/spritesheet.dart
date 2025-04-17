@@ -104,7 +104,6 @@ class AssetSource {
     }
   }
 
-
   ParallaxComponent? getParallax({required String name}) {
     if (_parallaxCache.containsKey(name)) {
       return _parallaxCache[name];

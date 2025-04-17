@@ -12,7 +12,6 @@ class Sizes {
   double get blockLength => 32.0;
   Vector2 get blockSize => Vector2.all(blockLength);
 
-
   // Game
   double get gameWidth => 13 * blockLength; // 416
 
@@ -196,7 +195,8 @@ class Sizes {
 
   double get dialogButtonHeight => 1.5 * blockLength;
 
-  Vector2 get dialogButtonSize => Vector2(dialogButtonWidth, dialogButtonHeight);
+  Vector2 get dialogButtonSize =>
+      Vector2(dialogButtonWidth, dialogButtonHeight);
 
   // UIArea
   double get uiAreaWidth => gameWidth - 1 * blockLength;

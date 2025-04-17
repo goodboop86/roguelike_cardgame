@@ -53,19 +53,18 @@ class BasicButtonComponent extends ButtonComponent {
 }
 
 class UIButtonComponent extends SpriteButtonComponent {
-  UIButtonComponent(
-      {
-        super.button,
-        super.buttonDown,
-        super.onPressed,
-        super.position,
-        super.size,
-        super.scale,
-        super.angle,
-        super.anchor,
-        super.children,
-        super.priority,})
-      : super();
+  UIButtonComponent({
+    super.button,
+    super.buttonDown,
+    super.onPressed,
+    super.position,
+    super.size,
+    super.scale,
+    super.angle,
+    super.anchor,
+    super.children,
+    super.priority,
+  }) : super();
 
   @override
   Future<void> onLoad() async {
@@ -81,38 +80,38 @@ class DialogButtonComponent extends ButtonComponent {
 
   DialogButtonComponent(
       {required this.text,
-        this.func,
-        // super.button,
-        super.buttonDown,
-        // super.onPressed,
-        super.onReleased,
-        super.onCancelled,
-        super.position,
-        super.size,
-        super.scale,
-        super.angle,
-        super.anchor,
-        // super.children,
-        required paint,
-        super.priority})
+      this.func,
+      // super.button,
+      super.buttonDown,
+      // super.onPressed,
+      super.onReleased,
+      super.onCancelled,
+      super.position,
+      super.size,
+      super.scale,
+      super.angle,
+      super.anchor,
+      // super.children,
+      required paint,
+      super.priority})
       : super(
-    button: RectangleComponent(
-      size: Sizes().dialogButtonSize,
-      paint: paint,
-      priority: 0,
-    ),
-    children: [
-      TextComponent(
-        priority: 1,
-        text: text,
-        position: Sizes().dialogButtonSize / 2,
-        anchor: Anchor.center,
-        textRenderer:
-        TextPaint(style: const TextStyle(color: Colors.white)),
-      ),
-    ],
-    onPressed: func,
-  );
+          button: RectangleComponent(
+            size: Sizes().dialogButtonSize,
+            paint: paint,
+            priority: 0,
+          ),
+          children: [
+            TextComponent(
+              priority: 1,
+              text: text,
+              position: Sizes().dialogButtonSize / 2,
+              anchor: Anchor.center,
+              textRenderer:
+                  TextPaint(style: const TextStyle(color: Colors.white)),
+            ),
+          ],
+          onPressed: func,
+        );
 
   @override
   Future<void> onLoad() async {
