@@ -119,9 +119,9 @@ class MainGame extends FlameGame
     super.onLoad();
   }
 
-  Future<void> routeWithTransition(
+  Future<void> routeWithFadeOut(
       {required String message, required Event event}) async {
-    log.info("startTransition.");
+    log.info("start FadeOut.");
 
     RectangleComponent darkenOverlay = OverlayComponent()
       ..size = canvasSize
@@ -148,6 +148,38 @@ class MainGame extends FlameGame
         onComplete: () {
           router.currentRoute.remove(darkenOverlay);
           router.pushNamed(event.name);
+        },
+      ),
+    );
+  }
+
+  Future<void> fadeIn(
+      {required String message}) async {
+    log.info("start fadeIn.");
+
+    RectangleComponent darkenOverlay = OverlayComponent()
+      ..size = canvasSize
+      ..anchor = Anchor.center
+      ..position = canvasSize / 2
+      ..paint.color = Colors.black.withValues(alpha: 1.0)
+      ..priority = 1000;
+
+    router.currentRoute.add(darkenOverlay);
+    darkenOverlay.add(transitionText
+      ..text = message
+      ..position = canvasSize / 2);
+
+    // SequenceEffect を使用して、複数のエフェクトを順番に実行
+    await darkenOverlay.add(
+      SequenceEffect(
+        [
+          // 暗転アニメーション
+          OpacityEffect.to(
+            0.0,
+            EffectController(startDelay: 0.2, duration: 0.5),
+          ),
+        ],
+        onComplete: () {
         },
       ),
     );

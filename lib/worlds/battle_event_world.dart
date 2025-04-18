@@ -33,13 +33,14 @@ class BattleEventWorld extends World
 
   @override
   Future<void> onMount() async {
-    startTransition(
-      message: 'player-turn',
-      next: () async {
-        await Future.delayed(const Duration(seconds: 0));
-        refreshCards();
-      },
-    );
+    game.fadeIn(message: '');
+    // startTransition(
+    //   message: 'player-turn',
+    //   next: () async {
+    //     await Future.delayed(const Duration(seconds: 0));
+    //     refreshCards();
+    //   },
+    // );
 
     addToGameWidgetBuild(() async {
       // BattleRouteState state = ref.read(battleRouteProvider);

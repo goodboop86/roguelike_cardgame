@@ -25,6 +25,8 @@ class PersonEventWorld extends World
 
   @override
   Future<void> onMount() async {
+    game.fadeIn(message: '');
+
     addToGameWidgetBuild(() async {
       BattleRouteState state = ref.read(battleRouteProvider);
       PlayerState playerState = ref.read(playerProvider);
@@ -56,7 +58,6 @@ class PersonEventWorld extends World
           addUi();
         }
 
-        // final value = await game.router.pushAndWait(ValueRouteFactory.create("int"));
       }
     });
 

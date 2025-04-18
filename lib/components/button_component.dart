@@ -173,7 +173,7 @@ class ChoiceButtonComponent extends RectangleComponent with TapCallbacks, HasGam
     bool isYes = await game.router.pushAndWait(MyBoolDialogRoute());
 
     if(isYes){
-      game.routeWithTransition(message: '', event: value);
+      game.routeWithFadeOut(message: '', event: value);
     }
     super.onTapUp(event);
   }
