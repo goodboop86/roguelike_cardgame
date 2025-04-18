@@ -13,6 +13,7 @@ import 'dart:async';
 
 import 'package:roguelike_cardgame/providers/sizes.dart';
 import 'package:roguelike_cardgame/spritesheet/spritesheet.dart';
+import 'package:roguelike_cardgame/valueroutes/popup.dart';
 import 'package:roguelike_cardgame/worlds/battle_event_world.dart';
 import 'package:roguelike_cardgame/worlds/explore_world.dart';
 import 'package:roguelike_cardgame/worlds/home.dart';
@@ -40,6 +41,9 @@ class MainGame extends FlameGame
 
   @override
   Future<void> onLoad() async {
+    // Singleton
+    CANVAS.initialize(game.canvasSize);
+
     log.info(size);
     log.info(camera.viewport.virtualSize);
     log.info(camera.viewport.size);

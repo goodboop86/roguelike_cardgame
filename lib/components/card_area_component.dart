@@ -46,7 +46,6 @@ class MapCardAreaComponent extends PositionComponent with HasGameRef<MainGame> {
       : super();
 
   Logger log = Logger('MapCardAreaComponent');
-
 }
 
 class CharacterAreaComponent extends PositionComponent {
@@ -91,7 +90,6 @@ class UiAreaComponent extends PositionComponent {
 
 // カードエリアの描画やその他の処理
 }
-
 
 class NPCDialogAreaComponent extends PositionComponent {
   NPCDialogAreaComponent({required Vector2 position, required Vector2 size})

@@ -151,28 +151,28 @@ class OptionButtonComponent extends ButtonComponent {
         );
 }
 
-class ChoiceButtonComponent extends RectangleComponent with TapCallbacks, HasGameRef<MainGame> {
-  ChoiceButtonComponent(
-      {
-        super.position,
-        super.size,
-        super.scale,
-        super.angle,
-        super.anchor,
-        super.children,
-        super.priority,
-        super.paint,
-        super.paintLayers,
-        super.key,
-      required this.value,
-      });
+class ChoiceButtonComponent extends RectangleComponent
+    with TapCallbacks, HasGameRef<MainGame> {
+  ChoiceButtonComponent({
+    super.position,
+    super.size,
+    super.scale,
+    super.angle,
+    super.anchor,
+    super.children,
+    super.priority,
+    super.paint,
+    super.paintLayers,
+    super.key,
+    required this.value,
+  });
   Event value;
 
   @override
   Future<void> onTapUp(TapUpEvent event) async {
     bool isYes = await game.router.pushAndWait(MyBoolDialogRoute());
 
-    if(isYes){
+    if (isYes) {
       game.routeWithFadeOut(message: '', event: value);
     }
     super.onTapUp(event);

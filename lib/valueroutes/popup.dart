@@ -92,8 +92,8 @@ class DialogBackground extends RectangleComponent with TapCallbacks {
         );
 }
 
-class MyDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
-  MyDialogRoute() : super(value: -1, transparent: true);
+class NPCDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
+  NPCDialogRoute() : super(value: -1, transparent: true);
 
   @override
   Component build() {
@@ -102,12 +102,29 @@ class MyDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
         size: game.canvasSize,
         children: [
           DialogBackground(
-            position: game.canvasSize / 2,
-            size: Sizes.cardSize * 2,
-            anchor: Anchor.center,
+            position: CANVAS.sizes.npcDialogPosition,
+            // Vector2(game.canvasSize.x / 2,game.canvasSize.y /16),
+            size: CANVAS.sizes.npcDialogSize,
+            anchor: Anchor.topLeft,
             children: [
               BasicButtonComponent(
-                  position: Sizes.cardSize,
+                  position: CANVAS.sizes.npcDialogSize / 2,
+                  anchor: Anchor.center,
+                  text: 'hello?',
+                  func: () {
+                    completeWith(
+                      12345, // return value
+                    );
+                  })
+            ],
+          )..paint.color = Colors.black.withValues(alpha: 0.1),
+          DialogBackground(
+            position: CANVAS.sizes.npcPopupPosition,
+            size: CANVAS.sizes.npcPopupSize,
+            anchor: Anchor.topLeft,
+            children: [
+              BasicButtonComponent(
+                  position: CANVAS.sizes.npcPopupSize,
                   anchor: Anchor.center,
                   text: 'hello?',
                   func: () {
@@ -133,12 +150,12 @@ class MyBoolDialogRoute extends ValueRoute<bool>
         children: [
           DialogBackground(
             position: game.canvasSize / 2,
-            size: Sizes.dialogSize,
+            size: Sizes.boolDialogSize,
             anchor: Anchor.center,
             children: [
               DialogButtonComponent(
                   position: Vector2(
-                      0, Sizes.dialogHeight - Sizes.dialogButtonHeight),
+                      0, Sizes.boolDialogHeight - Sizes.dialogButtonHeight),
                   anchor: Anchor.topLeft,
                   text: 'Yes',
                   func: () {
@@ -149,8 +166,8 @@ class MyBoolDialogRoute extends ValueRoute<bool>
                   paint: Paint()..color = Colors.yellow.withValues(alpha: 0.6)),
               DialogButtonComponent(
                   position: Vector2(
-                      Sizes.dialogWidth - Sizes.dialogButtonWidth,
-                      Sizes.dialogHeight - Sizes.dialogButtonHeight),
+                      Sizes.boolDialogWidth - Sizes.dialogButtonWidth,
+                      Sizes.boolDialogHeight - Sizes.dialogButtonHeight),
                   anchor: Anchor.topLeft,
                   text: 'No',
                   func: () {

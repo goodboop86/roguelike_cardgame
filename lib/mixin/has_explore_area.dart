@@ -95,7 +95,5 @@ mixin HasExploreArea
 
       log.info("add ToggleButtonComponent");
     });
-
-    // toggleButton.isSelected = true;
   }
 }

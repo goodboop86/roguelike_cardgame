@@ -112,11 +112,6 @@ class CardComponent extends RectangleComponent
     target = null;
   }
 
-  // @override
-  // void onLongTapDown(TapDownEvent event) {
-  //   process();
-  // }
-
   void process() {
     add(SequenceEffect([
       ScaleEffect.to(
@@ -177,16 +172,6 @@ class CardComponent extends RectangleComponent
 
     canvas.drawRRect(rrect, fillPaint); // まず塗りつぶし
     canvas.drawRRect(rrect, strokePaint); // 次に輪郭線
-
-    // canvas.drawRect(size.toRect(), Paint()..color = Colors.green);
-    // TextPainter(
-    //   text: TextSpan(
-    //       text: card.toJsonString(),
-    //       style: const TextStyle(color: Colors.white)),
-    //   textDirection: TextDirection.ltr,
-    // )
-    //   ..layout(maxWidth: size.x)
-    //   ..paint(canvas, Vector2(0, 0).toOffset());
   }
 }
 

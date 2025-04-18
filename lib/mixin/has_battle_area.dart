@@ -41,8 +41,7 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
           cardAreaCenterX +
               (col - 1) * (Sizes.cardWidth + Sizes.cardMargin), // X 座標を調整
           cardAreaCenterY +
-              (row - 0.5) *
-                  (Sizes.cardHeight + Sizes.cardMargin), // Y 座標を調整
+              (row - 0.5) * (Sizes.cardHeight + Sizes.cardMargin), // Y 座標を調整
         ); // カードエリアの中心を基準に位置を計算
       cardArea.add(cardComponent);
     });

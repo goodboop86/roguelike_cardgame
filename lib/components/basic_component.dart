@@ -19,8 +19,7 @@ class OverlayComponent extends RectangleComponent with TapCallbacks {
     super.paint,
     super.paintLayers,
     super.key,
-  }) {
-  }
+  }) {}
   @override
   void onTapDown(TapDownEvent event) {
     print("blocked!!!!");
