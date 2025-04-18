@@ -32,9 +32,7 @@ mixin HasExploreArea
       stages.asMap().forEach((choice, stage) {
         final button = ButtonComponent(
           button: RectangleComponent(
-              size: Sizes.mapSize,
-              paint: Paint()..color = color,
-              priority: 0),
+              size: Sizes.mapSize, paint: Paint()..color = color, priority: 0),
           onPressed: () {},
           children: [
             TextComponent(
@@ -85,40 +83,6 @@ mixin HasExploreArea
     );
     add(mapCardArea);
 
-    // Debug
-    AdvancedButtonComponent executeButton = AdvancedButtonComponent(
-        defaultLabel: TextComponent(
-          priority: 1,
-          text: "default",
-          anchor: Anchor.center,
-          position: Sizes.mapCardSize / 2,
-          textRenderer: TextPaint(style: const TextStyle(color: Colors.white)),
-        ),
-        disabledLabel: TextComponent(
-          priority: 1,
-          text: "disable",
-          anchor: Anchor.center,
-          position: Sizes.mapCardSize / 2,
-          textRenderer: TextPaint(style: const TextStyle(color: Colors.white)),
-        ),
-        defaultSkin: RectangleComponent(
-          size: Sizes.wideButtonSize,
-          paint: Paint()..color = Colors.red,
-          position: Vector2(0, 0),
-        ),
-        disabledSkin: RectangleComponent(
-          size: Sizes.wideButtonSize,
-          paint: Paint()..color = Colors.grey,
-          position: Vector2(0, 0),
-        ),
-        onPressed: () {
-          mapCardArea.pupUp();
-        })
-      ..position = Vector2((mapCardAreaWidth - Sizes.wideButtonWidth) / 2,
-          6 * Sizes.blockLength)
-      ..isDisabled = true;
-
-    mapCardArea.add(executeButton);
 
     events.asMap().forEach((index, event) {
       // debug
@@ -136,22 +100,16 @@ mixin HasExploreArea
 
       final key = ComponentKey.unique();
 
-      ChoiceButtonComponent button = ChoiceButtonComponent<Event>(
+      ChoiceButtonComponent button = ChoiceButtonComponent(
+          size: Sizes.mapCardSize,
           priority: 30,
           position: Vector2(0, 0),
-          defaultSkin: noSelected,
-          defaultSelectedSkin: selected,
           key: key,
-          value: event)
+          value: event,
+          paint: Paint()..color = Colors.blue)
         ..position = Vector2(mapCardWidth_ * index, Sizes.blockLength);
 
-      mapCardArea.add(button
-        ..onSelectedChanged = (bool val) {
-          if (val) {
-            mapCardArea.disableAllStageExclusive(key: key);
-          }
-          mapCardArea.updateExecuteButton(isSelected: val);
-        });
+      mapCardArea.add(button);
 
       log.info("add ToggleButtonComponent");
     });

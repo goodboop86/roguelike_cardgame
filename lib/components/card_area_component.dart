@@ -47,53 +47,6 @@ class MapCardAreaComponent extends PositionComponent with HasGameRef<MainGame> {
 
   Logger log = Logger('MapCardAreaComponent');
 
-  void disableAllStageExclusive({required ComponentKey key}) {
-    // 受け取ったkey以外のコンポーネントをinactiveにする。
-    Iterable<ChoiceButtonComponent> buttons =
-        children.whereType<ChoiceButtonComponent>();
-    for (var button in buttons) {
-      if (button.key != key) {
-        button.isSelected = false;
-      }
-    }
-  }
-
-  void updateExecuteButton({required bool isSelected}) {
-    // stageSelectが1つでもactiveであれば、executeButtonもactiveにする
-    // 全て無効ならdisableする。
-    Iterable<AdvancedButtonComponent> button =
-        children.whereType<AdvancedButtonComponent>();
-    final executeButton = button.first;
-    if (isSelected) {
-      executeButton.isDisabled = false;
-    } else {
-      Iterable<ChoiceButtonComponent> buttons =
-          children.whereType<ChoiceButtonComponent>();
-      bool anySelected =
-          buttons.map((button) => button.isSelected).any((val) => val == true);
-      if (!anySelected) {
-        executeButton.isDisabled = true;
-      }
-    }
-  }
-
-  Future<void> pupUp() async {
-    Iterable<ChoiceButtonComponent> buttons =
-        children.whereType<ChoiceButtonComponent>();
-    Event event = buttons.where((button) => button.isSelected).first.value;
-    log.info(event);
-
-    // parent!.add(overlay);
-    // parent!.add(button..priority = 40);
-    bool value = await game.router.pushAndWait(MyBoolDialogRoute());
-
-    if (value) {
-      game.router.pushNamed(event.name);
-    }
-
-    // game.router.currentRoute.add(button);
-    // game.router.pushNamed(event.name);
-  }
 }
 
 class CharacterAreaComponent extends PositionComponent {

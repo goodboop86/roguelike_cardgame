@@ -1,10 +1,14 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
+import 'package:roguelike_cardgame/main_game.dart';
 
+import '../models/enum.dart';
 import '../providers/sizes.dart';
+import '../valueroutes/popup.dart';
 
 class BasicButtonComponent extends ButtonComponent {
   final String text;
@@ -147,35 +151,32 @@ class OptionButtonComponent extends ButtonComponent {
         );
 }
 
-class ChoiceButtonComponent<T> extends ToggleButtonComponent {
+class ChoiceButtonComponent extends RectangleComponent with TapCallbacks, HasGameRef<MainGame> {
   ChoiceButtonComponent(
-      {super.onPressed,
-      super.onSelectedChanged,
-      super.onChangeState,
-      super.defaultSkin,
-      super.downSkin,
-      super.disabledSkin,
-      super.defaultSelectedSkin,
-      super.downAndSelectedSkin,
-      super.disabledAndSelectedSkin,
-      super.defaultLabel,
-      super.disabledLabel,
-      super.defaultSelectedLabel,
-      super.disabledAndSelectedLabel,
-      super.size,
-      super.position,
-      super.scale,
-      super.angle,
-      super.anchor,
-      super.children,
-      super.priority,
+      {
+        super.position,
+        super.size,
+        super.scale,
+        super.angle,
+        super.anchor,
+        super.children,
+        super.priority,
+        super.paint,
+        super.paintLayers,
+        super.key,
       required this.value,
-      required this.key});
+      });
+  Event value;
 
   @override
-  ComponentKey key;
+  Future<void> onTapUp(TapUpEvent event) async {
+    bool isYes = await game.router.pushAndWait(MyBoolDialogRoute());
 
-  T value;
+    if(isYes){
+      game.routeWithTransition(message: '', event: value);
+    }
+    super.onTapUp(event);
+  }
 }
 
 class ExecuteButtonComponent<T> extends AdvancedButtonComponent {

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/parallax.dart';
@@ -17,6 +18,7 @@ import 'package:roguelike_cardgame/worlds/explore_world.dart';
 import 'package:roguelike_cardgame/worlds/home.dart';
 import 'package:roguelike_cardgame/worlds/person_event_world.dart';
 
+import 'components/basic_component.dart';
 import 'models/enum.dart';
 
 class MainGame extends FlameGame
@@ -115,5 +117,39 @@ class MainGame extends FlameGame
     );
 
     super.onLoad();
+  }
+
+  Future<void> routeWithTransition(
+      {required String message, required Event event}) async {
+    log.info("startTransition.");
+
+    RectangleComponent darkenOverlay = OverlayComponent()
+      ..size = canvasSize
+      ..anchor = Anchor.center
+      ..position = canvasSize / 2
+      ..paint.color = Colors.black.withValues(alpha: 0.0)
+      ..priority = 1000;
+
+    router.currentRoute.add(darkenOverlay);
+    darkenOverlay.add(transitionText
+      ..text = message
+      ..position = canvasSize / 2);
+
+    // SequenceEffect を使用して、複数のエフェクトを順番に実行
+    await darkenOverlay.add(
+      SequenceEffect(
+        [
+          // 暗転アニメーション
+          OpacityEffect.to(
+            1.0,
+            EffectController(startDelay: 0.2, duration: 0.5),
+          ),
+        ],
+        onComplete: () {
+          router.currentRoute.remove(darkenOverlay);
+          router.pushNamed(event.name);
+        },
+      ),
+    );
   }
 }
