@@ -60,8 +60,7 @@ mixin HasExploreArea
     });
   }
 
-  void addMapCards(List<List<Event>> stageList, int currentStage,
-      RouterComponent router, ComponentRef ref) {
+  void addMapCards(List<List<Event>> stageList, int currentStage) {
     List<Event> events = stageList[currentStage];
 
     // カードエリアを作成
@@ -83,28 +82,11 @@ mixin HasExploreArea
     );
     add(mapCardArea);
 
-
     events.asMap().forEach((index, event) {
-      // debug
-      RectangleComponent noSelected = RectangleComponent(
-        size: Sizes.mapCardSize,
-        paint: Paint()..color = Colors.blue, // 青色で塗りつぶし
-        position: Vector2(0, 0), // 描画位置 (左上隅の座標)
-      );
-
-      RectangleComponent selected = RectangleComponent(
-        size: Sizes.mapCardSize,
-        paint: Paint()..color = Colors.red, // 青色で塗りつぶし
-        position: Vector2(0, 0), // 描画位置 (左上隅の座標)
-      );
-
-      final key = ComponentKey.unique();
-
       ChoiceButtonComponent button = ChoiceButtonComponent(
           size: Sizes.mapCardSize,
           priority: 30,
           position: Vector2(0, 0),
-          key: key,
           value: event,
           paint: Paint()..color = Colors.blue)
         ..position = Vector2(mapCardWidth_ * index, Sizes.blockLength);

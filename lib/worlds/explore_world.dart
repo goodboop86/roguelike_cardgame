@@ -53,7 +53,7 @@ class ExploreWorld extends World
         }
         if (mapCardArea.isEmpty & background.isMounted) {
           log.fine("addMapCards");
-          addMapCards(state.stageList, state.stage, game.router, ref);
+          addMapCards(state.stageList, state.stage);
         }
         if (uiArea.isEmpty & background.isMounted) {
           log.fine("addUI");
