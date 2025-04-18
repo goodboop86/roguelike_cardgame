@@ -107,15 +107,26 @@ class NPCDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
             size: CANVAS.sizes.npcDialogSize,
             anchor: Anchor.topCenter,
             children: [
-              BasicButtonComponent(
-                  position: CANVAS.sizes.npcDialogSize / 2,
-                  anchor: Anchor.center,
-                  text: 'hello?',
-                  func: () {
-                    completeWith(
-                      12345, // return value
-                    );
-                  })
+              ScrollTextBoxComponent(
+                  size: CANVAS.sizes.npcDialogSize,
+                  text: 'やあ、\nテストNPCだよ。'
+                      'ここにテキストを\n'
+                      '書くと表示されるよ。\n'
+                      'ーーーーーーーーーーーーーーーーーー\n'
+                      'ーーーーーーーーーーーーーーーーーー\n'
+                      'ーーーーーーーーーーーーーーーーーー\n'
+                      'ーーーーーーーーーーーーー',
+                  boxConfig: const TextBoxConfig(
+                      timePerChar: 0.03,
+                      maxWidth: 3.0,
+                      growingBox: true,
+                      margins: EdgeInsets.fromLTRB(10, 10, 10, 10)),
+                  textRenderer: TextPaint(
+                      style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontFamily: 'monospace', // 等幅フォントが見やすい
+                  ))),
             ],
           )..paint.color = Colors.black.withValues(alpha: 0.1),
           DialogBackground(
