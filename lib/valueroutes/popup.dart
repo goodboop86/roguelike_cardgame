@@ -105,7 +105,7 @@ class NPCDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
             position: CANVAS.sizes.npcDialogPosition,
             // Vector2(game.canvasSize.x / 2,game.canvasSize.y /16),
             size: CANVAS.sizes.npcDialogSize,
-            anchor: Anchor.topLeft,
+            anchor: Anchor.topCenter,
             children: [
               BasicButtonComponent(
                   position: CANVAS.sizes.npcDialogSize / 2,
@@ -121,7 +121,7 @@ class NPCDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
           DialogBackground(
             position: CANVAS.sizes.npcPopupPosition,
             size: CANVAS.sizes.npcPopupSize,
-            anchor: Anchor.topLeft,
+            anchor: Anchor.topCenter,
             children: [
               BasicButtonComponent(
                   position: CANVAS.sizes.npcPopupSize,

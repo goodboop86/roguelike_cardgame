@@ -239,13 +239,19 @@ class CANVAS {
   late double x;
   late double y;
 
-  Vector2 get npcDialogSize => Vector2(0.90 * x, 0.2 * y);
+  double get centerX => x/2;
 
-  Vector2 get npcDialogPosition => Vector2(0.05 * x, 0.1 * y);
+  double get npcDialogWidth => 12 * Sizes.blockLength;
+  double get npcDialogHeight => 4 * Sizes.blockLength;
+  Vector2 get npcDialogSize => Vector2(npcDialogWidth, npcDialogHeight);
 
-  Vector2 get npcPopupSize => Vector2(0.9 * x, 0.5 * y);
+  Vector2 get npcDialogPosition => Vector2(centerX, y/10);
 
-  Vector2 get npcPopupPosition => Vector2(0.05 * x, 0.35 * y);
+  double get npcPopupWidth => 12 * Sizes.blockLength;
+  double get npcPopupHeight => 12 * Sizes.blockLength;
+  Vector2 get npcPopupSize => Vector2(npcPopupWidth, npcPopupHeight);
+
+  Vector2 get npcPopupPosition => Vector2(centerX, y/2.5);
 
   // singleton method
   CANVAS._(this.size) {
