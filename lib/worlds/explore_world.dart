@@ -44,8 +44,7 @@ class ExploreWorld extends World
       if (background != null) {
         if (characterArea.isEmpty & background.isMounted) {
           log.fine("addCharacters");
-          await addCharacters(
-              loadParallaxComponent: game.loadParallaxComponent, ref: ref);
+          await addCharacters();
         }
         if (mapArea.isEmpty & background.isMounted) {
           log.fine("addMap");

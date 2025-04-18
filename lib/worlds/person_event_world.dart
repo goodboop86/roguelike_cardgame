@@ -44,8 +44,7 @@ class PersonEventWorld extends World
             (playerState != null) &
             (enemyState != null)) {
           log.fine("addCharacters");
-          await addCharacters(
-              loadParallaxComponent: game.loadParallaxComponent, ref: ref);
+          await addCharacters();
 
           final value = await game.router.pushAndWait(MyDialogRoute());
           print(value);

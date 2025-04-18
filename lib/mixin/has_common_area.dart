@@ -26,9 +26,7 @@ mixin HasCommonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     addAll([topGradient, bottomGradient]);
   }
 
-  Future<void> addCharacters(
-      {required Function loadParallaxComponent,
-      required ComponentRef ref}) async {
+  Future<void> addCharacters() async {
     // add(SpriteSource().getParallax(name: "default")!);
 
     final characterArea = CharacterAreaComponent(

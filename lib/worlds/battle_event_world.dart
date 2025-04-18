@@ -64,8 +64,7 @@ class BattleEventWorld extends World
             (enemyState != null)) {
           log.fine("addCharacters");
 
-          await addCharacters(
-              loadParallaxComponent: game.loadParallaxComponent, ref: ref);
+          await addCharacters();
         }
 
         if (buttonArea.isEmpty & background.isMounted) {
