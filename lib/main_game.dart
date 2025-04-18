@@ -154,7 +154,7 @@ class MainGame extends FlameGame
   }
 
   Future<void> fadeIn(
-      {required String message}) async {
+      {required String message, required Function onComplete}) async {
     log.info("start fadeIn.");
 
     RectangleComponent darkenOverlay = OverlayComponent()
@@ -180,6 +180,8 @@ class MainGame extends FlameGame
           ),
         ],
         onComplete: () {
+          router.currentRoute.remove(darkenOverlay);
+          onComplete();
         },
       ),
     );

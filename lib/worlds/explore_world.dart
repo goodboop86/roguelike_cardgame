@@ -27,6 +27,8 @@ class ExploreWorld extends World
 
   @override
   void onMount() {
+    game.fadeIn(message: '', onComplete: (){});
+
     addToGameWidgetBuild(() async {
       ExploreRouteState state = ref.read(exploreRouteProvider);
 

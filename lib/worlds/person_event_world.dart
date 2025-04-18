@@ -25,7 +25,7 @@ class PersonEventWorld extends World
 
   @override
   Future<void> onMount() async {
-    game.fadeIn(message: '');
+    game.fadeIn(message: '', onComplete: (){});
 
     addToGameWidgetBuild(() async {
       BattleRouteState state = ref.read(battleRouteProvider);
