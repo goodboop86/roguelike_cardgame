@@ -97,7 +97,7 @@ class NPCDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
 
   @override
   Component build() {
-    TextBoxComponent textBox =  TextBoxComponent(
+    TextBoxComponent textBox = TextBoxComponent(
         size: Sizes.npcDialogSize,
         text: 'サンプルテキスト',
         boxConfig: const TextBoxConfig(
@@ -107,10 +107,10 @@ class NPCDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
             margins: EdgeInsets.fromLTRB(10, 10, 10, 10)),
         textRenderer: TextPaint(
             style: const TextStyle(
-              fontSize: 14,
-              color: Colors.white,
-              fontFamily: 'monospace', // 等幅フォントが見やすい
-            )));
+          fontSize: 14,
+          color: Colors.white,
+          fontFamily: 'monospace', // 等幅フォントが見やすい
+        )));
 
     return OverlayComponent(
         paint: Paint()..color = Colors.black.withValues(alpha: 0.5),
@@ -123,7 +123,7 @@ class NPCDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
             children: [
               textBox,
               BasicButtonComponent(
-                  position: CANVAS.sizes.npcPopupSize/2,
+                  position: CANVAS.sizes.npcPopupSize / 2,
                   anchor: Anchor.center,
                   text: 'hello?',
                   func: () {
@@ -137,7 +137,8 @@ class NPCDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
   }
 }
 
-class NPCDialogPopupRoute extends ValueRoute<int> with HasGameReference<MainGame> {
+class NPCDialogPopupRoute extends ValueRoute<int>
+    with HasGameReference<MainGame> {
   NPCDialogPopupRoute() : super(value: -1, transparent: true);
 
   @override
@@ -166,10 +167,10 @@ class NPCDialogPopupRoute extends ValueRoute<int> with HasGameReference<MainGame
                       margins: EdgeInsets.fromLTRB(10, 10, 10, 10)),
                   textRenderer: TextPaint(
                       style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
-                        fontFamily: 'monospace', // 等幅フォントが見やすい
-                      ))),
+                    fontSize: 14,
+                    color: Colors.white,
+                    fontFamily: 'monospace', // 等幅フォントが見やすい
+                  ))),
             ],
           )..paint.color = Colors.black.withValues(alpha: 0.1),
           DialogBackground(
@@ -178,7 +179,7 @@ class NPCDialogPopupRoute extends ValueRoute<int> with HasGameReference<MainGame
             anchor: Anchor.topCenter,
             children: [
               BasicButtonComponent(
-                  position: CANVAS.sizes.npcPopupSize/2,
+                  position: CANVAS.sizes.npcPopupSize / 2,
                   anchor: Anchor.center,
                   text: 'hello?',
                   func: () {

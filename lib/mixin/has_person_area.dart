@@ -65,7 +65,14 @@ mixin HasPersonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
       ..onComplete = () async {
         String value = await popUp();
 
-        textComponent1.text = value;
+        add(TextBoxComponent(
+            align: Anchor.center,
+            text: value,
+            size: Sizes.supportDialogSize,
+            anchor: Anchor.topLeft,
+            position: Sizes.supportDialogPosition));
+
+        textComponent1.text = "またおいで";
       });
 
     add(overlay);

@@ -221,6 +221,17 @@ class Sizes {
   static double get npcDialogY => 1 * Sizes.blockLength;
   static Vector2 get npcDialogPosition => Vector2(npcDialogX, npcDialogY);
 
+  // Support dialog
+  static double get supportDialogWidth => 12 * Sizes.blockLength;
+  static double get supportDialogHeight => 1 * Sizes.blockLength;
+  static Vector2 get supportDialogSize =>
+      Vector2(supportDialogWidth, supportDialogHeight);
+
+  static double get supportDialogX => gameOriginX + 0.5 * Sizes.blockLength;
+  static double get supportDialogY => gameOriginY + 9 * Sizes.blockLength;
+  static Vector2 get supportDialogPosition =>
+      Vector2(supportDialogX, supportDialogY);
+
   // UIArea
   static double get uiAreaWidth => gameWidth - 1 * blockLength;
 
@@ -248,19 +259,19 @@ class CANVAS {
   late double x;
   late double y;
 
-  double get centerX => x/2;
+  double get centerX => x / 2;
 
   double get npcDialogWidth => 12 * Sizes.blockLength;
   double get npcDialogHeight => 4 * Sizes.blockLength;
   Vector2 get npcDialogSize => Vector2(npcDialogWidth, npcDialogHeight);
 
-  Vector2 get npcDialogPosition => Vector2(centerX, y/10);
+  Vector2 get npcDialogPosition => Vector2(centerX, y / 10);
 
   double get npcPopupWidth => 12 * Sizes.blockLength;
   double get npcPopupHeight => 12 * Sizes.blockLength;
   Vector2 get npcPopupSize => Vector2(npcPopupWidth, npcPopupHeight);
 
-  Vector2 get npcPopupPosition => Vector2(centerX, y/2.5);
+  Vector2 get npcPopupPosition => Vector2(centerX, y / 2.5);
 
   // singleton method
   CANVAS._(this.size) {
