@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:roguelike_cardgame/components/basic_component.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 
+import '../components/background_component.dart';
 import '../components/button_component.dart';
 import '../providers/sizes.dart';
 
@@ -85,12 +86,6 @@ class IntRoute extends ValueRoute<int> with HasGameReference<MainGame> {
   }
 }
 
-class DialogBackground extends RectangleComponent with TapCallbacks {
-  DialogBackground({super.position, super.size, super.children, super.anchor})
-      : super(
-          paint: Paint()..color = Colors.black.withValues(alpha: 0.8),
-        );
-}
 
 class NPCDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
   NPCDialogRoute() : super(value: -1, transparent: true);
@@ -112,7 +107,7 @@ class NPCDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
           fontFamily: 'monospace', // 等幅フォントが見やすい
         )));
 
-    return OverlayComponent(
+    return OverlayBackground(
         paint: Paint()..color = Colors.black.withValues(alpha: 0.5),
         size: game.canvasSize,
         children: [
@@ -143,7 +138,7 @@ class NPCDialogPopupRoute extends ValueRoute<int>
 
   @override
   Component build() {
-    return OverlayComponent(
+    return OverlayBackground(
         paint: Paint()..color = Colors.black.withValues(alpha: 0.5),
         size: game.canvasSize,
         children: [
@@ -199,7 +194,7 @@ class MyBoolDialogRoute extends ValueRoute<bool>
 
   @override
   Component build() {
-    return OverlayComponent(
+    return OverlayBackground(
         paint: Paint()..color = Colors.black.withValues(alpha: 0.5),
         size: game.canvasSize,
         children: [

@@ -13,7 +13,6 @@ import '../models/player_state.dart';
 import '../providers/battle_route_provider.dart';
 import '../providers/enemy_provider.dart';
 import '../providers/player_provider.dart';
-import '../valueroutes/popup.dart';
 
 class PersonEventWorld extends World
     with

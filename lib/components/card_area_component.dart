@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 
-import '../models/enum.dart';
-import '../valueroutes/popup.dart';
-import 'button_component.dart';
 
 class CardAreaComponent extends RectangleComponent with HasGameRef<MainGame> {
   CardAreaComponent({required Vector2 position, required Vector2 size})

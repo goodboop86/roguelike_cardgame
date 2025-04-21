@@ -13,12 +13,12 @@ import 'dart:async';
 
 import 'package:roguelike_cardgame/providers/sizes.dart';
 import 'package:roguelike_cardgame/spritesheet/spritesheet.dart';
-import 'package:roguelike_cardgame/valueroutes/popup.dart';
 import 'package:roguelike_cardgame/worlds/battle_event_world.dart';
 import 'package:roguelike_cardgame/worlds/explore_world.dart';
 import 'package:roguelike_cardgame/worlds/home.dart';
 import 'package:roguelike_cardgame/worlds/person_event_world.dart';
 
+import 'components/background_component.dart';
 import 'components/basic_component.dart';
 import 'models/enum.dart';
 
@@ -127,7 +127,7 @@ class MainGame extends FlameGame
       {required String message, required Event event}) async {
     log.info("start FadeOut.");
 
-    RectangleComponent darkenOverlay = OverlayComponent()
+    RectangleComponent darkenOverlay = OverlayBackground()
       ..size = canvasSize
       ..anchor = Anchor.center
       ..position = canvasSize / 2
@@ -161,7 +161,7 @@ class MainGame extends FlameGame
       {required String message, required Function onComplete}) async {
     log.info("start fadeIn.");
 
-    RectangleComponent darkenOverlay = OverlayComponent()
+    RectangleComponent darkenOverlay = OverlayBackground()
       ..size = canvasSize
       ..anchor = Anchor.center
       ..position = canvasSize / 2

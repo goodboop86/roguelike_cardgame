@@ -7,26 +7,8 @@ import 'package:flutter/material.dart' hide Gradient;
 import '../providers/sizes.dart';
 import 'background_component.dart';
 
-class OverlayComponent extends RectangleComponent with TapCallbacks {
-  OverlayComponent({
-    super.position,
-    super.size,
-    super.scale,
-    super.angle,
-    super.anchor,
-    super.children,
-    super.priority,
-    super.paint,
-    super.paintLayers,
-    super.key,
-  }) {}
-  @override
-  void onTapDown(TapDownEvent event) {
-    print("blocked!!!!");
-  } // タッチイベントを消費する
-}
 
-RectangleComponent darkenOverlay = OverlayComponent()
+RectangleComponent darkenOverlay = OverlayBackground()
   ..size = Sizes.gameSize
   ..anchor = Anchor.center
   ..paint.color = Colors.black.withValues(alpha: 0.5)
