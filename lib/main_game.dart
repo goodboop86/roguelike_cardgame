@@ -81,6 +81,11 @@ class MainGame extends FlameGame
         key: ComponentKey.named("question"),
         size: Sizes.blockSize);
 
+    await AssetSource().storeSprite(
+        path: 'right_arrow.png',
+        key: ComponentKey.named("right_arrow"),
+        size: Sizes.blockSize);
+
     // parallax
     ParallaxComponent parallax = await loadParallaxComponent(
       [

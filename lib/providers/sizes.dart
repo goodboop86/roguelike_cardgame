@@ -217,8 +217,8 @@ class Sizes {
   static double get npcDialogHeight => 4 * Sizes.blockLength;
   static Vector2 get npcDialogSize => Vector2(npcDialogWidth, npcDialogHeight);
 
-  static double get npcDialogX => 0.5 * Sizes.blockLength;
-  static double get npcDialogY => 1 * Sizes.blockLength;
+  static double get npcDialogX => gameOriginX + 0.5 * Sizes.blockLength;
+  static double get npcDialogY => gameOriginY + 1 * Sizes.blockLength;
   static Vector2 get npcDialogPosition => Vector2(npcDialogX, npcDialogY);
 
   // Support dialog

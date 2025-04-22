@@ -70,12 +70,14 @@ mixin HasCommonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     UIButtonComponent homeButton =
         UIButtonComponent(button: AssetSource().getSprite(name: "home.png"))
           ..size = Sizes.blockSize
+          ..priority = 100
           ..onPressed = () {
             game.router.pushNamed(ROUTE.home.name);
           };
     UIButtonComponent questionButton =
         UIButtonComponent(button: AssetSource().getSprite(name: "question.png"))
           ..size = Sizes.blockSize
+          ..priority = 100
           ..onPressed = () {};
 
     uiArea.addAll([

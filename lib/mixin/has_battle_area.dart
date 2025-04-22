@@ -3,8 +3,10 @@ import 'package:flame/effects.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
+import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
+import '../components/background_component.dart';
 import '../components/basic_component.dart';
 import '../components/button_component.dart';
 import '../components/card_area_component.dart';
@@ -50,6 +52,13 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   Future<void> startTransition(
       {required String message, required Function next}) async {
     log.info("startTransition.");
+
+    RectangleComponent darkenOverlay = OverlayBackground()
+      ..size = Sizes.gameSize
+      ..anchor = Anchor.center
+      ..paint.color = Colors.black.withValues(alpha: 0.5)
+      ..priority = 1000;
+
 
     add(darkenOverlay);
 

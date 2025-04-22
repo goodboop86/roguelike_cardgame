@@ -7,13 +7,6 @@ import 'package:flutter/material.dart' hide Gradient;
 import '../providers/sizes.dart';
 import 'background_component.dart';
 
-
-RectangleComponent darkenOverlay = OverlayBackground()
-  ..size = Sizes.gameSize
-  ..anchor = Anchor.center
-  ..paint.color = Colors.black.withValues(alpha: 0.5)
-  ..priority = 1000;
-
 TextComponent transitionText = TextComponent(
   priority: 1,
   anchor: Anchor.center,
@@ -43,3 +36,4 @@ GradientBackground bottomGradient = GradientBackground(
     ],
   ),
 );
+
