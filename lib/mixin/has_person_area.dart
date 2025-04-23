@@ -31,37 +31,10 @@ mixin HasPersonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
       ..onComplete = () async {
         String value = await npcDialog();
 
-        RectangleComponent valueText = RectangleComponent(
-            position: Sizes.supportDialogPosition,
-            size: Sizes.supportDialogSize,
-            paint: Paint()..color = Colors.red.withValues(alpha: 0.1),
-            children: [
-          TextBoxComponent(
-              align: Anchor.center,
-              text: value,
-              size: Sizes.supportDialogSize,
-              anchor: Anchor.topLeft,
-              // position: Sizes.supportDialogPosition
-          )
-        ]);
+        SupportDialog supportDialog = SupportDialog(text: value.toString());
 
-        valueText.add(MoveEffect.by(
-          Vector2(0, -5), // 上方向に50ピクセル移動
-          EffectController(
-            duration: 1.0, // 2秒かけて移動
-            curve: Curves.easeInOut, // イーズイン・アウトのアニメーションカーブ
-          ),
-        ));
 
-        valueText.add(OpacityEffect.to(
-          1.0, // 最終的な透明度（完全に不透明）
-          EffectController(
-            duration: 1.0, // 2秒かけて透明度を変化
-            curve: Curves.easeInOut,
-          ),
-        ));
-
-        add(valueText);
+        add(supportDialog);
 
         dialog.remove(textComponent1);
 
