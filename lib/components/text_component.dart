@@ -21,7 +21,6 @@ class DialogText extends TextBoxComponent {
   }
 }
 
-
 class SupportText extends TextBoxComponent {
   SupportText() {
     size = Sizes.supportDialogSize;
@@ -34,9 +33,9 @@ class SupportText extends TextBoxComponent {
 
     textRenderer = TextPaint(
         style: const TextStyle(
-          fontSize: 14,
-          color: Colors.black,
-          fontFamily: 'monospace', // 等幅フォントが見やすい
-        ));
+      fontSize: 14,
+      color: Colors.black,
+      fontFamily: 'monospace', // 等幅フォントが見やすい
+    ));
   }
 }

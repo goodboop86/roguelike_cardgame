@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 
-
 class CardAreaComponent extends RectangleComponent with HasGameRef<MainGame> {
   CardAreaComponent({required Vector2 position, required Vector2 size})
       : super(position: position, size: size) {

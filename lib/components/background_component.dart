@@ -58,12 +58,12 @@ class SupportDialog extends RectangleComponent {
             paint: Paint()..color = Colors.black.withValues(alpha: 0.1),
             children: [
               TextBoxComponent(
-                textRenderer:TextPaint(
+                textRenderer: TextPaint(
                     style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.yellow,
-                      fontFamily: 'monospace', // 等幅フォントが見やすい
-                    )),
+                  fontSize: 14,
+                  color: Colors.yellow,
+                  fontFamily: 'monospace', // 等幅フォントが見やすい
+                )),
                 align: Anchor.center,
                 text: text,
                 size: Sizes.supportDialogSize,

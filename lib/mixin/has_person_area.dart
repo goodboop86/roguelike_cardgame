@@ -6,8 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 import '../components/background_component.dart';
+import '../components/button_component.dart';
 import '../components/text_component.dart';
+import '../models/enum.dart';
 import '../providers/sizes.dart';
+import '../spritesheet/spritesheet.dart';
 import '../valueroutes/popup.dart';
 
 mixin HasPersonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
@@ -33,7 +36,6 @@ mixin HasPersonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
 
         SupportDialog supportDialog = SupportDialog(text: value.toString());
 
-
         add(supportDialog);
 
         dialog.remove(textComponent1);
@@ -41,7 +43,14 @@ mixin HasPersonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
         textComponent1 = DialogText()
           ..text = 'またおいで..............'
           ..onComplete = () async {
-            log.info("end text.");
+            dialog.add(UIButtonComponent(
+                button: AssetSource().getSprite(name: "right_arrow.png"))
+              ..size = Sizes.blockSize * 0.8
+              ..position = Sizes.npcDialogSize - Sizes.blockSize
+              ..priority = 100
+              ..onPressed = () {
+                game.router.pushNamed(ROUTE.home.name);
+              });
           };
 
         dialog.add(textComponent1);

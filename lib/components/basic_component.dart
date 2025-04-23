@@ -36,4 +36,3 @@ GradientBackground bottomGradient = GradientBackground(
     ],
   ),
 );
-

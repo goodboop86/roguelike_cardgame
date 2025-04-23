@@ -59,7 +59,6 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
       ..paint.color = Colors.black.withValues(alpha: 0.5)
       ..priority = 1000;
 
-
     add(darkenOverlay);
 
     // SequenceEffect を使用して、複数のエフェクトを順番に実行

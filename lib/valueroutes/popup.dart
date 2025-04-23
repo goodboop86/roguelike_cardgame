@@ -86,7 +86,6 @@ class IntRoute extends ValueRoute<int> with HasGameReference<MainGame> {
   }
 }
 
-
 class NPCDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
   NPCDialogRoute() : super(value: -1, transparent: true);
 
