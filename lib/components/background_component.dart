@@ -12,7 +12,6 @@ import '../providers/sizes.dart';
 
 class GradientBackground extends PositionComponent
     with HasGameReference<MainGame> {
-
   GradientBackground.topGradient() {
     position = Sizes.gameTopLeft;
     paint = Paint()
@@ -28,14 +27,15 @@ class GradientBackground extends PositionComponent
 
   GradientBackground.bottomGradient() {
     position = Sizes.bottomGradientPosition;
-    paint = Paint()..shader = Gradient.linear(
-      Offset(Sizes.gameWidth / 2, 0),
-      Offset(Sizes.gameWidth / 2, Sizes.blockLength),
-      [
-        Colors.transparent,
-        Colors.black,
-      ],
-    );
+    paint = Paint()
+      ..shader = Gradient.linear(
+        Offset(Sizes.gameWidth / 2, 0),
+        Offset(Sizes.gameWidth / 2, Sizes.blockLength),
+        [
+          Colors.transparent,
+          Colors.black,
+        ],
+      );
   }
 
   late Paint paint;
@@ -61,6 +61,16 @@ class OverlayBackground extends RectangleComponent with TapCallbacks {
     super.paintLayers,
     super.key,
   });
+
+
+  OverlayBackground.fadeOut()
+      : super(
+            size: CANVAS.sizes.size,
+            anchor: Anchor.center,
+            position: CANVAS.sizes.size / 2,
+            paint: Paint()..color = Colors.black.withValues(alpha: 0.0),
+            priority: 1000,
+            children: []);
 
   @override
   void onTapDown(TapDownEvent event) {

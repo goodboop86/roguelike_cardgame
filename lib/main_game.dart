@@ -132,34 +132,27 @@ class MainGame extends FlameGame
       {required String message, required Event event}) async {
     log.info("start FadeOut.");
 
-    RectangleComponent darkenOverlay = OverlayBackground()
-      ..size = canvasSize
-      ..anchor = Anchor.center
-      ..position = canvasSize / 2
-      ..paint.color = Colors.black.withValues(alpha: 0.0)
-      ..priority = 1000;
-
-    router.currentRoute.add(darkenOverlay);
-    darkenOverlay.add(transitionText
-      ..text = message
-      ..position = canvasSize / 2);
+    final localDarkenOverlay = OverlayBackground.fadeOut();
 
     // SequenceEffect を使用して、複数のエフェクトを順番に実行
-    await darkenOverlay.add(
+    localDarkenOverlay.add(
       SequenceEffect(
         [
-          // 暗転アニメーション
           OpacityEffect.to(
             1.0,
             EffectController(startDelay: 0.2, duration: 0.5),
           ),
+          RemoveEffect(delay: 1.0)
         ],
         onComplete: () {
-          router.currentRoute.remove(darkenOverlay);
+          router.currentRoute.remove(localDarkenOverlay);
           router.pushNamed(event.name);
         },
       ),
     );
+
+    router.currentRoute.add(localDarkenOverlay);
+
   }
 
   Future<void> fadeIn(
