@@ -4,6 +4,7 @@ import 'package:flame/input.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
+import '../components/background_component.dart';
 import '../components/basic_component.dart';
 import '../components/button_component.dart';
 import '../components/card_area_component.dart';
@@ -23,7 +24,7 @@ mixin HasCommonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     add(AssetSource().getSpriteComponent(name: "background.png")!
       ..position = Sizes.backgroundPosition
       ..priority = 0);
-    addAll([topGradient, bottomGradient]);
+    addAll([GradientBackground.topGradient(), GradientBackground.bottomGradient()]);
   }
 
   Future<void> addCharacters() async {

@@ -3,21 +3,46 @@ import 'dart:ui';
 import 'package:flame/components.dart' hide Timer;
 import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
-import 'package:flutter/material.dart';
 import 'package:roguelike_cardgame/main_game.dart';
+
+import 'package:flame/components.dart';
+import 'package:flutter/material.dart' hide Gradient;
 
 import '../providers/sizes.dart';
 
 class GradientBackground extends PositionComponent
     with HasGameReference<MainGame> {
-  GradientBackground({required super.position, required this.shader})
-      : super(anchor: Anchor.topLeft);
 
-  Shader shader;
+  GradientBackground.topGradient() {
+    position = Sizes.gameTopLeft;
+    paint = Paint()
+      ..shader = Gradient.linear(
+        Offset(Sizes.gameWidth / 2, 0),
+        Offset(Sizes.gameWidth / 2, Sizes.blockLength),
+        [
+          Colors.black,
+          Colors.transparent,
+        ],
+      );
+  }
+
+  GradientBackground.bottomGradient() {
+    position = Sizes.bottomGradientPosition;
+    paint = Paint()..shader = Gradient.linear(
+      Offset(Sizes.gameWidth / 2, 0),
+      Offset(Sizes.gameWidth / 2, Sizes.blockLength),
+      [
+        Colors.transparent,
+        Colors.black,
+      ],
+    );
+  }
+
+  late Paint paint;
 
   @override
   void render(Canvas canvas) {
-    Paint paint = Paint()..shader = shader;
+    // Paint paint = Paint()..shader = shader;
     canvas.drawRect(
         Rect.fromLTWH(0, 0, Sizes.gameWidth, Sizes.gameHeight), paint);
   }

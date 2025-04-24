@@ -14,25 +14,3 @@ TextComponent transitionText = TextComponent(
       TextPaint(style: const TextStyle(color: Colors.white, fontSize: 24)),
 );
 
-GradientBackground topGradient = GradientBackground(
-    position: Sizes.gameTopLeft,
-    shader: Gradient.linear(
-      Offset(Sizes.gameWidth / 2, 0),
-      Offset(Sizes.gameWidth / 2, Sizes.blockLength),
-      [
-        Colors.black,
-        Colors.transparent,
-      ],
-    ));
-
-GradientBackground bottomGradient = GradientBackground(
-  position: Sizes.bottomGradientPosition,
-  shader: Gradient.linear(
-    Offset(Sizes.gameWidth / 2, 0),
-    Offset(Sizes.gameWidth / 2, Sizes.blockLength),
-    [
-      Colors.transparent,
-      Colors.black,
-    ],
-  ),
-);
