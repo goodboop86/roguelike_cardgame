@@ -12,35 +12,28 @@ import '../spritesheet/spritesheet.dart';
 import '../valueroutes/popup.dart';
 
 class BasicButtonComponent extends SpriteButtonComponent {
-
   BasicButtonComponent(
-      {
-      // super.button,
-      super.onPressed,
-      super.position,
-      super.anchor,
-      // super.children,
-      super.priority})
+      {super.onPressed, super.position, super.anchor, super.priority})
       : super(
           button: AssetSource().getSprite(name: "button.png"),
           size: Sizes.buttonSize,
         );
 
-  BasicButtonComponent.optionButton({super.onPressed}) :super(
-    priority: 20,
-    button: AssetSource().getSprite(name: "button.png"),
-    size: Sizes.buttonSize,
-    anchor: Anchor.center,
-    children: [
-    ],
-  );
+  BasicButtonComponent.npcDialogButton({super.onPressed})
+      : super(
+            position: CANVAS.sizes.npcPopupSize / 2,
+            anchor: Anchor.center,
+            button: AssetSource().getSprite(name: "button.png"),
+            size: Sizes.buttonSize) {}
 
-  @override
-  Future<void> onLoad() async {
-    // 必要であれば、ボタン固有のアセットロードや初期化処理をここで行う
-    // 例: ボタンの画像スプライトをロードするなど
-    await super.onLoad();
-  }
+  BasicButtonComponent.optionButton({super.onPressed})
+      : super(
+          priority: 20,
+          button: AssetSource().getSprite(name: "button.png"),
+          size: Sizes.buttonSize,
+          anchor: Anchor.center,
+          children: [],
+        );
 }
 
 class UIButtonComponent extends SpriteButtonComponent {
@@ -112,7 +105,6 @@ class DialogButtonComponent extends ButtonComponent {
   }
 }
 
-
 class ChoiceButtonComponent extends RectangleComponent
     with TapCallbacks, HasGameRef<MainGame> {
   ChoiceButtonComponent({
@@ -128,6 +120,7 @@ class ChoiceButtonComponent extends RectangleComponent
     super.key,
     required this.value,
   });
+
   Event value;
 
   @override
