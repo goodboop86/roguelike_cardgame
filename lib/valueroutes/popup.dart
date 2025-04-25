@@ -1,13 +1,8 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
-import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:flame/geometry.dart';
-
-import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
-import 'package:roguelike_cardgame/components/basic_component.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 
 import '../components/background_component.dart';
@@ -15,84 +10,13 @@ import '../components/button_component.dart';
 import '../components/text_component.dart';
 import '../providers/sizes.dart';
 
-class StringRoute extends ValueRoute<String> with HasGameReference<MainGame> {
-  StringRoute() : super(value: "empty", transparent: true);
-
-  @override
-  Component build() {
-    final size = Vector2(250, 130);
-    return DialogBackground(
-      position: game.size / 2,
-      size: size,
-      children: [
-        ButtonComponent(
-          button: RectangleComponent(
-              size: Sizes.buttonSize,
-              paint: Paint()..color = Colors.brown,
-              priority: 0),
-          onPressed: () {
-            completeWith(
-              "complete!", // return value
-            );
-          },
-          children: [
-            TextComponent(
-              priority: 1,
-              text: 'hello',
-              position: Sizes.buttonSize / 2,
-              anchor: Anchor.center,
-              textRenderer:
-                  TextPaint(style: const TextStyle(color: Colors.white)),
-            ),
-          ],
-        )
-      ],
-    );
-  }
-}
-
-class IntRoute extends ValueRoute<int> with HasGameReference<MainGame> {
-  IntRoute() : super(value: -1, transparent: true);
-
-  @override
-  Component build() {
-    final size = Vector2(250, 130);
-    return DialogBackground(
-      position: game.size / 2,
-      size: size,
-      children: [
-        ButtonComponent(
-          button: RectangleComponent(
-              size: Sizes.buttonSize,
-              paint: Paint()..color = Colors.brown,
-              priority: 0),
-          onPressed: () {
-            completeWith(
-              12345, // return value
-            );
-          },
-          children: [
-            TextComponent(
-              priority: 1,
-              text: 'hello',
-              position: Sizes.buttonSize / 2,
-              anchor: Anchor.center,
-              textRenderer:
-                  TextPaint(style: const TextStyle(color: Colors.white)),
-            ),
-          ],
-        )
-      ],
-    );
-  }
-}
 
 class NPCDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
   NPCDialogRoute() : super(value: -1, transparent: true);
 
   @override
   Component build() {
-    TextBoxComponent textBox = TextBoxes.dialogText()..text="サンプルテキスト";
+    TextBoxComponent textBox = TextBoxes.dialogText()..text = "サンプルテキスト";
 
     return OverlayBackground(
         paint: Paint()..color = Colors.black.withValues(alpha: 0.5),
@@ -104,21 +28,20 @@ class NPCDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
             anchor: Anchor.topCenter,
             children: [
               textBox,
-              BasicButtonComponent.npcDialogButton(
-                  onPressed: () {
-                    completeWith(
-                      12345, // return value
-                    );
-                  })
+              BasicButtonComponent.npcDialogButton(onPressed: () {
+                completeWith(
+                  12345, // return value
+                );
+              })
             ],
           )
         ]);
   }
 }
 
-class MyBoolDialogRoute extends ValueRoute<bool>
+class YesNoPpupRoute extends ValueRoute<bool>
     with HasGameReference<MainGame> {
-  MyBoolDialogRoute() : super(value: false, transparent: false);
+  YesNoPpupRoute() : super(value: false, transparent: false);
 
   @override
   Component build() {
@@ -132,18 +55,18 @@ class MyBoolDialogRoute extends ValueRoute<bool>
             anchor: Anchor.center,
             children: [
               DialogButtonComponent.yes(
-                  onPressed: () {
-                    completeWith(
-                      true, // return value
-                    );
-                  },
+                onPressed: () {
+                  completeWith(
+                    true, // return value
+                  );
+                },
               ),
               DialogButtonComponent.no(
-                  onPressed: () {
-                    completeWith(
-                      false, // return value
-                    );
-                  },
+                onPressed: () {
+                  completeWith(
+                    false, // return value
+                  );
+                },
               )
             ],
           )

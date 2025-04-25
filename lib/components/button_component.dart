@@ -125,7 +125,7 @@ class ChoiceButtonComponent extends RectangleComponent
 
   @override
   Future<void> onTapUp(TapUpEvent event) async {
-    bool isYes = await game.router.pushAndWait(MyBoolDialogRoute());
+    bool isYes = await game.router.pushAndWait(YesNoPpupRoute());
 
     if (isYes) {
       game.routeWithFadeOut(message: '', event: value);
