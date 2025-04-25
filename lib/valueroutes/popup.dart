@@ -131,29 +131,20 @@ class MyBoolDialogRoute extends ValueRoute<bool>
             size: Sizes.boolDialogSize,
             anchor: Anchor.center,
             children: [
-              DialogButtonComponent(
-                  position: Vector2(
-                      0, Sizes.boolDialogHeight - Sizes.dialogButtonHeight),
-                  anchor: Anchor.topLeft,
-                  text: 'Yes',
+              DialogButtonComponent.yes(
                   onPressed: () {
                     completeWith(
                       true, // return value
                     );
                   },
-                  paint: Paint()..color = Colors.yellow.withValues(alpha: 0.6)),
-              DialogButtonComponent(
-                  position: Vector2(
-                      Sizes.boolDialogWidth - Sizes.dialogButtonWidth,
-                      Sizes.boolDialogHeight - Sizes.dialogButtonHeight),
-                  anchor: Anchor.topLeft,
-                  text: 'No',
+              ),
+              DialogButtonComponent.no(
                   onPressed: () {
                     completeWith(
                       false, // return value
                     );
                   },
-                  paint: Paint()..color = Colors.grey.withValues(alpha: 0.6))
+              )
             ],
           )
         ]);

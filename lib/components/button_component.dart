@@ -59,29 +59,43 @@ class UIButtonComponent extends SpriteButtonComponent {
 }
 
 class DialogButtonComponent extends ButtonComponent {
-  final String text;
-  // final VoidCallback? func;
-
-  DialogButtonComponent(
-      {required this.text,
-      super.buttonDown,
-      super.onPressed,
-      super.position,
-      super.size,
-      super.anchor,
-      // super.children,
-      required paint,
-      super.priority})
+  DialogButtonComponent.yes({super.onPressed})
       : super(
+          anchor: Anchor.topLeft,
+          position:
+              Vector2(0, Sizes.boolDialogHeight - Sizes.dialogButtonHeight),
           button: RectangleComponent(
             size: Sizes.dialogButtonSize,
-            paint: paint,
+            paint: Paint()..color = Colors.yellow.withValues(alpha: 0.6),
             priority: 0,
           ),
           children: [
             TextComponent(
               priority: 1,
-              text: text,
+              text: "yes",
+              position: Sizes.dialogButtonSize / 2,
+              anchor: Anchor.center,
+              textRenderer:
+                  TextPaint(style: const TextStyle(color: Colors.white)),
+            ),
+          ],
+        );
+
+  DialogButtonComponent.no({
+    super.onPressed,
+  }) : super(
+          anchor: Anchor.topLeft,
+          position: Vector2(Sizes.boolDialogWidth - Sizes.dialogButtonWidth,
+              Sizes.boolDialogHeight - Sizes.dialogButtonHeight),
+          button: RectangleComponent(
+            size: Sizes.dialogButtonSize,
+            paint: Paint()..color = Colors.grey.withValues(alpha: 0.6),
+            priority: 0,
+          ),
+          children: [
+            TextComponent(
+              priority: 1,
+              text: "no",
               position: Sizes.dialogButtonSize / 2,
               anchor: Anchor.center,
               textRenderer:
