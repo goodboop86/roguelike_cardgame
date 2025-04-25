@@ -62,7 +62,7 @@ mixin HasPersonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   }
 
   Future<String> npcDialog() async {
-    int value = await game.router.pushAndWait(NPCDialogRoute());
+    int value = await game.router.pushAndWait(MyPopupRoute());
     log.info(value);
     return value.toString();
   }

@@ -49,8 +49,8 @@ class GradientBackground extends PositionComponent
   }
 }
 
-class OverlayBackground extends RectangleComponent with TapCallbacks {
-  OverlayBackground({
+class BlockTapOverlay extends RectangleComponent with TapCallbacks {
+  BlockTapOverlay({
     super.position,
     super.size,
     super.scale,
@@ -64,14 +64,29 @@ class OverlayBackground extends RectangleComponent with TapCallbacks {
   });
 
 
-  OverlayBackground.fadeOut()
+  BlockTapOverlay.transparent({super.children})
+      : super(
+      size: CANVAS.sizes.size,
+      anchor: Anchor.center,
+      position: CANVAS.sizes.size / 2,
+      paint: Paint()..color = Colors.black.withValues(alpha: 0.0),
+      priority: 1000);
+
+  BlockTapOverlay.halfBlack({super.children})
+      : super(
+            size: CANVAS.sizes.size,
+            anchor: Anchor.center,
+            position: CANVAS.sizes.size / 2,
+            paint: Paint()..color = Colors.black.withValues(alpha: 0.5),
+            priority: 1000);
+
+  BlockTapOverlay.black({super.children})
       : super(
             size: CANVAS.sizes.size,
             anchor: Anchor.center,
             position: CANVAS.sizes.size / 2,
             paint: Paint()..color = Colors.black.withValues(alpha: 0.0),
-            priority: 1000,
-            children: []);
+            priority: 1000);
 
   @override
   void onTapDown(TapDownEvent event) {
@@ -84,13 +99,13 @@ class PopupBackground extends RectangleComponent with TapCallbacks {
       : super(
           paint: Paint()..color = Colors.black.withValues(alpha: 0.8),
         );
+
   PopupBackground.yesNoPopup({super.children})
       : super(
-    paint: Paint()..color = Colors.black.withValues(alpha: 0.8),
-    size: Sizes.boolDialogSize,
-    anchor: Anchor.center,
-    position: CANVAS.sizes.size / 2
-  );
+            paint: Paint()..color = Colors.black.withValues(alpha: 0.8),
+            size: Sizes.boolDialogSize,
+            anchor: Anchor.center,
+            position: CANVAS.sizes.size / 2);
 }
 
 class SupportDialog extends RectangleComponent {
@@ -100,7 +115,7 @@ class SupportDialog extends RectangleComponent {
             size: Sizes.supportDialogSize,
             paint: Paint()..color = Colors.black.withValues(alpha: 0.1),
             children: [
-              TextBoxes.supportText()..text=text,
+              TextBoxes.supportText()..text = text,
               MoveEffect.by(
                 Vector2(0, -5), // 上方向に50ピクセル移動
                 EffectController(
