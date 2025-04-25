@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flame/components.dart' hide Timer;
 import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
+import 'package:roguelike_cardgame/components/text_component.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 
 import 'package:flame/components.dart';
@@ -92,19 +93,7 @@ class SupportDialog extends RectangleComponent {
             size: Sizes.supportDialogSize,
             paint: Paint()..color = Colors.black.withValues(alpha: 0.1),
             children: [
-              TextBoxComponent(
-                textRenderer: TextPaint(
-                    style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.yellow,
-                  fontFamily: 'monospace', // 等幅フォントが見やすい
-                )),
-                align: Anchor.center,
-                text: text,
-                size: Sizes.supportDialogSize,
-                anchor: Anchor.topLeft,
-                // position: Sizes.supportDialogPosition
-              ),
+              TextBoxes.supportText()..text=text,
               MoveEffect.by(
                 Vector2(0, -5), // 上方向に50ピクセル移動
                 EffectController(

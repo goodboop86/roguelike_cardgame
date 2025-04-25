@@ -25,7 +25,7 @@ mixin HasPersonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   )..paint.color = Colors.black.withValues(alpha: 0.3);
 
   Future<void> startDialog() async {
-    textComponent1 = DialogText()
+    textComponent1 = TextBoxes.dialogText()
       ..text = 'やあ、\nテストNPCだよ。'
           'ここにテキストを\n'
           '書くと表示されるよ。\n'
@@ -40,7 +40,7 @@ mixin HasPersonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
 
         dialog.remove(textComponent1);
 
-        textComponent1 = DialogText()
+        textComponent1 = TextBoxes.dialogText()
           ..text = 'またおいで..............'
           ..onComplete = () async {
             dialog.add(UIButtonComponent(
