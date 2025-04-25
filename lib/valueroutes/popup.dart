@@ -107,7 +107,6 @@ class NPCDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
               BasicButtonComponent(
                   position: CANVAS.sizes.npcPopupSize / 2,
                   anchor: Anchor.center,
-                  text: 'hello?',
                   onPressed: () {
                     completeWith(
                       12345, // return value

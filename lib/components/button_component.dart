@@ -8,59 +8,30 @@ import 'package:roguelike_cardgame/main_game.dart';
 
 import '../models/enum.dart';
 import '../providers/sizes.dart';
+import '../spritesheet/spritesheet.dart';
 import '../valueroutes/popup.dart';
 
-class BasicButtonComponent extends ButtonComponent {
-  final String text;
+class BasicButtonComponent extends SpriteButtonComponent {
 
   BasicButtonComponent(
-      {required this.text,
+      {
       // super.button,
-      super.buttonDown,
       super.onPressed,
-      super.onReleased,
-      super.onCancelled,
       super.position,
-      super.size,
-      super.scale,
-      super.angle,
       super.anchor,
       // super.children,
       super.priority})
       : super(
-          button: RectangleComponent(
-            size: Sizes.buttonSize,
-            paint: Paint()..color = Colors.brown,
-            priority: 0,
-          ),
-          children: [
-            TextComponent(
-              priority: 1,
-              text: text,
-              position: Sizes.buttonSize / 2,
-              anchor: Anchor.center,
-              textRenderer:
-                  TextPaint(style: const TextStyle(color: Colors.white)),
-            ),
-          ],
+          button: AssetSource().getSprite(name: "button.png"),
+          size: Sizes.buttonSize,
         );
 
-  BasicButtonComponent.optionButton({required this.text, super.onPressed}) :super(
+  BasicButtonComponent.optionButton({super.onPressed}) :super(
     priority: 20,
-    button: RectangleComponent(
-        size: Sizes.buttonSize,
-        paint: Paint()..color = Colors.brown,
-        priority: 0),
+    button: AssetSource().getSprite(name: "button.png"),
+    size: Sizes.buttonSize,
     anchor: Anchor.center,
     children: [
-      TextComponent(
-        priority: 1,
-        text: text,
-        position: Sizes.buttonSize / 2,
-        anchor: Anchor.center,
-        textRenderer:
-        TextPaint(style: const TextStyle(color: Colors.white)),
-      ),
     ],
   );
 

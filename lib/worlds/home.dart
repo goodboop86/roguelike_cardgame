@@ -26,7 +26,6 @@ class HomePage extends World
   Future<void> onLoad() async {
     add(BasicButtonComponent(
         anchor: Anchor.center,
-        text: 'start',
         onPressed: () {
           _start();
         }));
