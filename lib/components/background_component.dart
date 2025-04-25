@@ -94,13 +94,20 @@ class BlockTapOverlay extends RectangleComponent with TapCallbacks {
   } // タッチイベントを消費する
 }
 
-class PopupBackground extends RectangleComponent with TapCallbacks {
-  PopupBackground({super.position, super.size, super.children, super.anchor})
+class PopupWindow extends RectangleComponent with TapCallbacks {
+  PopupWindow({super.position, super.size, super.children, super.anchor})
       : super(
           paint: Paint()..color = Colors.black.withValues(alpha: 0.8),
         );
 
-  PopupBackground.yesNoPopup({super.children})
+  PopupWindow.choice({super.children})
+      : super(
+      paint: Paint()..color = Colors.black.withValues(alpha: 0.8),
+      size: CANVAS.sizes.npcPopupSize,
+      anchor: Anchor.topCenter,
+      position: CANVAS.sizes.npcPopupPosition);
+
+  PopupWindow.yesNo({super.children})
       : super(
             paint: Paint()..color = Colors.black.withValues(alpha: 0.8),
             size: Sizes.boolDialogSize,

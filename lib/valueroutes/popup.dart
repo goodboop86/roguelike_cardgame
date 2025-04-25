@@ -16,10 +16,7 @@ class MyPopupRoute extends ValueRoute<int> with HasGameReference<MainGame> {
   @override
   Component build() {
     return BlockTapOverlay.transparent(children: [
-      PopupBackground(
-        position: CANVAS.sizes.npcPopupPosition,
-        size: CANVAS.sizes.npcPopupSize,
-        anchor: Anchor.topCenter,
+      PopupWindow.choice(
         children: [
           TextBoxes.dialogText()..text = "サンプルテキスト",
           BasicButtonComponent.npcDialogButton(onPressed: () {
@@ -41,7 +38,7 @@ class YesNoPopupRoute extends ValueRoute<bool> with HasGameReference<MainGame> {
   Component build() {
     return BlockTapOverlay.halfBlack(
         children: [
-          PopupBackground.yesNoPopup(
+          PopupWindow.yesNo(
             children: [
               DialogButtonComponent.yes(
                 onPressed: () {

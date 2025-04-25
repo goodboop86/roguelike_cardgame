@@ -18,7 +18,7 @@ mixin HasPersonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
 
   late TextBoxComponent textComponent1;
 
-  PopupBackground dialog = PopupBackground(
+  PopupWindow dialog = PopupWindow(
     position: Sizes.npcDialogPosition,
     size: Sizes.npcDialogSize,
     anchor: Anchor.topLeft,
