@@ -12,52 +12,57 @@ import '../providers/sizes.dart';
 import '../spritesheet/spritesheet.dart';
 import '../valueroutes/popup.dart';
 
-class BasicButtonComponent extends SpriteButtonComponent {
-  BasicButtonComponent(
-      {super.onPressed, super.position, super.anchor, super.priority})
+class Buttons extends SpriteButtonComponent {
+  Buttons();
+
+  Buttons.basicButton({super.onPressed, super.position})
       : super(
+          anchor: Anchor.center,
           button: AssetSource().getSprite(name: "button.png"),
           size: Sizes.buttonSize,
         );
 
-  BasicButtonComponent.npcDialogButton({super.onPressed})
+  Buttons.npcDialogButton({super.onPressed})
       : super(
             position: CANVAS.sizes.npcPopupSize / 2,
             anchor: Anchor.center,
             button: AssetSource().getSprite(name: "button.png"),
-            size: Sizes.buttonSize) {}
+            size: Sizes.buttonSize);
 
-  BasicButtonComponent.optionButton({super.onPressed})
+  Buttons.optionButton({super.onPressed})
       : super(
           priority: 20,
           button: AssetSource().getSprite(name: "button.png"),
           size: Sizes.buttonSize,
           anchor: Anchor.center,
-          children: [],
         );
+
+  Buttons.homeButton({super.onPressed})
+      : super(
+    priority: 100,
+    button: AssetSource().getSprite(name: "home.png"),
+    size: Sizes.blockSize,
+    anchor: Anchor.topLeft,
+  );
+
+  Buttons.questionButton({super.onPressed})
+      : super(
+    priority: 100,
+    button: AssetSource().getSprite(name: "question.png"),
+    size: Sizes.blockSize,
+    anchor: Anchor.topLeft,
+  );
+
+  Buttons.dialogNextButton({super.onPressed})
+      : super(
+    priority: 100,
+    button: AssetSource().getSprite(name: "right_arrow.png"),
+    size: Sizes.blockSize * 0.8,
+    position: Sizes.npcDialogSize - Sizes.blockSize,
+    anchor: Anchor.topLeft,
+  );
 }
 
-class UIButtonComponent extends SpriteButtonComponent {
-  UIButtonComponent({
-    super.button,
-    super.buttonDown,
-    super.onPressed,
-    super.position,
-    super.size,
-    super.scale,
-    super.angle,
-    super.anchor,
-    super.children,
-    super.priority,
-  }) : super();
-
-  @override
-  Future<void> onLoad() async {
-    // 必要であれば、ボタン固有のアセットロードや初期化処理をここで行う
-    // 例: ボタンの画像スプライトをロードするなど
-    await super.onLoad();
-  }
-}
 
 class DialogButtonComponent extends ButtonComponent {
   DialogButtonComponent.yes({super.onPressed})
@@ -71,7 +76,7 @@ class DialogButtonComponent extends ButtonComponent {
             priority: 0,
           ),
           children: [
-            Texts.buttonText()..text="yes",
+            Texts.buttonText()..text = "yes",
           ],
         );
 
@@ -87,7 +92,7 @@ class DialogButtonComponent extends ButtonComponent {
             priority: 0,
           ),
           children: [
-      Texts.buttonText()..text="no",
+            Texts.buttonText()..text = "no",
           ],
         );
 }

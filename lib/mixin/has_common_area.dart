@@ -23,7 +23,10 @@ mixin HasCommonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     add(AssetSource().getSpriteComponent(name: "background.png")!
       ..position = Sizes.backgroundPosition
       ..priority = 0);
-    addAll([GradientBackground.topGradient(), GradientBackground.bottomGradient()]);
+    addAll([
+      GradientBackground.topGradient(),
+      GradientBackground.bottomGradient()
+    ]);
   }
 
   Future<void> addCharacters() async {
@@ -67,18 +70,11 @@ mixin HasCommonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     );
     add(uiArea);
 
-    final homeButton =
-        UIButtonComponent(button: AssetSource().getSprite(name: "home.png"))
-          ..size = Sizes.blockSize
-          ..priority = 100
-          ..onPressed = () {
-            game.router.pushNamed(ROUTE.home.name);
-          };
-    final questionButton =
-        UIButtonComponent(button: AssetSource().getSprite(name: "question.png"))
-          ..size = Sizes.blockSize
-          ..priority = 100
-          ..onPressed = () {};
+    final homeButton = Buttons.homeButton(onPressed: () {
+      game.router.pushNamed(ROUTE.home.name);
+    });
+
+    final questionButton = Buttons.questionButton(onPressed: () {});
 
     uiArea.addAll([
       homeButton,

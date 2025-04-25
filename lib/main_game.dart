@@ -19,7 +19,6 @@ import 'package:roguelike_cardgame/worlds/home.dart';
 import 'package:roguelike_cardgame/worlds/person_event_world.dart';
 
 import 'components/background_component.dart';
-import 'components/basic_component.dart';
 import 'components/text_component.dart';
 import 'models/enum.dart';
 

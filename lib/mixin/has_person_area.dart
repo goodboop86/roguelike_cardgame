@@ -43,14 +43,9 @@ mixin HasPersonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
         textBox = TextBoxes.dialogText()
           ..text = 'またおいで..............'
           ..onComplete = () async {
-            dialog.add(UIButtonComponent(
-                button: AssetSource().getSprite(name: "right_arrow.png"))
-              ..size = Sizes.blockSize * 0.8
-              ..position = Sizes.npcDialogSize - Sizes.blockSize
-              ..priority = 100
-              ..onPressed = () {
-                game.router.pushNamed(ROUTE.home.name);
-              });
+            dialog.add(Buttons.dialogNextButton(onPressed: () {
+              game.router.pushNamed(ROUTE.home.name);
+            }));
           };
 
         dialog.add(textBox);

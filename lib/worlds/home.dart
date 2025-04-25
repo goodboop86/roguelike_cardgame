@@ -24,8 +24,7 @@ class HomePage extends World
 
   @override
   Future<void> onLoad() async {
-    add(BasicButtonComponent(
-        anchor: Anchor.center,
+    add(Buttons.basicButton(
         onPressed: () {
           _start();
         }));

@@ -19,7 +19,7 @@ class MyPopupRoute extends ValueRoute<int> with HasGameReference<MainGame> {
       PopupWindow.choice(
         children: [
           TextBoxes.dialogText()..text = "サンプルテキスト",
-          BasicButtonComponent.npcDialogButton(onPressed: () {
+          Buttons.npcDialogButton(onPressed: () {
             completeWith(
               12345, // return value
             );
