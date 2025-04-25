@@ -53,11 +53,7 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
       {required String message, required Function next}) async {
     log.info("startTransition.");
 
-    RectangleComponent darkenOverlay = BlockTapOverlay()
-      ..size = Sizes.gameSize
-      ..anchor = Anchor.center
-      ..paint.color = Colors.black.withValues(alpha: 0.5)
-      ..priority = 1000;
+    final darkenOverlay = BlockTapOverlay.transparent_();
 
     add(darkenOverlay);
 

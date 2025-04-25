@@ -50,25 +50,22 @@ class GradientBackground extends PositionComponent
 }
 
 class BlockTapOverlay extends RectangleComponent with TapCallbacks {
-  BlockTapOverlay({
-    super.position,
-    super.size,
-    super.scale,
-    super.angle,
-    super.anchor,
-    super.children,
-    super.priority,
-    super.paint,
-    super.paintLayers,
-    super.key,
-  });
-
+  BlockTapOverlay();
 
   BlockTapOverlay.transparent({super.children})
       : super(
       size: CANVAS.sizes.size,
       anchor: Anchor.center,
       position: CANVAS.sizes.size / 2,
+      paint: Paint()..color = Colors.black.withValues(alpha: 0.0),
+      priority: 1000);
+
+
+  BlockTapOverlay.transparent_({super.children})
+      : super(
+      size: Sizes.gameSize,
+      anchor: Anchor.center,
+      position: Vector2(0,0),
       paint: Paint()..color = Colors.black.withValues(alpha: 0.0),
       priority: 1000);
 
@@ -80,12 +77,15 @@ class BlockTapOverlay extends RectangleComponent with TapCallbacks {
             paint: Paint()..color = Colors.black.withValues(alpha: 0.5),
             priority: 1000);
 
+
+
+
   BlockTapOverlay.black({super.children})
       : super(
             size: CANVAS.sizes.size,
             anchor: Anchor.center,
             position: CANVAS.sizes.size / 2,
-            paint: Paint()..color = Colors.black.withValues(alpha: 0.0),
+            paint: Paint()..color = Colors.black.withValues(alpha: 1.0),
             priority: 1000);
 
   @override

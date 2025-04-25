@@ -138,7 +138,7 @@ class MainGame extends FlameGame
       {required String message, required Event event}) async {
     log.info("start FadeOut.");
 
-    final localDarkenOverlay = BlockTapOverlay.black();
+    final localDarkenOverlay = BlockTapOverlay.transparent();
 
     // SequenceEffect を使用して、複数のエフェクトを順番に実行
     localDarkenOverlay.add(
@@ -165,12 +165,7 @@ class MainGame extends FlameGame
       {required String message, required Function onComplete}) async {
     log.info("start fadeIn.");
 
-    RectangleComponent darkenOverlay = BlockTapOverlay()
-      ..size = canvasSize
-      ..anchor = Anchor.center
-      ..position = canvasSize / 2
-      ..paint.color = Colors.black.withValues(alpha: 1.0)
-      ..priority = 1000;
+    final darkenOverlay = BlockTapOverlay.black();
 
     router.currentRoute.add(darkenOverlay);
     darkenOverlay.add(Texts.transitionText()
