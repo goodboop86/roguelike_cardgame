@@ -79,11 +79,18 @@ class OverlayBackground extends RectangleComponent with TapCallbacks {
   } // タッチイベントを消費する
 }
 
-class DialogBackground extends RectangleComponent with TapCallbacks {
-  DialogBackground({super.position, super.size, super.children, super.anchor})
+class PopupBackground extends RectangleComponent with TapCallbacks {
+  PopupBackground({super.position, super.size, super.children, super.anchor})
       : super(
           paint: Paint()..color = Colors.black.withValues(alpha: 0.8),
         );
+  PopupBackground.yesNoPopup({super.children})
+      : super(
+    paint: Paint()..color = Colors.black.withValues(alpha: 0.8),
+    size: Sizes.boolDialogSize,
+    anchor: Anchor.center,
+    position: CANVAS.sizes.size / 2
+  );
 }
 
 class SupportDialog extends RectangleComponent {

@@ -22,7 +22,7 @@ class NPCDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
         paint: Paint()..color = Colors.black.withValues(alpha: 0.5),
         size: game.canvasSize,
         children: [
-          DialogBackground(
+          PopupBackground(
             position: CANVAS.sizes.npcPopupPosition,
             size: CANVAS.sizes.npcPopupSize,
             anchor: Anchor.topCenter,
@@ -39,9 +39,9 @@ class NPCDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
   }
 }
 
-class YesNoPpupRoute extends ValueRoute<bool>
+class YesNoPopupRoute extends ValueRoute<bool>
     with HasGameReference<MainGame> {
-  YesNoPpupRoute() : super(value: false, transparent: false);
+  YesNoPopupRoute() : super(value: false, transparent: false);
 
   @override
   Component build() {
@@ -49,10 +49,7 @@ class YesNoPpupRoute extends ValueRoute<bool>
         paint: Paint()..color = Colors.black.withValues(alpha: 0.5),
         size: game.canvasSize,
         children: [
-          DialogBackground(
-            position: game.canvasSize / 2,
-            size: Sizes.boolDialogSize,
-            anchor: Anchor.center,
+          PopupBackground.yesNoPopup(
             children: [
               DialogButtonComponent.yes(
                 onPressed: () {
