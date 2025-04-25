@@ -27,7 +27,6 @@ class MyPopupRoute extends ValueRoute<int> with HasGameReference<MainGame> {
         ],
       )
     ]);
-    ;
   }
 }
 

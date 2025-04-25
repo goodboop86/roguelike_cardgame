@@ -20,6 +20,7 @@ import 'package:roguelike_cardgame/worlds/person_event_world.dart';
 
 import 'components/background_component.dart';
 import 'components/basic_component.dart';
+import 'components/text_component.dart';
 import 'models/enum.dart';
 
 class MainGame extends FlameGame
@@ -172,7 +173,7 @@ class MainGame extends FlameGame
       ..priority = 1000;
 
     router.currentRoute.add(darkenOverlay);
-    darkenOverlay.add(transitionText
+    darkenOverlay.add(Texts.transitionText()
       ..text = message
       ..position = canvasSize / 2);
 

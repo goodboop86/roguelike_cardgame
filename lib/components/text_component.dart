@@ -16,21 +16,30 @@ class TextBoxes extends TextBoxComponent {
 
     textRenderer = TextPaint(
         style: const TextStyle(
-          fontSize: 14,
-          color: Colors.white,
-          fontFamily: 'monospace', // 等幅フォントが見やすい
-        ));
+      fontSize: 14,
+      color: Colors.white,
+      fontFamily: 'monospace', // 等幅フォントが見やすい
+    ));
   }
 
-  TextBoxes.supportText() : super(align: Anchor.center,
-      size: Sizes.supportDialogSize,
-      anchor: Anchor.topLeft,
-      textRenderer: TextPaint(
-          style: const TextStyle(
-            fontSize: 14,
-            color: Colors.yellow,
-            fontFamily: 'monospace', // 等幅フォントが見やすい
-          )));
-
+  TextBoxes.supportText()
+      : super(
+            align: Anchor.center,
+            size: Sizes.supportDialogSize,
+            anchor: Anchor.topLeft,
+            textRenderer: TextPaint(
+                style: const TextStyle(
+              fontSize: 14,
+              color: Colors.yellow,
+              fontFamily: 'monospace', // 等幅フォントが見やすい
+            )));
 }
 
+class Texts extends TextComponent {
+  Texts.transitionText()
+      : super(
+            priority: 1,
+            anchor: Anchor.center,
+            textRenderer: TextPaint(
+                style: const TextStyle(color: Colors.white, fontSize: 24)));
+}

@@ -11,6 +11,7 @@ import '../components/basic_component.dart';
 import '../components/button_component.dart';
 import '../components/card_area_component.dart';
 import '../components/card_component.dart';
+import '../components/text_component.dart';
 import '../models/card.dart';
 import '../models/card_effect.dart';
 import '../models/enum.dart';
@@ -60,6 +61,8 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
       ..priority = 1000;
 
     add(darkenOverlay);
+
+    final transitionText = Texts.transitionText();
 
     // SequenceEffect を使用して、複数のエフェクトを順番に実行
     await darkenOverlay.add(
