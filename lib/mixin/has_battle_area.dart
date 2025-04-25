@@ -144,7 +144,7 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     final buttonAreaCenterX = Sizes.buttonAreaWidth / 2;
     final buttonAreaCenterY = Sizes.buttonAreaHeight / 2;
     buttonOnPressedFunctions.asMap().forEach((index, function) {
-      final button = Buttons.optionButton(onPressed: function)
+      final button = SpriteButtons.optionButton(onPressed: function)
         ..position = Vector2(
           buttonAreaCenterX +
               (index - 1.5) * (Sizes.buttonWidth + Sizes.margin), // X 座標を調整

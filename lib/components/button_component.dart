@@ -12,24 +12,24 @@ import '../providers/sizes.dart';
 import '../spritesheet/spritesheet.dart';
 import '../valueroutes/popup.dart';
 
-class Buttons extends SpriteButtonComponent {
-  Buttons();
+class SpriteButtons extends SpriteButtonComponent {
+  SpriteButtons();
 
-  Buttons.basicButton({super.onPressed, super.position})
+  SpriteButtons.basicButton({super.onPressed, super.position})
       : super(
           anchor: Anchor.center,
           button: AssetSource().getSprite(name: "button.png"),
           size: Sizes.buttonSize,
         );
 
-  Buttons.npcDialogButton({super.onPressed})
+  SpriteButtons.npcDialogButton({super.onPressed})
       : super(
             position: CANVAS.sizes.npcPopupSize / 2,
             anchor: Anchor.center,
             button: AssetSource().getSprite(name: "button.png"),
             size: Sizes.buttonSize);
 
-  Buttons.optionButton({super.onPressed})
+  SpriteButtons.optionButton({super.onPressed})
       : super(
           priority: 20,
           button: AssetSource().getSprite(name: "button.png"),
@@ -37,7 +37,7 @@ class Buttons extends SpriteButtonComponent {
           anchor: Anchor.center,
         );
 
-  Buttons.homeButton({super.onPressed})
+  SpriteButtons.homeButton({super.onPressed})
       : super(
     priority: 100,
     button: AssetSource().getSprite(name: "home.png"),
@@ -45,7 +45,7 @@ class Buttons extends SpriteButtonComponent {
     anchor: Anchor.topLeft,
   );
 
-  Buttons.questionButton({super.onPressed})
+  SpriteButtons.questionButton({super.onPressed})
       : super(
     priority: 100,
     button: AssetSource().getSprite(name: "question.png"),
@@ -53,7 +53,7 @@ class Buttons extends SpriteButtonComponent {
     anchor: Anchor.topLeft,
   );
 
-  Buttons.dialogNextButton({super.onPressed})
+  SpriteButtons.dialogNextButton({super.onPressed})
       : super(
     priority: 100,
     button: AssetSource().getSprite(name: "right_arrow.png"),
@@ -61,11 +61,12 @@ class Buttons extends SpriteButtonComponent {
     position: Sizes.npcDialogSize - Sizes.blockSize,
     anchor: Anchor.topLeft,
   );
+
 }
 
 
-class DialogButtonComponent extends ButtonComponent {
-  DialogButtonComponent.yes({super.onPressed})
+class Buttons extends ButtonComponent {
+  Buttons.yes({super.onPressed})
       : super(
           anchor: Anchor.topLeft,
           position:
@@ -80,7 +81,7 @@ class DialogButtonComponent extends ButtonComponent {
           ],
         );
 
-  DialogButtonComponent.no({
+  Buttons.no({
     super.onPressed,
   }) : super(
           anchor: Anchor.topLeft,
@@ -124,25 +125,4 @@ class ChoiceButtonComponent extends RectangleComponent
     }
     super.onTapUp(event);
   }
-}
-
-class ExecuteButtonComponent<T> extends AdvancedButtonComponent {
-  ExecuteButtonComponent(
-      {super.onPressed,
-      super.onChangeState,
-      super.defaultSkin,
-      super.downSkin,
-      super.disabledSkin,
-      super.defaultLabel,
-      super.disabledLabel,
-      super.size,
-      super.position,
-      super.scale,
-      super.angle,
-      super.anchor,
-      super.children,
-      super.priority,
-      required this.value});
-
-  T value;
 }

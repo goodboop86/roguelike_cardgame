@@ -19,7 +19,7 @@ class MyPopupRoute extends ValueRoute<int> with HasGameReference<MainGame> {
       PopupWindow.choice(
         children: [
           TextBoxes.dialogText()..text = "サンプルテキスト",
-          Buttons.npcDialogButton(onPressed: () {
+          SpriteButtons.npcDialogButton(onPressed: () {
             completeWith(
               12345, // return value
             );
@@ -39,14 +39,14 @@ class YesNoPopupRoute extends ValueRoute<bool> with HasGameReference<MainGame> {
         children: [
           PopupWindow.yesNo(
             children: [
-              DialogButtonComponent.yes(
+              Buttons.yes(
                 onPressed: () {
                   completeWith(
                     true, // return value
                   );
                 },
               ),
-              DialogButtonComponent.no(
+              Buttons.no(
                 onPressed: () {
                   completeWith(
                     false, // return value

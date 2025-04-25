@@ -70,11 +70,11 @@ mixin HasCommonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     );
     add(uiArea);
 
-    final homeButton = Buttons.homeButton(onPressed: () {
+    final homeButton = SpriteButtons.homeButton(onPressed: () {
       game.router.pushNamed(ROUTE.home.name);
     });
 
-    final questionButton = Buttons.questionButton(onPressed: () {});
+    final questionButton = SpriteButtons.questionButton(onPressed: () {});
 
     uiArea.addAll([
       homeButton,

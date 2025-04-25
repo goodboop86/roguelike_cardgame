@@ -24,7 +24,7 @@ class HomePage extends World
 
   @override
   Future<void> onLoad() async {
-    add(Buttons.basicButton(
+    add(SpriteButtons.basicButton(
         onPressed: () {
           _start();
         }));

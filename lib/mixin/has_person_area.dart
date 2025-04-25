@@ -43,7 +43,7 @@ mixin HasPersonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
         textBox = TextBoxes.dialogText()
           ..text = 'またおいで..............'
           ..onComplete = () async {
-            dialog.add(Buttons.dialogNextButton(onPressed: () {
+            dialog.add(SpriteButtons.dialogNextButton(onPressed: () {
               game.router.pushNamed(ROUTE.home.name);
             }));
           };
