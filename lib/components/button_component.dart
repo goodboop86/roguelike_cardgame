@@ -12,14 +12,12 @@ import '../valueroutes/popup.dart';
 
 class BasicButtonComponent extends ButtonComponent {
   final String text;
-  final VoidCallback? func;
 
   BasicButtonComponent(
       {required this.text,
-      this.func,
       // super.button,
       super.buttonDown,
-      // super.onPressed,
+      super.onPressed,
       super.onReleased,
       super.onCancelled,
       super.position,
@@ -45,8 +43,26 @@ class BasicButtonComponent extends ButtonComponent {
                   TextPaint(style: const TextStyle(color: Colors.white)),
             ),
           ],
-          onPressed: func,
         );
+
+  BasicButtonComponent.optionButton({required this.text, super.onPressed}) :super(
+    priority: 20,
+    button: RectangleComponent(
+        size: Sizes.buttonSize,
+        paint: Paint()..color = Colors.brown,
+        priority: 0),
+    anchor: Anchor.center,
+    children: [
+      TextComponent(
+        priority: 1,
+        text: text,
+        position: Sizes.buttonSize / 2,
+        anchor: Anchor.center,
+        textRenderer:
+        TextPaint(style: const TextStyle(color: Colors.white)),
+      ),
+    ],
+  );
 
   @override
   Future<void> onLoad() async {
@@ -125,31 +141,6 @@ class DialogButtonComponent extends ButtonComponent {
   }
 }
 
-class OptionButtonComponent extends ButtonComponent {
-  final String text;
-  final VoidCallback? func;
-
-  OptionButtonComponent({required this.text, this.func})
-      : super(
-          priority: 20,
-          button: RectangleComponent(
-              size: Sizes.buttonSize,
-              paint: Paint()..color = Colors.brown,
-              priority: 0),
-          onPressed: func,
-          anchor: Anchor.center,
-          children: [
-            TextComponent(
-              priority: 1,
-              text: text,
-              position: Sizes.buttonSize / 2,
-              anchor: Anchor.center,
-              textRenderer:
-                  TextPaint(style: const TextStyle(color: Colors.white)),
-            ),
-          ],
-        );
-}
 
 class ChoiceButtonComponent extends RectangleComponent
     with TapCallbacks, HasGameRef<MainGame> {

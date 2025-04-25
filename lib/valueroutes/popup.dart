@@ -108,7 +108,7 @@ class NPCDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
                   position: CANVAS.sizes.npcPopupSize / 2,
                   anchor: Anchor.center,
                   text: 'hello?',
-                  func: () {
+                  onPressed: () {
                     completeWith(
                       12345, // return value
                     );

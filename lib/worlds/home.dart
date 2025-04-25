@@ -27,7 +27,7 @@ class HomePage extends World
     add(BasicButtonComponent(
         anchor: Anchor.center,
         text: 'start',
-        func: () {
+        onPressed: () {
           _start();
         }));
   }
