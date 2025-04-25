@@ -60,20 +60,14 @@ class UIButtonComponent extends SpriteButtonComponent {
 
 class DialogButtonComponent extends ButtonComponent {
   final String text;
-  final VoidCallback? func;
+  // final VoidCallback? func;
 
   DialogButtonComponent(
       {required this.text,
-      this.func,
-      // super.button,
       super.buttonDown,
-      // super.onPressed,
-      super.onReleased,
-      super.onCancelled,
+      super.onPressed,
       super.position,
       super.size,
-      super.scale,
-      super.angle,
       super.anchor,
       // super.children,
       required paint,
@@ -94,15 +88,7 @@ class DialogButtonComponent extends ButtonComponent {
                   TextPaint(style: const TextStyle(color: Colors.white)),
             ),
           ],
-          onPressed: func,
         );
-
-  @override
-  Future<void> onLoad() async {
-    // 必要であれば、ボタン固有のアセットロードや初期化処理をここで行う
-    // 例: ボタンの画像スプライトをロードするなど
-    await super.onLoad();
-  }
 }
 
 class ChoiceButtonComponent extends RectangleComponent

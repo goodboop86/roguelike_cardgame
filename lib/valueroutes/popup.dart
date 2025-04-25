@@ -136,7 +136,7 @@ class MyBoolDialogRoute extends ValueRoute<bool>
                       0, Sizes.boolDialogHeight - Sizes.dialogButtonHeight),
                   anchor: Anchor.topLeft,
                   text: 'Yes',
-                  func: () {
+                  onPressed: () {
                     completeWith(
                       true, // return value
                     );
@@ -148,7 +148,7 @@ class MyBoolDialogRoute extends ValueRoute<bool>
                       Sizes.boolDialogHeight - Sizes.dialogButtonHeight),
                   anchor: Anchor.topLeft,
                   text: 'No',
-                  func: () {
+                  onPressed: () {
                     completeWith(
                       false, // return value
                     );
