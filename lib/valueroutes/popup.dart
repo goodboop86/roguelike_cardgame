@@ -12,6 +12,7 @@ import 'package:roguelike_cardgame/main_game.dart';
 
 import '../components/background_component.dart';
 import '../components/button_component.dart';
+import '../components/text_component.dart';
 import '../providers/sizes.dart';
 
 class StringRoute extends ValueRoute<String> with HasGameReference<MainGame> {
@@ -91,20 +92,7 @@ class NPCDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
 
   @override
   Component build() {
-    TextBoxComponent textBox = TextBoxComponent(
-        size: Sizes.npcDialogSize,
-        text: 'サンプルテキスト',
-        boxConfig: const TextBoxConfig(
-            timePerChar: 0.03,
-            maxWidth: 30.0,
-            growingBox: true,
-            margins: EdgeInsets.fromLTRB(10, 10, 10, 10)),
-        textRenderer: TextPaint(
-            style: const TextStyle(
-          fontSize: 14,
-          color: Colors.white,
-          fontFamily: 'monospace', // 等幅フォントが見やすい
-        )));
+    TextBoxComponent textBox = TextBoxes.dialogText()..text="サンプルテキスト";
 
     return OverlayBackground(
         paint: Paint()..color = Colors.black.withValues(alpha: 0.5),
@@ -116,62 +104,6 @@ class NPCDialogRoute extends ValueRoute<int> with HasGameReference<MainGame> {
             anchor: Anchor.topCenter,
             children: [
               textBox,
-              BasicButtonComponent(
-                  position: CANVAS.sizes.npcPopupSize / 2,
-                  anchor: Anchor.center,
-                  text: 'hello?',
-                  func: () {
-                    completeWith(
-                      12345, // return value
-                    );
-                  })
-            ],
-          )
-        ]);
-  }
-}
-
-class NPCDialogPopupRoute extends ValueRoute<int>
-    with HasGameReference<MainGame> {
-  NPCDialogPopupRoute() : super(value: -1, transparent: true);
-
-  @override
-  Component build() {
-    return OverlayBackground(
-        paint: Paint()..color = Colors.black.withValues(alpha: 0.5),
-        size: game.canvasSize,
-        children: [
-          DialogBackground(
-            position: CANVAS.sizes.npcDialogPosition,
-            // Vector2(game.canvasSize.x / 2,game.canvasSize.y /16),
-            size: CANVAS.sizes.npcDialogSize,
-            anchor: Anchor.topCenter,
-            children: [
-              TextBoxComponent(
-                  size: CANVAS.sizes.npcDialogSize,
-                  text: 'やあ、\nテストNPCだよ。'
-                      'ここにテキストを\n'
-                      '書くと表示されるよ。\n'
-                      'ーーーーーーーーーーーーーーーーーー\n'
-                      'ーーーーーーーーーーーーー',
-                  boxConfig: const TextBoxConfig(
-                      timePerChar: 0.03,
-                      maxWidth: 30.0,
-                      growingBox: true,
-                      margins: EdgeInsets.fromLTRB(10, 10, 10, 10)),
-                  textRenderer: TextPaint(
-                      style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.white,
-                    fontFamily: 'monospace', // 等幅フォントが見やすい
-                  ))),
-            ],
-          )..paint.color = Colors.black.withValues(alpha: 0.1),
-          DialogBackground(
-            position: CANVAS.sizes.npcPopupPosition,
-            size: CANVAS.sizes.npcPopupSize,
-            anchor: Anchor.topCenter,
-            children: [
               BasicButtonComponent(
                   position: CANVAS.sizes.npcPopupSize / 2,
                   anchor: Anchor.center,
