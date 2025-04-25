@@ -42,4 +42,18 @@ class Texts extends TextComponent {
             anchor: Anchor.center,
             textRenderer: TextPaint(
                 style: const TextStyle(color: Colors.white, fontSize: 24)));
+
+  Texts.buttonText()
+      : super(
+      priority: 1,
+      anchor: Anchor.center,
+      position: Sizes.dialogButtonSize / 2,
+      textRenderer: TextPaint(style: const TextStyle(color: Colors.white)));
+
+  Texts.tinyMapText()
+      : super(
+      priority: 1,
+      anchor: Anchor.center,
+      position: Sizes.mapSize,
+      textRenderer: TextPaint(style: const TextStyle(color: Colors.white, fontSize: 12)));
 }

@@ -4,6 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
+import 'package:roguelike_cardgame/components/text_component.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 
 import '../models/enum.dart';
@@ -70,14 +71,7 @@ class DialogButtonComponent extends ButtonComponent {
             priority: 0,
           ),
           children: [
-            TextComponent(
-              priority: 1,
-              text: "yes",
-              position: Sizes.dialogButtonSize / 2,
-              anchor: Anchor.center,
-              textRenderer:
-                  TextPaint(style: const TextStyle(color: Colors.white)),
-            ),
+            Texts.buttonText()..text="yes",
           ],
         );
 
@@ -93,14 +87,7 @@ class DialogButtonComponent extends ButtonComponent {
             priority: 0,
           ),
           children: [
-            TextComponent(
-              priority: 1,
-              text: "no",
-              position: Sizes.dialogButtonSize / 2,
-              anchor: Anchor.center,
-              textRenderer:
-                  TextPaint(style: const TextStyle(color: Colors.white)),
-            ),
+      Texts.buttonText()..text="no",
           ],
         );
 }

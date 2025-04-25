@@ -16,7 +16,7 @@ import '../valueroutes/popup.dart';
 mixin HasPersonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   Logger log = Logger('HasPersonArea');
 
-  late TextBoxComponent textComponent1;
+  late TextBoxComponent textBox;
 
   PopupWindow dialog = PopupWindow(
     position: Sizes.npcDialogPosition,
@@ -25,7 +25,7 @@ mixin HasPersonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   )..paint.color = Colors.black.withValues(alpha: 0.3);
 
   Future<void> startDialog() async {
-    textComponent1 = TextBoxes.dialogText()
+    textBox = TextBoxes.dialogText()
       ..text = 'やあ、\nテストNPCだよ。'
           'ここにテキストを\n'
           '書くと表示されるよ。\n'
@@ -38,9 +38,9 @@ mixin HasPersonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
 
         add(supportDialog);
 
-        dialog.remove(textComponent1);
+        dialog.remove(textBox);
 
-        textComponent1 = TextBoxes.dialogText()
+        textBox = TextBoxes.dialogText()
           ..text = 'またおいで..............'
           ..onComplete = () async {
             dialog.add(UIButtonComponent(
@@ -53,10 +53,10 @@ mixin HasPersonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
               });
           };
 
-        dialog.add(textComponent1);
+        dialog.add(textBox);
       };
 
-    dialog.add(textComponent1);
+    dialog.add(textBox);
 
     add(dialog);
   }

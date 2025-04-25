@@ -5,7 +5,6 @@ import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 import '../components/background_component.dart';
-import '../components/basic_component.dart';
 import '../components/button_component.dart';
 import '../components/card_area_component.dart';
 import '../components/enemy_component.dart';

@@ -7,6 +7,7 @@ import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 import '../components/button_component.dart';
 import '../components/card_area_component.dart';
+import '../components/text_component.dart';
 import '../models/enum.dart';
 import '../providers/sizes.dart';
 
@@ -35,14 +36,7 @@ mixin HasExploreArea
               size: Sizes.mapSize, paint: Paint()..color = color, priority: 0),
           onPressed: () {},
           children: [
-            TextComponent(
-              priority: 1,
-              text: '$depth $choice',
-              position: Sizes.mapSize,
-              anchor: Anchor.center,
-              textRenderer:
-                  TextPaint(style: const TextStyle(color: Colors.white)),
-            ),
+            Texts.tinyMapText()..text = '$depth $choice',
           ],
         )..position = Vector2(
             depth * totalMapWidth +
