@@ -72,24 +72,19 @@ class MainGame extends FlameGame
         size: Sizes.backgroundSize);
 
     await AssetSource().storeSprite(
-        path: 'home.png',
-        key: ComponentKey.named("home"),
-        size: Sizes.blockSize);
+        path: 'home.png',);
 
     await AssetSource().storeSprite(
-        path: 'question.png',
-        key: ComponentKey.named("question"),
-        size: Sizes.blockSize);
+        path: 'question.png',);
 
     await AssetSource().storeSprite(
-        path: 'right_arrow.png',
-        key: ComponentKey.named("right_arrow"),
-        size: Sizes.blockSize);
+        path: 'right_arrow.png',);
 
     await AssetSource().storeSprite(
-        path: 'button.png',
-        key: ComponentKey.named("button"),
-        size: Sizes.blockSize);
+        path: 'button.png',);
+
+    await AssetSource().storeSprite(
+      path: 'fireball_96_64.png',);
 
     // parallax
     ParallaxComponent parallax = await loadParallaxComponent(

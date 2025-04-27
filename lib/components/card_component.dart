@@ -15,10 +15,10 @@ class CardComponent extends RectangleComponent
     with TapCallbacks, RiverpodComponentMixin, HasGameRef, DragCallbacks {
   CardComponent(
       {required this.card,
-      this.borderRadius = 3.0,
-      this.strokeWidth = 3.0,
+      this.borderRadius = 1.0,
+      this.strokeWidth = 1.0,
       this.fillColor = Colors.black,
-      this.strokeColor = Colors.red}) {
+      this.strokeColor = Colors.white}) {
     super.priority = 20;
   }
 

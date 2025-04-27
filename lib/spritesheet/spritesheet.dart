@@ -56,9 +56,7 @@ class AssetSource {
   }
 
   Future<void> storeSprite(
-      {required Vector2 size,
-      required String path,
-      required ComponentKey key}) async {
+      {required String path,}) async {
     if (!_spriteCache.containsKey(path)) {
       Sprite sprite = await Sprite.load(path);
       _spriteCache[path] = sprite;
