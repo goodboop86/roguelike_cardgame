@@ -54,20 +54,19 @@ class BlockTapOverlay extends RectangleComponent with TapCallbacks {
 
   BlockTapOverlay.transparent({super.children})
       : super(
-      size: CANVAS.sizes.size,
-      anchor: Anchor.center,
-      position: CANVAS.sizes.size / 2,
-      paint: Paint()..color = Colors.black.withValues(alpha: 0.0),
-      priority: 1000);
-
+            size: CANVAS.sizes.size,
+            anchor: Anchor.center,
+            position: CANVAS.sizes.size / 2,
+            paint: Paint()..color = Colors.black.withValues(alpha: 0.0),
+            priority: 1000);
 
   BlockTapOverlay.transparent_({super.children})
       : super(
-      size: Sizes.gameSize,
-      anchor: Anchor.center,
-      position: Vector2(0,0),
-      paint: Paint()..color = Colors.black.withValues(alpha: 0.0),
-      priority: 1000);
+            size: Sizes.gameSize,
+            anchor: Anchor.center,
+            position: Vector2(0, 0),
+            paint: Paint()..color = Colors.black.withValues(alpha: 0.0),
+            priority: 1000);
 
   BlockTapOverlay.halfBlack({super.children})
       : super(
@@ -76,9 +75,6 @@ class BlockTapOverlay extends RectangleComponent with TapCallbacks {
             position: CANVAS.sizes.size / 2,
             paint: Paint()..color = Colors.black.withValues(alpha: 0.5),
             priority: 1000);
-
-
-
 
   BlockTapOverlay.black({super.children})
       : super(
@@ -102,10 +98,10 @@ class PopupWindow extends RectangleComponent with TapCallbacks {
 
   PopupWindow.choice({super.children})
       : super(
-      paint: Paint()..color = Colors.black.withValues(alpha: 0.8),
-      size: CANVAS.sizes.npcPopupSize,
-      anchor: Anchor.topCenter,
-      position: CANVAS.sizes.npcPopupPosition);
+            paint: Paint()..color = Colors.black.withValues(alpha: 0.8),
+            size: CANVAS.sizes.npcPopupSize,
+            anchor: Anchor.topCenter,
+            position: CANVAS.sizes.npcPopupPosition);
 
   PopupWindow.yesNo({super.children})
       : super(

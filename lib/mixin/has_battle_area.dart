@@ -57,29 +57,29 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
 
     add(darkenOverlay);
 
-    final transitionText = Texts.transitionText();
+    final transitionText = Texts.transitionText()
+      ..text = message
+      ..position = Sizes.gameSize / 2;
 
     // SequenceEffect を使用して、複数のエフェクトを順番に実行
-    await darkenOverlay.add(
+    darkenOverlay.add(
       SequenceEffect(
         [
           // 暗転アニメーション
           OpacityEffect.to(
               0.6, EffectController(startDelay: 0.2, duration: 0.5),
               onComplete: () => {
-                    darkenOverlay.add(transitionText
-                      ..text = message
-                      ..position = Sizes.gameSize / 2)
+                    darkenOverlay.add(transitionText)
                   }),
           // 待機
           OpacityEffect.to(0.6, EffectController(duration: 0.5),
               onComplete: () => {darkenOverlay.remove(transitionText)}),
           // 明転アニメーション
           OpacityEffect.to(0, EffectController(duration: 0.5)),
+          RemoveEffect(delay: 0.5)
         ],
         onComplete: () {
           next();
-          remove(darkenOverlay);
           // 画面遷移処理
           // ...
         },
