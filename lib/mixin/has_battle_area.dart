@@ -55,7 +55,6 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
 
     final darkenOverlay = BlockTapOverlay.transparent_();
 
-    add(darkenOverlay);
 
     final transitionText = Texts.transitionText()
       ..text = message
@@ -85,11 +84,15 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
         },
       ),
     );
+    add(darkenOverlay);
   }
 
-  void refreshCards() {
-    ref.read(playerProvider.notifier).resetMana();
+  void playerPhase() {
+    ref.read(playerProvider.notifier).startTurn();
     ref.read(deckProvider.notifier).startTurn();
+  }
+
+  void removeCardArea() {
     // 現在のカードを削除
     children.whereType<CardAreaComponent>().forEach((area) {
       if (area.isMounted) {
@@ -105,7 +108,8 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
       message: 'player-turn',
       next: () async {
         await Future.delayed(const Duration(milliseconds: 500));
-        refreshCards();
+        removeCardArea();
+        playerPhase();
       },
     );
   }

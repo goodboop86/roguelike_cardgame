@@ -33,7 +33,7 @@ class BattleEventWorld extends World
 
   @override
   Future<void> onMount() async {
-    game.fadeIn(message: '', onComplete: refreshCards);
+    game.fadeIn(message: '', onComplete: playerPhase);
 
     addToGameWidgetBuild(() async {
       // BattleRouteState state = ref.read(battleRouteProvider);
