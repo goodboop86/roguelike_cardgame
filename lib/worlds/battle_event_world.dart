@@ -37,8 +37,8 @@ class BattleEventWorld extends World
 
     addToGameWidgetBuild(() async {
       // BattleRouteState state = ref.read(battleRouteProvider);
-      PlayerState playerState = ref.read(playerProvider);
-      EnemyState enemyState = ref.read(enemyProvider);
+      // PlayerState playerState = ref.read(playerProvider);
+      // EnemyState enemyState = ref.read(enemyProvider);
       // TODO: 受け取ったEventに従ってEnemyを設置する
 
       Component? background = game.findByKey(ComponentKey.named("Background"));
@@ -52,12 +52,8 @@ class BattleEventWorld extends World
       var uiArea = children.whereType<UiAreaComponent>();
 
       if (background != null) {
-        if (characterArea.isEmpty &
-            background.isMounted &
-            (playerState != null) &
-            (enemyState != null)) {
+        if (characterArea.isEmpty & background.isMounted) {
           log.fine("addCharacters");
-
           await addCharacters();
         }
 
