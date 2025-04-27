@@ -18,6 +18,7 @@ import '../models/enum.dart';
 import '../providers/deck_provider.dart';
 import '../providers/player_provider.dart';
 import '../providers/sizes.dart';
+import '../spritesheet/spritesheet.dart';
 
 mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   Logger log = Logger('HasBattleArea');
@@ -30,6 +31,7 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     );
     add(cardArea);
 
+
     // カードコンポーネントを作成し、カードエリアの中心に集める
     final cardAreaCenterX = Sizes.cardAreaWidth / 2;
     final cardAreaCenterY = Sizes.cardAreaHeight / 2;
@@ -37,7 +39,16 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     cards.asMap().forEach((index, card) {
       final row = index ~/ colSize;
       final col = index % colSize;
-      final cardComponent = CardComponent(card: card)
+
+      final cardSprite = AssetSource().getSpriteComponent(name: "fireball_96_64.png", size: Sizes.cardSpriteSize)!;
+      if(cardSprite == null){
+        log.warning("cardSprite is null.");
+      } else {
+        log.warning("cardSprite is exists.");
+      }
+
+      final cardComponent = CardComponent(card: card
+      , sprite: cardSprite)
         ..position = Vector2(
           cardAreaCenterX +
               (col - 1) * (Sizes.cardWidth + Sizes.cardMargin), // X 座標を調整

@@ -38,25 +38,9 @@ class AssetSource {
     }
   }
 
-  Future<void> storeSpriteComponent(
-      {required Vector2 size,
-      required String path,
-      required ComponentKey key}) async {
-    if (!_spriteComponentCache.containsKey(path)) {
-      SpriteComponent sprite = SpriteComponent(
-        size: size,
-        sprite: await Sprite.load(path),
-        key: key,
-        priority: 10,
-        anchor: Anchor.center,
-      );
-      _spriteComponentCache[path] = sprite;
-      log.fine("store sprite: $path");
-    }
-  }
-
-  Future<void> storeSprite(
-      {required String path,}) async {
+  Future<void> storeSprite({
+    required String path,
+  }) async {
     if (!_spriteCache.containsKey(path)) {
       Sprite sprite = await Sprite.load(path);
       _spriteCache[path] = sprite;
@@ -82,9 +66,19 @@ class AssetSource {
     }
   }
 
-  SpriteComponent? getSpriteComponent({required String name}) {
-    if (_spriteComponentCache.containsKey(name)) {
-      return _spriteComponentCache[name];
+  SpriteComponent? getSpriteComponent(
+      {required String name, required Vector2 size, ComponentKey? key}) {
+
+    key ??= ComponentKey.unique();
+
+    if (_spriteCache.containsKey(name)) {
+      return SpriteComponent(
+        size: size,
+        sprite: _spriteCache[name],
+        priority: 10,
+        anchor: Anchor.center,
+        key: key
+      );
     } else {
       log.warning('not found: $name');
       return null;

@@ -11,24 +11,34 @@ import '../models/card.dart';
 import '../models/enum.dart';
 import '../providers/card_provider.dart';
 import '../providers/sizes.dart';
+import '../spritesheet/spritesheet.dart';
 
 class CardComponent extends PositionComponent
     with TapCallbacks, RiverpodComponentMixin, HasGameRef, DragCallbacks {
-  CardComponent({required this.card})
+  CardComponent({required this.card, required this.sprite})
       : super(
-            priority: 0,
-            size: Sizes.cardSize,
-            anchor: Anchor.center,
-            children: [
-              CardDesignComponent(),
-            ]);
+      priority: 0,
+      size: Sizes.cardSize,
+      anchor: Anchor.center,);
 
+  SpriteComponent sprite;
   Logger log = Logger('CardComponent');
   final Card_ card;
   Vector2? initialPosition;
   CharacterAreaComponent? target;
 
   bool isOverlapping = false;
+
+  @override
+  Future<void> onMount() async{
+    super.onMount();
+
+    // final sprite= AssetSource().getSpriteComponent(name: sprite)!;
+
+    add(sprite..anchor=Anchor.topLeft); //これを追加するとエラー
+
+    add(CardDesignComponent());
+  }
 
   @override
   void onTapUp(TapUpEvent event) {
@@ -73,7 +83,9 @@ class CardComponent extends PositionComponent
 
   @override
   void onDragEnd(DragEndEvent event) {
-    int mana = ref.read(playerProvider).mana;
+    int mana = ref
+        .read(playerProvider)
+        .mana;
     super.onDragEnd(event);
     if (isOverlapping & (mana >= card.effect.manaCost)) {
       process();
@@ -147,11 +159,10 @@ class CardComponent extends PositionComponent
 
 class CardDesignComponent extends RectangleComponent
     with RiverpodComponentMixin, HasGameRef {
-  CardDesignComponent(
-      {this.borderRadius = 1.0,
-      this.strokeWidth = 1.0,
-      this.fillColor = Colors.black,
-      this.strokeColor = Colors.white})
+  CardDesignComponent({this.borderRadius = 1.0,
+    this.strokeWidth = 1.0,
+    this.fillColor = Colors.black,
+    this.strokeColor = Colors.white})
       : super(priority: -1, size: Sizes.cardSize);
 
   @override
@@ -197,7 +208,8 @@ class MapCardComponent extends RectangleComponent
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    canvas.drawRect(size.toRect(), Paint()..color = Colors.green);
+    canvas.drawRect(size.toRect(), Paint()
+      ..color = Colors.green);
     TextPainter(
       text: TextSpan(text: name, style: const TextStyle(color: Colors.white)),
       textDirection: TextDirection.ltr,

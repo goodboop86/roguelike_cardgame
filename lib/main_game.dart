@@ -66,25 +66,26 @@ class MainGame extends FlameGame
         flip: true);
 
     // sprite
-    await AssetSource().storeSpriteComponent(
-        path: 'background.png',
-        key: ComponentKey.named("Background"),
-        size: Sizes.backgroundSize);
+    await AssetSource().storeSprite(
+        path: 'background.png');
+
+    await AssetSource().storeSprite(path: 'fireball_96_64.png');
 
     await AssetSource().storeSprite(
-        path: 'home.png',);
+      path: 'home.png',
+    );
 
     await AssetSource().storeSprite(
-        path: 'question.png',);
+      path: 'question.png',
+    );
 
     await AssetSource().storeSprite(
-        path: 'right_arrow.png',);
+      path: 'right_arrow.png',
+    );
 
     await AssetSource().storeSprite(
-        path: 'button.png',);
-
-    await AssetSource().storeSprite(
-      path: 'fireball_96_64.png',);
+      path: 'button.png',
+    );
 
     // parallax
     ParallaxComponent parallax = await loadParallaxComponent(
@@ -152,7 +153,6 @@ class MainGame extends FlameGame
     );
 
     router.currentRoute.add(localDarkenOverlay);
-
   }
 
   Future<void> fadeIn(

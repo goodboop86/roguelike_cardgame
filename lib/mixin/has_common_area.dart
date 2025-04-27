@@ -20,7 +20,10 @@ mixin HasCommonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     add(AssetSource().getParallax(name: "default")!);
 
     log.info("---> ${Sizes.gameEndY}");
-    add(AssetSource().getSpriteComponent(name: "background.png")!
+    add(AssetSource().getSpriteComponent(
+        name: "background.png",
+        key: ComponentKey.named("Background"),
+        size: Sizes.backgroundSize)!
       ..position = Sizes.backgroundPosition
       ..priority = 0);
     addAll([

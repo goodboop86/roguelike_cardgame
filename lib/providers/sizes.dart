@@ -153,6 +153,14 @@ class Sizes {
 
   static double get cardMargin => 0.5 * blockLength;
 
+  // CardSprite
+  static double get cardSpriteWidth => 3 * blockLength;
+
+  static double get cardSpriteHeight => 2 * blockLength;
+
+  static Vector2 get cardSpriteSize => Vector2(cardSpriteWidth, cardSpriteHeight);
+
+
   // MapCardArea
   static double get mapCardAreaWidth => gameWidth - 1 * blockLength;
 
