@@ -38,8 +38,6 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
       final row = index ~/ colSize;
       final col = index % colSize;
       final cardComponent = CardComponent(card: card)
-        ..size = Sizes.cardSize
-        ..anchor = Anchor.center
         ..position = Vector2(
           cardAreaCenterX +
               (col - 1) * (Sizes.cardWidth + Sizes.cardMargin), // X 座標を調整

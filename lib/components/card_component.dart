@@ -10,29 +10,23 @@ import 'package:roguelike_cardgame/providers/player_provider.dart';
 import '../models/card.dart';
 import '../models/enum.dart';
 import '../providers/card_provider.dart';
+import '../providers/sizes.dart';
 
-class CardComponent extends RectangleComponent
+class CardComponent extends PositionComponent
     with TapCallbacks, RiverpodComponentMixin, HasGameRef, DragCallbacks {
-  CardComponent(
-      {required this.card,
-      this.borderRadius = 1.0,
-      this.strokeWidth = 1.0,
-      this.fillColor = Colors.black,
-      this.strokeColor = Colors.white}) {
-    super.priority = 20;
-  }
-
-  @override
-  Color get backgroundColor => Colors.black;
+  CardComponent({required this.card})
+      : super(
+            priority: 20,
+            size: Sizes.cardSize,
+            anchor: Anchor.center,
+            children: [
+              CardDesignComponent(),
+            ]);
 
   Logger log = Logger('CardComponent');
   final Card_ card;
   Vector2? initialPosition;
   CharacterAreaComponent? target;
-  final double borderRadius;
-  final double strokeWidth;
-  final Color fillColor; // 塗りつぶし色を受け取る
-  final Color strokeColor; // 輪郭線の色を受け取る
 
   bool isOverlapping = false;
 
@@ -49,12 +43,12 @@ class CardComponent extends RectangleComponent
           EffectController(duration: 0.1), // 0.05秒かけて縮小
         ),
       ], onComplete: () {
-        overLay();
+        discriptionOverLay();
       }));
     }
   }
 
-  void overLay() {
+  void discriptionOverLay() {
     // overlayでカード情報を表示するために、タップされたカードをアクティブにする。
     ref.read(cardProvider.notifier).setCard(card);
     game.overlays.add(OVERLAY.cardOverlay.name);
@@ -149,6 +143,25 @@ class CardComponent extends RectangleComponent
       }
     }
   }
+}
+
+class CardDesignComponent extends RectangleComponent
+    with TapCallbacks, RiverpodComponentMixin, HasGameRef, DragCallbacks {
+  CardDesignComponent(
+      {this.borderRadius = 1.0,
+      this.strokeWidth = 1.0,
+      this.fillColor = Colors.black,
+      this.strokeColor = Colors.white})
+      : super(priority: 20, size: Sizes.cardSize);
+
+  @override
+  Color get backgroundColor => Colors.black;
+
+  Logger log = Logger('CardDesignComponent');
+  final double borderRadius;
+  final double strokeWidth;
+  final Color fillColor; // 塗りつぶし色を受け取る
+  final Color strokeColor; // 輪郭線の色を受け取る
 
   @override
   void render(Canvas canvas) {
