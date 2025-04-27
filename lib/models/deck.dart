@@ -47,7 +47,7 @@ class Deck {
     }
   }
 
-  Deck startTurn() {
+  Deck refresh() {
     log.info("startTurn");
     // 手札をデッキに戻す
     _deck.addAll(_hand);

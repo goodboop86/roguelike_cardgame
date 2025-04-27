@@ -24,8 +24,8 @@ class DeckStateNotifier extends StateNotifier<DeckState> {
     state = DeckState(deck: state.deck.playCard(card, ref, game));
   }
 
-  void startTurn() {
-    state = DeckState(deck: state.deck.startTurn());
+  void refresh() {
+    state = DeckState(deck: state.deck.refresh());
   }
 }
 

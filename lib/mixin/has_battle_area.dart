@@ -88,8 +88,8 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   }
 
   void playerPhase() {
-    ref.read(playerProvider.notifier).startTurn();
-    ref.read(deckProvider.notifier).startTurn();
+    ref.read(playerProvider.notifier).refresh();
+    ref.read(deckProvider.notifier).refresh();
   }
 
   void removeCardArea() {
