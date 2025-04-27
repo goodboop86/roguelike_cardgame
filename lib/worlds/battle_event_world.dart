@@ -72,15 +72,19 @@ class BattleEventWorld extends World
       BattleRouteState battleState = ref.watch(battleRouteProvider);
       log.info("check deck exists");
 
+      final cardArea = children.whereType<CardAreaComponent>();
+      var characterArea = children.whereType<CharacterAreaComponent>();
+
       if (deckState.deck.hand.isNotEmpty &&
           battleState.phase == BattlePhase.playerPhase) {
-        final cardArea = children.whereType<CardAreaComponent>();
         // characterエリアより後にaddして描画が上に来るようにする。
-        var characterArea = children.whereType<CharacterAreaComponent>();
         if (cardArea.isEmpty & characterArea.isNotEmpty) {
           log.fine("addCards");
           addCards(deckState.deck.hand);
         }
+      } else if (cardArea.isNotEmpty &&
+          battleState.phase == BattlePhase.enemyPhase) {
+        removeCardArea();
       }
     });
 
