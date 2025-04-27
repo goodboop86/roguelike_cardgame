@@ -7,7 +7,7 @@ import 'package:roguelike_cardgame/main_game.dart';
 class CardAreaComponent extends RectangleComponent with HasGameRef<MainGame> {
   CardAreaComponent({required Vector2 position, required Vector2 size})
       : super(position: position, size: size) {
-    super.paint = Paint()..color = Colors.black.withValues(alpha: 0.6);
+    super.paint = Paint()..color = Colors.black.withValues(alpha: 0.3);
   }
 
   bool locked = true;

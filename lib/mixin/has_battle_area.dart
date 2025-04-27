@@ -31,7 +31,6 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     );
     add(cardArea);
 
-
     // カードコンポーネントを作成し、カードエリアの中心に集める
     final cardAreaCenterX = Sizes.cardAreaWidth / 2;
     final cardAreaCenterY = Sizes.cardAreaHeight / 2;
@@ -40,15 +39,8 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
       final row = index ~/ colSize;
       final col = index % colSize;
 
-      final cardSprite = AssetSource().getSpriteComponent(name: "fireball_96_64.png", size: Sizes.cardSpriteSize)!;
-      if(cardSprite == null){
-        log.warning("cardSprite is null.");
-      } else {
-        log.warning("cardSprite is exists.");
-      }
-
-      final cardComponent = CardComponent(card: card
-      , sprite: cardSprite)
+      final cardComponent = CardComponent(
+          card: card, spriteName: "fireball_48_32.png")
         ..position = Vector2(
           cardAreaCenterX +
               (col - 1) * (Sizes.cardWidth + Sizes.cardMargin), // X 座標を調整
@@ -65,7 +57,6 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
 
     final darkenOverlay = BlockTapOverlay.transparent_();
 
-
     final transitionText = Texts.transitionText()
       ..text = message
       ..position = Sizes.gameSize / 2;
@@ -77,9 +68,7 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
           // 暗転アニメーション
           OpacityEffect.to(
               0.6, EffectController(startDelay: 0.2, duration: 0.5),
-              onComplete: () => {
-                    darkenOverlay.add(transitionText)
-                  }),
+              onComplete: () => {darkenOverlay.add(transitionText)}),
           // 待機
           OpacityEffect.to(0.6, EffectController(duration: 0.5),
               onComplete: () => {darkenOverlay.remove(transitionText)}),
@@ -106,7 +95,6 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     });
   }
 
-
   void startPhase() {
     ref.read(battleRouteProvider.notifier).startPhase();
     playerPhase();
@@ -119,10 +107,9 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     ref.read(deckProvider.notifier).refresh();
   }
 
-  Future<void> playerEndPhase()async {
+  Future<void> playerEndPhase() async {
     ref.read(battleRouteProvider.notifier).playerEndPhase();
-    CardAreaComponent cardArea =
-        children.whereType<CardAreaComponent>().first;
+    CardAreaComponent cardArea = children.whereType<CardAreaComponent>().first;
     cardArea.lock();
     startTransition(
         message: "enemy-phase.",

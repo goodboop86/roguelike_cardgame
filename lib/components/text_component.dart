@@ -33,6 +33,22 @@ class TextBoxes extends TextBoxComponent {
               color: Colors.yellow,
               fontFamily: 'monospace', // 等幅フォントが見やすい
             )));
+
+  TextBoxes.cardText()
+      : super(
+            size: Sizes.cardTextSize,
+            position: Sizes.cardTextPosition,
+            anchor: Anchor.topLeft,
+            boxConfig: TextBoxConfig(
+                maxWidth: Sizes.cardTextWidth,
+                growingBox: true,
+                margins: const EdgeInsets.fromLTRB(4, 4, 4, 4)),
+            textRenderer: TextPaint(
+                style: const TextStyle(
+              fontSize: 10,
+              color: Colors.white,
+              fontFamily: 'monospace', // 等幅フォントが見やすい
+            )));
 }
 
 class Texts extends TextComponent {
@@ -45,15 +61,24 @@ class Texts extends TextComponent {
 
   Texts.buttonText()
       : super(
-      priority: 1,
-      anchor: Anchor.center,
-      position: Sizes.dialogButtonSize / 2,
-      textRenderer: TextPaint(style: const TextStyle(color: Colors.white)));
+            priority: 1,
+            anchor: Anchor.center,
+            position: Sizes.dialogButtonSize / 2,
+            textRenderer:
+                TextPaint(style: const TextStyle(color: Colors.white)));
 
   Texts.tinyMapText()
       : super(
-      priority: 1,
-      anchor: Anchor.center,
-      position: Sizes.mapSize,
-      textRenderer: TextPaint(style: const TextStyle(color: Colors.white, fontSize: 12)));
+            priority: 1,
+            anchor: Anchor.center,
+            position: Sizes.mapSize,
+            textRenderer: TextPaint(
+                style: const TextStyle(color: Colors.white, fontSize: 12)));
+
+// Texts.cardText()
+//     : super(
+//     priority: 1,
+//     anchor: Anchor.center,
+//     position: Sizes.mapSize,
+//     textRenderer: TextPaint(style: const TextStyle(color: Colors.white, fontSize: 12)));
 }

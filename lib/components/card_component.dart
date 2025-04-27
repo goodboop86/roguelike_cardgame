@@ -5,6 +5,7 @@ import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/components/card_area_component.dart';
+import 'package:roguelike_cardgame/components/text_component.dart';
 import 'package:roguelike_cardgame/providers/deck_provider.dart';
 import 'package:roguelike_cardgame/providers/player_provider.dart';
 import '../models/card.dart';
@@ -15,13 +16,16 @@ import '../spritesheet/spritesheet.dart';
 
 class CardComponent extends PositionComponent
     with TapCallbacks, RiverpodComponentMixin, HasGameRef, DragCallbacks {
-  CardComponent({required this.card, required this.sprite})
+  CardComponent({required this.card, required this.spriteName, super.key})
       : super(
-      priority: 0,
-      size: Sizes.cardSize,
-      anchor: Anchor.center,);
+          priority: 0,
+          size: Sizes.cardSize,
+          anchor: Anchor.center,
+        );
 
-  SpriteComponent sprite;
+  String spriteName;
+  ComponentKey? key;
+
   Logger log = Logger('CardComponent');
   final Card_ card;
   Vector2? initialPosition;
@@ -30,14 +34,21 @@ class CardComponent extends PositionComponent
   bool isOverlapping = false;
 
   @override
-  Future<void> onMount() async{
+  Future<void> onMount() async {
     super.onMount();
 
-    // final sprite= AssetSource().getSpriteComponent(name: sprite)!;
+    final text = TextBoxes.cardText();
 
-    add(sprite..anchor=Anchor.topLeft); //これを追加するとエラー
+    final sprite = AssetSource()
+        .getSpriteComponent(name: spriteName, size: Sizes.cardSpriteSize)!;
+
+    add(sprite
+      ..anchor = Anchor.topLeft
+      ..position = Sizes.cardSpritePosition); //これを追加するとエラー
 
     add(CardDesignComponent());
+
+    add(text..text=card.toString()..position=Sizes.cardTextPosition..anchor=Anchor.topLeft);
   }
 
   @override
@@ -83,9 +94,7 @@ class CardComponent extends PositionComponent
 
   @override
   void onDragEnd(DragEndEvent event) {
-    int mana = ref
-        .read(playerProvider)
-        .mana;
+    int mana = ref.read(playerProvider).mana;
     super.onDragEnd(event);
     if (isOverlapping & (mana >= card.effect.manaCost)) {
       process();
@@ -159,10 +168,11 @@ class CardComponent extends PositionComponent
 
 class CardDesignComponent extends RectangleComponent
     with RiverpodComponentMixin, HasGameRef {
-  CardDesignComponent({this.borderRadius = 1.0,
-    this.strokeWidth = 1.0,
-    this.fillColor = Colors.black,
-    this.strokeColor = Colors.white})
+  CardDesignComponent(
+      {this.borderRadius = 2.0,
+      this.strokeWidth = 2.0,
+      this.fillColor = Colors.black,
+      this.strokeColor = Colors.white})
       : super(priority: -1, size: Sizes.cardSize);
 
   @override
@@ -208,8 +218,7 @@ class MapCardComponent extends RectangleComponent
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    canvas.drawRect(size.toRect(), Paint()
-      ..color = Colors.green);
+    canvas.drawRect(size.toRect(), Paint()..color = Colors.green);
     TextPainter(
       text: TextSpan(text: name, style: const TextStyle(color: Colors.white)),
       textDirection: TextDirection.ltr,

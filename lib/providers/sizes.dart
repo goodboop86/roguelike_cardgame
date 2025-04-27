@@ -145,21 +145,41 @@ class Sizes {
   static Vector2 get cardAreaPosition => Vector2(cardAreaX, cardAreaY);
 
   // Card
-  static double get cardWidth => 3 * blockLength;
+  static double get cardWidth => 3.5 * blockLength;
 
-  static double get cardHeight => 4 * blockLength;
+  static double get cardHeight => 5 * blockLength;
 
   static Vector2 get cardSize => Vector2(cardWidth, cardHeight);
 
-  static double get cardMargin => 0.5 * blockLength;
+  static double get cardMargin => blockLength / 3;
 
   // CardSprite
-  static double get cardSpriteWidth => 3 * blockLength;
 
-  static double get cardSpriteHeight => 2 * blockLength;
+  static double get cardSpriteWidth => cardWidth - 4.0;
+
+  static double get cardSpriteHeight => cardHeight/2 -4.0;
 
   static Vector2 get cardSpriteSize => Vector2(cardSpriteWidth, cardSpriteHeight);
 
+  static double get cardSpriteX => 2.0;
+
+  static double get cardSpriteY => 2.0;
+
+  static Vector2 get cardSpritePosition => Vector2(cardSpriteX, cardSpriteY);
+
+
+  // CardText
+  static double get cardTextWidth => cardWidth;
+
+  static double get cardTextHeight => cardHeight;
+
+  static Vector2 get cardTextSize => Vector2(cardTextWidth, cardTextHeight);
+
+  static double get cardTextX => 2.0;
+
+  static double get cardTextY => cardHeight/2;
+
+  static Vector2 get cardTextPosition => Vector2(cardTextX, cardTextY);
 
   // MapCardArea
   static double get mapCardAreaWidth => gameWidth - 1 * blockLength;
