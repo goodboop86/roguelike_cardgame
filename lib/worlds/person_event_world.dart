@@ -55,7 +55,7 @@ class PersonEventWorld extends World
           await addCharacters();
         }
 
-        var uiArea = children.whereType<UiAreaComponent>();
+        var uiArea = children.whereType<BottomUiAreaComponent>();
         if (uiArea.isEmpty & background.isMounted) {
           log.fine("addUI");
           addUi();

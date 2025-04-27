@@ -41,7 +41,7 @@ class ExploreWorld extends World
       var characterArea = children.whereType<CharacterAreaComponent>();
       var mapArea = children.whereType<MapAreaComponent>();
       var mapCardArea = children.whereType<MapCardAreaComponent>();
-      var uiArea = children.whereType<UiAreaComponent>();
+      var uiArea = children.whereType<BottomUiAreaComponent>();
 
       if (background != null) {
         if (characterArea.isEmpty & background.isMounted) {

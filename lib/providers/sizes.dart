@@ -260,18 +260,31 @@ class Sizes {
   static Vector2 get supportDialogPosition =>
       Vector2(supportDialogX, supportDialogY);
 
-  // UIArea
-  static double get uiAreaWidth => gameWidth - 1 * blockLength;
+  // TopUIArea
+  static double get topUiAreaWidth => gameWidth - 1 * blockLength;
 
-  static double get uiAreaHeight => 1 * blockLength;
+  static double get topUiAreaHeight => 1 * blockLength;
 
-  static Vector2 get uiAreaSize => Vector2(uiAreaWidth, uiAreaHeight);
+  static Vector2 get topUiAreaSize => Vector2(topUiAreaWidth, topUiAreaHeight);
 
-  static double get uiAreaX => gameOriginX + 0.5 * blockLength;
+  static double get topUiAreaX => gameOriginX + 0.5 * blockLength;
 
-  static double get uiAreaY => gameOriginY + 25 * blockLength;
+  static double get topUiAreaY => gameOriginY + 1 * blockLength;
 
-  static Vector2 get uiAreaPosition => Vector2(uiAreaX, uiAreaY);
+  static Vector2 get topUiAreaPosition => Vector2(topUiAreaX, topUiAreaY);
+
+  // BottomUIArea
+  static double get bottomUiAreaWidth => gameWidth - 1 * blockLength;
+
+  static double get bottomUiAreaHeight => 1 * blockLength;
+
+  static Vector2 get bottomUiAreaSize => Vector2(bottomUiAreaWidth, bottomUiAreaHeight);
+
+  static double get bottomUiAreaX => gameOriginX + 0.5 * blockLength;
+
+  static double get bottomUiAreaY => gameOriginY + 25 * blockLength;
+
+  static Vector2 get bottomUiAreaPosition => Vector2(bottomUiAreaX, bottomUiAreaY);
 
   // margin
   static double get margin => 20.0;

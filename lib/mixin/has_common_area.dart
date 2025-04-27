@@ -65,9 +65,7 @@ mixin HasCommonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   }
 
   void addUi() {
-    final uiArea = UiAreaComponent(
-      position: Sizes.uiAreaPosition,
-      size: Sizes.uiAreaSize, // カードエリアのサイズ
+    final uiArea = BottomUiAreaComponent(
     );
     add(uiArea);
 
@@ -80,7 +78,7 @@ mixin HasCommonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     uiArea.addAll([
       homeButton,
       questionButton
-        ..position = Vector2(Sizes.uiAreaWidth - Sizes.blockLength, 0)
+        ..position = Vector2(Sizes.bottomUiAreaWidth - Sizes.blockLength, 0)
     ]);
   }
 

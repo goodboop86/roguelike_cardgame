@@ -3,7 +3,6 @@ import 'package:flame/effects.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
-import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 import 'package:roguelike_cardgame/providers/battle_route_provider.dart';
@@ -18,7 +17,6 @@ import '../models/enum.dart';
 import '../providers/deck_provider.dart';
 import '../providers/player_provider.dart';
 import '../providers/sizes.dart';
-import '../spritesheet/spritesheet.dart';
 
 mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   Logger log = Logger('HasBattleArea');

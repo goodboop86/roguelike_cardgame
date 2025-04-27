@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 
+import '../providers/sizes.dart';
+
 class CardAreaComponent extends RectangleComponent with HasGameRef<MainGame> {
   CardAreaComponent({required Vector2 position, required Vector2 size})
       : super(position: position, size: size) {
@@ -80,11 +82,14 @@ class MapAreaComponent extends PositionComponent {
 // カードエリアの描画やその他の処理
 }
 
-class UiAreaComponent extends PositionComponent {
-  UiAreaComponent({required Vector2 position, required Vector2 size})
-      : super(position: position, size: size);
+class TopUiAreaComponent extends PositionComponent {
+  TopUiAreaComponent()
+      : super(position: Sizes.topUiAreaPosition, size: Sizes.topUiAreaSize);
+}
 
-// カードエリアの描画やその他の処理
+class BottomUiAreaComponent extends PositionComponent {
+  BottomUiAreaComponent()
+      : super(position: Sizes.bottomUiAreaPosition, size: Sizes.bottomUiAreaSize);
 }
 
 class NPCDialogAreaComponent extends PositionComponent {
