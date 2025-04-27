@@ -18,11 +18,8 @@ mixin HasPersonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
 
   late TextBoxComponent textBox;
 
-  PopupWindow dialog = PopupWindow(
-    position: Sizes.npcDialogPosition,
-    size: Sizes.npcDialogSize,
-    anchor: Anchor.topLeft,
-  )..paint.color = Colors.black.withValues(alpha: 0.3);
+  PopupWindow dialog = PopupWindow.npcDialog(
+  );
 
   Future<void> startDialog() async {
     textBox = TextBoxes.dialogText()

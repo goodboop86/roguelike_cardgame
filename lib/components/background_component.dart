@@ -103,6 +103,13 @@ class PopupWindow extends RectangleComponent with TapCallbacks {
             anchor: Anchor.topCenter,
             position: CANVAS.sizes.npcPopupPosition);
 
+  PopupWindow.npcDialog({super.children})
+      : super(
+      paint: Paint()..color = Colors.black.withValues(alpha: 0.3),
+      position: Sizes.npcDialogPosition,
+      size: Sizes.npcDialogSize,
+      anchor: Anchor.topLeft,);
+
   PopupWindow.yesNo({super.children})
       : super(
             paint: Paint()..color = Colors.black.withValues(alpha: 0.8),

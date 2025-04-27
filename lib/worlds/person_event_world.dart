@@ -30,8 +30,6 @@ class PersonEventWorld extends World
           await startDialog();
         });
 
-    // final value = await game.router.pushAndWait(MyDialogRoute());
-    // print(value);
 
     addToGameWidgetBuild(() async {
       BattleRouteState state = ref.read(battleRouteProvider);
