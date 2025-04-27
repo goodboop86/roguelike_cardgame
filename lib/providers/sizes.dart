@@ -105,21 +105,21 @@ class Sizes {
   // ButtonArea
   static double get buttonAreaWidth => gameWidth - 1 * blockLength;
 
-  static double get buttonAreaHeight => blockLength;
+  static double get buttonAreaHeight => 0.8 * blockLength;
 
   static Vector2 get buttonAreaSize =>
       Vector2(buttonAreaWidth, buttonAreaHeight);
 
   static double get buttonAreaX => gameOriginX + 0.5 * blockLength;
 
-  static double get buttonAreaY => gameOriginY + 12 * blockLength;
+  static double get buttonAreaY => gameOriginY + 11 * blockLength;
 
   static Vector2 get buttonAreaPosition => Vector2(buttonAreaX, buttonAreaY);
 
   // Button
-  static double get buttonWidth => blockLength;
+  static double get buttonWidth => 0.8 * blockLength;
 
-  static double get buttonHeight => blockLength;
+  static double get buttonHeight => 0.8 * blockLength;
 
   static Vector2 get buttonSize => Vector2(buttonWidth, buttonHeight);
 
@@ -134,13 +134,13 @@ class Sizes {
   // CardArea
   static double get cardAreaWidth => gameWidth - 1 * blockLength;
 
-  static double get cardAreaHeight => 10 * blockLength;
+  static double get cardAreaHeight => 12 * blockLength;
 
   static Vector2 get cardAreaSize => Vector2(cardAreaWidth, cardAreaHeight);
 
   static double get cardAreaX => gameOriginX + 0.5 * blockLength;
 
-  static double get cardAreaY => gameOriginY + 14 * blockLength;
+  static double get cardAreaY => gameOriginY + 13 * blockLength;
 
   static Vector2 get cardAreaPosition => Vector2(cardAreaX, cardAreaY);
 
@@ -171,7 +171,7 @@ class Sizes {
   // CardText
   static double get cardTextWidth => cardWidth;
 
-  static double get cardTextHeight => cardHeight;
+  static double get cardTextHeight => cardHeight/2;
 
   static Vector2 get cardTextSize => Vector2(cardTextWidth, cardTextHeight);
 
