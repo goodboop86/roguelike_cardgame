@@ -16,7 +16,7 @@ class CardComponent extends PositionComponent
     with TapCallbacks, RiverpodComponentMixin, HasGameRef, DragCallbacks {
   CardComponent({required this.card})
       : super(
-            priority: 20,
+            priority: 0,
             size: Sizes.cardSize,
             anchor: Anchor.center,
             children: [
@@ -146,13 +146,13 @@ class CardComponent extends PositionComponent
 }
 
 class CardDesignComponent extends RectangleComponent
-    with TapCallbacks, RiverpodComponentMixin, HasGameRef, DragCallbacks {
+    with RiverpodComponentMixin, HasGameRef {
   CardDesignComponent(
       {this.borderRadius = 1.0,
       this.strokeWidth = 1.0,
       this.fillColor = Colors.black,
       this.strokeColor = Colors.white})
-      : super(priority: 20, size: Sizes.cardSize);
+      : super(priority: -1, size: Sizes.cardSize);
 
   @override
   Color get backgroundColor => Colors.black;
