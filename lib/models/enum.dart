@@ -26,6 +26,12 @@ enum Event {
   end
 }
 
+enum BattlePhase {
+  start,
+  playerTurn,
+  enemyTurn,
+}
+
 enum CharState {
   idle,
   ready,

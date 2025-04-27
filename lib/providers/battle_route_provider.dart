@@ -8,7 +8,7 @@ import '../models/enum.dart';
 // プレイヤーの状態管理プロバイダ
 final battleRouteProvider =
     StateNotifierProvider<BattleRouteStateNotifier, BattleRouteState>((ref) {
-  return BattleRouteStateNotifier(BattleRouteState(event: Event.start));
+  return BattleRouteStateNotifier(BattleRouteState(event: Event.start, phase: BattlePhase.playerTurn));
 });
 
 class BattleRouteStateNotifier extends StateNotifier<BattleRouteState> {
@@ -17,17 +17,30 @@ class BattleRouteStateNotifier extends StateNotifier<BattleRouteState> {
   Event getEvent() {
     return state.event;
   }
+
+  void enemyTurn() {
+    state = BattleRouteState(event: state.event, phase: BattlePhase.enemyTurn
+    );
+  }
+
+  void playerTurn() {
+    state = BattleRouteState(event: state.event, phase: BattlePhase.playerTurn
+    );
+  }
+
 }
 
 class BattleRouteState implements Jsonable {
   final Event event;
+  final BattlePhase phase;
 
-  BattleRouteState({required this.event});
+  BattleRouteState({required this.event, required this.phase});
 
   @override
   Map<String, dynamic> toJson() {
     return {
       'name': event.name,
+      'phase': phase.name,
     };
   }
 

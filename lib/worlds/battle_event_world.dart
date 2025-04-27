@@ -4,15 +4,13 @@ import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 import 'package:roguelike_cardgame/mixin/has_common_area.dart';
 import 'package:roguelike_cardgame/mixin/has_battle_area.dart';
-import 'package:roguelike_cardgame/models/enemy_state.dart';
-import 'package:roguelike_cardgame/models/player_state.dart';
+import 'package:roguelike_cardgame/models/enum.dart';
 import 'package:roguelike_cardgame/providers/deck_provider.dart';
-import 'package:roguelike_cardgame/providers/enemy_provider.dart';
-import 'package:roguelike_cardgame/providers/player_provider.dart';
 
 import 'dart:async';
 
 import '../components/card_area_component.dart';
+import '../providers/battle_route_provider.dart';
 
 class BattleEventWorld extends World
     with
@@ -36,7 +34,7 @@ class BattleEventWorld extends World
     game.fadeIn(message: '', onComplete: playerPhase);
 
     addToGameWidgetBuild(() async {
-      // BattleRouteState state = ref.read(battleRouteProvider);
+      BattleRouteState state = ref.read(battleRouteProvider);
       // PlayerState playerState = ref.read(playerProvider);
       // EnemyState enemyState = ref.read(enemyProvider);
       // TODO: 受け取ったEventに従ってEnemyを設置する
@@ -70,16 +68,18 @@ class BattleEventWorld extends World
     });
 
     addToGameWidgetBuild(() async {
-      DeckState state = ref.watch(deckProvider);
+      DeckState seckState = ref.watch(deckProvider);
+      BattleRouteState battleState = ref.read(battleRouteProvider);
       log.info("check deck exists");
 
-      if (state.deck.hand.isNotEmpty) {
+      if (seckState.deck.hand.isNotEmpty &&
+          battleState.phase == BattlePhase.playerTurn) {
         final cardArea = children.whereType<CardAreaComponent>();
         // characterエリアより後にaddして描画が上に来るようにする。
         var characterArea = children.whereType<CharacterAreaComponent>();
         if (cardArea.isEmpty & characterArea.isNotEmpty) {
           log.fine("addCards");
-          addCards(state.deck.hand);
+          addCards(seckState.deck.hand);
         }
       }
     });
