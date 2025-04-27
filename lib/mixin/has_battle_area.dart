@@ -6,6 +6,7 @@ import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
+import 'package:roguelike_cardgame/providers/battle_route_provider.dart';
 import '../components/background_component.dart';
 import '../components/button_component.dart';
 import '../components/card_area_component.dart';
@@ -88,6 +89,8 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   }
 
   void playerPhase() {
+    log.info("playerPhase.");
+    ref.read(battleRouteProvider.notifier).playerPhase();
     ref.read(playerProvider.notifier).refresh();
     ref.read(deckProvider.notifier).refresh();
   }
@@ -102,6 +105,9 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   }
 
   Future<void> enemyPhase() async {
+    ref.read(battleRouteProvider.notifier).enemyPhase();
+    log.info("enemyPhase.");
+
     await Future.delayed(const Duration(milliseconds: 500));
     PlayerDamageEffect().call(ref, game);
     startTransition(

@@ -68,18 +68,18 @@ class BattleEventWorld extends World
     });
 
     addToGameWidgetBuild(() async {
-      DeckState seckState = ref.watch(deckProvider);
-      BattleRouteState battleState = ref.read(battleRouteProvider);
+      DeckState deckState = ref.watch(deckProvider);
+      BattleRouteState battleState = ref.watch(battleRouteProvider);
       log.info("check deck exists");
 
-      if (seckState.deck.hand.isNotEmpty &&
-          battleState.phase == BattlePhase.playerTurn) {
+      if (deckState.deck.hand.isNotEmpty &&
+          battleState.phase == BattlePhase.playerPhase) {
         final cardArea = children.whereType<CardAreaComponent>();
         // characterエリアより後にaddして描画が上に来るようにする。
         var characterArea = children.whereType<CharacterAreaComponent>();
         if (cardArea.isEmpty & characterArea.isNotEmpty) {
           log.fine("addCards");
-          addCards(seckState.deck.hand);
+          addCards(deckState.deck.hand);
         }
       }
     });

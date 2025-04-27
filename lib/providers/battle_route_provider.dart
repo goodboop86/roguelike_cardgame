@@ -8,7 +8,7 @@ import '../models/enum.dart';
 // プレイヤーの状態管理プロバイダ
 final battleRouteProvider =
     StateNotifierProvider<BattleRouteStateNotifier, BattleRouteState>((ref) {
-  return BattleRouteStateNotifier(BattleRouteState(event: Event.start, phase: BattlePhase.playerTurn));
+  return BattleRouteStateNotifier(BattleRouteState(event: Event.start, phase: BattlePhase.playerPhase));
 });
 
 class BattleRouteStateNotifier extends StateNotifier<BattleRouteState> {
@@ -18,13 +18,13 @@ class BattleRouteStateNotifier extends StateNotifier<BattleRouteState> {
     return state.event;
   }
 
-  void enemyTurn() {
-    state = BattleRouteState(event: state.event, phase: BattlePhase.enemyTurn
+  void enemyPhase() {
+    state = BattleRouteState(event: state.event, phase: BattlePhase.enemyPhase
     );
   }
 
-  void playerTurn() {
-    state = BattleRouteState(event: state.event, phase: BattlePhase.playerTurn
+  void playerPhase() {
+    state = BattleRouteState(event: state.event, phase: BattlePhase.playerPhase
     );
   }
 

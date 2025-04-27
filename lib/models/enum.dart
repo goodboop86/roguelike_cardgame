@@ -28,8 +28,8 @@ enum Event {
 
 enum BattlePhase {
   start,
-  playerTurn,
-  enemyTurn,
+  playerPhase,
+  enemyPhase,
 }
 
 enum CharState {
