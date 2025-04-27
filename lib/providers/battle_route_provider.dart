@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:logging/logging.dart';
 import 'package:riverpod/riverpod.dart';
 
 import '../models/character_state.dart';
@@ -13,18 +14,39 @@ final battleRouteProvider =
 
 class BattleRouteStateNotifier extends StateNotifier<BattleRouteState> {
   BattleRouteStateNotifier(super.initialState);
+  Logger log  = Logger("BattleRouteStateNotifier");
 
   Event getEvent() {
     return state.event;
   }
 
-  void enemyPhase() {
-    state = BattleRouteState(event: state.event, phase: BattlePhase.enemyPhase
+  void startPhase() {
+    log.info("startPhase");
+    state = BattleRouteState(event: state.event, phase: BattlePhase.startPhase
     );
   }
 
   void playerPhase() {
+    log.info("playerPhase");
     state = BattleRouteState(event: state.event, phase: BattlePhase.playerPhase
+    );
+  }
+
+  void playerEndPhase() {
+    log.info("endPhase");
+    state = BattleRouteState(event: state.event, phase: BattlePhase.playerEndPhase
+    );
+  }
+
+  void enemyPhase() {
+    log.info("enemyPhase");
+    state = BattleRouteState(event: state.event, phase: BattlePhase.enemyPhase
+    );
+  }
+
+  void endPhase() {
+    log.info("endPhase");
+    state = BattleRouteState(event: state.event, phase: BattlePhase.endPhase
     );
   }
 

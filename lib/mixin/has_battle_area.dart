@@ -88,13 +88,6 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     add(darkenOverlay);
   }
 
-  void playerPhase() {
-    log.info("playerPhase.");
-    ref.read(battleRouteProvider.notifier).playerPhase();
-    ref.read(playerProvider.notifier).refresh();
-    ref.read(deckProvider.notifier).refresh();
-  }
-
   void removeCardArea() {
     // 現在のカードを削除
     children.whereType<CardAreaComponent>().forEach((area) {
@@ -104,20 +97,50 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     });
   }
 
+
+  void startPhase() {
+    ref.read(battleRouteProvider.notifier).startPhase();
+    playerPhase();
+  }
+
+  void playerPhase() {
+    ref.read(battleRouteProvider.notifier).playerPhase();
+
+    ref.read(playerProvider.notifier).refresh();
+    ref.read(deckProvider.notifier).refresh();
+  }
+
+  Future<void> playerEndPhase()async {
+    ref.read(battleRouteProvider.notifier).playerEndPhase();
+    CardAreaComponent cardArea =
+        children.whereType<CardAreaComponent>().first;
+    cardArea.lock();
+    startTransition(
+        message: "enemy-phase.",
+        next: () {
+          enemyPhase();
+        });
+  }
+
   Future<void> enemyPhase() async {
     ref.read(battleRouteProvider.notifier).enemyPhase();
-    log.info("enemyPhase.");
 
     await Future.delayed(const Duration(milliseconds: 500));
     PlayerDamageEffect().call(ref, game);
+
     startTransition(
       message: 'player-turn',
       next: () async {
         await Future.delayed(const Duration(milliseconds: 500));
         removeCardArea();
-        playerPhase();
+        endPhase();
       },
     );
+  }
+
+  Future<void> endPhase() async {
+    ref.read(battleRouteProvider.notifier).endPhase();
+    startPhase();
   }
 
   void addBattleButtons() {
@@ -140,14 +163,7 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
         game.overlays.add(OVERLAY.autoDisappearingOverlay.name);
       },
       () {
-        CardAreaComponent cardArea =
-            children.whereType<CardAreaComponent>().first;
-        cardArea.lock();
-        startTransition(
-            message: "enemy-turn.",
-            next: () {
-              enemyPhase();
-            });
+        playerEndPhase();
       },
     ];
 

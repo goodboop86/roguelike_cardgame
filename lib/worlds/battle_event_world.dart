@@ -31,7 +31,7 @@ class BattleEventWorld extends World
 
   @override
   Future<void> onMount() async {
-    game.fadeIn(message: '', onComplete: playerPhase);
+    game.fadeIn(message: '', onComplete: startPhase);
 
     addToGameWidgetBuild(() async {
       BattleRouteState state = ref.read(battleRouteProvider);
@@ -83,7 +83,7 @@ class BattleEventWorld extends World
           addCards(deckState.deck.hand);
         }
       } else if (cardArea.isNotEmpty &&
-          battleState.phase == BattlePhase.enemyPhase) {
+          battleState.phase == BattlePhase.playerEndPhase) {
         removeCardArea();
       }
     });

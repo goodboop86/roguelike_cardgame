@@ -27,9 +27,12 @@ enum Event {
 }
 
 enum BattlePhase {
-  start,
+  empty,
+  startPhase,
   playerPhase,
+  playerEndPhase,
   enemyPhase,
+  endPhase
 }
 
 enum CharState {
