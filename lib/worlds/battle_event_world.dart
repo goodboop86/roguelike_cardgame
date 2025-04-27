@@ -47,7 +47,8 @@ class BattleEventWorld extends World
 
       var characterArea = children.whereType<CharacterAreaComponent>();
       var buttonArea = children.whereType<ButtonAreaComponent>();
-      var uiArea = children.whereType<BottomUiAreaComponent>();
+      var bottomUiArea = children.whereType<BottomUiAreaComponent>();
+      var topUiArea = children.whereType<TopUiAreaComponent>();
 
       if (background != null) {
         if (characterArea.isEmpty & background.isMounted) {
@@ -60,9 +61,14 @@ class BattleEventWorld extends World
           addBattleButtons();
         }
 
-        if (uiArea.isEmpty & background.isMounted) {
-          log.fine("addUI");
-          addUi();
+        if (bottomUiArea.isEmpty & background.isMounted) {
+          log.fine("addBottomUI");
+          addBottomUi();
+        }
+
+        if (topUiArea.isEmpty & background.isMounted) {
+          log.fine("addTopUI");
+          addTopUi(hasEnemy: true);
         }
       }
     });

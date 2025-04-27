@@ -4,11 +4,14 @@ import 'package:flame/input.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
+import 'package:roguelike_cardgame/models/player_state.dart';
+import 'package:roguelike_cardgame/providers/player_provider.dart';
 import '../components/background_component.dart';
 import '../components/button_component.dart';
 import '../components/card_area_component.dart';
 import '../components/enemy_component.dart';
 import '../components/player_component.dart';
+import '../components/text_component.dart';
 import '../models/enum.dart';
 import '../providers/sizes.dart';
 import '../spritesheet/spritesheet.dart';
@@ -64,9 +67,23 @@ mixin HasCommonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     }
   }
 
-  void addUi() {
-    final uiArea = BottomUiAreaComponent(
-    );
+  void addTopUi({hasEnemy = false}) {
+    final uiArea = TopUiAreaComponent();
+
+    PlayerState state = ref.watch(playerProvider);
+
+    uiArea.add(PlayerStatus());
+
+    if(hasEnemy){
+      log.info("add enemy status");
+      uiArea.add(EnemyStatus());
+    }
+
+    add(uiArea);
+  }
+
+  void addBottomUi() {
+    final uiArea = BottomUiAreaComponent();
     add(uiArea);
 
     final homeButton = SpriteButtons.homeButton(onPressed: () {
@@ -80,9 +97,5 @@ mixin HasCommonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
       questionButton
         ..position = Vector2(Sizes.bottomUiAreaWidth - Sizes.blockLength, 0)
     ]);
-  }
-
-  Future<T> pushAndWait<T>(ValueRoute<T> route) async {
-    return await game.router.pushAndWait(route);
   }
 }

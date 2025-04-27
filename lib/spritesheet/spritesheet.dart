@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
+import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
 import '../components/player_component.dart';

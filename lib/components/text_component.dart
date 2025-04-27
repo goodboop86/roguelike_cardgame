@@ -1,9 +1,10 @@
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
+import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:flutter/material.dart';
 import '../providers/sizes.dart';
 
-class TextBoxes extends TextBoxComponent {
+class TextBoxes extends TextBoxComponent with RiverpodComponentMixin {
   TextBoxes();
 
   TextBoxes.dialogText() {
@@ -67,18 +68,35 @@ class Texts extends TextComponent {
             textRenderer:
                 TextPaint(style: const TextStyle(color: Colors.white)));
 
+  Texts.healthText()
+      : super(
+            priority: 100,
+            anchor: Anchor.center,
+            position: Vector2(Sizes.blockLength, Sizes.topUiAreaHeight / 2),
+            textRenderer: TextPaint(
+                style: const TextStyle(color: Colors.white, fontSize: 12)));
+
+  Texts.manaText()
+      : super(
+            priority: 100,
+            anchor: Anchor.center,
+            position:
+                Vector2(Sizes.blockLength * 2.5, Sizes.topUiAreaHeight / 2),
+            textRenderer: TextPaint(
+                style: const TextStyle(color: Colors.white, fontSize: 12)));
+
   Texts.tinyMapText()
       : super(
             priority: 1,
             anchor: Anchor.center,
-            position: Sizes.mapSize,
+            position: Sizes.mapSize / 2,
             textRenderer: TextPaint(
                 style: const TextStyle(color: Colors.white, fontSize: 12)));
+}
 
-// Texts.cardText()
-//     : super(
-//     priority: 1,
-//     anchor: Anchor.center,
-//     position: Sizes.mapSize,
-//     textRenderer: TextPaint(style: const TextStyle(color: Colors.white, fontSize: 12)));
+class TextPaints extends TextPaint {
+  TextPaints.base()
+      : super(
+            style: const TextStyle(
+                color: Colors.white, fontSize: 14, fontFamily: 'monospace', fontWeight: FontWeight.bold));
 }

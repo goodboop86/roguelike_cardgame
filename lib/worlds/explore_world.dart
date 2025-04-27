@@ -41,7 +41,9 @@ class ExploreWorld extends World
       var characterArea = children.whereType<CharacterAreaComponent>();
       var mapArea = children.whereType<MapAreaComponent>();
       var mapCardArea = children.whereType<MapCardAreaComponent>();
-      var uiArea = children.whereType<BottomUiAreaComponent>();
+      var bottomArea = children.whereType<BottomUiAreaComponent>();
+      var topUiArea = children.whereType<TopUiAreaComponent>();
+
 
       if (background != null) {
         if (characterArea.isEmpty & background.isMounted) {
@@ -56,9 +58,13 @@ class ExploreWorld extends World
           log.fine("addMapCards");
           addMapCards(state.stageList, state.stage);
         }
-        if (uiArea.isEmpty & background.isMounted) {
-          log.fine("addUI");
-          addUi();
+        if (bottomArea.isEmpty & background.isMounted) {
+          log.fine("addBottomUI");
+          addBottomUi();
+        }
+        if (topUiArea.isEmpty & background.isMounted) {
+          log.fine("addTopUI");
+          addTopUi();
         }
       }
     });

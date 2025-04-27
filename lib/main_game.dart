@@ -31,7 +31,7 @@ class MainGame extends FlameGame
 
   Logger log = Logger('MainGame');
   @override
-  var debugMode = true;
+  var debugMode = false;
 
   @override
   // Color backgroundColor() => const Color.fromRGBO(89, 106, 108, 1.0);
@@ -85,6 +85,18 @@ class MainGame extends FlameGame
 
     await AssetSource().storeSprite(
       path: 'button.png',
+    );
+
+    await AssetSource().storeSprite(
+      path: 'heart.png',
+    );
+
+    await AssetSource().storeSprite(
+      path: 'mana.png',
+    );
+
+    await AssetSource().storeSprite(
+      path: 'enemy_icon.png',
     );
 
     // parallax

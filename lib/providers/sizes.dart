@@ -263,7 +263,7 @@ class Sizes {
   // TopUIArea
   static double get topUiAreaWidth => gameWidth - 1 * blockLength;
 
-  static double get topUiAreaHeight => 1 * blockLength;
+  static double get topUiAreaHeight => 0.5 * blockLength;
 
   static Vector2 get topUiAreaSize => Vector2(topUiAreaWidth, topUiAreaHeight);
 
@@ -272,6 +272,9 @@ class Sizes {
   static double get topUiAreaY => gameOriginY + 1 * blockLength;
 
   static Vector2 get topUiAreaPosition => Vector2(topUiAreaX, topUiAreaY);
+
+
+
 
   // BottomUIArea
   static double get bottomUiAreaWidth => gameWidth - 1 * blockLength;

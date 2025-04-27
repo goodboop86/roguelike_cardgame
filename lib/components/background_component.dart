@@ -18,7 +18,7 @@ class GradientBackground extends PositionComponent
     paint = Paint()
       ..shader = Gradient.linear(
         Offset(Sizes.gameWidth / 2, 0),
-        Offset(Sizes.gameWidth / 2, Sizes.blockLength),
+        Offset(Sizes.gameWidth / 2, Sizes.blockLength*2),
         [
           Colors.black,
           Colors.transparent,

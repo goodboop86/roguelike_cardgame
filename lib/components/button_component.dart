@@ -62,6 +62,33 @@ class SpriteButtons extends SpriteButtonComponent {
     anchor: Anchor.topLeft,
   );
 
+  SpriteButtons.heartButton({super.onPressed})
+      : super(
+    priority: 100,
+    button: AssetSource().getSprite(name: "heart.png"),
+    size: Sizes.blockSize * 0.5,
+    anchor: Anchor.topLeft,
+  );
+
+  SpriteButtons.manaButton({super.onPressed})
+      : super(
+    priority: 100,
+    button: AssetSource().getSprite(name: "mana.png"),
+    position: Vector2(3 * Sizes.blockLength, 0),
+    size: Sizes.blockSize * 0.5,
+    anchor: Anchor.topLeft,
+  );
+
+  SpriteButtons.enemyIconButton({super.onPressed})
+      : super(
+    priority: 100,
+    button: AssetSource().getSprite(name: 'heart.png'),
+    position: Vector2(4.5 * Sizes.blockLength, 0),
+    size: Sizes.blockSize * 0.5,
+    anchor: Anchor.topLeft,
+  );
+
+
 }
 
 
