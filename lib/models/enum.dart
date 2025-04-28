@@ -35,7 +35,7 @@ enum BattlePhase {
   endPhase
 }
 
-enum CharState {
+enum CharacterState {
   idle,
   ready,
   run,
@@ -50,4 +50,29 @@ enum CharState {
   block,
   death,
   roll
+}
+
+enum ContainerState {
+  woodenChestBoxIdle,
+  silverChestBoxIdle,
+  goldenChestBoxIdle,
+  woodenChestBoxOpen,
+  silverChestBoxOpen,
+  goldenChestBoxOpen,
+  smallBoxDestroy,
+  mediumBoxDestroy,
+  largeBoxDestroy,
+  bucketDestroy,
+  barrelDestroy,
+  largeBarrelDestroy,
+  jugDestroy,
+  urnDestroy,
+  vaseDestroy,
+  tombStoneADestroy,
+  tombStoneBDestroy,
+  tombStoneCDestroy,
+  bookCaseDestroy,
+  coffinDestroy
+
+
 }

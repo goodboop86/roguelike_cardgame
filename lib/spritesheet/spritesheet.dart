@@ -15,15 +15,40 @@ class AssetSource {
   final Map<String, SpriteComponent> _spriteComponentCache = {};
   final Map<String, Sprite> _spriteCache = {};
 
-  Future<void> storeAnimation(
+  Future<void> storeCharacterAnimation(
       {required String path,
-      required CharState onStart,
+      required CharacterState onStart,
       required Vector2 srcSize,
       required Vector2 size,
       required ComponentKey key,
       bool flip = false}) async {
     if (!_animationCache.containsKey(path)) {
       SpriteAnimationGroupComponent component = SpriteAnimationGroups.character(
+        key: key,
+        sheet:
+        SpriteSheet(image: await Flame.images.load(path), srcSize: srcSize),
+        size: size,
+        anchor: Anchor.center,
+        priority: 20,
+        current: onStart,
+      );
+      if (flip) {
+        component.flipHorizontally();
+      }
+      _animationCache[path] = component;
+      log.fine("store sprite: ${path}");
+    }
+  }
+
+  Future<void> storeContainerAnimation(
+      {required String path,
+        required ContainerState onStart,
+        required Vector2 srcSize,
+        required Vector2 size,
+        required ComponentKey key,
+        bool flip = false}) async {
+    if (!_animationCache.containsKey(path)) {
+      SpriteAnimationGroupComponent component = SpriteAnimationGroups.containers(
         key: key,
         sheet:
         SpriteSheet(image: await Flame.images.load(path), srcSize: srcSize),

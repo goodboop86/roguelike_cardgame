@@ -49,21 +49,30 @@ class MainGame extends FlameGame
     log.info(camera.viewport.size);
 
     // animation
-    await AssetSource().storeAnimation(
+    await AssetSource().storeCharacterAnimation(
       path: 'player.png',
       key: ComponentKey.named("PlayerAnimation"),
       size: Vector2(128, 128),
-      onStart: CharState.idle,
+      onStart: CharacterState.idle,
       srcSize: Vector2(64.0, 64.0),
     );
 
-    await AssetSource().storeAnimation(
+    await AssetSource().storeCharacterAnimation(
         path: 'dragon.png',
         key: ComponentKey.named("EnemyAnimation"),
         size: Vector2(128, 128),
-        onStart: CharState.idle,
+        onStart: CharacterState.idle,
         srcSize: Vector2(64.0, 64.0),
         flip: true);
+
+    // animation
+    await AssetSource().storeContainerAnimation(
+      path: 'containers.png',
+      key: ComponentKey.named("ContainersAnimation"),
+      size: Vector2(128, 128),
+      onStart: ContainerState.woodenChestBoxIdle,
+      srcSize: Vector2(64.0, 64.0),
+    );
 
     // sprite
     await AssetSource().storeSprite(
