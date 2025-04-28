@@ -39,58 +39,55 @@ class SpriteButtons extends SpriteButtonComponent {
 
   SpriteButtons.homeButton({super.onPressed})
       : super(
-    priority: 100,
-    button: AssetSource().getSprite(name: "home.png"),
-    size: Sizes.blockSize,
-    anchor: Anchor.topLeft,
-  );
+          priority: 100,
+          button: AssetSource().getSprite(name: "home.png"),
+          size: Sizes.blockSize,
+          anchor: Anchor.topLeft,
+        );
 
   SpriteButtons.questionButton({super.onPressed})
       : super(
-    priority: 100,
-    button: AssetSource().getSprite(name: "question.png"),
-    size: Sizes.blockSize,
-    anchor: Anchor.topLeft,
-  );
+          priority: 100,
+          button: AssetSource().getSprite(name: "question.png"),
+          size: Sizes.blockSize,
+          anchor: Anchor.topLeft,
+        );
 
   SpriteButtons.dialogNextButton({super.onPressed})
       : super(
-    priority: 100,
-    button: AssetSource().getSprite(name: "right_arrow.png"),
-    size: Sizes.blockSize * 0.8,
-    position: Sizes.npcDialogSize - Sizes.blockSize,
-    anchor: Anchor.topLeft,
-  );
+          priority: 100,
+          button: AssetSource().getSprite(name: "right_arrow.png"),
+          size: Sizes.blockSize * 0.8,
+          position: Sizes.npcDialogSize - Sizes.blockSize,
+          anchor: Anchor.topLeft,
+        );
 
   SpriteButtons.heartButton({super.onPressed})
       : super(
-    priority: 100,
-    button: AssetSource().getSprite(name: "heart.png"),
-    size: Sizes.blockSize * 0.5,
-    anchor: Anchor.topLeft,
-  );
+          priority: 100,
+          button: AssetSource().getSprite(name: "heart.png"),
+          size: Sizes.blockSize * 0.5,
+          anchor: Anchor.topLeft,
+        );
 
   SpriteButtons.manaButton({super.onPressed})
       : super(
-    priority: 100,
-    button: AssetSource().getSprite(name: "mana.png"),
-    position: Vector2(3 * Sizes.blockLength, 0),
-    size: Sizes.blockSize * 0.5,
-    anchor: Anchor.topLeft,
-  );
+          priority: 100,
+          button: AssetSource().getSprite(name: "mana.png"),
+          position: Vector2(3 * Sizes.blockLength, 0),
+          size: Sizes.blockSize * 0.5,
+          anchor: Anchor.topLeft,
+        );
 
   SpriteButtons.enemyIconButton({super.onPressed})
       : super(
-    priority: 100,
-    button: AssetSource().getSprite(name: 'heart.png'),
-    position: Vector2(4.5 * Sizes.blockLength, 0),
-    size: Sizes.blockSize * 0.5,
-    anchor: Anchor.topLeft,
-  );
-
-
+          priority: 100,
+          button: AssetSource().getSprite(name: 'heart.png'),
+          position: Vector2(4.5 * Sizes.blockLength, 0),
+          size: Sizes.blockSize * 0.5,
+          anchor: Anchor.topLeft,
+        );
 }
-
 
 class Buttons extends ButtonComponent {
   Buttons.yes({super.onPressed})
@@ -125,23 +122,40 @@ class Buttons extends ButtonComponent {
         );
 }
 
-class ChoiceButtonComponent extends RectangleComponent
+class ChoiceButtonComponent extends PositionComponent
     with TapCallbacks, HasGameRef<MainGame> {
   ChoiceButtonComponent({
     super.position,
-    super.size,
-    super.scale,
-    super.angle,
     super.anchor,
     super.children,
-    super.priority,
-    super.paint,
-    super.paintLayers,
     super.key,
     required this.value,
-  });
+  }) : super(
+          size: Sizes.mapCardSize,
+          priority: 30,
+        );
 
   Event value;
+
+  @override
+  Future<void> onMount() async {
+    super.onMount();
+
+    final animation = AssetSource().getAnimation(name: "containers.png")!;
+    Sprite? sprite = animation
+        .animations?[ContainerState.goldenChestBoxIdle]!.frames.first.sprite;
+
+    add(SpriteComponent(
+      size: Sizes.mapCardSpriteSize,
+      position: Sizes.mapCardSpritePosition,
+      sprite: sprite,
+      priority: 10,
+      anchor: Anchor.topLeft,
+    ));
+
+    add(RectangleComponent(
+        size: Sizes.mapCardSize, paint: Paint()..color = Colors.black54, priority: 0));
+  }
 
   @override
   Future<void> onTapUp(TapUpEvent event) async {

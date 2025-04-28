@@ -31,7 +31,7 @@ class MainGame extends FlameGame
 
   Logger log = Logger('MainGame');
   @override
-  var debugMode = true;
+  var debugMode = false;
 
   @override
   // Color backgroundColor() => const Color.fromRGBO(89, 106, 108, 1.0);

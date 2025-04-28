@@ -102,6 +102,8 @@ class Sizes {
   static double get enemyAreaY => 1.5 * blockLength; // sprite内の余白分
   static Vector2 get enemyAreaPosition => Vector2(enemyAreaX, enemyAreaY);
 
+
+
   // ButtonArea
   static double get buttonAreaWidth => gameWidth - 1 * blockLength;
 
@@ -166,6 +168,21 @@ class Sizes {
   static double get cardSpriteY => 2.0;
 
   static Vector2 get cardSpritePosition => Vector2(cardSpriteX, cardSpriteY);
+
+  // MapCardSprite
+
+  static double get mapCardSpriteWidth => mapCardWidth - 4.0;
+
+  static double get mapCardSpriteHeight => mapCardWidth*1.2 -4.0;
+
+  static Vector2 get mapCardSpriteSize => Vector2(mapCardSpriteWidth, mapCardSpriteHeight);
+
+  static double get mapCardSpriteX => 2.0;
+
+  static double get mapCardSpriteY => 2.0 - blockLength;
+
+  static Vector2 get mapCardSpritePosition => Vector2(mapCardSpriteX, mapCardSpriteY);
+
 
 
   // CardText

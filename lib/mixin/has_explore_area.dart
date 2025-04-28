@@ -78,12 +78,8 @@ mixin HasExploreArea
 
     events.asMap().forEach((index, event) {
       ChoiceButtonComponent button = ChoiceButtonComponent(
-          size: Sizes.mapCardSize,
-          priority: 30,
-          position: Vector2(0, 0),
-          value: event,
-          paint: Paint()..color = Colors.blue)
-        ..position = Vector2(mapCardWidth_ * index, Sizes.blockLength);
+        value: event,
+      )..position = Vector2(mapCardWidth_ * index, Sizes.blockLength);
 
       mapCardArea.add(button);
 
