@@ -3,10 +3,9 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
-import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
-import '../components/player_component.dart';
+import '../components/sprite_animation_group_component.dart';
 import '../models/enum.dart';
 
 class AssetSource {
@@ -24,13 +23,13 @@ class AssetSource {
       required ComponentKey key,
       bool flip = false}) async {
     if (!_animationCache.containsKey(path)) {
-      SpriteAnimationGroupComponent component = CharacterAnimationComponent(
-        anchor: Anchor.center,
-        priority: 20,
-        size: size,
+      SpriteAnimationGroupComponent component = SpriteAnimationGroups.character(
         key: key,
         sheet:
-            SpriteSheet(image: await Flame.images.load(path), srcSize: srcSize),
+        SpriteSheet(image: await Flame.images.load(path), srcSize: srcSize),
+        size: size,
+        anchor: Anchor.center,
+        priority: 20,
         current: onStart,
       );
       if (flip) {
