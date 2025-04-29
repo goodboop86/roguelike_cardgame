@@ -15,7 +15,7 @@ mixin HasExploreArea
     on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   Logger log = Logger('HasBattleArea');
 
-  void addMap(List<List<Event>> stageList, int currentStage) {
+  void addMap(List<List<Event>> stageList, int nextStage) {
     final mapArea = MapAreaComponent();
     add(mapArea);
 
@@ -26,7 +26,11 @@ mixin HasExploreArea
       final int choiceNum = stages.length;
       final totalMapHeight = Sizes.mapHeight + Sizes.miniMargin;
 
-      Color color = depth == currentStage ? Colors.green : Colors.black12;
+      Color color = depth == nextStage
+          ? Colors.green
+          : depth == (nextStage - 1)
+              ? Colors.red
+              : Colors.grey;
       stages.asMap().forEach((choice, stage) {
         final button = ButtonComponent(
           button: RectangleComponent(
@@ -44,7 +48,6 @@ mixin HasExploreArea
             // choice * (Sizes.mapWidth / 2 + Sizes.mini_margin)
             , // Y 座標を調整
           );
-        // ..anchor = Anchor.center;
 
         mapArea.add(button);
       });
@@ -61,12 +64,11 @@ mixin HasExploreArea
     add(mapCardArea);
 
     events.asMap().forEach((index, event) {
-      ChoiceButtonComponent button = ChoiceButtonComponent(
+      MapCardComponent button = MapCardComponent(
         value: event,
-      )..position = Vector2(mapCardWidth_ * index, Sizes.blockLength);
+      )..position = Vector2(0.5 * Sizes.blockLength + mapCardWidth_ * index, Sizes.blockLength);
 
       mapCardArea.add(button);
-
     });
   }
 }

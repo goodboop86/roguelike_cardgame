@@ -123,9 +123,9 @@ class Buttons extends ButtonComponent {
         );
 }
 
-class ChoiceButtonComponent extends PositionComponent
+class MapCardComponent extends PositionComponent
     with TapCallbacks, HasGameRef<MainGame> {
-  ChoiceButtonComponent({
+  MapCardComponent({
     super.position,
     super.anchor,
     super.children,

@@ -142,7 +142,7 @@ class Sizes {
 
   static double get cardAreaX => gameOriginX + 0.5 * blockLength;
 
-  static double get cardAreaY => gameOriginY + 13 * blockLength;
+  static double get cardAreaY => gameOriginY + 12 * blockLength;
 
   static Vector2 get cardAreaPosition => Vector2(cardAreaX, cardAreaY);
 
@@ -184,7 +184,6 @@ class Sizes {
   static Vector2 get mapCardSpritePosition => Vector2(mapCardSpriteX, mapCardSpriteY);
 
 
-
   // CardText
   static double get cardTextWidth => cardWidth;
 
@@ -201,14 +200,14 @@ class Sizes {
   // MapCardArea
   static double get mapCardAreaWidth => gameWidth - 1 * blockLength;
 
-  static double get mapCardAreaHeight => 8 * blockLength;
+  static double get mapCardAreaHeight => 7 * blockLength;
 
   static Vector2 get mapCardAreaSize =>
       Vector2(mapCardAreaWidth, mapCardAreaHeight);
 
   static double get mapCardAreaX => gameOriginX + 0.5 * blockLength;
 
-  static double get mapCardAreaY => gameOriginY + 16 * blockLength;
+  static double get mapCardAreaY => gameOriginY + 15 * blockLength;
 
   static Vector2 get mapCardAreaPosition => Vector2(mapCardAreaX, mapCardAreaY);
 
@@ -230,14 +229,14 @@ class Sizes {
 
   static double get mapAreaX => gameOriginX + 0.5 * blockLength;
 
-  static double get mapAreaY => gameOriginY + 12 * blockLength;
+  static double get mapAreaY => gameOriginY + 11 * blockLength;
 
   static Vector2 get mapAreaPosition => Vector2(mapAreaX, mapAreaY);
 
   // Map
-  static double get mapWidth => mapAreaWidth * 0.05;
+  static double get mapWidth => blockLength * 0.8;
 
-  static double get mapHeight => mapAreaHeight * 0.2;
+  static double get mapHeight => blockLength * 0.8;
 
   static Vector2 get mapSize => Vector2(mapWidth, mapHeight);
 
@@ -307,9 +306,9 @@ class Sizes {
   static Vector2 get bottomUiAreaPosition => Vector2(bottomUiAreaX, bottomUiAreaY);
 
   // margin
-  static double get margin => 20.0;
+  static double get margin => blockLength/2;
 
-  static double get miniMargin => 5.0;
+  static double get miniMargin => blockLength/4;
 }
 
 class CANVAS {
