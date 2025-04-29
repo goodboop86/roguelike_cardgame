@@ -37,7 +37,6 @@ mixin HasCommonArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
 
   Future<void> addCharacters() async {
     final characterArea = CharacterAreaComponent(
-      key: ComponentKey.named('BattleCharacterArea'), // カードエリアのサイズ
     );
     add(characterArea);
 

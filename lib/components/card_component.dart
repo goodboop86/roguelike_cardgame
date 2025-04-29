@@ -84,7 +84,7 @@ class CardComponent extends PositionComponent
     super.onDragStart(event);
     initialPosition = position.clone(); // ドラッグ開始時の位置を保存
     target = game.findByKey(
-        ComponentKey.named("BattleCharacterArea")); // TargetComponentを直接取得
+        ComponentKey.named("CharacterArea")); // TargetComponentを直接取得
   }
 
   @override
