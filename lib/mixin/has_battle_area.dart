@@ -111,7 +111,6 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   Future<void> playerEndPhase() async {
     ref.read(battleRouteProvider.notifier).playerEndPhase();
     CardAreaComponent cardArea = children.whereType<CardAreaComponent>().first;
-    cardArea.lock();
     startTransition(
         message: "enemy-phase.",
         next: () {

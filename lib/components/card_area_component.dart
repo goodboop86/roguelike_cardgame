@@ -12,28 +12,9 @@ class CardAreaComponent extends RectangleComponent with HasGameRef<MainGame> {
     super.paint = Paint()..color = Colors.black.withValues(alpha: 0.3);
   }
 
-  bool locked = true;
-
   Logger log = Logger('CardAreaComponent');
 
-  void lock() {
-    locked = true;
-  }
 
-  void unlock() {
-    locked = false;
-  }
-
-  @override
-  void onMount() {
-    log.info("mounted");
-    unlock();
-  }
-
-  @override
-  void onRemove() {
-    log.info("removed");
-  }
 }
 
 class MapCardAreaComponent extends PositionComponent with HasGameRef<MainGame> {

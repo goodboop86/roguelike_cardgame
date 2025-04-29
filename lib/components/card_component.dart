@@ -50,25 +50,26 @@ class CardComponent extends PositionComponent
 
     add(CardDesignComponent());
 
-    add(text..text=card.toString()..position=Sizes.cardTextPosition..anchor=Anchor.topLeft);
+    add(text
+      ..text = card.toString()
+      ..position = Sizes.cardTextPosition
+      ..anchor = Anchor.topLeft);
   }
 
   @override
   void onTapUp(TapUpEvent event) {
-    if (!(parent as CardAreaComponent).locked) {
-      add(SequenceEffect([
-        ScaleEffect.to(
-          Vector2.all(0.95), // 1.05倍に拡大
-          EffectController(duration: 0.1), // 0.05秒かけて拡大
-        ),
-        ScaleEffect.to(
-          Vector2.all(1.0), // 元の大きさに戻す
-          EffectController(duration: 0.1), // 0.05秒かけて縮小
-        ),
-      ], onComplete: () {
-        discriptionOverLay();
-      }));
-    }
+    add(SequenceEffect([
+      ScaleEffect.to(
+        Vector2.all(0.95), // 1.05倍に拡大
+        EffectController(duration: 0.1), // 0.05秒かけて拡大
+      ),
+      ScaleEffect.to(
+        Vector2.all(1.0), // 元の大きさに戻す
+        EffectController(duration: 0.1), // 0.05秒かけて縮小
+      ),
+    ], onComplete: () {
+      discriptionOverLay();
+    }));
   }
 
   void discriptionOverLay() {
@@ -88,10 +89,8 @@ class CardComponent extends PositionComponent
 
   @override
   void onDragUpdate(DragUpdateEvent event) {
-    if (!(parent as CardAreaComponent).locked) {
       position.add(event.localDelta); // ドラッグに応じてコンポーネントの位置を更新
       checkOverlap();
-    }
   }
 
   @override
@@ -151,10 +150,8 @@ class CardComponent extends PositionComponent
 
     // カードを削除
     if (isMounted) {
-
       removeFromParent();
     }
-
   }
 
   // 重なり判定
