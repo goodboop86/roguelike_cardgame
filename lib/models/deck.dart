@@ -70,6 +70,6 @@ class Deck {
 
   @override
   String toString() {
-    return 'デッキ: $_deck\n手札: $_hand\n墓地: $_trash\n除外: $_excluded\n直前に使ったカード: $_lastPlayedCard\n次のカードへのダメージバフ: $_nextCardDamageBuff';
+    return 'デッキ: \n$_deck\n手札: \n$_hand\n墓地: \n$_trash\n除外: \n$_excluded\n直前に使ったカード: \n$_lastPlayedCard\n次のカードへのダメージバフ: \n$_nextCardDamageBuff';
   }
 }

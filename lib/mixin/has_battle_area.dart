@@ -26,8 +26,7 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
 
   void addCards(List<Card_> cards) {
     // カードエリアを作成
-    final cardArea = CardAreaComponent(
-    );
+    final cardArea = CardAreaComponent();
     add(cardArea);
 
     // カードコンポーネントを作成し、カードエリアの中心に集める
@@ -86,7 +85,6 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   }
 
   void removeCardArea() {
-    // 現在のカードを削除
     children.whereType<CardAreaComponent>().forEach((area) {
       if (area.isMounted) {
         remove(area);
@@ -125,7 +123,6 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     startTransition(
       message: 'player-turn',
       next: () async {
-        await Future.delayed(const Duration(milliseconds: 500));
         removeCardArea();
         endPhase();
       },
@@ -148,6 +145,11 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
       () {
         game.overlays.add(OVERLAY.autoDisappearingOverlay.name);
       },
+    () {
+    // overlayでカード情報を表示するために、タップされたカードをアクティブにする。
+    game.overlays.add(OVERLAY.deckOverlay.name);
+    game.pauseEngine();
+    },
       () {
         playerEndPhase();
       },

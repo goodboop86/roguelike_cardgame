@@ -67,7 +67,6 @@ mixin HasExploreArea
 
       mapCardArea.add(button);
 
-      log.info("add ToggleButtonComponent");
     });
   }
 }

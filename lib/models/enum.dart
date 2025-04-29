@@ -9,6 +9,7 @@ enum ROUTE {
 
 enum OVERLAY {
   cardOverlay,
+  deckOverlay,
   characterOverlay,
   enemyTurnOverlay,
   autoDisappearingOverlay,

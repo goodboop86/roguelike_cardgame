@@ -45,4 +45,9 @@ class DeckState implements Jsonable {
   String toJsonString() {
     return jsonEncode(toJson());
   }
+
+  @override
+  String toString() {
+    return deck.toString();
+  }
 }
