@@ -14,12 +14,21 @@ import 'button_component.dart';
 class EnemyComponent extends PositionComponent with RiverpodComponentMixin {
   EnemyComponent({required super.key, required String path})
       : super(priority: 10, children: [
-          AssetSource().getAnimation(name: path)!
-            ..anchor = Anchor.bottomCenter
-            ..position =
-                Vector2(Sizes.enemyAreaWidth / 2, Sizes.enemyAreaHeight),
           EnemyHpBar()
-        ]);
+        ]) {
+    animation = AssetSource().getAnimation(name: path)!
+      ..anchor = Anchor.bottomCenter
+      ..position =
+      Vector2(Sizes.playerAreaWidth / 2, Sizes.playerAreaHeight);
+  }
+
+  late SpriteAnimationGroupComponent animation;
+
+  @override
+  Future<void> onMount() async {
+    super.onMount();
+    add(animation);
+  }
 
   @override
   void render(Canvas canvas) {

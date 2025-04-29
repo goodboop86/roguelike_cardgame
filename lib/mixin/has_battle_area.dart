@@ -4,6 +4,8 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame_riverpod/flame_riverpod.dart';
 import 'package:logging/logging.dart';
+import 'package:roguelike_cardgame/components/enemy_component.dart';
+import 'package:roguelike_cardgame/components/player_component.dart';
 import 'package:roguelike_cardgame/main_game.dart';
 import 'package:roguelike_cardgame/providers/battle_route_provider.dart';
 import '../components/background_component.dart';
@@ -165,5 +167,18 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
         ..anchor = Anchor.center;
       buttonArea.add(button);
     });
+  }
+
+  Future<void> playerIsDead()async {
+
+    final player = game.findByKey(ComponentKey.named("Player")) as PlayerComponent;
+    player.animation.current = CharacterState.death;
+    // game.findByKey(ComponentKey.named("PlayerAnimation"));
+  }
+
+  Future<void> enemyIsDead()async {
+
+    final enemy = game.findByKey(ComponentKey.named("Enemy")) as EnemyComponent;
+    enemy.animation.current = CharacterState.death;
   }
 }

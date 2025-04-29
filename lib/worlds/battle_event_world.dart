@@ -109,10 +109,12 @@ class BattleEventWorld extends World
 
       if(playerState.isDead()){
         log.info("player is dead");
+        playerIsDead();
       }
 
       if(enemyState.isDead()){
         log.info("enemy is dead");
+        enemyIsDead();
       }
 
     });
