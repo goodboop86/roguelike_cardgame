@@ -107,11 +107,16 @@ class DeckOverlayWidget extends ConsumerWidget {
         color: Colors.black.withValues(alpha: 0.5),
         child: Center(
           child: Container(
-            width: Sizes.gameWidth*0.8,
-            height: Sizes.gameHeight*0.8,
+            width: Sizes.gameWidth * 0.8,
+            height: Sizes.gameHeight * 0.8,
             color: Colors.white,
             child: Center(
-              child: Text(deckState.toString()),
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all((8.0)),
+                  child: Text(deckState.toString()),
+                ),
+              ),
             ),
           ),
         ),
