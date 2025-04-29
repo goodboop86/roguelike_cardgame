@@ -138,7 +138,6 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   }
 
   void addBattleButtons() {
-    // カードエリアを作成
     final buttonArea = ButtonAreaComponent(
       position: Sizes.buttonAreaPosition,
       size: Sizes.buttonAreaSize, // カードエリアのサイズ
@@ -146,9 +145,6 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     add(buttonArea);
 
     List buttonOnPressedFunctions = [
-      () {
-        game.router.pushNamed(ROUTE.explore.name);
-      },
       () {
         game.overlays.add(OVERLAY.autoDisappearingOverlay.name);
       },
