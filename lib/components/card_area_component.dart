@@ -1,5 +1,4 @@
 import 'package:flame/components.dart';
-import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/main_game.dart';
@@ -7,34 +6,35 @@ import 'package:roguelike_cardgame/main_game.dart';
 import '../providers/sizes.dart';
 
 class CardAreaComponent extends RectangleComponent with HasGameRef<MainGame> {
-  CardAreaComponent({required Vector2 position, required Vector2 size})
-      : super(position: position, size: size) {
-    super.paint = Paint()..color = Colors.black.withValues(alpha: 0.3);
-  }
+  CardAreaComponent()
+      : super(
+            position: Sizes.cardAreaPosition,
+            size: Sizes.cardAreaSize,
+            paint: Paint()..color = Colors.black.withValues(alpha: 0.3));
 
   Logger log = Logger('CardAreaComponent');
-
-
 }
 
-class MapCardAreaComponent extends PositionComponent with HasGameRef<MainGame> {
-  MapCardAreaComponent(
-      {required Vector2 super.position,
-      required Vector2 super.size,
-      required super.anchor})
-      : super();
+class MapCardAreaComponent extends RectangleComponent
+    with HasGameRef<MainGame> {
+  MapCardAreaComponent()
+      : super(
+            position: Sizes.mapCardAreaPosition,
+            size: Sizes.mapCardAreaSize,
+            anchor: Anchor.topLeft,
+            paint: Paint()..color = Colors.black.withValues(alpha: 0.0));
 
   Logger log = Logger('MapCardAreaComponent');
 }
 
-class CharacterAreaComponent extends PositionComponent {
-  CharacterAreaComponent(
-      {required Vector2 position,
-      required Vector2 size,
-      required ComponentKey key})
-      : super(position: position, size: size, key: key, priority: 20);
+class CharacterAreaComponent extends RectangleComponent {
+  CharacterAreaComponent({required super.key})
+      : super(
+            position: Sizes.characterAreaPosition,
+            size: Sizes.characterAreaSize,
+      paint:  Paint()..color = Colors.transparent,
+            priority: 20);
 
-  final Paint paint = Paint()..color = Colors.transparent;
 
   @override
   void render(Canvas canvas) {
@@ -45,37 +45,45 @@ class CharacterAreaComponent extends PositionComponent {
   void changeColor(Color color) {
     paint.color = color;
   }
+}
 
+class ButtonAreaComponent extends RectangleComponent {
+  ButtonAreaComponent()
+      : super(
+            position: Sizes.buttonAreaPosition,
+            size: Sizes.buttonAreaSize,
+            paint: Paint()..color = Colors.black.withValues(alpha: 0.0));
 // カードエリアの描画やその他の処理
 }
 
-class ButtonAreaComponent extends PositionComponent {
-  ButtonAreaComponent({required Vector2 position, required Vector2 size})
-      : super(position: position, size: size);
-
-// カードエリアの描画やその他の処理
+class MapAreaComponent extends RectangleComponent {
+  MapAreaComponent()
+      : super(
+            position: Sizes.mapAreaPosition,
+            size: Sizes.mapAreaSize,
+            paint: Paint()..color = Colors.black.withValues(alpha: 0.0));
 }
 
-class MapAreaComponent extends PositionComponent {
-  MapAreaComponent({required Vector2 position, required Vector2 size})
-      : super(position: position, size: size);
-
-// カードエリアの描画やその他の処理
-}
-
-class TopUiAreaComponent extends PositionComponent {
+class TopUiAreaComponent extends RectangleComponent {
   TopUiAreaComponent()
-      : super(position: Sizes.topUiAreaPosition, size: Sizes.topUiAreaSize);
+      : super(
+            position: Sizes.topUiAreaPosition,
+            size: Sizes.topUiAreaSize,
+            paint: Paint()..color = Colors.black.withValues(alpha: 0.0));
 }
 
-class BottomUiAreaComponent extends PositionComponent {
+class BottomUiAreaComponent extends RectangleComponent {
   BottomUiAreaComponent()
-      : super(position: Sizes.bottomUiAreaPosition, size: Sizes.bottomUiAreaSize);
+      : super(
+            position: Sizes.bottomUiAreaPosition,
+            size: Sizes.bottomUiAreaSize,
+            paint: Paint()..color = Colors.black.withValues(alpha: 0.0));
 }
 
-class NPCDialogAreaComponent extends PositionComponent {
+class NPCDialogAreaComponent extends RectangleComponent {
   NPCDialogAreaComponent({required Vector2 position, required Vector2 size})
-      : super(position: position, size: size);
-
-// カードエリアの描画やその他の処理
+      : super(
+            position: position,
+            size: size,
+            paint: Paint()..color = Colors.black.withValues(alpha: 0.0));
 }

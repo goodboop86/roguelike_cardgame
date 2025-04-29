@@ -16,10 +16,7 @@ mixin HasExploreArea
   Logger log = Logger('HasBattleArea');
 
   void addMap(List<List<Event>> stageList, int currentStage) {
-    final mapArea = MapAreaComponent(
-      position: Sizes.mapAreaPosition,
-      size: Sizes.mapAreaSize, // カードエリアのサイズ
-    );
+    final mapArea = MapAreaComponent();
     add(mapArea);
 
     int stageNum = stageList.length;
@@ -59,21 +56,8 @@ mixin HasExploreArea
 
     // カードエリアを作成
     double mapCardWidth_ = Sizes.mapCardWidth + Sizes.mapCardMargin;
-    double mapCardAreaWidth =
-        events.length * mapCardWidth_ - Sizes.mapCardMargin;
 
-    Vector2 mapCardAreaSize =
-        Vector2(mapCardAreaWidth, Sizes.mapCardAreaHeight);
-
-    double mapCardAreaX =
-        Sizes.gameOriginX + (Sizes.gameWidth - mapCardAreaWidth) / 2;
-    Vector2 mapCardAreaPosition = Vector2(mapCardAreaX, Sizes.mapCardAreaY);
-
-    final mapCardArea = MapCardAreaComponent(
-      position: mapCardAreaPosition,
-      size: mapCardAreaSize,
-      anchor: Anchor.topLeft,
-    );
+    final mapCardArea = MapCardAreaComponent();
     add(mapCardArea);
 
     events.asMap().forEach((index, event) {

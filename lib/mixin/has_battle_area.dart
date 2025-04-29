@@ -27,8 +27,6 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   void addCards(List<Card_> cards) {
     // カードエリアを作成
     final cardArea = CardAreaComponent(
-      position: Sizes.cardAreaPosition,
-      size: Sizes.cardAreaSize, // カードエリアのサイズ
     );
     add(cardArea);
 
@@ -143,8 +141,6 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
 
   void addBattleButtons() {
     final buttonArea = ButtonAreaComponent(
-      position: Sizes.buttonAreaPosition,
-      size: Sizes.buttonAreaSize, // カードエリアのサイズ
     );
     add(buttonArea);
 
