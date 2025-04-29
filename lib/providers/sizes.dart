@@ -173,13 +173,13 @@ class Sizes {
 
   static double get mapCardSpriteWidth => mapCardWidth - 4.0;
 
-  static double get mapCardSpriteHeight => mapCardWidth*1.2 -4.0;
+  static double get mapCardSpriteHeight => mapCardWidth -4.0;
 
   static Vector2 get mapCardSpriteSize => Vector2(mapCardSpriteWidth, mapCardSpriteHeight);
 
   static double get mapCardSpriteX => 2.0;
 
-  static double get mapCardSpriteY => 2.0 - blockLength;
+  static double get mapCardSpriteY => 2.0 ;
 
   static Vector2 get mapCardSpritePosition => Vector2(mapCardSpriteX, mapCardSpriteY);
 

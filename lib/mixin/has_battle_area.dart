@@ -147,10 +147,6 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
 
     List buttonOnPressedFunctions = [
       () {
-        game.router.pushNamed(ROUTE.home.name);
-      },
-      () {
-        // ref.read(deckProvider.notifier).startTurn();
         game.router.pushNamed(ROUTE.explore.name);
       },
       () {

@@ -14,7 +14,7 @@ import '../models/card.dart';
 // プレイヤーの状態管理プロバイダ
 final deckProvider = StateNotifierProvider<DeckStateNotifier, DeckState>((ref) {
   return DeckStateNotifier(
-      DeckState(deck: Deck(cards: getCards(), maxHandNum: 4)));
+      DeckState(deck: Deck(cards: getCards(), maxHandNum: 6)));
 });
 
 class DeckStateNotifier extends StateNotifier<DeckState> {

@@ -10,7 +10,11 @@ import 'package:roguelike_cardgame/providers/deck_provider.dart';
 import 'dart:async';
 
 import '../components/card_area_component.dart';
+import '../models/enemy_state.dart';
+import '../models/player_state.dart';
 import '../providers/battle_route_provider.dart';
+import '../providers/enemy_provider.dart';
+import '../providers/player_provider.dart';
 
 class BattleEventWorld extends World
     with
@@ -33,11 +37,11 @@ class BattleEventWorld extends World
   Future<void> onMount() async {
     game.fadeIn(message: '', onComplete: startPhase);
 
+    // 各種Componentの配置
     addToGameWidgetBuild(() async {
       BattleRouteState state = ref.read(battleRouteProvider);
-      // PlayerState playerState = ref.read(playerProvider);
-      // EnemyState enemyState = ref.read(enemyProvider);
-      // TODO: 受け取ったEventに従ってEnemyを設置する
+      PlayerState playerState = ref.read(playerProvider);
+      EnemyState enemyState = ref.read(enemyProvider);
 
       Component? background = game.findByKey(ComponentKey.named("Background"));
       if (background == null) {
@@ -45,27 +49,28 @@ class BattleEventWorld extends World
         addBackgrounds();
       }
 
-      var characterArea = children.whereType<CharacterAreaComponent>();
-      var buttonArea = children.whereType<ButtonAreaComponent>();
-      var bottomUiArea = children.whereType<BottomUiAreaComponent>();
-      var topUiArea = children.whereType<TopUiAreaComponent>();
 
       if (background != null) {
+        var characterArea = children.whereType<CharacterAreaComponent>();
         if (characterArea.isEmpty & background.isMounted) {
           log.fine("addCharacters");
           await addCharacters();
         }
 
+        var buttonArea = children.whereType<ButtonAreaComponent>();
         if (buttonArea.isEmpty & background.isMounted) {
           log.fine("addButtons");
           addBattleButtons();
         }
+
+        var bottomUiArea = children.whereType<BottomUiAreaComponent>();
 
         if (bottomUiArea.isEmpty & background.isMounted) {
           log.fine("addBottomUI");
           addBottomUi();
         }
 
+        var topUiArea = children.whereType<TopUiAreaComponent>();
         if (topUiArea.isEmpty & background.isMounted) {
           log.fine("addTopUI");
           addTopUi(hasEnemy: true);
@@ -73,6 +78,8 @@ class BattleEventWorld extends World
       }
     });
 
+
+    // Deckの更新
     addToGameWidgetBuild(() async {
       DeckState deckState = ref.watch(deckProvider);
       BattleRouteState battleState = ref.watch(battleRouteProvider);
@@ -92,6 +99,22 @@ class BattleEventWorld extends World
           battleState.phase == BattlePhase.playerEndPhase) {
         removeCardArea();
       }
+    });
+
+    // Player/Enemyの管理
+    addToGameWidgetBuild(() async {
+      BattleRouteState state = ref.read(battleRouteProvider);
+      PlayerState playerState = ref.read(playerProvider);
+      EnemyState enemyState = ref.read(enemyProvider);
+
+      if(playerState.isDead()){
+        log.info("player is dead");
+      }
+
+      if(enemyState.isDead()){
+        log.info("enemy is dead");
+      }
+
     });
 
     super.onMount();

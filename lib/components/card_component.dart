@@ -44,7 +44,7 @@ class CardComponent extends PositionComponent
 
     add(sprite
       ..anchor = Anchor.topLeft
-      ..position = Sizes.cardSpritePosition); //これを追加するとエラー
+      ..position = Sizes.cardSpritePosition);
 
     add(CardDesignComponent());
 
