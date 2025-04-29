@@ -15,6 +15,7 @@ import '../models/player_state.dart';
 import '../providers/battle_route_provider.dart';
 import '../providers/enemy_provider.dart';
 import '../providers/player_provider.dart';
+import '../valueroutes/popup.dart';
 
 class BattleEventWorld extends World
     with
@@ -26,7 +27,7 @@ class BattleEventWorld extends World
   Logger log = Logger('BattleEventWorld');
 
   late SpriteAnimationGroupComponent? playerComponent;
-  bool deckInitialized = false;
+  bool isBattleEnd = false;
 
   @override
   Future<void> onLoad() async {
@@ -103,21 +104,23 @@ class BattleEventWorld extends World
 
     // Player/Enemyの管理
     addToGameWidgetBuild(() async {
-      BattleRouteState state = ref.read(battleRouteProvider);
-      PlayerState playerState = ref.read(playerProvider);
-      EnemyState enemyState = ref.read(enemyProvider);
+      if(!isBattleEnd){
+        // お互いのHPを確認し、死亡していたらPhaseを更新する。
+        if(ref.read(playerProvider).isDead()){
+          log.info("player is dead.");
+          isBattleEnd =true;
+          lose();
+        } else if(ref.read(enemyProvider).isDead()){
+          log.info("enemy is dead.");
+          isBattleEnd =true;
+          win();
+        }
 
-      if(playerState.isDead()){
-        log.info("player is dead");
-        playerIsDead();
-      }
 
-      if(enemyState.isDead()){
-        log.info("enemy is dead");
-        enemyIsDead();
       }
 
     });
+
 
     super.onMount();
   }

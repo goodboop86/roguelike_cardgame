@@ -19,6 +19,7 @@ import '../models/enum.dart';
 import '../providers/deck_provider.dart';
 import '../providers/player_provider.dart';
 import '../providers/sizes.dart';
+import '../valueroutes/popup.dart';
 
 mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
   Logger log = Logger('HasBattleArea');
@@ -139,6 +140,8 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     startPhase();
   }
 
+
+
   void addBattleButtons() {
     final buttonArea = ButtonAreaComponent(
       position: Sizes.buttonAreaPosition,
@@ -169,16 +172,16 @@ mixin HasBattleArea on Component, HasGameRef<MainGame>, RiverpodComponentMixin {
     });
   }
 
-  Future<void> playerIsDead()async {
-
-    final player = game.findByKey(ComponentKey.named("Player")) as PlayerComponent;
-    player.animation.current = CharacterState.death;
-    // game.findByKey(ComponentKey.named("PlayerAnimation"));
-  }
-
-  Future<void> enemyIsDead()async {
-
+  Future<void> win()async {
     final enemy = game.findByKey(ComponentKey.named("Enemy")) as EnemyComponent;
     enemy.animation.current = CharacterState.death;
+    int value = await game.router.pushAndWait(MyPopupRoute());
+  }
+
+  Future<void> lose()async {
+    final player = game.findByKey(ComponentKey.named("Player")) as PlayerComponent;
+    player.animation.current = CharacterState.death;
+    int value = await game.router.pushAndWait(MyPopupRoute());
+
   }
 }

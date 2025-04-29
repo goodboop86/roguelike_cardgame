@@ -20,6 +20,12 @@ class BattleRouteStateNotifier extends StateNotifier<BattleRouteState> {
     return state.event;
   }
 
+  void waitPhase() {
+    log.info("waitPhase");
+    state = BattleRouteState(event: state.event, phase: BattlePhase.waitPhase
+    );
+  }
+
   void startPhase() {
     log.info("startPhase");
     state = BattleRouteState(event: state.event, phase: BattlePhase.startPhase
@@ -47,6 +53,18 @@ class BattleRouteStateNotifier extends StateNotifier<BattleRouteState> {
   void endPhase() {
     log.info("endPhase");
     state = BattleRouteState(event: state.event, phase: BattlePhase.endPhase
+    );
+  }
+
+  void winPhase() {
+    log.info("winPhase");
+    state = BattleRouteState(event: state.event, phase: BattlePhase.win
+    );
+  }
+
+  void losePhase() {
+    log.info("losePhase");
+    state = BattleRouteState(event: state.event, phase: BattlePhase.lose
     );
   }
 

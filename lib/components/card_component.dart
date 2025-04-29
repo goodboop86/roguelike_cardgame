@@ -7,9 +7,11 @@ import 'package:logging/logging.dart';
 import 'package:roguelike_cardgame/components/card_area_component.dart';
 import 'package:roguelike_cardgame/components/text_component.dart';
 import 'package:roguelike_cardgame/providers/deck_provider.dart';
+import 'package:roguelike_cardgame/providers/enemy_provider.dart';
 import 'package:roguelike_cardgame/providers/player_provider.dart';
 import '../models/card.dart';
 import '../models/enum.dart';
+import '../providers/battle_route_provider.dart';
 import '../providers/card_provider.dart';
 import '../providers/sizes.dart';
 import '../spritesheet/spritesheet.dart';
@@ -149,8 +151,10 @@ class CardComponent extends PositionComponent
 
     // カードを削除
     if (isMounted) {
+
       removeFromParent();
     }
+
   }
 
   // 重なり判定
