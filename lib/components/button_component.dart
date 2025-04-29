@@ -50,6 +50,7 @@ class SpriteButtons extends SpriteButtonComponent {
           priority: 100,
           button: AssetSource().getSprite(name: "question.png"),
           size: Sizes.blockSize,
+    position: Vector2(Sizes.bottomUiAreaWidth - Sizes.blockLength, 0),
           anchor: Anchor.topLeft,
         );
 

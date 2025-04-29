@@ -16,13 +16,14 @@ import 'button_component.dart';
 class PlayerComponent extends PositionComponent
     with RiverpodComponentMixin, TapCallbacks, HasGameRef {
   PlayerComponent({required super.key, required String path})
-      : super(priority: 10, children: [
-          PlayerHpBar()
-        ]) {
+      : super(
+            size: Sizes.playerAreaSize,
+            position: Sizes.playerAreaPosition,
+            priority: 10,
+            children: [PlayerHpBar()]) {
     animation = AssetSource().getAnimation(name: path)!
       ..anchor = Anchor.bottomCenter
-      ..position =
-      Vector2(Sizes.playerAreaWidth / 2, Sizes.playerAreaHeight);
+      ..position = Vector2(Sizes.playerAreaWidth / 2, Sizes.playerAreaHeight);
   }
 
   late SpriteAnimationGroupComponent animation;
@@ -45,7 +46,8 @@ class PlayerComponent extends PositionComponent
   }
 }
 
-class PlayerHpBar extends PositionComponent with RiverpodComponentMixin, HasGameRef<MainGame> {
+class PlayerHpBar extends PositionComponent
+    with RiverpodComponentMixin, HasGameRef<MainGame> {
   late double _hp;
   late double _maxHp;
   late String? currentRouteName;
@@ -53,7 +55,7 @@ class PlayerHpBar extends PositionComponent with RiverpodComponentMixin, HasGame
 
   PlayerHpBar({hp, maxHp}) {
     size = Vector2(100, 10);
-    position = Vector2((Sizes.playerAreaWidth-size.x)/2, 0);
+    position = Vector2((Sizes.playerAreaWidth - size.x) / 2, 0);
     anchor = Anchor.topLeft;
   }
 
@@ -112,12 +114,12 @@ class PlayerHpBar extends PositionComponent with RiverpodComponentMixin, HasGame
         size.toRect(),
         borderPaint,
       );
-
     }
   }
 }
 
-class PlayerStatus extends PositionComponent with RiverpodComponentMixin, HasGameRef<MainGame> {
+class PlayerStatus extends PositionComponent
+    with RiverpodComponentMixin, HasGameRef<MainGame> {
   bool _isInitialized = false;
 
   final heartButton = SpriteButtons.heartButton(onPressed: () {});
@@ -133,7 +135,6 @@ class PlayerStatus extends PositionComponent with RiverpodComponentMixin, HasGam
 
   @override
   Future<void> onMount() async {
-
     addAll([heartButton, manaButton]);
 
     addToGameWidgetBuild(() async {
@@ -148,7 +149,8 @@ class PlayerStatus extends PositionComponent with RiverpodComponentMixin, HasGam
 
     if (_isInitialized) {
       var playerState = ref.watch(playerProvider);
-      _textPaint.render(canvas,
+      _textPaint.render(
+          canvas,
           '${playerState.health.toInt()} / ${playerState.maxHealth.toInt()}',
           heartButton.position + Vector2(Sizes.blockLength / 1.5, 0));
       _textPaint.render(canvas, '${playerState.mana} / ${playerState.maxMana}',
@@ -156,4 +158,3 @@ class PlayerStatus extends PositionComponent with RiverpodComponentMixin, HasGam
     }
   }
 }
-

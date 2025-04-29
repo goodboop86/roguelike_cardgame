@@ -6,14 +6,16 @@ import 'package:roguelike_cardgame/components/text_component.dart';
 import '../main_game.dart';
 import '../models/enum.dart';
 import '../providers/enemy_provider.dart';
-import '../providers/player_provider.dart';
 import '../providers/sizes.dart';
 import '../spritesheet/spritesheet.dart';
 import 'button_component.dart';
 
 class EnemyComponent extends PositionComponent with RiverpodComponentMixin {
   EnemyComponent({required super.key, required String path})
-      : super(priority: 10, children: [
+      : super(
+  size: Sizes.enemyAreaSize,
+  position: Sizes.enemyAreaPosition,
+      priority: 10, children: [
           EnemyHpBar()
         ]) {
     animation = AssetSource().getAnimation(name: path)!
