@@ -22,6 +22,11 @@ class Card_ implements Jsonable {
   String toJsonString() {
     return jsonEncode(toJson());
   }
+
+  @override
+  String toString() {
+    return 'cost: ${effect.manaCost}\nname: ${effect.name}\n${effect.description}';
+  }
 }
 
 List<Card_> getCards() {

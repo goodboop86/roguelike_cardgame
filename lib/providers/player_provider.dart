@@ -43,7 +43,7 @@ class PlayerStateNotifier extends CharacterStateNotifier<PlayerState> {
     );
   }
 
-  void resetMana() {
+  void refresh() {
     state = PlayerState(
       name: state.name,
       maxHealth: state.maxHealth,

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:roguelike_cardgame/providers/card_provider.dart';
 import 'package:roguelike_cardgame/providers/deck_provider.dart';
-import 'package:roguelike_cardgame/worlds/battle_event_world.dart';
+import 'package:roguelike_cardgame/providers/sizes.dart';
 
 import 'main_game.dart';
 import 'models/enum.dart';
@@ -36,6 +36,10 @@ class MainGamePageState extends State<MainGamePage> {
                 OVERLAY.cardOverlay.name:
                     (BuildContext context, MainGame game) {
                   return CardOverlayWidget(game: game);
+                },
+                OVERLAY.deckOverlay.name:
+                    (BuildContext context, MainGame game) {
+                  return DeckOverlayWidget(game: game);
                 },
                 OVERLAY.characterOverlay.name:
                     (BuildContext context, MainGame game) {
@@ -78,6 +82,41 @@ class CardOverlayWidget extends ConsumerWidget {
             color: Colors.white,
             child: Center(
               child: Text(cardState.toJsonString()),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DeckOverlayWidget extends ConsumerWidget {
+  final MainGame game;
+
+  const DeckOverlayWidget({super.key, required this.game});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    DeckState deckState = ref.read(deckProvider);
+    return GestureDetector(
+      onTap: () {
+        game.overlays.remove(OVERLAY.deckOverlay.name);
+        game.resumeEngine();
+      },
+      child: Container(
+        color: Colors.black.withValues(alpha: 0.5),
+        child: Center(
+          child: Container(
+            width: Sizes.gameWidth * 0.8,
+            height: Sizes.gameHeight * 0.8,
+            color: Colors.white,
+            child: Center(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all((8.0)),
+                  child: Text(deckState.toString()),
+                ),
+              ),
             ),
           ),
         ),

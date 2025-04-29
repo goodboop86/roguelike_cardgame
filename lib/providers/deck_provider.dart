@@ -14,7 +14,7 @@ import '../models/card.dart';
 // プレイヤーの状態管理プロバイダ
 final deckProvider = StateNotifierProvider<DeckStateNotifier, DeckState>((ref) {
   return DeckStateNotifier(
-      DeckState(deck: Deck(cards: getCards(), maxHandNum: 4)));
+      DeckState(deck: Deck(cards: getCards(), maxHandNum: 6)));
 });
 
 class DeckStateNotifier extends StateNotifier<DeckState> {
@@ -24,8 +24,8 @@ class DeckStateNotifier extends StateNotifier<DeckState> {
     state = DeckState(deck: state.deck.playCard(card, ref, game));
   }
 
-  void startTurn() {
-    state = DeckState(deck: state.deck.startTurn());
+  void refresh() {
+    state = DeckState(deck: state.deck.refresh());
   }
 }
 
@@ -44,5 +44,10 @@ class DeckState implements Jsonable {
   @override
   String toJsonString() {
     return jsonEncode(toJson());
+  }
+
+  @override
+  String toString() {
+    return deck.toString();
   }
 }

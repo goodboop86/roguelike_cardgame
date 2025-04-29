@@ -29,7 +29,16 @@ List<List<Event>> generateNestedListWithFixedLength(
   if (isDebug) {
     return [
       [Event.start],
-      [Event.battle, Event.person, Event.treasureChest]
+      [Event.battle, Event.person, Event.treasureChest],
+      [Event.battle, Event.person, Event.treasureChest],
+      [Event.battle, Event.person, Event.treasureChest],
+      [Event.battle, Event.person, Event.treasureChest],
+      [Event.battle, Event.person, Event.treasureChest],
+      [Event.battle, Event.person, Event.treasureChest],
+      [Event.battle, Event.person, Event.treasureChest],
+      [Event.battle, Event.person, Event.treasureChest],
+      [Event.battle, Event.person, Event.treasureChest],
+      [Event.battle, Event.person, Event.treasureChest],
     ];
   }
   return nestedList;

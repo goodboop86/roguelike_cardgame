@@ -32,4 +32,8 @@ class PlayerState extends CharacterState {
   String toJsonString() {
     return jsonEncode(toJson());
   }
+
+  bool isDead(){
+    return health == 0.0;
+  }
 }

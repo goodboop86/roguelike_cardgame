@@ -16,9 +16,12 @@ import 'character_state.dart';
 abstract class CardEffect implements Jsonable {
   Logger log = Logger('CardEffect');
   final String _name = "default";
+  final String _description = "default description";
   final int _manaCost = 0;
 
   String get name => _name;
+
+  String get description => _description;
 
   int get manaCost => _manaCost;
 
@@ -43,6 +46,9 @@ abstract class CardEffect implements Jsonable {
 class AllDamageEffect extends CardEffect {
   @override
   String get name => "AllDamage";
+
+  @override
+  String get description => "プレイヤーに10ダメージ、相手に10ダメージ与える";
 
   @override
   int get manaCost => 2;
@@ -78,6 +84,9 @@ class PlayerDamageEffect extends CardEffect {
   String get name => "PlayerDamage";
 
   @override
+  String get description => "プレイヤーは10ダメージ受ける";
+
+  @override
   int get manaCost => 1;
 
   @override
@@ -89,6 +98,9 @@ class PlayerDamageEffect extends CardEffect {
 class PlayerHealEffect extends CardEffect {
   @override
   String get name => "PlayerHeal";
+
+  @override
+  String get description => "プレイヤーは30回復する";
 
   @override
   int get manaCost => 1;
@@ -104,6 +116,10 @@ class BuffEffect extends CardEffect {
   String get name => "Buff";
 
   @override
+  String get description => "バフを得る";
+
+
+  @override
   int get manaCost => 1;
 
   @override
@@ -117,6 +133,9 @@ class DebuffEffect extends CardEffect {
   String get name => "DeBuff";
 
   @override
+  String get description => "デバフを得る";
+
+  @override
   int get manaCost => 1;
 
   @override
@@ -128,6 +147,10 @@ class DebuffEffect extends CardEffect {
 class EmptyEffect extends CardEffect {
   @override
   String get name => "Empty";
+
+  @override
+  String get description => "Empty description";
+
 
   @override
   int get manaCost => 1;

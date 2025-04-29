@@ -9,6 +9,7 @@ enum ROUTE {
 
 enum OVERLAY {
   cardOverlay,
+  deckOverlay,
   characterOverlay,
   enemyTurnOverlay,
   autoDisappearingOverlay,
@@ -26,7 +27,19 @@ enum Event {
   end
 }
 
-enum CharState {
+enum BattlePhase {
+  waitPhase,
+  empty,
+  startPhase,
+  playerPhase,
+  playerEndPhase,
+  enemyPhase,
+  endPhase,
+  lose,
+  win
+}
+
+enum CharacterState {
   idle,
   ready,
   run,
@@ -41,4 +54,29 @@ enum CharState {
   block,
   death,
   roll
+}
+
+enum ContainerState {
+  woodenChestBoxIdle,
+  silverChestBoxIdle,
+  goldenChestBoxIdle,
+  woodenChestBoxOpen,
+  silverChestBoxOpen,
+  goldenChestBoxOpen,
+  smallBoxDestroy,
+  mediumBoxDestroy,
+  largeBoxDestroy,
+  bucketDestroy,
+  barrelDestroy,
+  largeBarrelDestroy,
+  jugDestroy,
+  urnDestroy,
+  vaseDestroy,
+  tombStoneADestroy,
+  tombStoneBDestroy,
+  tombStoneCDestroy,
+  bookCaseDestroy,
+  coffinDestroy
+
+
 }
